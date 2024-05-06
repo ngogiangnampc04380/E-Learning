@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('path_video');
             $table->unsignedBigInteger('chapter_id');
             $table->foreign('chapter_id')->references('id')->on('chapters')->constrained()->cascadeOnDelete();
+
             $table->timestamps();
         });
     }

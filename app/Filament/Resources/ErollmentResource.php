@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
+use App\Filament\Resources\ErollmentResource\Pages;
+use App\Filament\Resources\ErollmentResource\RelationManagers;
+use Filament\Tables\Filters\SelectFilter;
+
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -13,13 +15,14 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class UserResource extends Resource
+class ErollmentResource extends Resource
 {
     protected static ?string $model = User::class;
-    protected static ?string $navigationLabel = 'Người dùng';
-    protected static ?string $modelLabel = 'người dùng';
-    protected static ?string $navigationIcon = 'heroicon-o-user';
 
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Học viên';
+    protected static ?string $modelLabel = 'Học viên';
+    protected static ?int $navigationSort = 2;
     public static function form(Form $form): Form
     {
         return $form
@@ -29,7 +32,7 @@ class UserResource extends Resource
                     ->required()
                     ->validationMessages([
                         'required' => 'vui lòng nhập tên người dùng',
-                        ])
+                    ])
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
@@ -37,7 +40,7 @@ class UserResource extends Resource
                     ->validationMessages([
                         'required' => 'vui lòng nhập địa chỉ email',
                         'email' => 'vui lòng nhập đúng định dạng email',
-                        ])
+                    ])
                     ->maxLength(255),
                 Forms\Components\TextInput::make('phone')
                     ->label('Số điện thoại')
@@ -49,7 +52,7 @@ class UserResource extends Resource
                         'required' => 'vui lòng nhập số điện thoại',
                         'regex' => 'vui lòng nhập đúng định dạng số điện thoại',
                         'min' => 'vui lòng nhập đúng độ dài số điện thoại',
-                        ]),
+                    ]),
 
                 // Forms\Components\TextInput::make('auth')
                 //     ->maxLength(255),
@@ -60,14 +63,14 @@ class UserResource extends Resource
                     ->required()
                     ->validationMessages([
                         'required' => 'vui lòng nhập mật khẩu',
-                        ])
+                    ])
                     ->maxLength(255),
-                    Forms\Components\FileUpload::make('thumbnail')
+                Forms\Components\FileUpload::make('thumbnail')
                     ->required()
                     ->columnSpanFull()
                     ->validationMessages([
                         'required' => 'vui lòng hình ảnh',
-                        ])
+                    ])
                     ->label('Hình ảnh'),
             ]);
     }
@@ -125,10 +128,10 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
-            'view' => Pages\ViewUser::route('/{record}'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
+            'index' => Pages\ListErollments::route('/'),
+            'create' => Pages\CreateErollment::route('/create'),
+            'view' => Pages\ViewErollment::route('/{record}'),
+            'edit' => Pages\EditErollment::route('/{record}/edit'),
         ];
     }
 }
