@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->decimal('sale_price',7,3);
+            $table->integer('percent_sale');
             $table->date('start_date');
             $table->date('end_date');
+            $table->integer('amount');
             $table->unsignedBigInteger('course_id');
             $table->foreign('course_id')->references('id')->on('courses')->constrained()->cascadeOnDelete();
             $table->timestamps();

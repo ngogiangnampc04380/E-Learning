@@ -35,7 +35,12 @@ class MentorResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('user_id')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->label('id'),
+                Tables\Columns\TextColumn::make('user.name')
+                ->numeric()
+                ->sortable()
+                ->label('name'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
