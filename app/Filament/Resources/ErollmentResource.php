@@ -22,6 +22,7 @@ class ErollmentResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $navigationLabel = 'Học viên';
     protected static ?string $modelLabel = 'Học viên';
+    protected static ?string $navigationGroup = 'Người dùng';
     protected static ?int $navigationSort = 2;
     public static function form(Form $form): Form
     {
@@ -54,9 +55,7 @@ class ErollmentResource extends Resource
                         'min' => 'vui lòng nhập đúng độ dài số điện thoại',
                     ]),
 
-                // Forms\Components\TextInput::make('auth')
-                //     ->maxLength(255),
-                // Forms\Components\DateTimePicker::make('email_verified_at'),
+                
                 Forms\Components\TextInput::make('password')
                     ->label('Mật khẩu')
                     ->password()
@@ -79,6 +78,9 @@ class ErollmentResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('thumbnail')
+                    ->label('Hình ảnh')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Tên người dùng')
                     ->searchable(),
@@ -87,26 +89,17 @@ class ErollmentResource extends Resource
                 Tables\Columns\TextColumn::make('phone')
                     ->label('Số điện thoại')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('thumbnail')
-                    ->label('Hình ảnh')
+                    Tables\Columns\TextColumn::make('address')
+                    ->label('Địa chỉ')
                     ->searchable(),
-                // Tables\Columns\TextColumn::make('auth')
-                //     ->searchable(),
-                // Tables\Columns\TextColumn::make('email_verified_at')
-                //     ->dateTime()
-                //     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                
+              
             ])
             ->filters([
-                //
+                SelectFilter::make('role')
+                    ->default('0'),
             ])
+
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
@@ -115,7 +108,9 @@ class ErollmentResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->hiddenFilterIndicators();
+
     }
 
     public static function getRelations(): array

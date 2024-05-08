@@ -8,17 +8,23 @@ use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\SelectColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Enum\RoleUsers;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
     protected static ?string $navigationLabel = 'Người dùng';
     protected static ?string $modelLabel = 'người dùng';
+    protected static ?string $navigationGroup = 'Người dùng';
     protected static ?string $navigationIcon = 'heroicon-o-user';
+
 
     public static function form(Form $form): Form
     {
@@ -29,7 +35,7 @@ class UserResource extends Resource
                     ->required()
                     ->validationMessages([
                         'required' => 'vui lòng nhập tên người dùng',
-                        ])
+                    ])
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
@@ -37,7 +43,7 @@ class UserResource extends Resource
                     ->validationMessages([
                         'required' => 'vui lòng nhập địa chỉ email',
                         'email' => 'vui lòng nhập đúng định dạng email',
-                        ])
+                    ])
                     ->maxLength(255),
                 Forms\Components\TextInput::make('phone')
                     ->label('Số điện thoại')
@@ -49,33 +55,54 @@ class UserResource extends Resource
                         'required' => 'vui lòng nhập số điện thoại',
                         'regex' => 'vui lòng nhập đúng định dạng số điện thoại',
                         'min' => 'vui lòng nhập đúng độ dài số điện thoại',
-                        ]),
+                    ]),
 
-                // Forms\Components\TextInput::make('auth')
-                //     ->maxLength(255),
-                // Forms\Components\DateTimePicker::make('email_verified_at'),
+                Forms\Components\TextInput::make('address')
+                    ->label('Địa chỉ')
+                    ->required()
+                    ->validationMessages([
+                        'required' => 'vui lòng nhập địa ch người dùng',
+                    ])
+                    ->maxLength(255),
+                Forms\Components\Select::make('role')
+                    ->label('Vai trò')
+                    ->required()
+                    ->options([
+                        0 => 'Học viên',
+                        1 => 'ADMIN'
+                    ])
+                    ->default('0')
+                    ->validationMessages([
+                        'required' => 'vui lòng nhập vai trò người dùng',
+                    ]),
+
                 Forms\Components\TextInput::make('password')
                     ->label('Mật khẩu')
                     ->password()
                     ->required()
                     ->validationMessages([
                         'required' => 'vui lòng nhập mật khẩu',
-                        ])
+                    ])
                     ->maxLength(255),
-                    Forms\Components\FileUpload::make('thumbnail')
+                Forms\Components\FileUpload::make('thumbnail')
                     ->required()
                     ->columnSpanFull()
                     ->validationMessages([
                         'required' => 'vui lòng hình ảnh',
-                        ])
+                    ])
                     ->label('Hình ảnh'),
             ]);
     }
 
     public static function table(Table $table): Table
     {
+
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('thumbnail')
+                    ->label('Hình ảnh')
+                    ->searchable(),
+
                 Tables\Columns\TextColumn::make('name')
                     ->label('Tên người dùng')
                     ->searchable(),
@@ -84,14 +111,15 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('phone')
                     ->label('Số điện thoại')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('thumbnail')
-                    ->label('Hình ảnh')
+                Tables\Columns\TextColumn::make('address')
+                    ->label('Địa chỉ')
                     ->searchable(),
-                // Tables\Columns\TextColumn::make('auth')
-                //     ->searchable(),
-                // Tables\Columns\TextColumn::make('email_verified_at')
-                //     ->dateTime()
-                //     ->sortable(),
+                Tables\Columns\SelectColumn::make('role')
+                ->label('Vai trò')
+                ->options([
+                    0 => 'Học viên',
+                    1 => 'ADMIN'
+                ]),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -102,7 +130,7 @@ class UserResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

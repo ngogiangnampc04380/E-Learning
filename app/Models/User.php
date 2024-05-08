@@ -22,9 +22,11 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'role',
         'phone',
         'thumbnail',
         'password',
+        'address'
     ];
 
     /**
@@ -50,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(comment::class);
     }
+    public function mentor(): BelongsTo
+    {
+        return $this->belongsTo(Mentor::class);
+    }
+
 }
