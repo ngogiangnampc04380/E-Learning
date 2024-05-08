@@ -5681,7 +5681,7 @@ body.home-three :-ms-input-placeholder {
 .course-price-three span {
     text-decoration: line-through;
     font-size: 14px;
-    color: #DEDEDE;
+    color: #bbb;
     line-height: 0;
 }
 .student-counts-info {
@@ -5961,12 +5961,13 @@ body.home-three :-ms-input-placeholder {
 }
 .home-three-goals {
     padding: 60px 0 60px;
-    background-color: #ffffff;
+    background: url(../img/bg/map.png), #071136;
+    
 }
 .development-carrer h2 {
     font-weight: 600;
     font-size: 36px;
-    color: #0DD3A3;
+    color: #fff;
 }
 .acheive-goals h2 {
     font-weight: 700;
@@ -5994,6 +5995,10 @@ body.home-three :-ms-input-placeholder {
 .acheive-goals-content h4 {
     margin-bottom: 20px;
     text-align: left;
+    color: #fff;
+}
+.acheive-goals-content h4 span {
+    color: #fff;
 }
 .acheive-elips-one {
     position: absolute;
@@ -6010,7 +6015,7 @@ body.home-three :-ms-input-placeholder {
 .acheive-goals-main h2 {
     font-weight: 700;
     font-size: 32px;
-    color: #1A1E21;
+    color: #fff;
 }
 .acheive-goals {
     position: relative;
@@ -18547,7 +18552,8 @@ input[type=password]::-ms-clear
 	}
 	.home-three-goals {
 		padding: 60px 0 60px;
-		background-color: #ffffff;
+        background: url(../img/bg/map.png), #071136;
+
 	}
 	.accelerate-cloud-three {
 		padding: 60px 0 60px;
@@ -22019,9 +22025,11 @@ input[type=password]::-ms-clear
 	}
     .home-three-goals .course-count p {
 		text-align: center;
+        color: #fff;
 	}
     .home-three-goals .acheive-goals-content h4 {
 		text-align: center;
+        color: #fff;
 	}
 	.enroll-group {
 		padding: 20px;
@@ -23245,6 +23253,7 @@ input[type=password]::-ms-clear
     }
     .acheive-goals-content h4 {
         margin-bottom: 10px;
+        color: #fff;
     }
     .course-price-three h3 {
         font-size: 16px;

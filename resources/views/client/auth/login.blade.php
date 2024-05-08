@@ -17,9 +17,7 @@
                                         <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
                                     </div>
                                     <div class="mentor-course text-center">
-                                        <h2>Welcome to <br>DreamsLMS Courses.</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                        <h2>Chào mừng đến với <br>EngWorld.</h2>
                                     </div>
                                 </div>
                             </div>

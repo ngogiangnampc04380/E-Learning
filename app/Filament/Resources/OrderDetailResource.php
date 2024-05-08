@@ -16,9 +16,9 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class OrderDetailResource extends Resource
 {
     protected static ?string $model = Order_detail::class;
-    protected static ?string $label = 'Chi tiết Đơn';
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $label = 'Chi tiết đơn hàng';
+    protected static ?string $modelLabel = 'Chi tiết đơn hàng';
+    protected static ?string $navigationIcon = 'heroicon-o-table-cells';
 
     public static function form(Form $form): Form
     {

@@ -17,7 +17,7 @@ class CommentsResource extends Resource
 {
     protected static ?string $model = Comment::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-oval-left-ellipsis';
     protected static ?string $navigationLabel = 'Bình luận';
     protected static ?string $modelLabel = 'Bình luận';
     protected static ?int $navigationSort = 3;

@@ -2,11 +2,7 @@
 // ----------------------------Admin----------------------------*******
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\AuthController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\MentorController;
-use App\Http\Controllers\Admin\BlogController;
+
 // ----------------------------client----------------------------*******
 
 use App\Http\Controllers\Client\HomeController;
@@ -14,6 +10,8 @@ use App\Http\Controllers\Client\CoursesController;
 use App\Http\Controllers\Client\InstructorController;
 use App\Http\Controllers\Client\IndexAuthController;
 use App\Http\Controllers\Client\UserProfileController;
+use App\Http\Controllers\Client\PostController;
+
 
 // ----------------------------Mentor----------------------------*******
 use App\Http\Controllers\Mentor\MentorRegisterController;
@@ -66,5 +64,9 @@ Route::get("/", [HomeController::class, "index"])->name("Dashboard-client");
     // -----------------------Mentor-------------------------
     Route::get("/mentor-register", [MentorRegisterController::class, "mentorRegister"])->name("mentor-register");
     Route::get("/mentor-profile", [MentorProfileController::class, "profile"])->name("mentor-profile");
+
+        // -----------------------Post-------------------------
+    Route::get("/post-list", [PostController::class, "list"])->name("post-list");
+    Route::get("/post-detail", [PostController::class, "detail"])->name("post-detail");
 
 });
