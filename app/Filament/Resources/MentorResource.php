@@ -93,9 +93,9 @@ class MentorResource extends Resource
     {
         return [
             'index' => Pages\ListMentors::route('/'),
-            'create' => Pages\CreateMentor::route('/create'),
+           
             'view' => Pages\ViewMentor::route('/{record}'),
-            'edit' => Pages\EditMentor::route('/{record}/edit'),
+            
         ];
     }
 }

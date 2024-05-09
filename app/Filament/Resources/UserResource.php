@@ -16,6 +16,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Enum\RoleUsers;
+use Closure;
+use Filament\Forms\FormsComponent;
 
 class UserResource extends Resource
 {
@@ -33,16 +35,21 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->label('Tên người dùng')
                     ->required()
+                    ->regex('/^[\p{L}\s]+$/u')
                     ->validationMessages([
-                        'required' => 'vui lòng nhập tên người dùng',
+                        'required' => 'Vui lòng nhập tên người dùng',
+                        'regex'=> 'Chỉ nhập chữ cái', 
                     ])
                     ->maxLength(255),
+                    
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
+                    ->unique(ignoreRecord: true)
                     ->validationMessages([
-                        'required' => 'vui lòng nhập địa chỉ email',
-                        'email' => 'vui lòng nhập đúng định dạng email',
+                        'required' => 'Vui lòng nhập địa chỉ email',
+                        'email' => 'Vui lòng nhập đúng định dạng email',
+                        'unique' =>'Email đã tồn tại'
                     ])
                     ->maxLength(255),
                 Forms\Components\TextInput::make('phone')
@@ -51,44 +58,53 @@ class UserResource extends Resource
                     ->required()
                     ->minLength(10)
                     ->maxLength(10)
+                    ->doesntStartWith(['1','2','4','5','6','7','8','9','3'])
                     ->validationMessages([
-                        'required' => 'vui lòng nhập số điện thoại',
-                        'regex' => 'vui lòng nhập đúng định dạng số điện thoại',
-                        'min' => 'vui lòng nhập đúng độ dài số điện thoại',
+                        'doesnt_start_with'=>'Vui lòng nhập đúng định dạng số điện thoại',
+                        'required' => 'Vui lòng nhập số điện thoại',
+                        'regex' => 'Vui lòng nhập đúng định dạng số điện thoại',
+                        'min' => 'Vui lòng nhập đúng độ dài số điện thoại',
+                        
                     ]),
 
-                Forms\Components\TextInput::make('address')
+                    Forms\Components\TextInput::make('address')
                     ->label('Địa chỉ')
                     ->required()
+                    ->regex('/^[\p{L}\s]+$/u')
                     ->validationMessages([
-                        'required' => 'vui lòng nhập địa ch người dùng',
+                        'required' => 'Vui lòng nhập địa chỉ',
+                        'regex'=> 'Chỉ nhập chữ cái',
                     ])
                     ->maxLength(255),
+
                 Forms\Components\Select::make('role')
                     ->label('Vai trò')
-                    ->required()
                     ->options([
                         0 => 'Học viên',
                         1 => 'ADMIN'
                     ])
-                    ->default('0')
-                    ->validationMessages([
-                        'required' => 'vui lòng nhập vai trò người dùng',
-                    ]),
+                    ->default('0'),
 
                 Forms\Components\TextInput::make('password')
                     ->label('Mật khẩu')
                     ->password()
                     ->required()
+                    ->minLength(6)
+                    ->alphaNum()
                     ->validationMessages([
                         'required' => 'vui lòng nhập mật khẩu',
+                        'min'=>'Mật khẩu phải từ 6 kí tự bao gồm chữ và số ',
+                        'alpha_num'=>'Mật khẩu phải từ 6 kí tự bao gồm chữ và số '
                     ])
                     ->maxLength(255),
-                Forms\Components\FileUpload::make('thumbnail')
+                    Forms\Components\FileUpload::make('thumbnail')
                     ->required()
                     ->columnSpanFull()
+                    ->image()
+
                     ->validationMessages([
-                        'required' => 'vui lòng hình ảnh',
+                        'required' => 'Vui lòng chọn file hình ảnh',
+                        'image'=> 'File tải lên phải là các file JPG, JPEG, PNG và SVG'
                     ])
                     ->label('Hình ảnh'),
             ]);
