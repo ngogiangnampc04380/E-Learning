@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CourseResource\Pages;
+use App\Filament\Forms\Components\Concerns\BelongsToModel;
 use App\Filament\Resources\CourseResource\RelationManagers;
 use App\Models\Course;
 use Filament\Forms;
@@ -24,32 +25,37 @@ class CourseResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('category_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('mentor_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('category_id')
+                    ->relationship('category', 'name')
+                    ->label('Mã danh mục')
+                    ->required(),
+                
                 Forms\Components\TextInput::make('name')
+                    ->label('Tên khóa học')
                     ->required()
                     ->maxLength(50),
-                Forms\Components\Textarea::make('description')
-                    ->required()
-                    ->maxLength(65535)
-                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('thumbnail')
+                    ->label('Hình ảnh')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('price')
+                    ->label('Giá')
                     ->required()
                     ->numeric()
-                    ->prefix('$'),
+                    ->prefix('vnđ'),
                 Forms\Components\TextInput::make('view')
+                    ->label('Lượt xem')
                     ->required()
                     ->numeric(),
                 Forms\Components\TextInput::make('enrollment')
+                    ->label('Số người đăng ký')
                     ->required()
                     ->numeric(),
+                    Forms\Components\RichEditor::make('description')
+                    ->label('Mô tả')
+                    ->required()
+                    ->maxLength(65535)
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -57,23 +63,25 @@ class CourseResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('category_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('mentor_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('category.name')
+                    ->label('Danh mục')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Tên khóa học')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('thumbnail')
+                    ->label('Hình ảnh')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('price')
-                    ->money()
+                    ->label('Giá')
+                    ->money('VND')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('view')
+                    ->label('Lượt xem')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('enrollment')
+                    ->label('Số người đăng ký')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -90,7 +98,7 @@ class CourseResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -112,7 +120,7 @@ class CourseResource extends Resource
             'index' => Pages\ListCourses::route('/'),
             // 'create' => Pages\CreateCourse::route('/create'),
             'view' => Pages\ViewCourse::route('/{record}'),
-            'edit' => Pages\EditCourse::route('/{record}/edit'),
+            // 'edit' => Pages\EditCourse::route('/{record}/edit'),
         ];
     }
 }

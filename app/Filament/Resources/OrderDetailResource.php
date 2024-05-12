@@ -24,16 +24,10 @@ class OrderDetailResource extends Resource
     {
         return $form
             ->schema([
-                
-                Tables\Columns\TextColumn::make('order_id')
-                    
-
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('status')
-                ->label('Nội dung')
-                
-
-                ->searchable(),
+            
+                Forms\Components\TextInput::make('status')
+                    ->required()
+                    ->label('Trạng thái'),
             ]);
     }
 
@@ -42,16 +36,13 @@ class OrderDetailResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')
-                    
                     ->searchable(),
-                Tables\Columns\TextColumn::make('order_id')
-                    
+                Tables\Columns\TextColumn::make('order.order_code')
+                    ->label('Đơn hàng')
 
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status')
-                ->label('Nội dung')
-                
-
+                ->label('Trạng thái')
                 ->searchable(),
             ])
             ->filters([

@@ -52,9 +52,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(comment::class);
     }
+
     public function mentor(): BelongsTo
     {
         return $this->belongsTo(Mentor::class);
     }
 
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
 }

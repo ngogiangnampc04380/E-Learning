@@ -12,6 +12,11 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Validation\Rule;
+
+use Closure;
+
+
 
 class CourseCategoriesResource extends Resource
 {
@@ -25,26 +30,22 @@ class CourseCategoriesResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Tên danh mục')
                     ->required()
-                    ->rules([
-                    'regex:/^[a-zA-Z0-9]+$/'
-                    ])
+                    // ->rules('regex:/^[a-zA-Z]+$/')
+
                     ->validationMessages([
-                        'required' => 'vui lòng nhập name',
-                        'regex'=>'name không chứa ký tự đặc biệt'
+                        'required' => 'vui lòng nhập Tên danh mục',
+                        // 'regex'=>'Tên danh mục không chứa ký tự đặc biệt'
                         ]),
                     
                 Forms\Components\TextInput::make('slug')
+                    ->label('Đường dẫn')
                     ->required()
-                    ->rules([
-                        'regex:/^\S+$/',
-                        
-                    ])
+                    ->rules('regex:/^\S+$/')
                     ->validationMessages([
-                        'required' => 'vui lòng nhập slug!!!!',
-                        'regex'=>'vui lòng không để khoản trống!',
-                        
-
+                        'required' => 'vui lòng nhập đường dẫn',
+                        'regex'=>'vui lòng không để khoảng trống!',
                         ]),
 
             ]);
@@ -55,10 +56,10 @@ class CourseCategoriesResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                
+                ->label('Tên danh mục')
                 ->sortable(),
                 Tables\Columns\TextColumn::make('slug')
-                
+                ->label('Đường dẫn')
                 ->sortable(),
                 
             ])

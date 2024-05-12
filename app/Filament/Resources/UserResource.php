@@ -88,6 +88,7 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('password')
                     ->label('Mật khẩu')
                     ->password()
+                    ->revealable()
                     ->required()
                     ->minLength(6)
                     ->alphaNum()
@@ -114,11 +115,11 @@ class UserResource extends Resource
     {
 
         return $table
+            
             ->columns([
                 Tables\Columns\ImageColumn::make('thumbnail')
                     ->label('Hình ảnh')
                     ->searchable(),
-
                 Tables\Columns\TextColumn::make('name')
                     ->label('Tên người dùng')
                     ->searchable(),
@@ -126,6 +127,11 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone')
                     ->label('Số điện thoại')
+                    // ->value(fn ($record) => match ($record->status) {
+                    //     '123' => 'Draft',
+                    //     '0703374380' => 'Reviewing',
+                    //     default => $record->status,
+                    // })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('address')
                     ->label('Địa chỉ')
@@ -151,6 +157,7 @@ class UserResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -170,7 +177,7 @@ class UserResource extends Resource
     {
         return [
             'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
+            // 'create' => Pages\CreateUser::route('/create'),
             'view' => Pages\ViewUser::route('/{record}'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];

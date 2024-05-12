@@ -27,8 +27,7 @@ class OrderResource extends Resource
                 Forms\Components\TextInput::make('order_code')
                 ->required()
                 ->maxLength(100)
-                ->label('Mã yêu cầu')
-                ->placeholder('Nhập Mã yêu cầu'),
+                ->label('Mã đơn hàng'),
             Forms\Components\TextInput::make('course_id')
                 ->required(),
             Forms\Components\TextInput::make('user_id')
@@ -43,15 +42,14 @@ class OrderResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')
-                    
                     ->searchable(),
                 Tables\Columns\TextColumn::make('order_code')
-                    ->label('Mã yêu cầu')
+                    ->label('Mã đơn hàng')
 
                     ->searchable(),
-                Tables\Columns\TextColumn::make('user_id')
-                
-
+                Tables\Columns\TextColumn::make('user.name')
+                ->label('Người đăng ký')
+                ->sortable()
                 ->searchable(),
             ])
             ->filters([

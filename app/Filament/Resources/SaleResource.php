@@ -27,38 +27,41 @@ class SaleResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('course_id')
-                    ->required(),
                 Forms\Components\TextInput::make('percent_sale')
                 ->rules([
                     'regex:/^[0-9]+%/',
                 ])
                     ->required()
+                    ->label('Giảm giá')
                     ->validationMessages([
-                        'required' => 'vui lòng nhập percent_sale',
-                        'regex' => 'vui lòng nhập đúng định dạng percent_sale',
+                        'required' => 'vui lòng nhập phần trăm giảm giá',
+                        'regex' => 'vui lòng nhập đúng định dạng phần trăm giảm giá',
                         ])
                     ->maxLength(255),
                 Forms\Components\DateTimePicker::make('start_date')
                     ->required()
+                    ->label('Ngày bắt đầu')
                     ->validationMessages([
-                        'required' => 'vui lòng để start_date',
+                        'required' => 'vui lòng để ngày bắt đầu',
                         
                         ]),
                 Forms\Components\DateTimePicker::make('end_date')
                     ->required()
+                    ->label('Ngày kết thúc')
+                    ->after('start_date')
                     ->validationMessages([
-                        'required' => 'vui lòng để end_date',
-                        
+                        'required' => 'vui lòng để ngày kết thúc',
+                        'after' => 'ngày kết thúc không thể trước ngày bắt đầu',
                         ]),
                 Forms\Components\TextInput::make('amount')
                     ->required()
+                    ->label('Số lượng')
                     ->rules([
                         'regex:/^[0-9]/',
                     ])
                     ->validationMessages([
-                        'required' => 'vui lòng nhập amount',
-                        'regex' => 'vui lòng nhập đúng định dạng amount [0-9]',
+                        'required' => 'vui lòng nhập số lượng',
+                        'regex' => 'vui lòng nhập đúng định dạng số lượng',
                         
                         ])
                     ,
@@ -70,19 +73,24 @@ class SaleResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('course_id')
+                
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('percent_sale')
+                ->label('Giảm giá')
                     ->numeric()
                     ->sortable(),
                     
                 Tables\Columns\TextColumn::make('start_date')
+                ->label('Ngày bắt đầu')
                 ->dateTime()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('end_date')
+                ->label('Ngày kết thúc')
                 ->dateTime()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('amount')
+                ->label('Số lượng')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

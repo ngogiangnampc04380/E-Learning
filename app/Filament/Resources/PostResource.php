@@ -27,31 +27,39 @@ class PostResource extends Resource
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->label('Tiêu đề')
+                    ->unique(ignoreRecord: true)
                     ->validationMessages([
                         'required' => 'vui lòng nhập tiêu đề',
+                        'unique'=> 'tiêu đề đã tồn tại',
                         ])
                     ->maxLength(100),
                 Forms\Components\TextInput::make('slug')
                     ->required()
+                    ->unique(ignoreRecord: true)
+                    ->regex('/^\/[a-z0-9]+(?:-[a-z0-9]+)*$/')
                     ->validationMessages([
                         'required' => 'vui lòng nhập đường dẫn',
+                        'unique'=> 'đường dẫn đã tồn tại',
+                        'regex' => 'đường dẫn không hợp lệ (ví dụ dẫn hợp lệ là: /abc-abc)'
                         ])
                     ->label('Đường dẫn')
                     ->maxLength(100),
                     Forms\Components\FileUpload::make('thumbnail')
+                    ->required()
                     ->validationMessages([
                         'required' => 'vui lòng nhập hình ảnh',
                         ])
                     ->label('Hình ảnh')
-                    ->required(),
-                Forms\Components\TextInput::make('author')
-                    ->required()
-                    ->validationMessages([
-                        'required' => 'vui lòng nhập tên tác giả',
-                        ])
-                    ->label('Tác giả')
-                    ->maxLength(50),
-                Forms\Components\Textarea::make('content')
+                    
+                    ->columnSpanFull(),
+                // Forms\Components\TextInput::make('author')
+                //     ->required()
+                //     ->validationMessages([
+                //         'required' => 'vui lòng nhập tên tác giả',
+                //         ])
+                //     ->label('Tác giả')
+                //     ->maxLength(50),
+                Forms\Components\RichEditor::make('content')
                     ->required()
                     ->validationMessages([
                         'required' => 'vui lòng nhập nội dung bài viết',

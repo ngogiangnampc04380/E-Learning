@@ -28,6 +28,10 @@ class MentorResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('name')
+                    ->required()
+                    ->relationship('user', 'name')
+                    ->label('Tên giảng viên'),
             ]);
     }
 
@@ -36,7 +40,7 @@ class MentorResource extends Resource
         return $table
 
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')
+                Tables\Columns\TextColumn::make('id')
                     ->numeric()
                     ->sortable()
                     ->label('id'),
@@ -73,7 +77,7 @@ class MentorResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -93,9 +97,9 @@ class MentorResource extends Resource
     {
         return [
             'index' => Pages\ListMentors::route('/'),
-           
+            // 'create' => Pages\CreateMentor::route('/create'),
             'view' => Pages\ViewMentor::route('/{record}'),
-            
+            // 'edit' => Pages\EditMentor::route('/{record}/edit'),
         ];
     }
 }
