@@ -10,10 +10,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Mentor extends Model
 {
     use HasFactory;
-    protected $fillable=[
+
+
+
+    protected $fillable = [
         'id',
         'user_id',
-        
+    ];
+    protected $attributes = [
+        'image' => [
+            'front_card' => '',
+            'back_card' => '',
+        ],
     ];
     public function user(): BelongsTo
     {

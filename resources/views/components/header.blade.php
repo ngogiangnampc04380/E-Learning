@@ -33,13 +33,11 @@
 </head>
 
 <body class="home-three">
-
     <div class="main-wrapper">
-
-        <header class="header-three">
-            <div class="header-fixed-three header-fixed">
-                <nav class="navbar navbar-expand-lg header-nav-three scroll-sticky">
-                    <div class="container">
+        <header class="header header-page">
+            <div class="header-fixed">
+                <nav class="navbar navbar-expand-lg header-nav scroll-sticky">
+                    <div class="container ">
                         <div class="navbar-header">
                             <a id="mobile_btn" href="javascript:void(0);">
                                 <span class="bar-icon">
@@ -48,14 +46,14 @@
                                     <span></span>
                                 </span>
                             </a>
-                            <a href="{{ route('Dashboard-client') }}" class="navbar-brand logo">
-                                <img src="/assets-client/img/logo/logo.png" class="img-fluid" alt="Logo">
+                            <a href="" class="navbar-brand logo">
+                                <img src="{{ asset('/img/logo.svg') }}" class="img-fluid" alt="Logo">
                             </a>
                         </div>
                         <div class="main-menu-wrapper">
                             <div class="menu-header">
-                                <a href="{{ route('Dashboard-client') }}" class="menu-logo">
-                                    <img src="/assets-client/img/logo/logo.svg" class="img-fluid" alt="Logo">
+                                <a href="" class="menu-logo">
+                                    <img src="{{ asset('/img/logo.png') }}" class="img-fluid" alt="Logo">
                                 </a>
                                 <a id="menu_close" class="menu-close" href="javascript:void(0);">
                                     <i class="fas fa-times"></i>
@@ -78,16 +76,8 @@
                                 <li><a href="{{ route('client.instructor-course') }}">My Course</a></li>
                             </ul>
                         </div>
-                        <ul class="nav header-navbar-rht align-items-center">
-                            <li class="nav-item">
-                                <a class="nav-link login-three-head button"
-                                    href="{{ route('client.Login') }}"><span>Đăng nhập</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link signin-three-head" href="{{ route('client.Register') }}">Đăng ký</a>
-                            </li>
-                        </ul>
-                        <ul class="nav">
+                        
+                        {{-- <ul class="nav">
                             <li class="nav-item user-nav">
                                 <div class="dropdown">
                                     <a href="#">
@@ -106,17 +96,80 @@
                                                 <p class="text-muted mb-0">Giảng viên</p>
                                             </div>
                                         </div>
-                                        {{-- <a class="dropdown-item" href="{{ route('client.user-profile',$data->id) }}"><i
-                                                class="feather-star me-1"></i> Thông tin người dùng</a> --}}
-                                        <a class="dropdown-item" href="{{ route('client.mentor-profile') }}"><i
+                                        <a class="dropdown-item" href=""><i
+                                                class="feather-star me-1"></i> Thông tin người dùng</a>
+                                        <a class="dropdown-item" href=""><i
                                                 class="feather-star me-1"></i> Thông tin giảng viên</a>
                                         <a class="dropdown-item" href="{{ route('client.mentor-register') }}"><i
                                                 class="feather-log-out me-1"></i> Đăng ký giảng viên</a>
                                     </div>
                                 </div>
                             </li>
-                        </ul>
+                        </ul> --}}
+                        @guest
+                            <ul class="nav header-navbar-rht">
+                                <li class="nav-item">
+                                    <a class="nav-link header-sign" href="{{route('login')}}">Sign in</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link header-login" href="{{route('register')}}" >Sign up</a>
+                                </li>
+                            </ul>
+                        @endguest
+                        @auth
+                            <ul class="nav ">
+                                
+                                <li class="nav-item user-nav">
+                                    <a href="#"  data-bs-toggle="dropdown">
+                                        <img src="{{ asset('/img/icon/cart.svg') }}" alt="img">
+                                    </a>
+                                </li>
+                                
+                                <li class="nav-item user-nav">
+                                    <div class="dropdown" >
+                                    <a href="" class="dropdown-toggle"
+                                    data-bs-toggle="dropdown">
+                                        <span class="user-img" >
+                                            <img src=""
+                                                style="transform: scale(0.8);">
+                                            <span class="status online"></span>
+                                        </span>
+                                    </a>
+                                    <div class="users dropdown-menu dropdown"
+                                        data-popper-placement="bottom-end">
+                                        <a class="dropdown-item" href="{{ route('client.user-profile',$data->id) }}"><i
+                                                class="feather-user me-1"></i>Profile</a>
+
+                                            <a class="dropdown-item" href="{{ route('client.mentor-profile') }}"><i
+                                                    class="feather-user me-1"></i>
+                                            
+                                                    <span class="d-inline-block">Mentor</span><sup
+                                                        class="badge badge-info">Đăng ký</sup>
+                                                
+                                            </a>
+                                        <a class="dropdown-item" href="{{route('logout')}}"><i
+                                                class="feather-log-out me-1"></i> Logout</a>
+                                    </div>
+                                </div>
+                                </li>
+                            </ul>
+                        @endauth
+                        </div>
+                        
+                        
                     </div>
                 </nav>
             </div>
         </header>
+        <script>
+            function chuyenDuLieu() {
+            // Lấy giá trị từ tất cả các trường ngoài form và phân tách chúng bằng dấu phẩy
+            var giaTriNgoaiFormList = document.querySelectorAll('.inputOutsideForm');
+            var giaTriChuoi = Array.from(giaTriNgoaiFormList).map(function(element) {
+                return element.value;
+            }).join(',');
+
+            // Thiết lập giá trị cho trường trong form
+            document.getElementById("inputInsideForm").value = giaTriChuoi;
+        }
+        </script>

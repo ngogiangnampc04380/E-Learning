@@ -31,7 +31,7 @@
                             <h6 class="footer-three-title">Giành cho giảng viên</h6>
                             <ul>
                                 <li><a href="{{ route('Dashboard-client') }}">Trang chủ </a></li>
-                                <li><a href="{{ route('client.mentor-register') }}">Đăng ký làm giảng viên</a></li>
+                                {{-- <li><a href="{{ route('client.mentor-register') }}">Đăng ký làm giảng viên</a></li> --}}
                                 <li><a href="{{ route('client.instructor-profile') }}">Hồ sơ giảng viên</a></li>
                                 <li><a href="{{ route('client.instructor-list') }}">Danh sách giảng viên</a></li>
                             </ul>
@@ -43,8 +43,8 @@
                         <div class="footer-widget-three footer-menu-three">
                             <h6 class="footer-three-title">Giành cho học sinh</h6>
                             <ul>
-                                <li><a href="{{ route('client.Login') }}">Đăng nhập người dùng</a></li>
-                                <li><a href="{{ route('client.Register') }}">Đăng ký người dùng</a></li>
+                                {{-- <li><a href="{{ route('client.Login') }}">Đăng nhập người dùng</a></li> --}}
+                                {{-- <li><a href="{{ route('client.Register') }}">Đăng ký người dùng</a></li> --}}
                                 
                                 <li><a href="{{ route('client.course-lists') }}">Danh sách khóa học</a></li>
                             </ul>

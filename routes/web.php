@@ -18,10 +18,12 @@ use App\Http\Controllers\Client\UserDashboardController;
 use App\Http\Controllers\Client\UserProfileController;
 use App\Http\Controllers\Client\PostController;
 
+use App\Http\Controllers\Client\LogoutController;
+use App\Http\Controllers\Client\RegisterController;
+use App\Http\Controllers\Client\PasswordController;
 
 // ----------------------------Mentor----------------------------*******
-use App\Http\Controllers\Mentor\MentorRegisterController;
-use App\Http\Controllers\Mentor\MentorProfileController;
+use App\Http\Controllers\Mentor\MentorControllerr;
 
 
 /*
@@ -48,7 +50,7 @@ Route::get("/", [HomeController::class, "index"])->name("Dashboard-client");
 Route::prefix('client')->name('client.')->group(function () {
 
     // -----------------------AUTH-------------------------
-    Route::get("/login", [IndexAuthController::class, "login"])->name("Login");
+    // Route::get("/login", [IndexAuthController::class, "login"])->name("Login");
     Route::get("/register", [IndexAuthController::class, "register"])->name("Register");
     Route::get("/forgot-password", [IndexAuthController::class, "forgotpass"])->name("ForgotPass");
 
@@ -94,8 +96,6 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::get("/course-details", [CoursesController::class, "detail"])->name("course-details");
 
     // -----------------------Mentor-------------------------
-    Route::get("/mentor-register", [MentorRegisterController::class, "mentorRegister"])->name("mentor-register");
-    Route::get("/mentor-profile", [MentorProfileController::class, "profile"])->name("mentor-profile");
     Route::get("/mentor-comment", [MentorProfileController::class, "comment"])->name("mentor-comment");
     Route::get("/mentor-favorite", [MentorProfileController::class, "favorite"])->name("mentor-favorite");
 
@@ -104,5 +104,27 @@ Route::prefix('client')->name('client.')->group(function () {
         // -----------------------Post-------------------------
     Route::get("/post-list", [PostController::class, "list"])->name("post-list");
     Route::get("/post-detail", [PostController::class, "detail"])->name("post-detail");
+    // CHƯA HOÀN THÀNH
+    // Route::get("/mentor-register", [MentorControllerr::class, "mentorRegister"])->name("mentor-register");
+    // Route::post('/mentor/register', [MentorControllerr::class, 'handleRegister'])->name("mentor-handleRegister");
+    // Route::get("/mentor-profile", [MentorControllerr::class, "profile"])->name("mentor-profile");
+    // Route::get("/upload_ID_Card", [MentorControllerr::class, "upload_ID_Card"])->name("upload-id-card");
+    // Route::get("/takingPicture", [MentorControllerr::class, "takingPicture"])->name("online-id-card");
 
 });
+Route::prefix('password')->group(function () {
+    Route::get('enter-email', [PasswordController::class, 'enterEmail'])->name('enter-email');
+    Route::post('enter-email', [PasswordController::class, 'handleEnterEmail']);
+    Route::redirect('/', 'password/enter-email');
+    Route::get('confirm-code', [PasswordController::class, 'confirmCode'])->name('confirm-code');
+    Route::post('confirm-code', [PasswordController::class, 'handleConfirmCode']);
+    Route::get('new-password', [PasswordController::class, 'newPassword'])->name('new-password');
+    Route::post('new-password', [PasswordController::class, 'handleNewPassword']);
+});
+
+Route::get('/login', [IndexAuthController::class, 'index'])->name('login');
+Route::post('/login', [IndexAuthController::class, 'login']);
+Route::get('/register', [RegisterController::class, 'index'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
+Route::get('/logout', [LogoutController::class, 'index'])->name('logout')->middleware('auth');
+Route::post('/logout', [LogoutController::class, 'logout'])->middleware('auth');
