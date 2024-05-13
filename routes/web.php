@@ -9,6 +9,7 @@ use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\CoursesController;
 use App\Http\Controllers\Client\InstructorController;
 use App\Http\Controllers\Client\IndexAuthController;
+use App\Http\Controllers\Client\UserDashboardController;
 use App\Http\Controllers\Client\UserProfileController;
 use App\Http\Controllers\Client\PostController;
 
@@ -54,9 +55,11 @@ Route::get("/", [HomeController::class, "index"])->name("Dashboard-client");
     // ----------------------------------instructor-------------------------
     Route::get("/instructor-list", [InstructorController::class, "list"])->name("instructor-list");
     Route::get("/instructor-profile", [InstructorController::class, "profile"])->name("instructor-profile");
-    Route::get("/user-profile", [UserProfileController::class, "profile"])->name("user-profile");
-
-
+    Route::get("/dashboard-profile/{id}", [UserDashboardController::class, "dashboard"])->name("dashboard-profile");
+    Route::get("/user-profile/{id}", [UserProfileController::class, "userprofile"])->name("user-profile");
+    Route::post("/user-profile/{id}", [UserProfileController::class, "profile_edit"])->name("user-profile-edit");
+    
+    
     // ----------------------------------course-details-------------------------
     Route::get("/course-list", [CoursesController::class, "list"])->name("course-lists");
     Route::get("/course-details", [CoursesController::class, "detail"])->name("course-details");

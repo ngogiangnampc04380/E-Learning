@@ -17146,10 +17146,15 @@ input[type=password]::-ms-clear
 }
 .profile-bg img {
 	width: 100%;
+    
 	border-radius: 5px 5px 0 0;
 }
 .profile-bg {
 	position: relative;
+}
+.profile-bgs {
+	position: relative;
+    height:200px;
 }
 .profile-bg h5 {
 	position: absolute;
@@ -17162,6 +17167,7 @@ input[type=password]::-ms-clear
 	top: 20px;
 	margin: 0;
 }
+
 .profile-img img {
 	width: 150px;
     height: 150px;
@@ -17174,6 +17180,49 @@ input[type=password]::-ms-clear
     transform: translate(-50%, 0);
 	border: 5px solid #FFFFFF;
 }
+.profile-imgs img {
+	width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -60px;
+	left: 50%;
+	-webkit-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+	border: 5px solid #FFFFFF;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.profile-imgs input {
+	display: none;
+    
+}
+.profile-imgs label {
+	display: none;
+    background-color: #0071DC;
+    position: absolute;
+    border-radius: 5px;
+    left: 41%;
+    top: 90%;
+    padding: 1%;
+    text-align: center;
+
+    
+}
+
+/* .profile-imgs img:hover + input {
+    display: block;
+} */
 .profile-name h4 {
 	font-size: 20px;
 	color: #22100D;
@@ -18821,6 +18870,11 @@ input[type=password]::-ms-clear
 	.profile-img img {
 		width: 120px;
 		height: 120px;
+		border: 3px solid #FFFFFF;
+	}
+    .profile-imgs img {
+		width: 120px;
+		height: 240px;
 		border: 3px solid #FFFFFF;
 	}
 	.account-settings .settings-menu h3 {
