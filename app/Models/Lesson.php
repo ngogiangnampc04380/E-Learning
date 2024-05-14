@@ -8,18 +8,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Lesson extends Model
 {
-    use HasFactory;
-    protected $fillable=[
-        'id',
-        'title',
-        'slug',
-        'thumbnail',
-        'content',
-        'author',
-
+    protected $fillable = [
+        'name',
+        'chapter_id'
     ];
-    public function comments(): HasMany
-    {
+    public function comments(): HasMany{
         return $this->hasMany(Comment::class);
     }
     public function chapter(): BelongsTo{

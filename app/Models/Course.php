@@ -16,10 +16,15 @@ class Course extends Model
         'thumbnail',
         'price',
         'view',
+        'description',
         'enrollment',
     ];
     public function category(): BelongsTo{
         return $this ->belongsTo(Course_category::class);
+    }
+    public function chapters()
+    {
+        return $this->hasMany(Chapter::class);
     }
     public function comment(): HasManyThrough{
         return $this ->hasManyThrough('Comment::class','Chapters::class', 'course_id', 'chapter_id');

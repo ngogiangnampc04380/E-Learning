@@ -108,8 +108,6 @@
 </footer>
 
 </div>
-
-
 <script src="/assets-client/js/jquery-3.7.1.min.js" type="a24f51fa5374e90d6aa7f4a1-text/javascript"></script>
 
 <script src="/assets-client/js/bootstrap.bundle.min.js" type="a24f51fa5374e90d6aa7f4a1-text/javascript"></script>
@@ -130,6 +128,7 @@
 <script src="/assets-client/js/script.js" type="a24f51fa5374e90d6aa7f4a1-text/javascript"></script>
 {{-- <script src="../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
     data-cf-settings="a24f51fa5374e90d6aa7f4a1-|49" defer></script> --}}
+<script src="/assets-client/js/add.js"></script>
 </body>
 
 <!-- Mirrored from dreamslms.dreamstechnologies.com/html/index-three.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 03 Mar 2024 13:56:46 GMT -->

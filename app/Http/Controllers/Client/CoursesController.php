@@ -13,4 +13,5 @@ class CoursesController extends Controller
     public function detail(){
         return view('client.courses.course-details');
     }
+
 }

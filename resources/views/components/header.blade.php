@@ -75,7 +75,7 @@
                                 </li>
                                 <li><a href="{{ route('client.course-lists') }}">Danh sách khóa học</a></li>
                                 <li><a href="{{ route('client.post-list') }}">Danh sách bài viết</a></li>
-
+                                <li><a href="{{ route('client.instructor-course') }}">My Course</a></li>
                             </ul>
                         </div>
                         <ul class="nav header-navbar-rht align-items-center">
