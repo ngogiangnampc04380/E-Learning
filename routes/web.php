@@ -67,6 +67,10 @@ Route::get("/", [HomeController::class, "index"])->name("Dashboard-client");
     // -----------------------Mentor-------------------------
     Route::get("/mentor-register", [MentorRegisterController::class, "mentorRegister"])->name("mentor-register");
     Route::get("/mentor-profile", [MentorProfileController::class, "profile"])->name("mentor-profile");
+    Route::get("/mentor-comment", [MentorProfileController::class, "comment"])->name("mentor-comment");
+    Route::get("/mentor-favorite", [MentorProfileController::class, "favorite"])->name("mentor-favorite");
+
+
 
         // -----------------------Post-------------------------
     Route::get("/post-list", [PostController::class, "list"])->name("post-list");

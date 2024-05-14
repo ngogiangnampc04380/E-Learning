@@ -16,4 +16,5 @@ class IndexAuthController extends Controller
     public function forgotpass(){
         return view('client.auth.forgotPassword');
     }
+    
 }

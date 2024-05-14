@@ -87,7 +87,7 @@
                                 <a class="nav-link signin-three-head" href="{{ route('client.Register') }}">Đăng ký</a>
                             </li>
                         </ul>
-                        <ul class="nav ">
+                        <ul class="nav">
                             <li class="nav-item user-nav">
                                 <div class="dropdown">
                                     <a href="#">

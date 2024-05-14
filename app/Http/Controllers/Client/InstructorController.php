@@ -14,4 +14,5 @@ class InstructorController extends Controller
     public function profile(){
         return view('client.instructor.instructor-profile');
     }
+    
 }

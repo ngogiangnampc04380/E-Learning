@@ -34,7 +34,7 @@
                             <h3>Thông tin giảng viên</h3>
                             <ul>
                                 <li class="nav-item active">
-                                    <a href="instructor-dashboard.html" class="nav-link">
+                                    <a href="{{route('client.mentor-profile')}}" class="nav-link">
                                         <i class="feather-home"></i> Hồ sơ
                                     </a>
                                 </li>
@@ -44,8 +44,13 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="instructor-reviews.html" class="nav-link">
-                                        <i class="feather-star"></i> Phản hồi từ học viên
+                                    <a href="{{route('client.mentor-comment')}}" class="nav-link">
+                                        <i class="feather-star"></i> Quản lý bình luận
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('client.mentor-favorite')}}" class="nav-link">
+                                        <i class="feather-star"></i> Quản lý lượt thích
                                     </a>
                                 </li>
                             </ul>
