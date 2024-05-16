@@ -34,10 +34,9 @@ class CourseResource extends Resource
                     ->label('Tên khóa học')
                     ->required()
                     ->maxLength(50),
-                Forms\Components\TextInput::make('thumbnail')
+                Forms\Components\FileUpload::make('thumbnail')
                     ->label('Hình ảnh')
-                    ->required()
-                    ->maxLength(255),
+                    ->required(),
                 Forms\Components\TextInput::make('price')
                     ->label('Giá')
                     ->required()
@@ -69,7 +68,7 @@ class CourseResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->label('Tên khóa học')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('thumbnail')
+                Tables\Columns\ImageColumn::make('thumbnail')
                     ->label('Hình ảnh')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('price')

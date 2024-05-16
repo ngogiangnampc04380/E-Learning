@@ -42,10 +42,12 @@ class CourseCategoriesResource extends Resource
                 Forms\Components\TextInput::make('slug')
                     ->label('Đường dẫn')
                     ->required()
-                    ->rules('regex:/^\S+$/')
+                    ->unique(ignoreRecord: true)
+                    ->regex('/^\/[a-z0-9]+(?:-[a-z0-9]+)*$/')
                     ->validationMessages([
                         'required' => 'vui lòng nhập đường dẫn',
-                        'regex'=>'vui lòng không để khoảng trống!',
+                        'unique'=> 'đường dẫn đã tồn tại',
+                        'regex' => 'đường dẫn không hợp lệ (ví dụ dẫn hợp lệ là: /abc-abc)'
                         ]),
 
             ]);

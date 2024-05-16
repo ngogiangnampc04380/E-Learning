@@ -45,7 +45,7 @@
                             <ul>
                                 <li><a href="{{ route('client.Login') }}">Đăng nhập người dùng</a></li>
                                 <li><a href="{{ route('client.Register') }}">Đăng ký người dùng</a></li>
-                                <li><a href="{{ route('client.user-profile') }}">Hồ sơ người dùng</a></li>
+                                
                                 <li><a href="{{ route('client.course-lists') }}">Danh sách khóa học</a></li>
                             </ul>
                         </div>

@@ -34,8 +34,12 @@ class PostCategoryResource extends Resource
                 Forms\Components\TextInput::make('slug')
                     ->required()
                     ->label('Đường dẫn')
+                    ->unique(ignoreRecord: true)
+                    ->regex('/^\/[a-z0-9]+(?:-[a-z0-9]+)*$/')
                     ->validationMessages([
                         'required' => 'vui lòng nhập đường dẫn',
+                        'unique'=> 'đường dẫn đã tồn tại',
+                        'regex' => 'đường dẫn không hợp lệ (ví dụ dẫn hợp lệ là: /abc-abc)'
                         ])
                     ->maxLength(100),
             ]);

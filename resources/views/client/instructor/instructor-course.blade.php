@@ -172,7 +172,7 @@
                                                             <div class="sell-table-group d-flex align-items-center">
                                                                 <div class="sell-group-img">
                                                                     <a href="#">
-                                                                        <img src="{{ asset('storage/images/' . $post->thumbnail) }}" alt="Thumbnail" class="img-fluid" style="max-width: 150px;">
+                                                                        <img src="{{ Storage::url(''. $post->thumbnail) }}" alt="Thumbnail" class="img-fluid" style="max-width: 150px;">
                                                                     </a>
                                                                 </div>
                                                                 <div class="sell-tabel-info">

@@ -80,7 +80,7 @@ class InstructorController extends Controller
         if ($request->hasFile('thumbnail')) {
             $thumbnail = $request->file('thumbnail');
             $thumbnailName = $thumbnail->getClientOriginalName();
-            $thumbnail->storeAs('public/images', $thumbnailName); // Lưu vào thư mục storage/app/public/images
+            $thumbnail->storeAs('public/', $thumbnailName); // Lưu vào thư mục storage/app/public/images
             $course->thumbnail = $thumbnailName;
         }
         $course->save();

@@ -106,8 +106,8 @@
                                                 <p class="text-muted mb-0">Giảng viên</p>
                                             </div>
                                         </div>
-                                        <a class="dropdown-item" href="{{ route('client.user-profile') }}"><i
-                                                class="feather-star me-1"></i> Thông tin người dùng</a>
+                                        {{-- <a class="dropdown-item" href="{{ route('client.user-profile',$data->id) }}"><i
+                                                class="feather-star me-1"></i> Thông tin người dùng</a> --}}
                                         <a class="dropdown-item" href="{{ route('client.mentor-profile') }}"><i
                                                 class="feather-star me-1"></i> Thông tin giảng viên</a>
                                         <a class="dropdown-item" href="{{ route('client.mentor-register') }}"><i

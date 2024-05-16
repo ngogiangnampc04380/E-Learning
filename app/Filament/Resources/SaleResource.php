@@ -56,9 +56,7 @@ class SaleResource extends Resource
                 Forms\Components\TextInput::make('amount')
                     ->required()
                     ->label('Số lượng')
-                    ->rules([
-                        'regex:/^[0-9]/',
-                    ])
+                    ->rules('regex:/^[0-9]/',)
                     ->validationMessages([
                         'required' => 'vui lòng nhập số lượng',
                         'regex' => 'vui lòng nhập đúng định dạng số lượng',

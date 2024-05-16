@@ -41,7 +41,6 @@ class UserResource extends Resource
                         'regex'=> 'Chỉ nhập chữ cái', 
                     ])
                     ->maxLength(255),
-                    
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
@@ -58,25 +57,23 @@ class UserResource extends Resource
                     ->required()
                     ->minLength(10)
                     ->maxLength(10)
-                    ->doesntStartWith(['1','2','4','5','6','7','8','9','3'])
+                    ->startsWith(['0'])
                     ->validationMessages([
-                        'doesnt_start_with'=>'Vui lòng nhập đúng định dạng số điện thoại',
+                        'start_with'=>'Vui lòng nhập đúng định dạng số điện thoại',
                         'required' => 'Vui lòng nhập số điện thoại',
                         'regex' => 'Vui lòng nhập đúng định dạng số điện thoại',
                         'min' => 'Vui lòng nhập đúng độ dài số điện thoại',
+                        'max' => 'Vui lòng nhập đúng độ dài số điện thoại',
                         
                     ]),
 
                     Forms\Components\TextInput::make('address')
                     ->label('Địa chỉ')
                     ->required()
-                    ->regex('/^[\p{L}\s]+$/u')
                     ->validationMessages([
                         'required' => 'Vui lòng nhập địa chỉ',
-                        'regex'=> 'Chỉ nhập chữ cái',
                     ])
                     ->maxLength(255),
-
                 Forms\Components\Select::make('role')
                     ->label('Vai trò')
                     ->options([
@@ -84,7 +81,6 @@ class UserResource extends Resource
                         1 => 'ADMIN'
                     ])
                     ->default('0'),
-
                 Forms\Components\TextInput::make('password')
                     ->label('Mật khẩu')
                     ->password()
@@ -102,7 +98,6 @@ class UserResource extends Resource
                     ->required()
                     ->columnSpanFull()
                     ->image()
-
                     ->validationMessages([
                         'required' => 'Vui lòng chọn file hình ảnh',
                         'image'=> 'File tải lên phải là các file JPG, JPEG, PNG và SVG'
@@ -110,7 +105,6 @@ class UserResource extends Resource
                     ->label('Hình ảnh'),
             ]);
     }
-
     public static function table(Table $table): Table
     {
 
