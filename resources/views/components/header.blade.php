@@ -119,34 +119,57 @@
                         @auth
                             <ul class="nav ">
                                 
-                                <li class="nav-item user-nav">
-                                    <a href="#"  data-bs-toggle="dropdown">
-                                        <img src="{{ asset('/img/icon/cart.svg') }}" alt="img">
-                                    </a>
-                                </li>
                                 
                                 <li class="nav-item user-nav">
                                     <div class="dropdown" >
                                     <a href="" class="dropdown-toggle"
                                     data-bs-toggle="dropdown">
                                         <span class="user-img" >
-                                            <img src=""
+                                            <img src="{{ Storage::url('assets-client/img/user/' .auth()->user()->thumbnail) }}"
                                                 style="transform: scale(0.8);">
                                             <span class="status online"></span>
                                         </span>
+                                        
                                     </a>
+                                    
                                     <div class="users dropdown-menu dropdown"
                                         data-popper-placement="bottom-end">
-                                        <a class="dropdown-item" href="{{ route('client.user-profile',$data->id) }}"><i
-                                                class="feather-user me-1"></i>Profile</a>
+                                        <a href="">{{auth()->user()->name}}</a>
+                                        @if(auth()->user()->role == 0)
+                                        <p class="text-muted mb-0">Học viên</p>
+                                        @elseif(auth()->user()->role == 1)
+                                        <p class="text-muted mb-0">ADMIN</p>
+                                        @elseif(auth()->user()->role == 2)
+                                        <p class="text-muted mb-0">Mentor</p>
+                                        @endif
 
-                                            <a class="dropdown-item" href="{{ route('client.mentor-profile') }}"><i
+                                        @if(auth()->user()->role == 0)
+                                        <a class="dropdown-item" href="{{ route('client.user-profile') }}"><i 
+                                            class="feather-user me-1"></i>Thông tin người dùng</a>
+                                        </a>
+                                        @elseif(auth()->user()->role== 2)
+                                    <a class="dropdown-item" href="{{ route('client.dashboard-profile') }}">
+                                        <i class="feather-star me-1"></i> Thông tin mentor
+                                    </a>
+                                    @elseif(auth()->user()->role== 1)
+                                    <a class="dropdown-item" href="{{ route('client.dashboard-profile') }}">
+                                        <i class="feather-star me-1"></i> Thông tin ADMIN
+                                    </a>
+                                    
+                                    <a class="dropdown-item" href="{{ route('client.dashboard-profile') }}">
+                                        <i class="feather-cpu me-1"></i> Quản trị website
+                                    </a>
+                                    @endif
+                                        {{-- <a class="dropdown-item" href="{{ route('client.user-profile') }}"><i 
+                                                class="feather-user me-1"></i>Profile</a> --}}
+
+                                            {{-- <a class="dropdown-item" href=""><i
                                                     class="feather-user me-1"></i>
                                             
                                                     <span class="d-inline-block">Mentor</span><sup
                                                         class="badge badge-info">Đăng ký</sup>
                                                 
-                                            </a>
+                                            </a> --}}
                                         <a class="dropdown-item" href="{{route('logout')}}"><i
                                                 class="feather-log-out me-1"></i> Logout</a>
                                     </div>

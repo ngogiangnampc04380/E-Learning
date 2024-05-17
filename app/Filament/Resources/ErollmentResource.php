@@ -125,6 +125,7 @@ class ErollmentResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('role')
+                    ->label('Học viên')
                     ->default('0'),
             ])
 

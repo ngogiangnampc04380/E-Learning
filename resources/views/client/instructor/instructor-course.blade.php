@@ -162,7 +162,7 @@
                                                     <th>Khóa học </th>
                                                     <th>Giá</th>
                                                     <th>Trạng thái</th>
-                                                    <th>Thao tác</th>
+                                                    <th colspan="2" class="text-center">Thao tác</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>

@@ -28,9 +28,7 @@ class SaleResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('percent_sale')
-                ->rules([
-                    'regex:/^[0-9]+%/',
-                ])
+                ->rules('regex:/^[0-9]+%/')
                     ->required()
                     ->label('Giảm giá')
                     ->validationMessages([
@@ -70,10 +68,8 @@ class SaleResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('course_id')
-                
-                    ->numeric()
-                    ->sortable(),
+                // Tables\Columns\TextColumn::make('cours.name')
+                //     ->sortable(),
                 Tables\Columns\TextColumn::make('percent_sale')
                 ->label('Giảm giá')
                     ->numeric()

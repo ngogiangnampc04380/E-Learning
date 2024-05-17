@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name',50);
             $table->text('description');
-            $table->string('thumbnail');
-            $table->decimal('price',7,3);
-            $table->integer('view');
-            $table->integer('enrollment');
+            $table->string('thumbnail',50);
+            $table->string('price',50);
+            $table->integer('view')->nullable();
+            $table->integer('enrollment')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('course_categories')->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('mentor_id');

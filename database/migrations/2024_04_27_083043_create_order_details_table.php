@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('order_id');
             $table->foreign('order_id')->references('id')->on('orders')->constrained()->cascadeOnDelete();
-            $table->string('status',50);
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

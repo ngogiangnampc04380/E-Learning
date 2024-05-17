@@ -59,6 +59,7 @@ class IndexAuthController extends Controller
         }
         // Đếm số ip cử 1 tài khoản
         if (Auth::attempt($request->only('email', 'password'))) {
+            session(['id' => Auth::user()->id]);
             // var_dump($request->only('email', 'password'));
             // die;
                 return redirect()->route('Dashboard-client');                     

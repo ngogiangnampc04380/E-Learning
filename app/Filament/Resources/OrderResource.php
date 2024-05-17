@@ -29,10 +29,11 @@ class OrderResource extends Resource
                 ->maxLength(100)
                 ->label('Mã đơn hàng'),
             Forms\Components\TextInput::make('course_id')
+                ->label('Khóa học')
                 ->required(),
             Forms\Components\TextInput::make('user_id')
                 ->required()
-                // ->label('')
+                ->label('Người đăng ký')
                 ->columnSpanFull(),
             ]);
     }
@@ -57,7 +58,7 @@ class OrderResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -79,7 +80,7 @@ class OrderResource extends Resource
             'index' => Pages\ListOrders::route('/'),
             'create' => Pages\CreateOrder::route('/create'),
             'view' => Pages\ViewOrder::route('/{record}'),
-            'edit' => Pages\EditOrder::route('/{record}/edit'),
+            // 'edit' => Pages\EditOrder::route('/{record}/edit'),
         ];
     }
 }

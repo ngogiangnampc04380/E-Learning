@@ -39,18 +39,30 @@ class OrderDetailResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('order.order_code')
                     ->label('Đơn hàng')
-
                     ->searchable(),
-                Tables\Columns\TextColumn::make('status')
-                ->label('Trạng thái')
-                ->searchable(),
+                    Tables\Columns\TextColumn::make('order.user.name')
+                    ->label('Người đăng ký')
+                    ->searchable(),
+                    Tables\Columns\TextColumn::make('order.user.address')
+                    ->label('Địa chỉ')
+                    ->searchable(),
+                    Tables\Columns\TextColumn::make('order.user.phone')
+                    ->label('Số điện thoại')
+                    ->searchable(),
+                    Tables\Columns\SelectColumn::make('status')
+                    ->label('Trạng thái')
+                    ->options([
+                        0 => 'Chưa trả phí',
+                        1 => 'Đã trả phí',
+                        2 => 'Đã hủy'
+                    ]),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -72,7 +84,7 @@ class OrderDetailResource extends Resource
             'index' => Pages\ListOrderDetails::route('/'),
             'create' => Pages\CreateOrderDetail::route('/create'),
             'view' => Pages\ViewOrderDetail::route('/{record}'),
-            'edit' => Pages\EditOrderDetail::route('/{record}/edit'),
+            // 'edit' => Pages\EditOrderDetail::route('/{record}/edit'),
         ];
     }
 }

@@ -78,7 +78,8 @@ class UserResource extends Resource
                     ->label('Vai trò')
                     ->options([
                         0 => 'Học viên',
-                        1 => 'ADMIN'
+                        1 => 'ADMIN',
+                        2 => 'MENTOR'
                     ])
                     ->default('0'),
                 Forms\Components\TextInput::make('password')
@@ -134,7 +135,8 @@ class UserResource extends Resource
                 ->label('Vai trò')
                 ->options([
                     0 => 'Học viên',
-                    1 => 'ADMIN'
+                    1 => 'Admin',
+                    2 => 'Giảng viên'
                 ]),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

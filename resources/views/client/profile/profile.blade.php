@@ -15,15 +15,21 @@
 
                                 <img src="/assets-client/img/instructor-profile-bg.jpg" alt="">
                                 <div class="profile-img">
-                                    <a href="instructor-profile.html"><img
-                                            src="{{ Storage::url('assets-client/img/user/' . $data->thumbnail) }}"
+                                    <a href=""><img
+                                            src="{{ Storage::url('assets-client/img/user/' .auth()->user()->thumbnail) }}"
                                             alt=""></a>
                                 </div>
                             </div>
                             <div class="profile-group">
                                 <div class="profile-name text-center">
-                                    <h4><a href="">{{ $data->name }}</a></h4>
-                                    <p>Instructor</p>
+                                    <h4><a href="">{{ auth()->user()->name }}</a></h4>
+                                    @if(auth()->user()->role == 0)
+                                        <p class="text-muted mb-0">Học viên</p>
+                                        @elseif(auth()->user()->role == 1)
+                                        <p class="text-muted mb-0">ADMIN</p>
+                                        @elseif(auth()->user()->role == 2)
+                                        <p class="text-muted mb-0">Mentor</p>
+                                        @endif
                                 </div>
                                 <div class="go-dashboard text-center">
                                     <a href="add-course.html" class="btn btn-primary">Create New Course</a>
@@ -38,20 +44,44 @@
                             <ul>
 
                                 <li class="nav-item ">
-                                    <a href="{{ route('client.dashboard-profile', $data->id) }}" class="nav-link">
+                                    <a href="{{ route('client.dashboard-profile') }}" class="nav-link">
                                         <i class="feather-home"></i> My Dashboard
                                     </a>
                                 </li>
                                 <li class="nav-item active">
-                                    <a href="{{ route('client.user-profile', $data->id) }}" class="nav-link">
-                                        <i class="feather-star"></i> Profile
+                                    <a href="{{ route('client.user-profile') }}" class="nav-link">
+                                        <i class="feather-star"></i> Thông tin cá nhân
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="feather-book"></i> Ví của tôi
+                                    <a href="instructor-course.html" class="nav-link">
+                                        <i class="feather-book"></i> Khóa học của tôi
                                     </a>
                                 </li>
+                                @if(auth()->user()->role == 2)
+                                <li class="nav-item">
+                                    <a href="instructor-earnings.html" class="nav-link">
+                                        <i class="feather-pie-chart"></i> Nam Béo
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="instructor-orders.html" class="nav-link">
+                                        <i class="feather-shopping-bag"></i> Nam Béo
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="instructor-student-grid.html" class="nav-link">
+                                        <i class="feather-users"></i> Quản lí học viên
+                                    </a>
+                                </li>
+                                @elseif(auth()->user()->role== 1)
+                                <li class="nav-item">
+                                    <a href="instructor-student-grid.html" class="nav-link">
+                                        <i class="feather-cpu"></i> Quảng trị wedsite
+                                    </a>
+                                </li>
+
+                                @endif  
                             </ul>
                         </div>
                     </div>
@@ -69,7 +99,7 @@
                                 <div class="card-body">
 
                                     <form enctype="multipart/form-data" class="container"
-                                        action="{{ route('client.user-profile-edit', $data->id) }}" method="POST">
+                                        action="{{ route('client.user-profile-edit') }}" method="POST">
                                         @csrf
                                         <div class="row">
                                             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
@@ -77,25 +107,25 @@
 
                                                 <div class="mb-3">
                                                     <label for="exampleInputEmail1" class="form-label">Tên</label>
-                                                    <input value="{{ $data->name }}"name="name" type="text"
+                                                    <input value="{{ auth()->user()->name }}"name="name" type="text"
                                                         class="form-control" id="exampleInputEmail1"
                                                         aria-describedby="emailHelp" placeholder="HỌ VÀ TÊN">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="exampleInputEmail1" class="form-label">Số Điện thoại</label>
-                                                    <input value="{{ $data->phone }} "type="text" name="phone"
+                                                    <input value="{{ auth()->user()->phone }} "type="text" name="phone"
                                                         class="form-control" id="exampleInputEmail1"
                                                         aria-describedby="emailHelp">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="exampleInputEmail1" class="form-label">Email</label>
-                                                    <input value="{{ $data->email }} "type="text" name="email"
+                                                    <input value="{{ auth()->user()->email }}"type="text" name="email"
                                                         class="form-control" id="exampleInputEmail1"
                                                         aria-describedby="emailHelp">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="exampleInputEmail1" class="form-label">Địa chỉ</label>
-                                                    <input value="{{ $data->address }}"type="text" name="address"
+                                                    <input value="{{ auth()->user()->address }}"type="text" name="address"
                                                         class="form-control" id="exampleInputEmail1"
                                                         aria-describedby="emailHelp" placeholder="Tam giác quỷ bemuda">
                                                 </div>
@@ -111,7 +141,7 @@
                                                             <div class="profile-imgs">
                                                                 <!-- Hiển thị hình ảnh đã lưu sẵn -->
                                                                 <img class="trigger-element"
-                                                                    src="{{ Storage::url('assets-client/img/user/' . $data->thumbnail) }}"
+                                                                    src="{{ Storage::url('assets-client/img/user/'.auth()->user()->thumbnail) }}"
                                                                     alt="Profile Image">
                                                                 <!-- Đặt input type="file" để cho phép người dùng chọn hình ảnh từ ổ cứng -->
                                                                 <input type="file" id="thumbnail" name="thumbnail"
@@ -124,7 +154,7 @@
 
                                                         <div class="profile-group">
                                                             <div class="profile-name text-center">
-                                                                <h4><a href="">{{ $data->name }}</a></h4>
+                                                                <h4><a href="">{{ auth()->user()->name }}</a></h4>
                                                             </div>
                                                             <div class="go-dashboard text-center">
                                                             </div>

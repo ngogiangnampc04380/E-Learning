@@ -83,9 +83,6 @@ class PostResource extends Resource
                 Tables\Columns\ImageColumn::make('thumbnail')
                     ->label('Hình ảnh')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('author')
-                    ->label('Tác giả')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

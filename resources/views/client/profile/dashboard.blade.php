@@ -12,7 +12,13 @@
                     <div class="settings-widget dash-profile">
                         <div class="settings-menu p-0">
                             <div class="profile-bg">
-                                <h5>Beginner</h5>
+                                @if(auth()->user()->role == 0)
+                                <h5 class="text-muted mb-0">Học viên</h5>
+                                @elseif(auth()->user()->role == 1)
+                                <h5 class="text-muted mb-0">ADMIN</h5>
+                                @elseif(auth()->user()->role == 2)
+                                <h5 class="text-muted mb-0">Mentor</h5>
+                                @endif
                                 <img src="/assets-client/img/instructor-profile-bg.jpg" alt="">
                                 <div class="profile-img">
                                     <a href=""><img src="{{Storage::url('assets-client/img/user/'.$data->thumbnail)}}"
@@ -30,32 +36,50 @@
                             </div>
                         </div>
                     </div>
-                    <div class="settings-widget account-settings">
-                        <div class="settings-menu">
-                            <h3>DASHBOARD</h3>
-                            <ul>
-                                
-                                <li class="nav-item active">
-                                    <a href="{{ route('client.dashboard-profile',$data->id) }}" class="nav-link">
-                                        <i class="feather-home"></i> My Dashboard
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('client.user-profile',$data->id) }}" class="nav-link">
-                                        <i class="feather-star"></i> Profile
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="instructor-course.html" class="nav-link">
-                                        <i class="feather-book"></i> My Courses
-                                    </a>
-                                </li>
-                                
-                                
-                                
-                                
-                            </ul>
-                        </div>
+                    <div class="settings-menu">
+                        <h3>Thông tin tài khoản</h3>
+                        <ul>
+
+                            <li class="nav-item  active">
+                                <a href="{{ route('client.dashboard-profile') }}" class="nav-link">
+                                    <i class="feather-home"></i> My Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="{{ route('client.user-profile') }}" class="nav-link">
+                                    <i class="feather-star"></i> Thông tin cá nhân
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="instructor-course.html" class="nav-link">
+                                    <i class="feather-book"></i> Khóa học của tôi
+                                </a>
+                            </li>
+                            @if(auth()->user()->role== 2)
+                            <li class="nav-item">
+                                <a href="instructor-earnings.html" class="nav-link">
+                                    <i class="feather-pie-chart"></i> Nam Béo
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="instructor-orders.html" class="nav-link">
+                                    <i class="feather-shopping-bag"></i> Nam Béo
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="instructor-student-grid.html" class="nav-link">
+                                    <i class="feather-users"></i> Quản lí học viên
+                                </a>
+                            </li>
+                            @elseif(auth()->user()->role == 1)
+                            <li class="nav-item">
+                                <a href="instructor-student-grid.html" class="nav-link">
+                                    <i class="feather-cpu"></i> Quảng trị wedsite
+                                </a>
+                            </li>
+
+                            @endif  
+                        </ul>
                     </div>
                 </div>
 
@@ -100,7 +124,13 @@
                                             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6"><div class="settings-widget dash-profile">
                                                 <div class="settings-menu p-0">
                                                     <div class="profile-bg">
-                                                        <h5>Beginner</h5>
+                                                        @if(auth()->user()->role == 0)
+                                                        <h5 class="text-muted mb-0">Học viên</h5>
+                                                        @elseif(auth()->user()->role == 1)
+                                                        <h5 class="text-muted mb-0">ADMIN</h5>
+                                                        @elseif(auth()->user()->role == 2)
+                                                        <h5 class="text-muted mb-0">Mentor</h5>
+                                                        @endif
                                                         <img src="/assets-client/img/instructor-profile-bg.jpg" alt="">
                                                         <div class="profile-img">
                                                             <a href=""><img src="{{Storage::url('assets-client/img/user/'.$data->thumbnail)}}"

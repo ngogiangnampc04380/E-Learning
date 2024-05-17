@@ -58,9 +58,9 @@ Route::prefix('client')->name('client.')->group(function () {
     // ----------------------------------instructor-------------------------
     Route::get("/instructor-list", [InstructorController::class, "list"])->name("instructor-list");
     Route::get("/instructor-profile", [InstructorController::class, "profile"])->name("instructor-profile");
-    Route::get("/dashboard-profile/{id}", [UserDashboardController::class, "dashboard"])->name("dashboard-profile");
-    Route::get("/user-profile/{id}", [UserProfileController::class, "userprofile"])->name("user-profile");
-    Route::post("/user-profile/{id}", [UserProfileController::class, "profile_edit"])->name("user-profile-edit");
+    Route::get("/dashboard-profile/", [UserDashboardController::class, "dashboard"])->name("dashboard-profile");
+    Route::get("/user-profile/", [UserProfileController::class, "userprofile"])->name("user-profile");
+    Route::post("/user-profile/", [UserProfileController::class, "profile_edit"])->name("user-profile-edit");
     
     
 
