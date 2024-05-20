@@ -77,35 +77,6 @@
                             </ul>
                         </div>
                         
-                        {{-- <ul class="nav">
-                            <li class="nav-item user-nav">
-                                <div class="dropdown">
-                                    <a href="#">
-                                        <span class="user-img dropdown-toggle">
-                                            <img src="/assets-client/img/instructor/profile-avatar.jpg" alt />
-                                        </span>
-                                    </a>
-                                    <div class="users dropdown-menu" data-popper-placement="bottom-end">
-                                        <div class="user-header">
-                                            <div class="avatar avatar-sm">
-                                                <img src="/assets-client/img/instructor/profile-avatar.jpg"
-                                                    alt="User Image" class="avatar-img rounded-circle" />
-                                            </div>
-                                            <div class="user-text">
-                                                <h6>Nam Béo</h6>
-                                                <p class="text-muted mb-0">Giảng viên</p>
-                                            </div>
-                                        </div>
-                                        <a class="dropdown-item" href=""><i
-                                                class="feather-star me-1"></i> Thông tin người dùng</a>
-                                        <a class="dropdown-item" href=""><i
-                                                class="feather-star me-1"></i> Thông tin giảng viên</a>
-                                        <a class="dropdown-item" href="{{ route('client.mentor-register') }}"><i
-                                                class="feather-log-out me-1"></i> Đăng ký giảng viên</a>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul> --}}
                         @guest
                             <ul class="nav header-navbar-rht">
                                 <li class="nav-item">
@@ -119,32 +90,31 @@
                         @auth
                             <ul class="nav ">
                                 
-                                
                                 <li class="nav-item user-nav">
                                     <div class="dropdown" >
                                     <a href="" class="dropdown-toggle"
                                     data-bs-toggle="dropdown">
                                         <span class="user-img" >
-                                            <img src="{{ Storage::url('assets-client/img/user/' .auth()->user()->thumbnail) }}"
+                                            <img src="{{ auth()->user()->thumbnail ? Storage::url('assets-client/img/user/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}" 
                                                 style="transform: scale(0.8);">
                                             <span class="status online"></span>
                                         </span>
                                         
                                     </a>
                                     
-                                    <div class="users dropdown-menu dropdown"
+                                    <div class="users dropdown-menu dropdown-user"
                                         data-popper-placement="bottom-end">
                                         <a href="">{{auth()->user()->name}}</a>
                                         @if(auth()->user()->role == 0)
-                                        <p class="text-muted mb-0">Học viên</p>
+                                        <p class="text-muted text-center">Học viên</p>
                                         @elseif(auth()->user()->role == 1)
-                                        <p class="text-muted mb-0">ADMIN</p>
+                                        <p class="text-muted  m-0">ADMIN</p>
                                         @elseif(auth()->user()->role == 2)
                                         <p class="text-muted mb-0">Mentor</p>
                                         @endif
 
                                         @if(auth()->user()->role == 0)
-                                        <a class="dropdown-item" href="{{ route('client.user-profile') }}"><i 
+                                        <a class="dropdown-item" href="{{ route('client.dashboard-profile') }}"><i 
                                             class="feather-user me-1"></i>Thông tin người dùng</a>
                                         </a>
                                         @elseif(auth()->user()->role== 2)
@@ -156,20 +126,11 @@
                                         <i class="feather-star me-1"></i> Thông tin ADMIN
                                     </a>
                                     
-                                    <a class="dropdown-item" href="{{ route('client.dashboard-profile') }}">
+                                    <a class="dropdown-item" href="/admin">
                                         <i class="feather-cpu me-1"></i> Quản trị website
                                     </a>
                                     @endif
-                                        {{-- <a class="dropdown-item" href="{{ route('client.user-profile') }}"><i 
-                                                class="feather-user me-1"></i>Profile</a> --}}
-
-                                            {{-- <a class="dropdown-item" href=""><i
-                                                    class="feather-user me-1"></i>
-                                            
-                                                    <span class="d-inline-block">Mentor</span><sup
-                                                        class="badge badge-info">Đăng ký</sup>
-                                                
-                                            </a> --}}
+                                        
                                         <a class="dropdown-item" href="{{route('logout')}}"><i
                                                 class="feather-log-out me-1"></i> Logout</a>
                                     </div>

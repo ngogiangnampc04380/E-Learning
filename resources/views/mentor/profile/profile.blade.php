@@ -40,7 +40,7 @@
                                 </li>
                                 <li class="nav-item">
                                     <a href="instructor-course.html" class="nav-link">
-                                        <i class="feather-book"></i> Khóa học của tôi
+                                        <i class="feather-shopping-bag"></i> Khóa học của tôi
                                     </a>
                                 </li>
                                 <li class="nav-item">

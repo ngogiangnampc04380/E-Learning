@@ -96,11 +96,11 @@ class UserResource extends Resource
                     ])
                     ->maxLength(255),
                     Forms\Components\FileUpload::make('thumbnail')
-                    ->required()
+                    
                     ->columnSpanFull()
                     ->image()
                     ->validationMessages([
-                        'required' => 'Vui lòng chọn file hình ảnh',
+                        
                         'image'=> 'File tải lên phải là các file JPG, JPEG, PNG và SVG'
                     ])
                     ->label('Hình ảnh'),

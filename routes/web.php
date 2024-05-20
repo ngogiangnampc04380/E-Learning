@@ -96,10 +96,6 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::get("/course-details", [CoursesController::class, "detail"])->name("course-details");
 
     // -----------------------Mentor-------------------------
-    Route::get("/mentor-comment", [MentorProfileController::class, "comment"])->name("mentor-comment");
-    Route::get("/mentor-favorite", [MentorProfileController::class, "favorite"])->name("mentor-favorite");
-
-
 
         // -----------------------Post-------------------------
     Route::get("/post-list", [PostController::class, "list"])->name("post-list");

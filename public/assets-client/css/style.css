@@ -1165,6 +1165,15 @@ button.bg-danger:hover {
 .users .dropdown-item i {
 	color: #FF875A;
 }
+.dropdown-user{
+    position: absolute;
+    top: 80%;
+    text-align: center;
+    right: -70%;
+}
+/* .dropdown-user p{
+    text-align: center;
+} */
 .dropdown-item.night-mode {
 	justify-content: space-between;
 }

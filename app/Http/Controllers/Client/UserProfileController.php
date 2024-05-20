@@ -18,6 +18,7 @@ class UserProfileController extends Controller
         $data = User::find($userId);
         return view('client.profile.profile',['data' => $data]);
     }
+    
     public function profile_edit( Request $request) {
         $data = [];
         $request->name ? $data['name'] = $request->name : '';
