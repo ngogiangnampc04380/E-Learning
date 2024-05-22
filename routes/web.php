@@ -132,3 +132,28 @@ Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 Route::get('/logout', [LogoutController::class, 'index'])->name('logout')->middleware('auth');
 Route::post('/logout', [LogoutController::class, 'logout'])->middleware('auth');
+
+
+Route::prefix('client')->name('client.')->group(function () {
+
+    // -----------------------AUTH-------------------------
+    // Route::get("/login", [IndexAuthController::class, "login"])->name("Login");
+    // ----------------------------------instructor-------------------------
+    Route::get("/instructor-list", [InstructorController::class, "list"])->name("instructor-list");
+    Route::get("/instructor-profile", [InstructorController::class, "profile"])->name("instructor-profile");
+    Route::get("/user-profile", [UserProfileController::class, "profile"])->name("user-profile");
+
+    // ----------------------------------course-details-------------------------
+    Route::get("/course-list", [CoursesController::class, "list"])->name("course-lists");
+    Route::get("/course-details", [CoursesController::class, "detail"])->name("course-details");
+
+    // -----------------------Mentor-------------------------
+  
+    // Route::get('/mentor-register', [MentorControllerr::class, "mentorRegister"])->name("mentor-register");
+    // Route::post('/mentor-register', [MentorControllerr::class, 'handleRegister']);
+    // Route::get('/mentor-profile', [MentorControllerr::class, "profile"])->name("mentor-profile");
+    
+    // Route::get('/upload_ID_Card', [MentorControllerr::class, "upload_ID_Card"])->name("upload-id-card");
+
+});
+// Route::post('/mentor/save-id-card-data', [MentorControllerr::class, 'saveIdCardData'])->name('mentor-save-id-card');

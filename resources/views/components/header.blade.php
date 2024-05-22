@@ -166,12 +166,12 @@
         <script>
             function chuyenDuLieu() {
             // Lấy giá trị từ tất cả các trường ngoài form và phân tách chúng bằng dấu phẩy
-            var giaTriNgoaiFormList = document.querySelectorAll('.inputOutsideForm');
+            var giaTriNgoaiFormList = document.querySelectorAll('.inputOutsideForm')
             var giaTriChuoi = Array.from(giaTriNgoaiFormList).map(function(element) {
-                return element.value;
-            }).join(',');
+                return element.value
+            }).join(',')
 
             // Thiết lập giá trị cho trường trong form
-            document.getElementById("inputInsideForm").value = giaTriChuoi;
+            document.getElementById("inputInsideForm").value = giaTriChuoi
         }
         </script>

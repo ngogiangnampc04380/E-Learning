@@ -19,22 +19,16 @@ class RegisterController extends Controller
     }
     public function register(AuthRequest $request)
     {
-        
-        $validatedData = $request->validated();
-
-        // Tạo tài khoản người dùng
-        $user = User::create([
-            'name' => $validatedData['name'],
-            'phone' => $validatedData['phone'],
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']),
-            
+        //Lấy IP từ mấy người dùng
+        // $request->validated();
+        User::create([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
         ]);
-        if (!$user) {
-            return redirect('login')->withSuccess('Sign Up Success!');
-        } else {
-            return redirect('register')->with(['error' => 'Registration failed!']);
-        }
-        
+        return redirect('login')->withSuccess('Đăng ký thành công !');
     }
+    
 }

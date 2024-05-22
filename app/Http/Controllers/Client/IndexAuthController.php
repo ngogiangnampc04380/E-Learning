@@ -11,25 +11,11 @@ use Laravel\Socialite\Facades\Socialite;
 
 class IndexAuthController extends Controller
 {
-
-    protected function _registerOrLoginUser($data)
-    {
-
-        $user = User::where('email', '=', $data->email)->first();
-
-        if (!$user) {
-            $user = new User();
-            $user->name = $data->name;
-            $user->email = $data->email;
-            $user->save();
-        }
-        Auth::login($user);
-    }
-
     public function index()
     {
         
         if (auth()->check()) {
+            var_dump(auth());
             return redirect()->route('Dashboard-client');
         }
         return view('client.auth.login');
@@ -46,27 +32,18 @@ class IndexAuthController extends Controller
     public function login(AuthRequest $request)
     {
         $request->validated();
-        $findEmail = $request->email; // tìm mail người dùng nhập vào
-        // Lấy bản ghi đầu tiên thỏa mãn điều kiện
-        $result = User::where('email', $findEmail)->first();
-        $ip_user = [];
-        if ($result) {
-            //lấy nhiều ip trong 1 tài khoản
-            $ip_user = $result->ip;
-        }
-        if (!$ip_user) {
-            $ip_user = [];
-        }
-        // Đếm số ip cử 1 tài khoản
+        $findEmail = $request->email; 
+        $result = User::where('id', $findEmail)->first();
         if (Auth::attempt($request->only('email', 'password'))) {
             session(['id' => Auth::user()->id]);
             // var_dump($request->only('email', 'password'));
             // die;
-                return redirect()->route('Dashboard-client');                     
-        } else {
+                return redirect()->route('Dashboard-client')->with('Đăng nhập thành công !');                     
+        } else {    
 
-            return redirect()->back()->withInput($request->only('email'))->withErrors([
-                'email' => 'Thông tin đăng nhập không chính xác.',
+            return redirect()->back()->withInput($request->only('email','password'))->withErrors([
+                'email' => 'Thông tin đăng nhập không chính xác!!!',
+                // 'password'=>'Mật khẩu không chính xác'
             ]);
 
         }

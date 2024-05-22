@@ -16,17 +16,18 @@ class PasswordController extends Controller
     {
         return view('client.auth.password.enter-email');
     }
-
     public function handleEnterEmail(Request $request)
     {
         $request_mail = $request->email;
         $user_from_request_mail = User::where('email', $request_mail)->first();
+        // var_dump($user_from_request_mail['email']);
+        // die;
         if ($user_from_request_mail) {
             $randomNumber = mt_rand(100000, 999999);
             $token_id = uniqid();
             Session::push($token_id, [$request_mail, $randomNumber]);
             Mail::send('mail.send-code-mail', compact('randomNumber'), function ($email) use ($user_from_request_mail) {
-                $email->subject('demo');
+                $email->subject('ENT-Web');
                 $email->to($user_from_request_mail->email, 'Ma xac nhan mat khau');
             });
             return redirect(route('confirm-code', ['token_id' => $token_id]));

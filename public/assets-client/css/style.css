@@ -12228,9 +12228,9 @@ input[type=password]::-ms-clear
 	padding-bottom: 10px;
 }
 .plan-box {
-	background: #FFFFFF;
-	border-radius: 10px;
-	padding: 20px;
+	background: #99cc00;
+	border-radius: 8px;
+	padding: 30px;
 	display: flex;
     justify-content: space-between;
 	margin-bottom: 25px;
@@ -25593,6 +25593,17 @@ input[type=password]::-ms-clear
         align-items: start;
         gap: 20px;
         margin-bottom: 50px;
+    }
+
+
+    /* card- */
+    .to-orange-4000 {
+        --tw-gradient-to: #fb3c3c var(--tw-gradient-to-position);
+    }
+    .from-orange-3000 {
+        --tw-gradient-from: #fdd474 var(--tw-gradient-from-position);
+        --tw-gradient-to: rgb(253 186 116 / 0) var(--tw-gradient-to-position);
+        --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
     }
 }
 .btn-group-equal {

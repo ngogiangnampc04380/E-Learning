@@ -1,13 +1,116 @@
 @extends('client.layout.authMaster')
 @section('content')
-    <div class="login-wrapper">
-        @if ($message = Session::get('success'))
-            @include('client.section.message', ['message' => $message, 'type' => 'success'])
-        @endif
-        @if ($message = Session::get('deny_register'))
-            @include('client.section.message', ['message' => $message, 'type' => 'error'])
-        @endif
-        <div class="loginbox">
+   
+        
+<div class="row">
+    <div class="col-md-6 login-bg">
+        <div class="login-wrapper">
+        <div class="owl-carousel login-slide owl-theme owl-loaded owl-drag">
+
+            
+
+            <div class="owl-stage-outer">
+                <div class="owl-stage"
+                    style="transform: translate3d(-3798px, 0px, 0px); transition: all 0.25s ease 0s; width: 5318px;">
+                    <div class="owl-item cloned" style="width: 735.6px; margin-right: 24px;">
+                        <div class="welcome-login">
+                            <div class="login-banner">
+                                <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
+                            </div>
+                            <div class="mentor-course text-center">
+                                <h2>Welcome to <br>DreamsLMS Courses.</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="owl-item cloned" style="width: 735.6px; margin-right: 24px;">
+                        <div class="welcome-login">
+                            <div class="login-banner">
+                                <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
+                            </div>
+                            <div class="mentor-course text-center">
+                                <h2>Welcome to <br>DreamsLMS Courses.</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="owl-item" style="width: 735.6px; margin-right: 24px;">
+                        <div class="welcome-login">
+                            <div class="login-banner">
+                                <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
+                            </div>
+                            <div class="mentor-course text-center">
+                                <h2>Welcome to <br>DreamsLMS Courses.</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="owl-item" style="width: 735.6px; margin-right: 24px;">
+                        <div class="welcome-login">
+                            <div class="login-banner">
+                                <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
+                            </div>
+                            <div class="mentor-course text-center">
+                                <h2>Welcome to <br>DreamsLMS Courses.</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="owl-item" style="width: 735.6px; margin-right: 24px;">
+                        <div class="welcome-login">
+                            <div class="login-banner">
+                                <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
+                            </div>
+                            <div class="mentor-course text-center">
+                                <h2>Welcome to <br>DreamsLMS Courses.</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="owl-item cloned active" style="width: 735.6px; margin-right: 24px;">
+                        <div class="welcome-login">
+                            <div class="login-banner">
+                                <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
+                            </div>
+                            <div class="mentor-course text-center">
+                                <h2>Welcome to <br>DreamsLMS Courses.</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="owl-item cloned" style="width: 735.6px; margin-right: 24px;">
+                        <div class="welcome-login">
+                            <div class="login-banner">
+                                <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
+                            </div>
+                            <div class="mentor-course text-center">
+                                <h2>Welcome to <br>DreamsLMS Courses.</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="owl-nav"><button type="button" role="presentation" class="owl-prev"><span
+                        aria-label="Previous">‹</span></button><button type="button" role="presentation"
+                    class="owl-next"><span aria-label="Next">›</span></button></div>
+            <div class="owl-dots"><button role="button" class="owl-dot active"><span></span></button><button
+                    role="button" class="owl-dot"><span></span></button><button role="button"
+                    class="owl-dot"><span></span></button></div>
+        </div>
+    </div>
+</div>
+        
+    <div class="col-md-6 login-wrap-bg" >
+        <div class="login-wrapper">
+            <div class="loginbox">
             <div class="img-logo">
                 <img src="{{ asset('assets/img/logo.png') }}" class="img-fluid" alt="Logo">
                 <div class="back-home">
@@ -60,9 +163,10 @@
                     </div>
                     <div class="password-strength" id="passwordStrength">
                         <span id="poor"></span>
-                        <span id="weak"></span>
                         <span id="strong"></span>
                         <span id="heavy"></span>
+                        <span id="weak"></span>                       
+                        
                     </div>
                     <div id="passwordInfo"></div>
                     <div class="error_message">
@@ -87,7 +191,6 @@
                             data-bs-target="#exampleModal2">
                             privacy police
                         </button>
-                       
                         <div class="error_message">
                             @error('remember')
                                 <span style="color: red;font-weight:lighter"></span>
@@ -100,7 +203,8 @@
                         type="submit">Register</button>
                 </div>
             </form>
-        </div>
+        
+   
         <div class="google-bg text-center">
             <span><a href="#">Or log in with</a></span>
             <div class="sign-google">
@@ -112,6 +216,7 @@
             </div>
             <p class="mb-0">Are you ready to create an account?<a href="{{ route('login') }}">Login</a></p>
         </div>
+    </div>
     </div>
     <script>
         var btn_login = document.querySelector('#registerButton');
@@ -125,16 +230,8 @@
         var password_input = inputs[inputs_length - 1]
 
         function enter_data() {
-            if (password_input.value.length > 5) {
-                poor.style.backgroundColor = '#ff725e';
-            } else {
-                poor.style.backgroundColor = '#e3e3e3';
-            }
-            if (/\d/.test(password_input.value)) {
-                weak.style.backgroundColor = '#ff725e';
-            } else {
-                weak.style.backgroundColor = '#e3e3e3';
-            }
+          
+         
             if (!(password_input.value.includes(inputs[inputs_length - 2].value)) && inputs[inputs_length - 2].value
                 .length > 3 && password_input.value.length > 5) {
                 strong.style.backgroundColor = '#ff725e';
@@ -146,6 +243,17 @@
             } else {
                 heavy.style.backgroundColor = '#e3e3e3';
             }
+            if (password_input.value.length > 5) {
+                poor.style.backgroundColor = '#ff725e';
+            } else {
+                poor.style.backgroundColor = '#e3e3e3';
+            }
+            if (/\d/.test(password_input.value)) {
+                weak.style.backgroundColor = '#ff725e';
+            } else {
+                weak.style.backgroundColor = '#e3e3e3';
+            }
+           
             let check_ = true
             for (let i = 0; i < inputs_length; i++) {
                 if (inputs[i].value.length < 5 || !accept_term_checkbox.checked) {

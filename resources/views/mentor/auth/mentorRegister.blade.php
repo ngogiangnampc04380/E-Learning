@@ -116,50 +116,17 @@
                                 <div class="back-home">
                                     <a href="{{ route('Dashboard-client') }}">Back to Home</a>
                                 </div>
-                            </div>
+                            </div>      
                             <h1>Đăng ký mentor</h1>
-                            <form action="instructor-dashboard.html">
-                                <div class="input-block">
-                                    <label class="form-control-label">Full Name</label>
-                                    <input type="text" class="form-control" placeholder="Enter your Full Name" />
-                                </div>
-                                <div class="input-block">
-                                    <label class="form-control-label">Email</label>
-                                    <input type="email" class="form-control" placeholder="Enter your email address">
-                                </div>
-                                <div class="input-block">
-                                    <label class="form-control-label">Password</label>
-                                    <div class="pass-group">
-                                        <input type="password" class="form-control pass-input"
-                                            placeholder="Enter your password">
-                                        <span class="feather-eye toggle-password"></span>
-                                    </div>
-                                    <div class="password-strength" id="passwordStrength">
-                                        <span id="poor"></span>
-                                        <span id="weak"></span>
-                                        <span id="strong"></span>
-                                        <span id="heavy"></span>
-                                    </div>
-                                    <div id="passwordInfo"></div>
-                                </div>
+                            <form action="{{ route('client.mentor-register') }}" method="POST">
+                               
                                 <div class="d-grid">
-                                    <button class="btn btn-primary btn-start" type="submit">Sign Up</button>
+                                    <button class="btn btn-primary btn-start" type="submit">Tiếp Tục >></button>
                                 </div>
                             </form>
                         </div>
                     </div>
-                    <div class="google-bg text-center">
-                        <span><a href="#">Or sign in with</a></span>
-                        <div class="sign-google">
-                            <ul>
-                                <li><a href="#"><img src="/assets-client/img/net-icon-01.png" class="img-fluid"
-                                            alt="Logo"> Sign In using Google</a></li>
-                                <li><a href="#"><img src="/assets-client/img/net-icon-02.png" class="img-fluid"
-                                            alt="Logo">Sign In using Facebook</a></li>
-                            </ul>
-                        </div>
-                        
-                    </div>
+                    
                 </div>
 
             </div>

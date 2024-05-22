@@ -1,10 +1,10 @@
 @extends('client.layout.authMaster')
 @section('content')
 @if ($message = Session::get('success'))
-@include('client.components.message', ['message' => $message, 'type' => 'success'])
+@include('components.message', ['message' => $message, 'type' => 'success'])
 @endif
 @if ($message = Session::get('need_login'))
-@include('client.section.message', ['message' => $message, 'type' => 'fail'])
+@include('components.message', ['message' => $message, 'type' => 'fail'])
 @endif
     
     <div class="row">
