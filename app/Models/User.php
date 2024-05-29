@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'role',
+        'introduce',
         'phone',
         'thumbnail',
         'password',
@@ -61,5 +62,8 @@ class User extends Authenticatable
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
+    }
+    public function educations() {
+        return $this->hasMany(Education::class);
     }
 }

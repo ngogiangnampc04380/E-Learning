@@ -193,6 +193,13 @@
                                                 </div>
                                             </div>
                                             
+                                            
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleInputEmail1" class="form-label" >Giới thiệu</label>
+                                            <label type="text" name="introduce" rows="5"
+                                                class="form-control" id="exampleInputEmail1"
+                                                aria-describedby="emailHelp" placeholder="Tam giác quỷ bemuda">{{ auth()->user()->introduce }}</label>
                                         </div>
                                         
                                     <button class="btn btn-primary"><a href="{{ route('client.user-profile') }}">Đến chỉnh sửa thông tin cá nhân</a></button>
@@ -233,6 +240,7 @@
                                                     <label name="address" type="text" class="form-control" id="exampleInputEmail1"
                                                         aria-describedby="emailHelp" placeholder="HỌ VÀ TÊN">{{auth()->user()-> address}}</label>
                                                 </div>
+                                                
                                                 <div class="profile-bg">
                                                     <h5>Beginner</h5>
                                                     <img src="/assets-client/img/instructor-profile-bg.jpg" alt="">
@@ -242,6 +250,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            
 
 
                                             

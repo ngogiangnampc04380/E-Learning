@@ -46,7 +46,7 @@
                                     <span></span>
                                 </span>
                             </a>
-                            <a href="" class="navbar-brand logo">
+                            <a href="{{ route('Dashboard-client') }}" class="navbar-brand logo">
                                 <img src="{{ asset('/img/logo.svg') }}" class="img-fluid" alt="Logo">
                             </a>
                         </div>

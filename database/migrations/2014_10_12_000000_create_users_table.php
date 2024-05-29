@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
+            $table->string('introduce')->nullable();
             $table->integer('role')->default(0);
             $table->string('thumbnail')->nullable();
             $table->unsignedBigInteger('auth')->nullable();

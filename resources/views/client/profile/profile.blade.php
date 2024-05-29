@@ -169,8 +169,10 @@
                                                         class="form-control" id="exampleInputEmail1"
                                                         aria-describedby="emailHelp" placeholder="Tam giác quỷ bemuda">
                                                 </div>
+                                                
 
                                             </div>
+                                            
                                             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                                 <div class="settings-widget dash-profile">
                                                     <div class="settings-menu p-0">
@@ -201,11 +203,126 @@
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            <div class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label" >Giới thiệu</label>
+                                                <textarea type="text" name="introduce" rows="5"
+                                                    class="form-control" id="exampleInputEmail1"
+                                                    aria-describedby="emailHelp" placeholder="Tam giác quỷ bemuda">{{ auth()->user()->introduce }}</textarea>
+                                            </div>
+                                            {{-- <div class="card-header">
+                                                <h4>Thông tin người dùng</h4>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label">Giới thiệu</label>
+                                                <input value="{{ auth()->user()->introduce }}"type="text" name="email"
+                                                    class="form-control" id="exampleInputEmail1"
+                                                    aria-describedby="emailHelp">
+                                            </div> --}}
+                                            
                                             {{-- <button type="button" class="d-none btn btn-primary position-absolute top-0 start-0 m-5" onclick="submitForm()" id="saveAvt">Lưu ảnh</button> --}}
                                             <button class="btn btn-primary" type="submit">Sửa thông tin</button>
-
                                     </form>
+                                    <div class="card-header">
+                                        <h4>Bằng cấp, chứng chỉ</h4>
+                                    </div>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Ảnh minh họa</th>
+                                                <th scope="col">Trình độ</th>
+                                                <th scope="col">Thời gian</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($data->educations as $education)
+                                            <tr>
+                                                
+                                                <td>
+                                                    @if ($education->thumbnail)
+                                                    <img src="{{ asset('storage/assets-client/img/educations/' . $education->thumbnail) }}" width="100">
+                                                    @endif
+                                                </td>
+                                                <td>{{ $education->academic_level }}</td>
+                                                <td>{{ $education->time }}</td>
+                                                <td>
+                                                    <button class="btn btn-primary btn-edit-education" data-id="{{ $education->id }}">Sửa</button>
+                                                    <form action="{{ route('client.deleteEducation', $education->id) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        <button class="btn btn-danger" type="submit">Xóa</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    <button class="btn btn-success" id="btn-add-education">Thêm</button>
+                                    
+                                    <!-- Edit Education Form -->
+                                    <div id="edit-education-form" style="display: none;">
+                                        <div class="card-header">
+                                            <h2>Sửa bằng cấp, chứng chỉ</h2>
+                                        </div>
+                                        
+                                        <form id="edit-education" action="" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" name="education_id" id="education-id">
+                                            <div class="mb-3">
+                                                <label for="academic_level" class="form-label">Trình độ</label>
+                                                <input type="text" name="academic_level" id="edit-academic-level" class="form-control">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="school" class="form-label">Trường</label>
+                                                <input type="text" name="school" id="edit-school" class="form-control">
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label for="time" class="form-label">Thời gian</label>
+                                                <input type="text" name="time" id="edit-time" class="form-control">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="describe" class="form-label">Mô tả</label>
+                                                <textarea class="form-control" name="describe" id="edit-describe" rows="5"></textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="thumbnail" class="form-label">Ảnh</label>
+                                                <input type="file" id="edit-thumbnail" name="thumbnail" accept="image/*">
+                                            </div>
+                                            <button class="btn btn-primary" type="submit">Sửa thông tin</button>
+                                        </form>
+                                    </div>
+                                    
+                                    <!-- Add Education Form -->
+                                    <div id="add-education-form" style="display: none;">
+                                        <div class="card-header">
+                                            <h2>Thêm bằng cấp, chứng chỉ</h2>
+                                        </div>
+                                        <form action="{{ route('client.storeEducation') }}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="mb-3">
+                                                <label for="academic_level" class="form-label">Trình độ</label>
+                                                <input type="text" name="academic_level" class="form-control" placeholder="Ví dụ: Tốt nghiệp cử nhân chuyên ngành ngôn ngữ anh">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="school" class="form-label">Trường</label>
+                                                <input type="text" name="school" class="form-control" placeholder="Ví dụ: đại học Cần Thơ">
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label for="time" class="form-label">Thời gian</label>
+                                                <input type="text" name="time" class="form-control" placeholder="Ví dụ: 2020 - 2024">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="describe" class="form-label">Mô tả</label>
+                                                <textarea class="form-control" name="describe" rows="5" placeholder="Ví dụ: Để tốt nghiệp ngành Ngôn ngữ Anh tại Đại học B, sinh viên cần hoàn thành các khóa học về ngôn ngữ, văn hóa, và kỹ năng giao tiếp. Chương trình tập trung vào việc phát triển khả năng đọc, viết, nói, và nghe tiếng Anh cùng nghiên cứu văn học và văn hóa. Sinh viên cũng tham gia vào các hoạt động ngoại khóa và hoàn thành dự án tốt nghiệp dưới sự hướng dẫn của giáo viên."></textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="thumbnail" class="form-label">Ảnh minh họa</label>
+                                                <input type="file" id="thumbnail" name="thumbnail" accept="image/*">
+                                            </div>
+                                            <button class="btn btn-primary" type="submit">Thêm thông tin</button>
+                                        </form>
+                                    </div>
 
 
 
@@ -265,5 +382,50 @@
                 }
             });
         });
+        document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('btn-add-education').addEventListener('click', function (event) {
+        event.preventDefault(); // Ngăn chặn hành vi mặc định của nút button
+        document.getElementById('add-education-form').style.display = 'block';
+        document.getElementById('edit-education-form').style.display = 'none'; // Ẩn form sửa giáo dục khi nhấp vào nút "Thêm"
+    });
+
+    document.querySelectorAll('.btn-edit-education').forEach(function (button) {
+        button.addEventListener('click', function () {
+            // if (document.getElementById('edit-education-form').style.display !== 'block') {
+                        event.preventDefault(); 
+                        document.getElementById('add-education-form').style.display = 'none';
+                        document.getElementById('edit-education-form').style.display = 'block';
+                    
+            var educationId = this.getAttribute('data-id');
+            // Fetch the education data and populate the edit form
+            fetch(`/client/education/${educationId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('education-id').value = data.id;
+                    document.getElementById('edit-academic-level').value = data.academic_level;
+                    document.getElementById('edit-school').value = data.school;
+                    document.getElementById('edit-describe').value = data.describe;
+                    document.getElementById('edit-time').value = data.time;
+                    document.getElementById('edit-education').action = `/client/education/${educationId}`;
+
+                    // Ghi lại trạng thái hiển thị của form sửa giáo dục
+                    console.log('Edit form display:', document.getElementById('edit-education-form').style.display);
+
+                    // Kiểm tra trạng thái hiển thị của form sửa giáo dục trước khi hiển thị
+                    
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        });
+    });
+});
+
     </script>
+    
 @endsection

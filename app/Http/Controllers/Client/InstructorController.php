@@ -14,7 +14,12 @@ class InstructorController extends Controller
 {
     public function list()
     {
-        return view('client.instructor.instructor-list');
+        $data = DB::table('users')
+        ->where('role', 2)
+        ->get();
+
+        return view('client.instructor.instructor-list', ['data' => $data]);
+        // return view('client.instructor.instructor-list');
     }
 
     public function profile()
