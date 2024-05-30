@@ -78,8 +78,8 @@ class UserResource extends Resource
                     ->label('Vai trò')
                     ->options([
                         0 => 'Học viên',
-                        1 => 'ADMIN',
-                        2 => 'MENTOR'
+                        1 => 'Admin',
+                        2 => 'Giảng viên'
                     ])
                     ->default('0'),
                 Forms\Components\TextInput::make('password')

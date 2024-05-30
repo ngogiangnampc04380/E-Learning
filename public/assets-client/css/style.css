@@ -1007,6 +1007,17 @@ button.bg-danger:hover {
     border-radius: 50px;
     text-align: center;
     font-size: 16px;
+    color: #db8080;
+    text-transform: capitalize;
+    font-weight: 500;
+	min-width: 150px;
+	border: 3px solid #e37272;
+	padding: 10px 15px;
+}
+.header-navbar-rht li a.header-sign {
+	border-radius: 50px;
+    text-align: center;
+    font-size: 16px;
     color: #392C7D;
     text-transform: capitalize;
     font-weight: 500;
@@ -1014,29 +1025,12 @@ button.bg-danger:hover {
 	border: 3px solid #B4A7F5;
 	padding: 10px 15px;
 }
-.header-navbar-rht li a.header-sign {
-	min-width: 150px;
-	padding: 14px 15px;
-	background: rgb(241 241 241 / 42%);
-	border-radius: 46.9159px;
-	text-align: center;
-}
 .header-navbar-rht li a.header-sign:hover {
-	background-color: #f6697b;
-    border-color: #f6697b;
+	background-color: #7079f3;
+    border-color: #7b9fe8;
     color: #fff;
 }
-.add-header-bg .header-navbar-rht li a.header-sign {
-	background: #b4a7f5;
-	border: 3px solid #B4A7F5;
-	color: #fff;
-	padding: 10px 15px;
-}
-.add-header-bg .header-navbar-rht li a.header-sign:hover {
-	background: #fff;
-	color: #22100D;
-	border: 3px solid #B4A7F5;
-}
+
 .header .has-arrow .dropdown-toggle:after {
 	border-top: 0;
 	border-left: 0;
@@ -4470,12 +4464,12 @@ html.menu-opened body {
 .header-navbar-rht li .dropdown-menu .dropdown-item:last-child {
 	border-radius: 0 0 5px 5px;
 }
-.header-navbar-rht li a.header-login:hover {
+/* .header-navbar-rht li a.header-login:hover {
     background-color: #f6697b;
     border-color: #f6697b;
     color: #fff;
-}
-.header-navbar-rht li a.header-login {
+} */
+/* .header-navbar-rht li a.header-login {
     border-radius: 50px;
     text-align: center;
     font-size: 16px;
@@ -4485,8 +4479,8 @@ html.menu-opened body {
 	min-width: 150px;
 	border: 3px solid #B4A7F5;
 	padding: 10px 15px;
-}
-.header-navbar-rht li a.header-sign {
+} */
+/* .header-navbar-rht li a.header-sign {
 	min-width: 150px;
 	padding: 14px 15px;
 	background: rgb(241 241 241 / 42%);
@@ -4497,18 +4491,8 @@ html.menu-opened body {
 	background-color: #f6697b;
     border-color: #f6697b;
     color: #fff;
-}
-.add-header-bg .header-navbar-rht li a.header-sign {
-	background: #b4a7f5;
-	border: 3px solid #B4A7F5;
-	color: #fff;
-	padding: 10px 15px;
-}
-.add-header-bg .header-navbar-rht li a.header-sign:hover {
-	background: #fff;
-	color: #22100D;
-	border: 3px solid #B4A7F5;
-}
+} */
+
 .header .has-arrow .dropdown-toggle:after {
 	border-top: 0;
 	border-left: 0;
@@ -18465,7 +18449,8 @@ input[type=password]::-ms-clear
 }
 
 @media (min-width: 576px) {
-	.modal-styles .modal-dialog {
+	.modal-styles .modal-dialog
+     {
 		max-width: 860px;
 	}
 	.growup-section .growup-right-img {
@@ -19257,19 +19242,24 @@ input[type=password]::-ms-clear
 	.section-header .sub-title {
 		font-size: 14px;
 	}
-	.header-navbar-rht li a.header-login,
+	/* .header-navbar-rht li a.header-login,
 	.add-header-bg .header-navbar-rht li a.header-sign	{
 		min-width: 110px;
 		padding: 6px 15px;
 		font-size: 14px;
-	}
+	} */
 	.enroll-group .total-course {
 		margin-bottom: 5px;
 	}
 	.header-navbar-rht li a.header-sign {
-		min-width: 110px;
-		padding: 8px 15px;
-		font-size: 14px;
+		min-width: 70px;
+		padding: 5px 10px;
+		font-size: 9px;
+	}
+    .header-navbar-rht li a.header-login {
+		min-width: 70px;
+		padding: 5px 10px;
+		font-size: 9px;
 	}
 	.main-nav li a {
 		font-size: 14px;

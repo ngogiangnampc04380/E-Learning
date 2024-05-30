@@ -101,7 +101,7 @@ class SaleResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -121,9 +121,9 @@ class SaleResource extends Resource
     {
         return [
             'index' => Pages\ListSales::route('/'),
-            'create' => Pages\CreateSale::route('/create'),
+            // 'create' => Pages\CreateSale::route('/create'),
             'view' => Pages\ViewSale::route('/{record}'),
-            'edit' => Pages\EditSale::route('/{record}/edit'),
+            // 'edit' => Pages\EditSale::route('/{record}/edit'),
         ];
     }
 }

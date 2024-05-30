@@ -1,7 +1,10 @@
 @extends('client.layout.master')
 @section('content')
+ 
     <section class="home-three-slide d-flex align-items-center">
+        
         <div class="container">
+            
             <div class="row ">
                 <div class="col-xl-6 col-lg-8 col-md-12 col-12" data-aos="fade-down">
                     <div class="home-three-slide-face">
@@ -31,7 +34,7 @@
                 </div>
                 <div class="col-xl-6 col-lg-4 col-md-6 col-12" data-aos="fade-up">
                     <div class="girl-slide-img aos">
-                        <img class="img-fluid" src="/assets-client/img/slider/home-slider.png" alt>
+                        
                     </div>
                 </div>
             </div>
@@ -3527,4 +3530,5 @@
             </div>
         </div>
     </section>
+   
 @endsection

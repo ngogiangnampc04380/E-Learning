@@ -13,6 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Tables\Columns\SelectColumn;
 class CommentsResource extends Resource
 {
     protected static ?string $model = Comment::class;
@@ -25,8 +28,7 @@ class CommentsResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('content')
-                    ->label('Tên bài học'),
+                
             ]);
     }
 
@@ -39,17 +41,16 @@ class CommentsResource extends Resource
                 
                 Tables\Columns\TextColumn::make('lesson.name')
                     ->label('Tên bài học')
+                    
                     ->searchable(),
+                    
                 Tables\Columns\TextColumn::make('content')
                     ->label('Nội dung bình luận')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('user.name')
-                    ->label('Tên giảng viên')
+                    ->label('Người bình luận')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('user.email')
-                    ->label('Email')
-                    ->searchable(),
-                    Tables\Columns\TextColumn::make('lesson.chapter.course.name')
+                Tables\Columns\TextColumn::make('lesson.chapter.course.name')
                     ->label('Khóa học')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -87,14 +88,31 @@ class CommentsResource extends Resource
             //
         ];
     }
+    public static function infolist(Infolist $infolist): Infolist
+{
+    return $infolist
+        ->schema([
+            TextEntry::make('user.name')
+            ->label('Người bình luận'),
+            TextEntry::make('content')
+            ->label('Nội dung bình luận'),
+            TextEntry::make('lesson.name')
+            ->label('Bài học'),
+            TextEntry::make('lesson.chapter.course.name')
+            ->label('Khóa học'),
+            TextEntry::make('created_at')
+            ->label('Ngày bình luận'),
+        ]);
+        
+}
 
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListComments::route('/'),
             'create' => Pages\CreateComments::route('/create'),
-            'view' => Pages\ViewComments::route('/{record}'),
-            'edit' => Pages\EditComments::route('/{record}/edit'),
+            // 'view' => Pages\ViewComments::route('/{record}'),
+            // 'edit' => Pages\EditComments::route('/{record}/edit'),
         ];
     }
 }

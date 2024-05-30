@@ -108,27 +108,34 @@
 </footer>
 
 </div>
-<script src="/assets-client/js/jquery-3.7.1.min.js" type="a24f51fa5374e90d6aa7f4a1-text/javascript"></script>
+<script src="/assets-client/js/jquery-3.7.1.min.js" ></script>
 
-<script src="/assets-client/js/bootstrap.bundle.min.js" type="a24f51fa5374e90d6aa7f4a1-text/javascript"></script>
+<script src="/assets-client/js/bootstrap.bundle.min.js" ></script>
 
-<script src="/assets-client/js/owl.carousel.min.js" type="a24f51fa5374e90d6aa7f4a1-text/javascript"></script>
+<script src="/assets-client/js/owl.carousel.min.js" ></script>
 
-<script src="/assets-client/plugins/aos/aos.js" type="a24f51fa5374e90d6aa7f4a1-text/javascript"></script>
+<script src="/assets-client/plugins/aos/aos.js" ></script>
 
-<script src="/assets-client/js/jquery.waypoints.js" type="a24f51fa5374e90d6aa7f4a1-text/javascript"></script>
-<script src="/assets-client/js/jquery.counterup.min.js" type="a24f51fa5374e90d6aa7f4a1-text/javascript"></script>
+<script src="/assets-client/js/jquery.waypoints.js" ></script>
+<script src="/assets-client/js/jquery.counterup.min.js" ></script>
 
-<script src="/assets-client/plugins/select2/js/select2.min.js" type="a24f51fa5374e90d6aa7f4a1-text/javascript"></script>
+<script src="/assets-client/plugins/select2/js/select2.min.js" ></script>
 
-<script src="/assets-client/plugins/slick/slick.js" type="a24f51fa5374e90d6aa7f4a1-text/javascript"></script>
+<script src="/assets-client/plugins/slick/slick.js"></script>
 
-<script src="/assets-client/plugins/swiper/js/swiper.min.js" type="a24f51fa5374e90d6aa7f4a1-text/javascript"></script>
+<script src="/assets-client/plugins/swiper/js/swiper.min.js" ></script>
 
-<script src="/assets-client/js/script.js" type="a24f51fa5374e90d6aa7f4a1-text/javascript"></script>
+<script src="/assets-client/js/script.js"></script>
 {{-- <script src="../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
     data-cf-settings="a24f51fa5374e90d6aa7f4a1-|49" defer></script> --}}
 <script src="/assets-client/js/add.js"></script>
+<script>
+    $(function(){
+        setTimeout(()=>{
+            $('#loader').fadeOut(1000);
+        },1000)
+    })
+</script>
 </body>
 
 <!-- Mirrored from dreamslms.dreamstechnologies.com/html/index-three.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 03 Mar 2024 13:56:46 GMT -->

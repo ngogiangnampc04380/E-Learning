@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
 use App\Models\Order;
+use App\Models\Order_detail;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,6 +13,9 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Tables\Columns\SelectColumn;
 
 class OrderResource extends Resource
 {
@@ -24,18 +28,9 @@ class OrderResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('order_code')
-                ->required()
-                ->maxLength(100)
-                ->label('Mã đơn hàng'),
-            Forms\Components\TextInput::make('course_id')
-                ->label('Khóa học')
-                ->required(),
-            Forms\Components\TextInput::make('user_id')
-                ->required()
-                ->label('Người đăng ký')
-                ->columnSpanFull(),
+                
             ]);
+            
     }
 
     public static function table(Table $table): Table
@@ -49,9 +44,14 @@ class OrderResource extends Resource
 
                     ->searchable(),
                 Tables\Columns\TextColumn::make('user.name')
-                ->label('Người đăng ký')
+                ->label('Người đăng ký khóa học')
                 ->sortable()
                 ->searchable(),
+                Tables\Columns\SelectColumn::make('order_details.status')
+                ->options([
+                    0 => 'Chưa thanh toán',
+                    1 => 'Đã thanh toán',
+                ]),
             ])
             ->filters([
                 //
@@ -66,7 +66,25 @@ class OrderResource extends Resource
                 ]),
             ]);
     }
-
+    public static function infolist(Infolist $infolist): Infolist
+{
+    return $infolist
+        ->schema([
+            TextEntry::make('order_code')
+            ->label('Mã đơn hàng'),
+            TextEntry::make('user.name')
+            ->label('Người đăng ký khóa học'),
+            TextEntry::make('user.address')
+            ->label('Địa chỉ người đăng ký'),
+            TextEntry::make('user.phone')
+            ->label('Số điện thoại người đăng ký'),
+            TextEntry::make('user.email')
+            ->label('Email'),
+            TextEntry::make('course.price')
+            ->label('Đơn giá'),
+           
+        ]);
+}
     public static function getRelations(): array
     {
         return [
@@ -79,7 +97,7 @@ class OrderResource extends Resource
         return [
             'index' => Pages\ListOrders::route('/'),
             'create' => Pages\CreateOrder::route('/create'),
-            'view' => Pages\ViewOrder::route('/{record}'),
+            // 'view' => Pages\ViewOrder::route('/{record}'),
             // 'edit' => Pages\EditOrder::route('/{record}/edit'),
         ];
     }

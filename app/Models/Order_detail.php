@@ -12,4 +12,5 @@ class Order_detail extends Model
     public function order(): BelongsTo{
         return $this ->belongsTo(Order::class);
     }
+    
 }
