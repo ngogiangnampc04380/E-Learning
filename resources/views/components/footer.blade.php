@@ -32,7 +32,7 @@
                             <ul>
                                 <li><a href="{{ route('Dashboard-client') }}">Trang chủ </a></li>
                                 {{-- <li><a href="{{ route('client.mentor-register') }}">Đăng ký làm giảng viên</a></li> --}}
-                                <li><a href="{{ route('client.instructor-profile') }}">Hồ sơ giảng viên</a></li>
+                                {{-- <li><a href="{{ route('client.instructor-profile', ['id' => $mentor->id]) }}">">Hồ sơ giảng viên</a></li> --}}
                                 <li><a href="{{ route('client.instructor-list') }}">Danh sách giảng viên</a></li>
                             </ul>
                         </div>

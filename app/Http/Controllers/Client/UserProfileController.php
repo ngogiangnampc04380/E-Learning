@@ -29,7 +29,9 @@ class UserProfileController extends Controller
         $request->email ? $data['email'] = $request->email : '';
         $request->address ? $data['address'] = $request->address : '';
         $request->introduce ? $data['introduce'] = $request->introduce : '';
-
+        $request->link_face ? $data['link_face'] = $request->link_face : '';
+        $request->link_mail ? $data['link_mail'] = $request->link_mail : '';
+        $request->link_youtube ? $data['link_youtube'] = $request->link_youtube : '';
 
         $user = User::find(Auth::id());
         if ($request->hasFile('thumbnail')) {

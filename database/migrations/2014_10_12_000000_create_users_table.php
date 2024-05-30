@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('introduce')->nullable();
             $table->integer('role')->default(0);
             $table->string('thumbnail')->nullable();
+            $table->string('link_face')->nullable();
+            $table->string('link_youtube')->nullable();
+            $table->string('link_mail')->nullable();
             $table->unsignedBigInteger('auth')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

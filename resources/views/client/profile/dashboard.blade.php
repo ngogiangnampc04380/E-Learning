@@ -53,11 +53,13 @@
                                 </a>
                             </li>
                             
+                            @if(in_array(auth()->user()->role, [0, 2]))
                             <li class="nav-item">
                                 <a href="instructor-course.html" class="nav-link">
                                     <i class="feather-shopping-bag"></i> Khóa học của tôi
                                 </a>
                             </li>
+                        @endif 
                             @if(auth()->user()->role== 2)
                             <li class="nav-item ">
                                 <a href="{{route('client.instructor-course')}}" class="nav-link">
@@ -80,31 +82,7 @@
                                 </a>
                             </li>
                             
-                            @elseif(auth()->user()->role == 1)
-                            <li class="nav-item ">
-                                <a href="{{route('client.instructor-course')}}" class="nav-link">
-                                    <i class="feather-book"></i> Quản lí khóa học
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="instructor-student-grid.html" class="nav-link">
-                                    <i class="feather-users"></i> Quản lí học viên
-                                </a>
-                            </li>
-                            
-                            <li class="nav-item">
-                                <a href="instructor-earnings.html" class="nav-link">
-                                    <i class="feather-pie-chart"></i> Nam Béo
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="instructor-orders.html" class="nav-link">
-                                    <i class="feather-shopping-bag"></i> Nam Béo
-                                </a>
-                            </li>
-                            
-
-                            @endif  
+                            @endif 
                             <div class="instructor-title">
                                 <h3>ACCOUNT SETTINGS</h3>
                             </div>

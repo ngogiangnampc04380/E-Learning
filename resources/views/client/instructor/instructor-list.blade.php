@@ -8,18 +8,57 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-9">
-
+                <div class="showing-list">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="d-flex align-items-center">
+                                <div class="view-icons">
+                                    <a href="{{route('client.instructor-list')}}" class="list-view active"><i
+                                            class="feather-list"></i></a>
+                                </div>
+                                <div class="show-result">
+                                    <h4>Showing 1-9 of 50 results</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="show-filter add-course-info">
+                                <form action="#">
+                                    <div class="row gx-2 align-items-center">
+                                        <div class="col-md-6 col-item">
+                                            <div class=" search-group">
+                                                <i class="feather-search"></i>
+                                                <input type="text" class="form-control"
+                                                    placeholder="Search our courses">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-6 col-item">
+                                            <div class="input-block select-form mb-0">
+                                                <select class="form-select select" name="sellist1">
+                                                    <option>Newly published </option>
+                                                    <option>Angular</option>
+                                                    <option>React</option>
+                                                    <option>Nodejs</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 @foreach($data as $mentor)
                     <div class="col-lg-12 d-flex">
                         
                         <div class="instructor-list flex-fill">
                             <div class="instructor-img">
-                                <a href="{{route('client.instructor-profile')}}">
+                                <a href="{{route('client.mentor_detail', ['id' => $mentor->id]) }}">
                                     <img class="img-fluid" alt src="{{ $mentor->thumbnail ? Storage::url('assets-client/img/user/' . $mentor->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"  alt="">
                                 </a>
                             </div>
                             <div class="instructor-content">
-                                <h5><a href="{{route('client.instructor-profile')}}">{{ $mentor->name }}</a></h5>
+                                <h5><a href="{{route('client.mentor_detail', ['id' => $mentor->id]) }}">{{ $mentor->name }}</a></h5>
                                 <div class="instructor-info">
                                     <div class="rating-img d-flex align-items-center">
                                         <img src="/assets-client/img/icon/icon-01.svg" class="me-1" alt>

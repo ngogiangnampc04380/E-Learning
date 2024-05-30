@@ -875,11 +875,7 @@
                                 </li>
                                 <li class="has-submenu {{ Route::currentRouteName() == 'client.instructor-list' ? 'active' : '' }}">
                                     <a href="{{ route('client.instructor-list') }}">Danh sách giảng viên</a>
-                                    <ul class="submenu">
-                                        <li class="{{ Route::currentRouteName() == 'client.instructor-profile' ? 'active' : '' }}">
-                                            <a href="{{ route('client.instructor-profile') }}">Hồ sơ giảng viên</a>
-                                        </li>
-                                    </ul>
+                                   
                                 </li>
                                 <li class="{{ Route::currentRouteName() == 'client.course-lists' ? 'active' : '' }}">
                                     <a href="{{ route('client.course-lists') }}">Khóa học</a>

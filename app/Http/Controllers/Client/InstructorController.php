@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Course;
 use App\Models\Chapter;
 use App\Models\Lesson;
+use App\Models\User;
+
 
 
 class InstructorController extends Controller
@@ -22,10 +24,17 @@ class InstructorController extends Controller
         // return view('client.instructor.instructor-list');
     }
 
+
     public function profile()
     {
         return view('client.instructor.instructor-profile');
     }
+    public function mentor_detail($id)
+    {
+        $mentor = User::with('educations')->where('role', 2)->findOrFail($id) ;
+        return view('client.instructor.instructor-profile', ['mentor' => $mentor]);
+    }
+
     public function course($id)
     {
         $data = DB::table('courses')

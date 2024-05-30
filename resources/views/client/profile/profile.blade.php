@@ -52,12 +52,14 @@
                                     <i class="feather-home"></i> My Dashboard
                                 </a>
                             </li>
+                            @if(in_array(auth()->user()->role, [0, 2]))
+    <li class="nav-item">
+        <a href="instructor-course.html" class="nav-link">
+            <i class="feather-shopping-bag"></i> Khóa học của tôi
+        </a>
+    </li>
+@endif 
                             
-                            <li class="nav-item">
-                                <a href="instructor-course.html" class="nav-link">
-                                    <i class="feather-shopping-bag"></i> Khóa học của tôi
-                                </a>
-                            </li>
                             @if(auth()->user()->role== 2)
                             <li class="nav-item ">
                                 <a href="{{route('client.instructor-course')}}" class="nav-link">
@@ -80,31 +82,7 @@
                                 </a>
                             </li>
                             
-                            @elseif(auth()->user()->role == 1)
-                            <li class="nav-item ">
-                                <a href="{{route('client.instructor-course')}}" class="nav-link">
-                                    <i class="feather-book"></i> Quản lí khóa học
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="instructor-student-grid.html" class="nav-link">
-                                    <i class="feather-users"></i> Quản lí học viên
-                                </a>
-                            </li>
-                            
-                            <li class="nav-item">
-                                <a href="instructor-earnings.html" class="nav-link">
-                                    <i class="feather-pie-chart"></i> Nam Béo
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="instructor-orders.html" class="nav-link">
-                                    <i class="feather-shopping-bag"></i> Nam Béo
-                                </a>
-                            </li>
-                            
-
-                            @endif  
+                            @endif 
                             <div class="instructor-title">
                                 <h3>ACCOUNT SETTINGS</h3>
                             </div>
@@ -209,6 +187,29 @@
                                                     class="form-control" id="exampleInputEmail1"
                                                     aria-describedby="emailHelp" placeholder="Tam giác quỷ bemuda">{{ auth()->user()->introduce }}</textarea>
                                             </div>
+                                            @if(auth()->user()->role == 2)
+                                            <div class="card-header">
+                                                <h4>Thông tin Liên hệ</h4>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label">Email liên hệ ( nếu có )</label>
+                                                <input value="{{ auth()->user()->link_mail }}"type="text" rows="5" name="link_mail"
+                                                    class="form-control" id="exampleInputEmail1"
+                                                    aria-describedby="emailHelp" >
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label">Link Facebook ( nếu có )</label>
+                                                <input value="{{ auth()->user()->link_face }}"type="text" rows="5" name="link_face"
+                                                    class="form-control" id="exampleInputEmail1"
+                                                    aria-describedby="emailHelp" >
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label">Link youtube ( nếu có )</label>
+                                                <input value="{{ auth()->user()->link_youtube }}"type="text" rows="5" name="link_youtube"
+                                                    class="form-control" id="exampleInputEmail1"
+                                                    aria-describedby="emailHelp" >
+                                            </div>
+                                            @endif
                                             {{-- <div class="card-header">
                                                 <h4>Thông tin người dùng</h4>
                                             </div>
@@ -222,6 +223,7 @@
                                             {{-- <button type="button" class="d-none btn btn-primary position-absolute top-0 start-0 m-5" onclick="submitForm()" id="saveAvt">Lưu ảnh</button> --}}
                                             <button class="btn btn-primary" type="submit">Sửa thông tin</button>
                                     </form>
+                                    @if(auth()->user()->role ==2)
                                     <div class="card-header">
                                         <h4>Bằng cấp, chứng chỉ</h4>
                                     </div>
@@ -323,7 +325,7 @@
                                             <button class="btn btn-primary" type="submit">Thêm thông tin</button>
                                         </form>
                                     </div>
-
+                                    @endif
 
 
                                 </div>
@@ -391,11 +393,11 @@
 
     document.querySelectorAll('.btn-edit-education').forEach(function (button) {
         button.addEventListener('click', function () {
-            // if (document.getElementById('edit-education-form').style.display !== 'block') {
+            if (document.getElementById('edit-education-form').style.display !== 'block') {
                         event.preventDefault(); 
                         document.getElementById('add-education-form').style.display = 'none';
                         document.getElementById('edit-education-form').style.display = 'block';
-                    
+            }
             var educationId = this.getAttribute('data-id');
             // Fetch the education data and populate the edit form
             fetch(`/client/education/${educationId}`)

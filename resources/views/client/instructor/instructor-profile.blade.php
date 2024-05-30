@@ -9,32 +9,42 @@
             <div class="row">
                 <div class="col-md-12 col-12">
                     <div class="profile-info-blk">
+                        
                         <a href="javascript:void(0);" class="profile-info-img">
-                            <img src="/assets-client/img/instructor/profile-avatar.jpg" alt class="img-fluid">
+                            <img src="{{ $mentor->thumbnail ? Storage::url('assets-client/img/user/' . $mentor->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"   alt class="img-fluid">
                         </a>
-                        <h4><a href="javascript:void(0);">Jenny Wilson</a><span>Beginner</span></h4>
-                        <p>Instructor</p>
+                        <h4><a href="javascript:void(0);">{{ $mentor->name }}</a></h4>
+                        <p>Giảng viên</p>
                         <ul class="list-unstyled inline-inline profile-info-social">
-                            <li class="list-inline-item">
-                                <a href="javascript:void(0);">
+                            @if($mentor->link_face)
+                                    <li class="list-inline-item">
+                                    <a href="{{ $mentor->link_face }}" target="_blank">
                                     <i class="fa-brands fa-facebook"></i>
+                                    </a>
+                                    </li>
+                            @endif
+                            @if($mentor->link_mail)
+                                    <li class="list-inline-item">
+                                    <a href="mailto:{{ $mentor->link_mail }}" target="_blank">
+                                    <i class="fa-solid fa-envelope"></i>
                                 </a>
                             </li>
+                             @endif
+
+                            @if($mentor->phone)
                             <li class="list-inline-item">
-                                <a href="javascript:void(0);">
-                                    <i class="fa-brands fa-twitter"></i>
+                            <a href="tel:{{ $mentor->phone }}" target="_blank">
+                                    <i class="fa-solid fa-phone"></i>
                                 </a>
                             </li>
-                            <li class="list-inline-item">
-                                <a href="javascript:void(0);">
-                                    <i class="fa-brands fa-instagram"></i>
+                    @endif
+                    @if($mentor->link_youtube)
+                    <li class="list-inline-item">
+                    <a href="{{ $mentor->link_youtube}}" target="_blank">
+                                    <i class="fa-brands fa-youtube"></i>
                                 </a>
                             </li>
-                            <li class="list-inline-item">
-                                <a href="javascript:void(0);">
-                                    <i class="fa-brands fa-linkedin"></i>
-                                </a>
-                            </li>
+                             @endif
                         </ul>
                     </div>
                 </div>
@@ -50,96 +60,39 @@
 
                     <div class="card overview-sec">
                         <div class="card-body">
-                            <h5 class="subs-title">About Me</h5>
-                            <p>Very well thought out and articulate communication. Clear milestones, deadlines and
-                                fast work. Patience. Infinite patience. No shortcuts. Even if the client is being
-                                careless. Some quick example text to build on the card title and bulk the card's
-                                content Moltin gives you platform.</p>
-                            <p class="mb-0">As a highly skilled and successfull product development and design
+                            <h5 class="subs-title">Giới thiệu</h5>
+                            <p>{{ $mentor->introduce }}</p>
+                            {{-- <p class="mb-0">As a highly skilled and successfull product development and design
                                 specialist with more than 4 Years of My experience lies in successfully
                                 conceptualizing, designing, and modifying consumer products specific to interior
-                                design and home furnishings.</p>
+                                design and home furnishings.</p> --}}
                         </div>
                     </div>
 
-
+                    
                     <div class="card education-sec">
+                        
                         <div class="card-body">
-                            <h5 class="subs-title">Education</h5>
+                            <h5 class="subs-title">Trình độ học vấn</h5>
+                            @foreach($mentor->educations as $education)
                             <div class="edu-wrap">
                                 <div class="edu-name">
-                                    <span>B</span>
+                                    <img src="{{ Storage::url('assets-client/img/educations/' . $education->thumbnail) }}" alt="" width="100">
                                 </div>
                                 <div class="edu-detail">
-                                    <h6>BCA - Bachelor of Computer Applications</h6>
-                                    <p class="edu-duration">International University - (2004 - 2010)</p>
-                                    <p>There are many variations of passages of available, but the majority
-                                        alteration in some form. As a highly skilled and successfull product
-                                        development and design specialist with more than 4 Years of My experience.
+                                    <h6>{{ $education->academic_level }}</h6>
+                                    <p class="edu-duration">{{ $education->school }} - {{ $education->time }}</p>
+                                    <p>{{ $education->describe }}
                                     </p>
                                 </div>
                             </div>
-                            <div class="edu-wrap">
-                                <div class="edu-name">
-                                    <span>M</span>
-                                </div>
-                                <div class="edu-detail">
-                                    <h6>MCA - Master of Computer Application</h6>
-                                    <p class="edu-duration">International University - (2010 - 2012)</p>
-                                    <p>There are many variations of passages of available, but the majority
-                                        alteration in some form. As a highly skilled and successfull product
-                                        development and design specialist with more than 4 Years of My experience.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="edu-wrap">
-                                <div class="edu-name">
-                                    <span>D</span>
-                                </div>
-                                <div class="edu-detail">
-                                    <h6>Design Communication Visual</h6>
-                                    <p class="edu-duration">International University - (2012-2015)</p>
-                                    <p>There are many variations of passages of available, but the majority
-                                        alteration in some form. As a highly skilled and successfull product
-                                        development and design specialist with more than 4 Years of My experience.
-                                    </p>
-                                </div>
-                            </div>
+                            @endforeach
+                            
                         </div>
                     </div>
+                    
 
-
-                    <div class="card education-sec">
-                        <div class="card-body">
-                            <h5 class="subs-title">Experience</h5>
-                            <div class="edu-wrap">
-                                <div class="edu-name">
-                                    <span>B</span>
-                                </div>
-                                <div class="edu-detail">
-                                    <h6>Web Design & Development Team Leader</h6>
-                                    <p class="edu-duration">Creative Agency - (2013 - 2016)</p>
-                                    <p>There are many variations of passages of available, but the majority
-                                        alteration in some form. As a highly skilled and successfull product
-                                        development and design specialist with more than 4 Years of My experience.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="edu-wrap">
-                                <div class="edu-name">
-                                    <span>M</span>
-                                </div>
-                                <div class="edu-detail">
-                                    <h6>Project Manager</h6>
-                                    <p class="edu-duration">Jobcy Technology Pvt.Ltd - (Pressent)</p>
-                                    <p>There are many variations of passages of available, but the majority
-                                        alteration in some form. As a highly skilled and successfull product
-                                        development and design specialist with more than 4 Years of My experience.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
 
 
                     <div class="card education-sec">
@@ -489,5 +442,20 @@
                 </div>
             </div>
         </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+        var socialLinks = document.querySelectorAll(".social-link");
+        socialLinks.forEach(function(link) {
+            link.addEventListener("click", function(event) {
+                if (!link.href || link.href.trim() === "" || link.href === "#") {
+                    event.preventDefault();
+                    alert("Trang không tồn tại");
+                }
+            });
+        });
+    });
+    
+        </script>
     </section>
+    
 @endsection

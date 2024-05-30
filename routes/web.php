@@ -57,15 +57,27 @@ Route::prefix('client')->name('client.')->group(function () {
 
     // ----------------------------------instructor-------------------------
     Route::get("/instructor-list", [InstructorController::class, "list"])->name("instructor-list");
-    Route::get("/instructor-profile", [InstructorController::class, "profile"])->name("instructor-profile");
+    // Route::get("/instructor-profile", [InstructorController::class, "profile"])->name("instructor-profile");
+    Route::get("/mentor-profile/{id}", [InstructorController::class, "mentor_detail"])->name("mentor_detail");
+
     Route::get("/dashboard-profile/", [UserDashboardController::class, "dashboard"])->name("dashboard-profile");
     Route::get("/user-profile/", [UserProfileController::class, "userprofile"])->name("user-profile");
     Route::post("/user-profile/", [UserProfileController::class, "profile_edit"])->name("user-profile-edit");
+    Route::post("/update_education/", [UserProfileController::class, "update_education"])->name("update_education");
+    Route::get("/user-profile/{id}", [UserProfileController::class, "education"])->name("user-edu");
+    
+    
+    
+    
+    // education
+    Route::post("/education", [UserProfileController::class, "storeEducation"])->name("storeEducation");
+    Route::post("/education/{id}", [UserProfileController::class, "updateEducation"])->name("updateEducation");
+    Route::post("/education/delete/{id}", [UserProfileController::class, "deleteEducation"])->name("deleteEducation");
+    Route::get("/education/{id}", [UserProfileController::class, "getEducation"])->name("getEducation");
+    
 
-
-
-
-    Route::get("/instructor-course/{id}", [InstructorController::class, "course"])->name("instructor-course");
+// instructor
+    Route::get("/instructor-course", [InstructorController::class, "course"])->name("instructor-course");
     Route::get("/instructor-addcourse", [InstructorController::class, "addcourse"])->name("instructor-addcourse");
     Route::post("/save-course", [InstructorController::class, "saveCourse"])->name('saveCourse');
     Route::get("/instructor-coursedetails/{id}", [InstructorController::class, "chapter"])->name("instructor-coursedetails");
@@ -134,28 +146,28 @@ Route::get('/logout', [LogoutController::class, 'index'])->name('logout')->middl
 Route::post('/logout', [LogoutController::class, 'logout'])->middleware('auth');
 
 
-Route::prefix('client')->name('client.')->group(function () {
+// Route::prefix('client')->name('client.')->group(function () {
 
-    // -----------------------AUTH-------------------------
-    // Route::get("/login", [IndexAuthController::class, "login"])->name("Login");
-    // ----------------------------------instructor-------------------------
-    Route::get("/instructor-list", [InstructorController::class, "list"])->name("instructor-list");
-    Route::get("/instructor-profile", [InstructorController::class, "profile"])->name("instructor-profile");
-    Route::get("/user-profile", [UserProfileController::class, "profile"])->name("user-profile");
+//     // -----------------------AUTH-------------------------
+//     // Route::get("/login", [IndexAuthController::class, "login"])->name("Login");
+//     // ----------------------------------instructor-------------------------
+//     Route::get("/instructor-list", [InstructorController::class, "list"])->name("instructor-list");
+//     Route::get("/instructor-profile", [InstructorController::class, "profile"])->name("instructor-profile");
+//     Route::get("/user-profile", [UserProfileController::class, "profile"])->name("user-profile");
 
-    // ----------------------------------course-details-------------------------
-    Route::get("/course-list", [CoursesController::class, "list"])->name("course-lists");
-    Route::get("/course-details", [CoursesController::class, "detail"])->name("course-details");
+//     // ----------------------------------course-details-------------------------
+//     Route::get("/course-list", [CoursesController::class, "list"])->name("course-lists");
+//     Route::get("/course-details", [CoursesController::class, "detail"])->name("course-details");
 
-    // -----------------------Mentor-------------------------
+//     // -----------------------Mentor-------------------------
   
-    Route::get('/mentor-register', [MentorControllerr::class, "mentorRegister"])->name("mentor-register");
-    Route::post('/mentor-register', [MentorControllerr::class, 'handleRegister']);
-    Route::get('/mentor-profile', [MentorControllerr::class, "profile"])->name("mentor-profile");
+//     Route::get('/mentor-register', [MentorControllerr::class, "mentorRegister"])->name("mentor-register");
+//     Route::post('/mentor-register', [MentorControllerr::class, 'handleRegister']);
+//     Route::get('/mentor-profile', [MentorControllerr::class, "profile"])->name("mentor-profile");
     
-    Route::get('/upload_ID_Card', [MentorControllerr::class, "upload_ID_Card"])->name("upload-id-card");
+//     Route::get('/upload_ID_Card', [MentorControllerr::class, "upload_ID_Card"])->name("upload-id-card");
 
-});
+// });
 Route::prefix('mentor')->name('mentor.')->group(function () {
     Route::get("/sale-course", [SaleController::class, "index"])->name("sale-course");
     Route::post("/sale-course", [SaleController::class, "AddSale"]);
