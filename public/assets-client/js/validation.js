@@ -1,6 +1,6 @@
 (function($) {
     "use strict";
-	
+
 	if($('#passwordInput').length > 0) {
 	let passwordInput = document.querySelector('#passwordInput input[type="password"]');
     let passwordStrength= document.getElementById('passwordStrength');
@@ -10,17 +10,17 @@
     let heavy = document.querySelector('#passwordStrength #heavy');
     let passwordInfo = document.getElementById('passwordInfo');
     let passcheck = document.querySelector('#passwordInput .pass-checked');
-  
+
     let poorRegExp = /[a-z]/;
     let weakRegExp = /(?=.*?[0-9])/;;
     let strongRegExp = /(?=.*?[#?!@$%^&*-])/;
-  
+
 	let whitespaceRegExp = /^$|\s+/;
- 
-	
+
+
 
     passwordInput.oninput= function(){
-   
+
         let passwordValue= passwordInput.value;
         let passwordLength= passwordValue.length;
         let poorPassword= passwordValue.match(poorRegExp);
@@ -42,7 +42,7 @@
 				strongPasswordStrength(passwordLength, poorPassword, weakPassword, strongPassword);
 				heavyPasswordStrength(passwordLength, poorPassword, weakPassword, strongPassword);
 			}
-			
+
 		}
 		else {
 			   passwordInfo.style.display = "none";
@@ -51,10 +51,10 @@
 			   passwordStrength.classList.remove("strong-active");
 			   passwordStrength.classList.remove("heavy-active");
 			   passcheck.classList.remove("active");
-			
+
 		   }
 		}
-		
+
 		function poorPasswordStrength(passwordLength, poorPassword, weakPassword, strongPassword){
 			if(passwordLength < 8)
 			{
@@ -66,7 +66,7 @@
 			   passwordInfo.style.display = "block";
 			   passwordInfo.style.color = "#FF0000";
 			   passwordInfo.innerHTML  = '<img src="assets/img/icon/angry.svg" class="me-2">' + "Weak. Must contain at least 8 characters";
-				  
+
 			}
 		}
 
@@ -81,10 +81,10 @@
 			   passwordInfo.style.display = "block";
 			   passwordInfo.style.color = "#FFB54A";
 			   passwordInfo.innerHTML = '<img src="assets/img/icon/anguish.svg" class="me-2">' + "Average. Must contain at least 1 letter or number";
-				  
+
 			}else{
 			 weak.classList.remove("active");
-			 
+
 		   }
 		}
 
@@ -98,13 +98,13 @@
 			 passwordStrength.classList.remove("heavy-active");
 			 passwordInfo.innerHTML = '<img src="assets/img/icon/smile.svg" class="me-2">' + "Almost. Must contain special symbol";
 			 passwordInfo.style.color = "#1D9CFD";
-		   
+
 		   }else{
 			 strong.classList.remove("active");
-			 
+
 		   }
 		}
-		
+
 		function heavyPasswordStrength(passwordLength, poorPassword, weakPassword, strongPassword){
 		  if(passwordLength >= 8 && (poorPassword && weakPassword) && strongPassword)
 			{
@@ -119,14 +119,14 @@
 		   }else{
 			 heavy.classList.remove("active");
 			 passcheck.classList.remove("active");
-			 
+
 		   }
 		}
-	}	
-		
-		
+	}
+
+
 	if($('#passwordInputs').length > 0) {
-		
+
 	let passwordInput1 = document.querySelector('#passwordInputs input[type="password"]');
     let passwordStrength1= document.getElementById('passwordStrengths');
     let poor1 = document.querySelector('#passwordStrengths #poors');
@@ -135,17 +135,17 @@
     let heavy1 = document.querySelector('#passwordStrengths #heavys');
     let passwordInfos = document.getElementById('passwordInfos');
     let passcheck1 = document.querySelector('#passwordInputs .pass-checked');
-  
+
     let poor1RegExp1 = /[a-z]/;
     let weak1RegExp1 = /(?=.*?[0-9])/;;
     let strong1RegExp1 = /(?=.*?[#?!@$%^&*-])/;
-  
+
 	let whitespace1RegExp1 = /^$|\s+/;
- 
-	
+
+
 
     passwordInput1.oninput= function(){
-   
+
         let passwordValue1= passwordInput1.value;
         let passwordLength1= passwordValue1.length;
         let poor1Password1= passwordValue1.match(poor1RegExp1);
@@ -167,7 +167,7 @@
 				strong1Password1Strength1(passwordLength1, poor1Password1, weak1Password1, strong1Password1);
 				heavy1passwordStrength1(passwordLength1, poor1Password1, weak1Password1, strong1Password1);
 			}
-			
+
 		}
 		else {
 			   passwordInfos.style.display = "none";
@@ -176,10 +176,10 @@
 			   passwordStrength1.classList.remove("strong-active");
 			   passwordStrength1.classList.remove("heavy-active");
 			   passcheck1.classList.remove("active");
-			
+
 		   }
 		}
-		
+
 		function poor1Password1Strength1(passwordLength1, poor1Password1, weak1Password1, strong1Password1){
 			if(passwordLength1 < 8)
 			{
@@ -191,7 +191,7 @@
 			   passwordInfos.style.display = "block";
 			   passwordInfos.style.color = "#FF0000";
 			   passwordInfos.innerHTML  = '<img src="assets/img/icon/angry.svg" class="me-2">' + "weak1. Must contain at least 8 characters";
-				  
+
 			}
 		}
 
@@ -206,10 +206,10 @@
 			   passwordInfos.style.display = "block";
 			   passwordInfos.style.color = "#FFB54A";
 			   passwordInfos.innerHTML = '<img src="assets/img/icon/anguish.svg" class="me-2">' + "Average. Must contain at least 1 letter or number";
-				  
+
 			}else{
 			 weak1.classList.remove("active");
-			 
+
 		   }
 		}
 
@@ -223,13 +223,11 @@
 			 passwordStrength1.classList.remove("heavy-active");
 			 passwordInfos.innerHTML = '<img src="assets/img/icon/smile.svg" class="me-2">' + "Almost. Must contain special symbol";
 			 passwordInfos.style.color = "#1D9CFD";
-		   
+
 		   }else{
 			 strong1.classList.remove("active");
-			 
 		   }
 		}
-		
 		function heavy1passwordStrength1(passwordLength1, poor1Password1, weak1Password1, strong1Password1){
 		  if(passwordLength1 >= 8 && (poor1Password1 && weak1Password1) && strong1Password1)
 			{
@@ -244,10 +242,10 @@
 		   }else{
 			 heavy1.classList.remove("active");
 			 passcheck1.classList.remove("active");
-			 
+
 		   }
 		}
-		
-	}	
-	
+
+	}
+
 })(jQuery);

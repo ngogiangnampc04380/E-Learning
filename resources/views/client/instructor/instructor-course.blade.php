@@ -4,7 +4,7 @@
         <div class="container">
             <div class="row">
 
-                
+
                 {{-- left --}}
                 <div class="col-xl-3 col-lg-4 col-md-12 theiaStickySidebar">
                     <div class="settings-widget dash-profile">
@@ -50,15 +50,15 @@
                                     <i class="feather-home"></i> My Dashboard
                                 </a>
                             </li>
-                            
+
                             <li class="nav-item">
                                 <a href="instructor-course.html" class="nav-link">
                                     <i class="feather-shopping-bag"></i> Khóa học của tôi
                                 </a>
                             </li>
-                            @if(auth()->user()->role== 2)
+                            @if(auth()->user()->role == 2)
                             <li class="nav-item active">
-                                <a href="{{route('client.instructor-course')}}" class="nav-link">
+                                <a href="{{route('client.instructor-course',auth()->user()->id)}}" class="nav-link">
                                     <i class="feather-book"></i> Quản lí khóa học
                                 </a>
                             </li>
@@ -77,10 +77,9 @@
                                     <i class="feather-shopping-bag"></i> Nam Béo
                                 </a>
                             </li>
-                            
                             @elseif(auth()->user()->role == 1)
                             <li class="nav-item active">
-                                <a href="{{route('client.instructor-course')}}" class="nav-link">
+                                <a href="{{route('client.instructor-course',auth()->user()->id)}}" class="nav-link">
                                     <i class="feather-book"></i> Quản lí khóa học
                                 </a>
                             </li>
@@ -89,7 +88,7 @@
                                     <i class="feather-users"></i> Quản lí học viên
                                 </a>
                             </li>
-                            
+
                             <li class="nav-item">
                                 <a href="instructor-earnings.html" class="nav-link">
                                     <i class="feather-pie-chart"></i> Nam Béo
@@ -100,9 +99,9 @@
                                     <i class="feather-shopping-bag"></i> Nam Béo
                                 </a>
                             </li>
-                            
 
-                            @endif  
+
+                            @endif
                             <div class="instructor-title">
                                 <h3>ACCOUNT SETTINGS</h3>
                             </div>
@@ -120,7 +119,7 @@
                                     <i class="feather-cpu"></i> Quảng trị website
                                 </a>
                             </li>
-                            @endif  
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -196,7 +195,7 @@
                                                             </div>
 
                                                         </td>
-                                                        <td>{{ number_format($post->price, 2, ',', ',') }}</td>
+                                                        <td>{{ number_format($post->price) }} VNĐ</td>
                                                         <td><span class="badge info-low">Live</span></td>
                                                         <td>
                                                             <form id="deleteForm" action="{{ route('client.deleteCourse', $post->id) }}" method="POST">

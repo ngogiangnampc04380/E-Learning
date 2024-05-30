@@ -5971,7 +5971,7 @@ body.home-three :-ms-input-placeholder {
 .home-three-goals {
     padding: 60px 0 60px;
     background: url(../img/bg/map.png), #071136;
-    
+
 }
 .development-carrer h2 {
     font-weight: 600;
@@ -17155,7 +17155,7 @@ input[type=password]::-ms-clear
 }
 .profile-bg img {
 	width: 100%;
-    
+
 	border-radius: 5px 5px 0 0;
 }
 .profile-bg {
@@ -17214,7 +17214,7 @@ input[type=password]::-ms-clear
 }
 .profile-imgs input {
 	display: none;
-    
+
 }
 .profile-imgs label {
 	display: none;
@@ -17226,7 +17226,7 @@ input[type=password]::-ms-clear
     padding: 1%;
     text-align: center;
 
-    
+
 }
 
 /* .profile-imgs img:hover + input {
@@ -25595,4 +25595,12 @@ input[type=password]::-ms-clear
         margin-bottom: 50px;
     }
 }
+.btn-group-equal {
+    display: flex;
+    justify-content: flex-end;
+}
+.btn-group-equal > * {
+    margin-left: 5px; /* Adjust the margin as needed */
+}
+
 

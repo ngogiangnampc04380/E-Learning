@@ -60,48 +60,66 @@
                                 </a>
                             </div>
                             <ul class="main-nav">
-                                <li class="has-submenu active">
+                                <li class="has-submenu {{ Route::currentRouteName() == 'Dashboard-client' ? 'active' : '' }}">
                                     <a href="{{ route('Dashboard-client') }}">Trang chủ </a>
                                 </li>
-                                <li class="has-submenu">
-                                    <a href>Giảng viên <i class="fas fa-chevron-down"></i></a>
+                                <li class="has-submenu {{ Route::currentRouteName() == 'client.instructor-list' ? 'active' : '' }}">
+                                    <a href="{{ route('client.instructor-list') }}">Danh sách giảng viên</a>
                                     <ul class="submenu">
-                                        <li><a href="{{ route('client.instructor-list') }}">Danh sách giảng viên</a>
+                                        <li class="{{ Route::currentRouteName() == 'client.instructor-profile' ? 'active' : '' }}">
+                                            <a href="{{ route('client.instructor-profile') }}">Hồ sơ giảng viên</a>
                                         </li>
-                                        <li><a href="{{ route('client.instructor-profile') }}">Hồ sơ giảng viên</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="{{ route('client.course-lists') }}">Danh sách khóa học</a></li>
-                                <li><a href="{{ route('client.post-list') }}">Danh sách bài viết</a></li>
-                                <li><a href="{{ route('client.instructor-course') }}">My Course</a></li>
+                                <li class="{{ Route::currentRouteName() == 'client.course-lists' ? 'active' : '' }}">
+                                    <a href="{{ route('client.course-lists') }}">Khóa học</a>
+                                </li>
+                                <li class="{{ Route::currentRouteName() == 'client.post-list' ? 'active' : '' }}">
+                                    <a href="{{ route('client.post-list') }}">Bài viết</a>
+                                </li>
+
+                                @if(auth()->check())
+                                    @if(auth()->user()->role == 1 || auth()->user()->role == 2)
+                                        <li class="{{ Route::currentRouteName() == 'client.instructor-course' ? 'active' : '' }}">
+                                            <a href="{{ route('client.instructor-course',auth()->user()->id)}}">Quản lí Khóa học</a>
+                                        </li>
+{{--                                        <li class="{{ Route::currentRouteName() == 'client.instructor-course' ? 'active' : '' }}">--}}
+{{--                                            <a href="{{ route('client.instructor-course') }}">Khóa học của tôi</a>--}}
+{{--                                        </li>--}}
+                                    @elseif(auth()->user()->role == 0)
+                                        <li class="{{ Route::currentRouteName() == 'client.instructor-course' ? 'active' : '' }}">
+                                            <a href="{{ route('client.instructor-course')}}">Khóa học của tôi</a>
+                                        </li>
+                                    @endif
+                                @endif
                             </ul>
                         </div>
-                        
+
                         @guest
                             <ul class="nav header-navbar-rht">
                                 <li class="nav-item">
-                                    <a class="nav-link header-sign" href="{{route('login')}}">Sign in</a>
+                                    <a class="nav-link header-sign" href="{{route('login')}}">Đăng nhập</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link header-login" href="{{route('register')}}" >Sign up</a>
+                                    <a class="nav-link header-login" href="{{route('register')}}" >Đăng ký</a>
                                 </li>
                             </ul>
                         @endguest
                         @auth
                             <ul class="nav ">
-                                
+
                                 <li class="nav-item user-nav">
                                     <div class="dropdown" >
                                     <a href="" class="dropdown-toggle"
                                     data-bs-toggle="dropdown">
                                         <span class="user-img" >
-                                            <img src="{{ auth()->user()->thumbnail ? Storage::url('assets-client/img/user/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}" 
+                                            <img src="{{ auth()->user()->thumbnail ? Storage::url('assets-client/img/user/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}"
                                                 style="transform: scale(0.8);">
                                             <span class="status online"></span>
                                         </span>
-                                        
+
                                     </a>
-                                    
+
                                     <div class="users dropdown-menu dropdown-user"
                                         data-popper-placement="bottom-end">
                                         <a href="">{{auth()->user()->name}}</a>
@@ -114,7 +132,7 @@
                                         @endif
 
                                         @if(auth()->user()->role == 0)
-                                        <a class="dropdown-item" href="{{ route('client.dashboard-profile') }}"><i 
+                                        <a class="dropdown-item" href="{{ route('client.dashboard-profile') }}"><i
                                             class="feather-user me-1"></i>Thông tin người dùng</a>
                                         </a>
                                         @elseif(auth()->user()->role== 2)
@@ -125,12 +143,12 @@
                                     <a class="dropdown-item" href="{{ route('client.dashboard-profile') }}">
                                         <i class="feather-star me-1"></i> Thông tin ADMIN
                                     </a>
-                                    
+
                                     <a class="dropdown-item" href="/admin">
                                         <i class="feather-cpu me-1"></i> Quản trị website
                                     </a>
                                     @endif
-                                        
+
                                         <a class="dropdown-item" href="{{route('logout')}}"><i
                                                 class="feather-log-out me-1"></i> Logout</a>
                                     </div>
@@ -139,8 +157,8 @@
                             </ul>
                         @endauth
                         </div>
-                        
-                        
+
+
                     </div>
                 </nav>
             </div>

@@ -9,16 +9,18 @@
                         <div class="settings-menu p-0">
                             <div class="profile-bg">
                                 @if(auth()->user()->role == 0)
-                                <h5 class="text-muted mb-0">Học viên</h5>
+                                    <h5 class="text-muted mb-0">Học viên</h5>
                                 @elseif(auth()->user()->role == 1)
-                                <h5 class="text-muted mb-0">ADMIN</h5>
+                                    <h5 class="text-muted mb-0">ADMIN</h5>
                                 @elseif(auth()->user()->role == 2)
-                                <h5 class="text-muted mb-0">Mentor</h5>
+                                    <h5 class="text-muted mb-0">Mentor</h5>
                                 @endif
                                 <img src="/assets-client/img/instructor-profile-bg.jpg" alt="">
                                 <div class="profile-img">
                                     <a href="">
-                                        <img src="{{ auth()->user()->thumbnail ? Storage::url('assets-client/img/user/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}"  alt="">
+                                        <img
+                                            src="{{ auth()->user()->thumbnail ? Storage::url('assets-client/img/user/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}"
+                                            alt="">
                                     </a>
                                 </div>
                             </div>
@@ -27,14 +29,15 @@
                                     <h4><a href="">{{auth()->user()-> name}}</a></h4>
                                     @if(auth()->user()->role == 0)
                                         <p class="text-muted mb-0">Học viên</p>
-                                        @elseif(auth()->user()->role == 1)
+                                    @elseif(auth()->user()->role == 1)
                                         <p class="text-muted mb-0">ADMIN</p>
-                                        @elseif(auth()->user()->role == 2)
+                                    @elseif(auth()->user()->role == 2)
                                         <p class="text-muted mb-0">Mentor</p>
-                                        @endif
+                                    @endif
                                 </div>
                                 <div class="go-dashboard text-center">
-                                    <a href="{{ route('client.instructor-addcourse') }}" class="btn btn-primary">Create New Course</a>
+                                    <a href="{{ route('client.instructor-addcourse') }}" class="btn btn-primary">Create
+                                        New Course</a>
                                 </div>
                             </div>
                         </div>
@@ -48,59 +51,58 @@
                                     <i class="feather-home"></i> My Dashboard
                                 </a>
                             </li>
-                            
+
                             <li class="nav-item">
                                 <a href="instructor-course.html" class="nav-link">
                                     <i class="feather-shopping-bag"></i> Khóa học của tôi
                                 </a>
                             </li>
                             @if(auth()->user()->role== 2)
-                            <li class="nav-item active">
-                                <a href="{{route('client.instructor-course')}}" class="nav-link">
-                                    <i class="feather-book"></i> Quản lí khóa học
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="instructor-student-grid.html" class="nav-link">
-                                    <i class="feather-users"></i> Quản lí học viên
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="instructor-earnings.html" class="nav-link">
-                                    <i class="feather-pie-chart"></i> Nam Béo
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="instructor-orders.html" class="nav-link">
-                                    <i class="feather-shopping-bag"></i> Nam Béo
-                                </a>
-                            </li>
-                            
-                            @elseif(auth()->user()->role == 1)
-                            <li class="nav-item active">
-                                <a href="{{route('client.instructor-course')}}" class="nav-link">
-                                    <i class="feather-book"></i> Quản lí khóa học
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="instructor-student-grid.html" class="nav-link">
-                                    <i class="feather-users"></i> Quản lí học viên
-                                </a>
-                            </li>
-                            
-                            <li class="nav-item">
-                                <a href="instructor-earnings.html" class="nav-link">
-                                    <i class="feather-pie-chart"></i> Nam Béo
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="instructor-orders.html" class="nav-link">
-                                    <i class="feather-shopping-bag"></i> Nam Béo
-                                </a>
-                            </li>
-                            
+                                <li class="nav-item active">
+                                    <a href="{{route('client.instructor-course')}}" class="nav-link">
+                                        <i class="feather-book"></i> Quản lí khóa học
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="instructor-student-grid.html" class="nav-link">
+                                        <i class="feather-users"></i> Quản lí học viên
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="instructor-earnings.html" class="nav-link">
+                                        <i class="feather-pie-chart"></i> Nam Béo
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="instructor-orders.html" class="nav-link">
+                                        <i class="feather-shopping-bag"></i> Nam Béo
+                                    </a>
+                                </li>
 
-                            @endif  
+                            @elseif(auth()->user()->role == 1)
+                                <li class="nav-item active">
+                                    <a href="{{route('client.instructor-course')}}" class="nav-link">
+                                        <i class="feather-book"></i> Quản lí khóa học
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="instructor-student-grid.html" class="nav-link">
+                                        <i class="feather-users"></i> Quản lí học viên
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="instructor-earnings.html" class="nav-link">
+                                        <i class="feather-pie-chart"></i> Nam Béo
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="instructor-orders.html" class="nav-link">
+                                        <i class="feather-shopping-bag"></i> Nam Béo
+                                    </a>
+                                </li>
+
+                            @endif
                             <div class="instructor-title">
                                 <h3>ACCOUNT SETTINGS</h3>
                             </div>
@@ -110,15 +112,15 @@
                                 </a>
                             </li>
                             @if(auth()->user()->role== 1)
-                            <div class="instructor-title">
-                                <h3>ADMIN</h3>
-                            </div>
-                            <li class="nav-item">
-                                <a href="/admin" class="nav-link">
-                                    <i class="feather-cpu"></i> Quảng trị website
-                                </a>
-                            </li>
-                            @endif  
+                                <div class="instructor-title">
+                                    <h3>ADMIN</h3>
+                                </div>
+                                <li class="nav-item">
+                                    <a href="/admin" class="nav-link">
+                                        <i class="feather-cpu"></i> Quảng trị website
+                                    </a>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -137,26 +139,30 @@
                                                 <h4>THÊM CHƯƠNG</h4>
                                                 <div class="form-group mt-3">
                                                     <label for="chapter_name">Tên chương</label>
-                                                    <input type="text" id="chapter_name" name="chapter_name" class="form-control">
+                                                    <input type="text" id="chapter_name" name="chapter_name"
+                                                           class="form-control">
                                                 </div>
                                                 <div class="form-group mt-3">
                                                     <label for="course_id ">Danh mục khóa học</label><br>
                                                     <select id="course_id " name="course_id" class="form-control">
                                                         <option value="">ID khóa học</option>
-                                                       @foreach($getCourse as $chapter)
+                                                        @foreach($getCourse as $chapter)
                                                             <option value="{{$chapter->id}}">{{$chapter->name}}</option>
-                                                       @endforeach
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="widget-btn form-group"> <!-- Sử dụng form-group để tạo kích thước cho nút -->
-                                            <button type="submit" class="btn btn-info-light btn-block" id="submit">Hoàn tất</button>
+                                        <div class="widget-btn form-group">
+                                            <!-- Sử dụng form-group để tạo kích thước cho nút -->
+                                            <button type="submit" class="btn btn-info-light btn-block" id="submit">Hoàn
+                                                tất
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
-            
+
                         </div>
                         <div class="col-md-7">
                             <div class="settings-widget">
@@ -171,26 +177,26 @@
                                                             <div class="sell-table-group d-flex align-items-center">
                                                                 <div class="sell-tabel-info">
                                                                     <a href="{{route('client.instructor-lesson',$post->id)}}">
-                                                                        <p> {{ $post->name }}</p> </a>
+                                                                        <p>{{ $post->name }}</p>
+                                                                    </a>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <a href="{{route('client.editChapter', $post->id)}}" class="btn btn-danger">
-                                                                Sửa
-                                                            </a>
-                                                            <form id="deleteForm" action="{{ route('client.deleteChapter', $post->id) }}" method="POST">
-                                                                @csrf
-                                                                <button type="submit" class="btn btn-danger">
-                                                                    Xóa
-                                                                </button>
-                                                            </form>
-            
+                                                            <div class="btn-group-equal">
+                                                                <form id="deleteForm" action="{{ route('client.deleteChapter', $post->id) }}" method="POST" style="display:inline;">
+                                                                    @csrf
+                                                                    <button type="submit" class="btn btn-danger btn-custom">
+                                                                        Xóa
+                                                                    </button>
+                                                                </form>
+                                                                <a href="{{ route('client.editChapter', $post->id) }}" class="btn btn-danger btn-custom">
+                                                                    Sửa
+                                                                </a>
+                                                            </div>
                                                         </td>
-            
                                                     </tr>
                                                 @endforeach
-            
                                                 </tbody>
                                             </table>
                                         </div>

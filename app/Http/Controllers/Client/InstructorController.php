@@ -21,10 +21,10 @@ class InstructorController extends Controller
     {
         return view('client.instructor.instructor-profile');
     }
-
-    public function course()
+    public function course($id)
     {
         $data = DB::table('courses')
+            ->where('mentor_id',$id)
             ->orderBy('id', 'desc')
             ->get();
 
@@ -76,12 +76,14 @@ class InstructorController extends Controller
         $course->description = $request->input('description');
         $course->price = $request->input('price');
         $course->category_id = $request->input('category_id');
+        $course->mentor_id = $request->input('mentor_id');
 
         if ($request->hasFile('thumbnail')) {
             $thumbnail = $request->file('thumbnail');
             $thumbnailName = $thumbnail->getClientOriginalName();
             $thumbnail->storeAs('public/', $thumbnailName); // Lưu vào thư mục storage/app/public/images
             $course->thumbnail = $thumbnailName;
+
         }
         $course->save();
 
