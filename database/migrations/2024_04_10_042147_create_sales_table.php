@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->integer('amount');
+            $table->integer('status');
             $table->unsignedBigInteger('course_id');
             $table->foreign('course_id')->references('id')->on('courses')->constrained()->cascadeOnDelete();
             $table->timestamps();
