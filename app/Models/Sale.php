@@ -8,10 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Sale extends Model
 {
     use HasFactory;
-    protected $fillable=[
-        'percent_sale',
+    protected $fillable = [
+        'id',
+        'price_sale',
+        'sales_code',
         'start_date',
         'end_date',
+        'course_id',
         'amount',
+        'status',
     ];
 }

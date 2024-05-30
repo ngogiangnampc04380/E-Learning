@@ -24,7 +24,7 @@ use App\Http\Controllers\Client\PasswordController;
 
 // ----------------------------Mentor----------------------------*******
 use App\Http\Controllers\Mentor\MentorControllerr;
-
+use App\Http\Controllers\Mentor\SaleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -149,11 +149,21 @@ Route::prefix('client')->name('client.')->group(function () {
 
     // -----------------------Mentor-------------------------
   
-    // Route::get('/mentor-register', [MentorControllerr::class, "mentorRegister"])->name("mentor-register");
-    // Route::post('/mentor-register', [MentorControllerr::class, 'handleRegister']);
-    // Route::get('/mentor-profile', [MentorControllerr::class, "profile"])->name("mentor-profile");
+    Route::get('/mentor-register', [MentorControllerr::class, "mentorRegister"])->name("mentor-register");
+    Route::post('/mentor-register', [MentorControllerr::class, 'handleRegister']);
+    Route::get('/mentor-profile', [MentorControllerr::class, "profile"])->name("mentor-profile");
     
-    // Route::get('/upload_ID_Card', [MentorControllerr::class, "upload_ID_Card"])->name("upload-id-card");
+    Route::get('/upload_ID_Card', [MentorControllerr::class, "upload_ID_Card"])->name("upload-id-card");
 
 });
-// Route::post('/mentor/save-id-card-data', [MentorControllerr::class, 'saveIdCardData'])->name('mentor-save-id-card');
+Route::prefix('mentor')->name('mentor.')->group(function () {
+    Route::get("/sale-course", [SaleController::class, "index"])->name("sale-course");
+    Route::post("/sale-course", [SaleController::class, "AddSale"]);
+});
+
+
+
+
+
+
+Route::post('/mentor/save-id-card-data', [MentorControllerr::class, 'saveIdCardData'])->name('mentor-save-id-card');
