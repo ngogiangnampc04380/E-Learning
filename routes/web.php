@@ -81,7 +81,7 @@ Route::post('/disable-account', [UserProfileController::class, 'disableAccount']
     
 
 // instructor
-    Route::get("/instructor-course", [InstructorController::class, "course"])->name("instructor-course");
+    Route::get("/instructor-course/{id}", [InstructorController::class, "course"])->name("instructor-course");
     Route::get("/instructor-addcourse", [InstructorController::class, "addcourse"])->name("instructor-addcourse");
     Route::post("/save-course", [InstructorController::class, "saveCourse"])->name('saveCourse');
     Route::get("/instructor-coursedetails/{id}", [InstructorController::class, "chapter"])->name("instructor-coursedetails");
