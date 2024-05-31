@@ -29,7 +29,7 @@
                         </div>
                         <div class="text-center mt-5 mb-4">
                             <h2>Forgot Your Password?</h2>
-                            <p>Forgot password confirmation code below, please do not let others know.</p>
+                            <p>Forgot password confirmation code below, please do not let others know.</p><br>
                             <div>
                                 <div class="pt-2 pb-2 ps-5 pe-5 mt-4 mb-3"
                                     style="background-color: black; color: white; display: inline-block; font-size:30px; font-weight: bold; border-radius:10px;">

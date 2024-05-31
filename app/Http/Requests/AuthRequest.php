@@ -33,7 +33,7 @@ class AuthRequest extends FormRequest
                 return array_merge($login_rules, [
                     'name' => ['required', 'min:3', 'max:40', 'regex:/[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$/'],
                     'phone' => ['required', 'string', 'alpha_dash:ascii', Rule::unique('users'), 'regex:/^0\d{9}$/'],
-
+                    
                     'email' => [
                         'email',
                         'required',
@@ -47,6 +47,9 @@ class AuthRequest extends FormRequest
                         'string',
                         'min:6',
                     ],
+                    'price_sale'=>[
+                        'required',
+                    ]
                    
                 ]);
         }
@@ -68,6 +71,8 @@ class AuthRequest extends FormRequest
             'name.max' => 'Tên không được vượt quá :max ký tự!',          
             'phone.unique' => 'Số điện thoại đã tồn tại !',
             'phone.regex' => 'Số điện thoại không đúng định dạng "012****"!',
+            // ----------------
+            'price_sale.required'=>'không được để trống',
         ];
     }
     public function attributes(): array

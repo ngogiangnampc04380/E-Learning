@@ -15,7 +15,7 @@ class IndexAuthController extends Controller
     {
         
         if (auth()->check()) {
-            var_dump(auth());
+            // var_dump(auth());
             return redirect()->route('Dashboard-client');
         }
         return view('client.auth.login');

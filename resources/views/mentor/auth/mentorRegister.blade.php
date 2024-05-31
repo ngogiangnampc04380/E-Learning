@@ -118,8 +118,8 @@
                                 </div>
                             </div>      
                             <h1>Đăng ký mentor</h1>
-                            <form action="{{ route('client.mentor-register') }}" method="POST">
-                               
+                            <form action="{{ route('client.mentor-register') }}" method="POST" >
+                                <input type="hidden" name="user_id" value="{{ auth()->id() }}">
                                 <div class="d-grid">
                                     <button class="btn btn-primary btn-start" type="submit">Tiếp Tục >></button>
                                 </div>
