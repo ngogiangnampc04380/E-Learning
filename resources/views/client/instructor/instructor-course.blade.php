@@ -35,93 +35,83 @@
                                         <p class="text-muted mb-0">Mentor</p>
                                         @endif
                                 </div>
+                                @if(auth()->user()->role == 2)
                                 <div class="go-dashboard text-center">
                                     <a href="{{ route('client.instructor-addcourse') }}" class="btn btn-primary">Create New Course</a>
                                 </div>
+                                @endif
+
                             </div>
                         </div>
                     </div>
                     <div class="settings-menu">
-                        <h3>Thông tin tài khoản</h3>
-                        <ul>
+    <h3>Thông tin tài khoản</h3>
+   <ul>
+        <li class="nav-item {{ request()->routeIs('client.dashboard-profile') ? 'active' : '' }}">
+            <a href="{{ route('client.dashboard-profile') }}" class="nav-link">
+                <i class="feather-home"></i> My Dashboard
+            </a>
+        </li>
+        @if(in_array(auth()->user()->role, [0, 2]))
+        <li class="nav-item {{ request()->is('instructor-course') ? 'active' : '' }}">
+            <a href="instructor-course.html" class="nav-link">
+                <i class="feather-shopping-bag"></i> Khóa học của tôi
+            </a>
+        </li>
+        @endif
+        @if(auth()->user()->role == 2)
+        <li class="nav-item {{ request()->routeIs('client.instructor-course') ? 'active' : '' }}">
+            <a href="{{ route('client.instructor-course') }}" class="nav-link">
+                <i class="feather-book"></i> Quản lí khóa học
+            </a>
+        </li>
+        <li class="nav-item {{ request()->is('instructor-student-grid.html') ? 'active' : '' }}">
+            <a href="instructor-student-grid.html" class="nav-link">
+                <i class="feather-users"></i> Quản lí học viên
+            </a>
+        </li>
+        <li class="nav-item {{ request()->is('instructor-earnings.html') ? 'active' : '' }}">
+            <a href="instructor-earnings.html" class="nav-link">
+                <i class="feather-pie-chart"></i> Nam Béo
+            </a>
+        </li>
+        <li class="nav-item {{ request()->is('instructor-orders.html') ? 'active' : '' }}">
+            <a href="instructor-orders.html" class="nav-link">
+                <i class="feather-shopping-bag"></i> Nam Béo
+            </a>
+        </li>
+        @endif
+        <div class="instructor-title">
+            <h3>ACCOUNT SETTINGS</h3>
+        </div>
+        <li class="nav-item {{ request()->routeIs('client.user-profile') ? 'active' : '' }}">
+            <a href="{{ route('client.user-profile') }}" class="nav-link">
+                <i class="feather-settings"></i> Thông tin cá nhân
+            </a>
+        </li>
+        @if(auth()->user()->role == 1)
+        <div class="instructor-title">
+            <h3>ADMIN</h3>
+        </div>
+        <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
+            <a href="/admin" class="nav-link">
+                <i class="feather-cpu"></i> Quảng trị website
+            </a>
+        </li>
+        @endif
+        <li class="nav-item">
+            <a href="{{ route('logout') }}" class="nav-link">
+                <i class="feather-log-out"></i> Đăng xuất
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('client.disable-account-form') }}" class="nav-link">
+                <i class="feather-user-x"></i> Vô hiệu hóa tài khoản
+            </a>
+        </li>
+    </ul>
+</div>
 
-                            <li class="nav-item  ">
-                                <a href="{{ route('client.dashboard-profile') }}" class="nav-link">
-                                    <i class="feather-home"></i> My Dashboard
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="instructor-course.html" class="nav-link">
-                                    <i class="feather-shopping-bag"></i> Khóa học của tôi
-                                </a>
-                            </li>
-                            @if(auth()->user()->role == 2)
-                            <li class="nav-item active">
-                                <a href="{{route('client.instructor-course',auth()->user()->id)}}" class="nav-link">
-                                    <i class="feather-book"></i> Quản lí khóa học
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="instructor-student-grid.html" class="nav-link">
-                                    <i class="feather-users"></i> Quản lí học viên
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="instructor-earnings.html" class="nav-link">
-                                    <i class="feather-pie-chart"></i> Nam Béo
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="instructor-orders.html" class="nav-link">
-                                    <i class="feather-shopping-bag"></i> Nam Béo
-                                </a>
-                            </li>
-                            @elseif(auth()->user()->role == 1)
-                            <li class="nav-item active">
-                                <a href="{{route('client.instructor-course',auth()->user()->id)}}" class="nav-link">
-                                    <i class="feather-book"></i> Quản lí khóa học
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="instructor-student-grid.html" class="nav-link">
-                                    <i class="feather-users"></i> Quản lí học viên
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="instructor-earnings.html" class="nav-link">
-                                    <i class="feather-pie-chart"></i> Nam Béo
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="instructor-orders.html" class="nav-link">
-                                    <i class="feather-shopping-bag"></i> Nam Béo
-                                </a>
-                            </li>
-
-
-                            @endif
-                            <div class="instructor-title">
-                                <h3>ACCOUNT SETTINGS</h3>
-                            </div>
-                            <li class="nav-item  ">
-                                <a href="{{ route('client.user-profile') }}" class="nav-link">
-                                    <i class="feather-settings"></i> Thông tin cá nhân
-                                </a>
-                            </li>
-                            @if(auth()->user()->role== 1)
-                            <div class="instructor-title">
-                                <h3>ADMIN</h3>
-                            </div>
-                            <li class="nav-item">
-                                <a href="/admin" class="nav-link">
-                                    <i class="feather-cpu"></i> Quảng trị website
-                                </a>
-                            </li>
-                            @endif
-                        </ul>
-                    </div>
                 </div>
 
 

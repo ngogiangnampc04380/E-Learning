@@ -50,6 +50,13 @@
                 </div>
             </div>
         </div>
+        <div class="container">
+            @if(Auth::check() && Auth::id() == $mentor->id)
+                <div class="text-center mt-3">
+                    <a href="{{ route('client.user-profile') }}" class="btn btn-primary">Sửa thông tin</a>
+                </div>
+            @endif
+        </div>
     </div>
 
 
@@ -62,10 +69,6 @@
                         <div class="card-body">
                             <h5 class="subs-title">Giới thiệu</h5>
                             <p>{{ $mentor->introduce }}</p>
-                            {{-- <p class="mb-0">As a highly skilled and successfull product development and design
-                                specialist with more than 4 Years of My experience lies in successfully
-                                conceptualizing, designing, and modifying consumer products specific to interior
-                                design and home furnishings.</p> --}}
                         </div>
                     </div>
 

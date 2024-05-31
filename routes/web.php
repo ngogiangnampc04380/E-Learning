@@ -65,8 +65,12 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::post("/user-profile/", [UserProfileController::class, "profile_edit"])->name("user-profile-edit");
     Route::post("/update_education/", [UserProfileController::class, "update_education"])->name("update_education");
     Route::get("/user-profile/{id}", [UserProfileController::class, "education"])->name("user-edu");
-    
-    
+    // delete
+// Hiển thị form xác nhận vô hiệu hóa tài khoản
+Route::get('/disable-account', [UserProfileController::class, 'showDisableAccountForm'])->name('disable-account-form');
+
+// Xử lý yêu cầu vô hiệu hóa tài khoản
+Route::post('/disable-account', [UserProfileController::class, 'disableAccount'])->name('disable-account');
     
     
     // education

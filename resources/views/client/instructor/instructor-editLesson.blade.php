@@ -33,9 +33,12 @@
                                         <p class="text-muted mb-0">Mentor</p>
                                         @endif
                                 </div>
+                                @if(auth()->user()->role == 2)
                                 <div class="go-dashboard text-center">
                                     <a href="{{ route('client.instructor-addcourse') }}" class="btn btn-primary">Create New Course</a>
                                 </div>
+                                @endif
+
                             </div>
                         </div>
                     </div>

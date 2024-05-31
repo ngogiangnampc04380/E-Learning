@@ -120,30 +120,22 @@
 </a>
 
 
-<h3 class=""><a href="course-details.html">Bạn chắc chắn muốn đăng xuất?</a></h3>
+<h2 class="">Bạn có chắc chắn muốn vô hiệu hóa tài khoản của mình không? Hành động này không thể hoàn tác.</h2>
 
 <div class="head-course-title" >
 <div class="all-btn all-category d-flex align-items-center">
-    <form method="POST">
+    
+    <form method="POST" action="{{ route('client.disable-account') }}">
         @csrf
-
-<button class="btn btn-primary m-3" id="submitButton">Yes</button>
-
+        <button class="btn btn-primary  " type="submit" class="btn btn-danger">Vô hiệu hóa</button>
     </form>
     <button class="btn btn-primary m-3" onclick="window.history.back()">
         Hủy bỏ
     </button>
-
 </div>
 
 </div>
 </div>
 </div>
-<script>
-    const submitButton = document.getElementById('submitButton');
-        submitButton.addEventListener('click', function() {
-            document.cookie = 'requestCount=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-            document.cookie = 'start_time=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        });
-</script>
+
 @endsection

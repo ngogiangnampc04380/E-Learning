@@ -29,6 +29,8 @@
     <!--
 <link rel="stylesheet" href="/assets-client/plugins/aos/aos.css"> -->
 
+
+
     <link rel="stylesheet" href="/assets-client/css/style.css">
     <style>
         *,
@@ -942,6 +944,9 @@
                                             class="feather-user me-1"></i>Thông tin người dùng</a>
                                         </a>
                                         @elseif(auth()->user()->role== 2)
+                                        <a class="dropdown-item" href="{{route('client.mentor_detail', ['id' =>auth()->user()->id]) }}">
+                                            <i class="feather-star me-1"></i> Giới thiệu
+                                        </a>
                                     <a class="dropdown-item" href="{{ route('client.dashboard-profile') }}">
                                         <i class="feather-star me-1"></i> Thông tin mentor
                                     </a>
@@ -956,7 +961,7 @@
                                     @endif
 
                                         <a class="dropdown-item" href="{{route('logout')}}"><i
-                                                class="feather-log-out me-1"></i> Logout</a>
+                                                class="feather-log-out me-1"></i>Đăng xuất</a>
                                     </div>
                                 </li>
                             </ul>

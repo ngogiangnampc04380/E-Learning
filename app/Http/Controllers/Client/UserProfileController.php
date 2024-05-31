@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Client;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Http\Controllers\Controller;
 use App\Models\Education;
 use Illuminate\Support\Facades\Session;
@@ -10,11 +10,13 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Http\Request;
-
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Illuminate\Support\Facades\File;
 class UserProfileController extends Controller
 {
+    use HasFactory, Notifiable, SoftDeletes;
     public function userprofile() {
         $userId = Session::get('id');
         $data = User::with('educations')->find($userId); // Load cả quan hệ educations
@@ -109,5 +111,23 @@ class UserProfileController extends Controller
     public function getEducation($id) {
         $education = Education::findOrFail($id);
         return response()->json($education);
+    }
+
+    public function showDisableAccountForm()
+    {
+        return view('client.profile.disable-account');
+    }
+
+    // Xử lý yêu cầu vô hiệu hóa tài khoản
+    public function disableAccount(Request $request)
+    {
+        $user = Auth::user();
+
+        Auth::logout(); // Đăng xuất người dùng
+
+        // Xóa tài khoản
+        DB::table('users')->where('id', $user->id)->delete();
+
+        return redirect('/')->with('status', 'Tài khoản của bạn đã được vô hiệu hóa.');
     }
 }

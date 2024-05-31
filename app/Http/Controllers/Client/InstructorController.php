@@ -9,6 +9,7 @@ use App\Models\Course;
 use App\Models\Chapter;
 use App\Models\Lesson;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -16,8 +17,10 @@ class InstructorController extends Controller
 {
     public function list()
     {
+        $currentUserId = Auth::id();
         $data = DB::table('users')
         ->where('role', 2)
+        ->where('id', '!=', $currentUserId)
         ->get();
 
         return view('client.instructor.instructor-list', ['data' => $data]);
