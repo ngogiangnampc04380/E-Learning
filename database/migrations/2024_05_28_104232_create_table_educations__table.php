@@ -15,13 +15,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->constrained()->cascadeOnDelete();
-            $table->string('academic_level')->nullable();
+            $table->string('academic_level',500)->nullable();
             $table->string('school')->nullable();
-            $table->string('describe')->nullable();
+            $table->string('describe',500)->nullable();
             $table->string('time')->nullable();
             $table->string('thumbnail')->nullable();
-            
-
             $table->timestamps();
         });
     }
