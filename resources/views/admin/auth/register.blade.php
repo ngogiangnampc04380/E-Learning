@@ -3,17 +3,15 @@
 
 <body>
 
-  
+
     <!-- ?PROD Only: Google Tag Manager (noscript) (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5DDHKGP" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-    
-    <!-- Content -->
-  
+
+
   <div class="position-relative">
     <div class="authentication-wrapper authentication-basic container-p-y">
       <div class="authentication-inner py-4">
-  
+
         <!-- Register Card -->
         <div class="card p-2">
           <!-- Logo -->
@@ -42,7 +40,7 @@
           <div class="card-body mt-2">
             <h4 class="mb-2">Adventure starts here 🚀</h4>
             <p class="mb-4">Make your app management easy and fun!</p>
-  
+
             <form id="formAuthentication" class="mb-3" action="https://demos.themeselection.com/materio-bootstrap-html-admin-template/html/vertical-menu-template/index.html" method="GET">
               <div class="form-floating form-floating-outline mb-3">
                 <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" autofocus>
@@ -61,7 +59,7 @@
                   <span class="input-group-text cursor-pointer"><i class="mdi mdi-eye-off-outline"></i></span>
                 </div>
               </div>
-  
+
               <div class="mb-3">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms">
@@ -75,31 +73,31 @@
                 Sign up
               </button>
             </form>
-  
+
             <p class="text-center">
               <span>Already have an account?</span>
               <a href="{{ route('admin.Login') }}">
                 <span>Sign in instead</span>
               </a>
             </p>
-  
+
             <div class="divider my-4">
               <div class="divider-text">or</div>
             </div>
-  
+
             <div class="d-flex justify-content-center gap-2">
               <a href="javascript:;" class="btn btn-icon btn-lg rounded-pill btn-text-facebook">
                 <i class="tf-icons mdi mdi-24px mdi-facebook"></i>
               </a>
-  
+
               <a href="javascript:;" class="btn btn-icon btn-lg rounded-pill btn-text-twitter">
                 <i class="tf-icons mdi mdi-24px mdi-twitter"></i>
               </a>
-  
+
               <a href="javascript:;" class="btn btn-icon btn-lg rounded-pill btn-text-github">
                 <i class="tf-icons mdi mdi-24px mdi-github"></i>
               </a>
-  
+
               <a href="javascript:;" class="btn btn-icon btn-lg rounded-pill btn-text-google-plus">
                 <i class="tf-icons mdi mdi-24px mdi-google"></i>
               </a>
@@ -113,17 +111,17 @@
       </div>
     </div>
   </div>
-  
+
   <!-- / Content -->
-  
-    
+
+
     <div class="buy-now">
       <a href="https://themeselection.com/item/materio-bootstrap-html-admin-template/" target="_blank" class="btn btn-danger btn-buy-now">Buy Now</a>
     </div>
-    
-  
-    
-  
+
+
+
+
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="/assets-admin/vendor/libs/jquery/jquery.js"></script>
@@ -135,21 +133,21 @@
     <script src="/assets-admin/vendor/libs/i18n/i18n.js"></script>
     <script src="/assets-admin/vendor/libs/typeahead-js/typeahead.js"></script>
     <script src="/assets-admin/vendor/js/menu.js"></script>
-    
+
     <!-- endbuild -->
-  
+
     <!-- Vendors JS -->
     <script src="/assets-admin/vendor/libs/%40form-validation/umd/bundle/popular.min.js"></script>
   <script src="/assets-admin/vendor/libs/%40form-validation/umd/plugin-bootstrap5/index.min.js"></script>
   <script src="/assets-admin/vendor/libs/%40form-validation/umd/plugin-auto-focus/index.min.js"></script>
-  
+
     <!-- Main JS -->
     <script src="/assets-admin/js/main.js"></script>
-    
-  
+
+
     <!-- Page JS -->
     <script src="/assets-admin/js/pages-auth.js"></script>
-    
+
 </body>
 
 @endsection

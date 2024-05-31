@@ -9,6 +9,7 @@ use App\Models\Checkout;
 use Illuminate\Support\Facades\Validator;
 use function Laravel\Prompts\select;
 use Illuminate\Support\Facades\Session;
+use App\Models\Course;
 
 
 class CoursesController extends Controller
@@ -35,30 +36,38 @@ class CoursesController extends Controller
 
         return view('client.courses.course-checkout', ['data' => $data]);
     }
-
     public function checkoutSubmit(Request $request)
     {
-        $selectedCourse = Session::get('selected_course');
-
-        // Lưu thông tin từ form vào section hoặc xử lý nó theo nhu cầu của bạn
         $fullname = $request->input('fullname');
         $phone = $request->input('phone');
         $email = $request->input('email');
         $address = $request->input('address');
         $courseId = $request->input('course_id');
-        return redirect()->route('client.courses.course-checkout');
+
+        session([
+            'fullname' => $fullname,
+            'phone' => $phone,
+            'email' => $email,
+            'address' => $address,
+            'course_id' => $courseId,
+        ]);
+        return redirect()->route('client.course-pricing', ['id' => $courseId]);
     }
     public function pricing($id)
     {
-        $data2 = DB::table('check_outs')
-            ->select('fullname','email','phone','address','course_id')
-            ->where('id', $id)
-            ->first();
-        $course_id = $data2->course_id;
-        $data = DB::table('courses')
-            ->select('id','thumbnail', 'name', 'price', 'description')
-            ->where('id', $course_id)
-            ->first();
-        return view('client.courses.course-pricing', ['data2' => $data2, 'data' => $data]);
+        $sessionData = [
+            'fullname' => session('fullname'),
+            'phone' => session('phone'),
+            'email' => session('email'),
+            'address' => session('address'),
+            'course_id' => session('course_id'),
+        ];
+        $course = Course::find($id);
+        if (!$course) {
+            return redirect()->route('client.courses')->with('error', 'Khóa học không tồn tại.');
+        }
+        return view('client.courses.course-pricing', compact('sessionData', 'course'));
     }
+
+
 }

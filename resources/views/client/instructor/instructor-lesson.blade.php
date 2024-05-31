@@ -62,7 +62,7 @@
                             </li>
                             @if(auth()->user()->role== 2)
                                 <li class="nav-item active">
-                                    <a href="{{route('client.instructor-course')}}" class="nav-link">
+                                    <a href="{{route('client.instructor-course', auth()->user()->id)}}" class="nav-link">
                                         <i class="feather-book"></i> Quản lí khóa học
                                     </a>
                                 </li>

@@ -175,10 +175,8 @@
                                                                     <p><a href="{{ route('client.instructor-coursedetails', $post->id) }}">{{ $post->name }}</a></p>
                                                                     <div class="course-info d-flex align-items-center border-bottom-0 pb-0">
                                                                         <div class="rating-img d-flex align-items-center">
-                                                                            <!-- Thêm mã HTML cho đánh giá nếu cần -->
                                                                         </div>
                                                                         <div class="course-view d-flex align-items-center">
-                                                                            <!-- Thêm mã HTML cho số lượt xem nếu cần -->
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -191,13 +189,14 @@
                                                             <form id="deleteForm" action="{{ route('client.deleteCourse', $post->id) }}" method="POST">
                                                                 @csrf
                                                                 <button type="submit" class="btn btn-danger">
-                                                                    Xóa
+                                                                    <i class="fas fa-trash-alt"></i>
                                                                 </button>
+
                                                             </form>
                                                         </td>
                                                         <td>
-                                                            <a href="{{route('client.editCourse', $post->id)}}" class="btn btn-danger">
-                                                                Sửa
+                                                            <a href="{{ route('client.editCourse', $post->id) }}" class="btn btn-danger">
+                                                                <i class="fas fa-edit"></i>
                                                             </a>
                                                         </td>
                                                     </tr>

@@ -45,7 +45,8 @@
                                             </div>
                                             <input type="hidden" class="form-control" name="course_id" value="{{$data->id}}">
                                         </div>
-                                        <div class="col-lg-12">
+                                        <div class="col-lg-12 d-flex justify-content-between">
+                                            <a href="#" class="btn btn-secondary mr-2 prev">Quay lại</a>
                                             <button type="submit" class="btn btn-primary">Tiến hành thanh toán</button>
                                         </div>
                                     </div>

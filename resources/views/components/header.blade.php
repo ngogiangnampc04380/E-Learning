@@ -896,13 +896,12 @@
 {{--                                        </li>--}}
                                     @elseif(auth()->user()->role == 0)
                                         <li class="{{ Route::currentRouteName() == 'client.instructor-course' ? 'active' : '' }}">
-                                            <a href="{{ route('client.instructor-course')}}">Khóa học của tôi</a>
+                                            <a href="#">Khóa học của tôi</a>
                                         </li>
                                     @endif
                                 @endif
                             </ul>
                         </div>
-
                         @guest
                             <ul class="nav header-navbar-rht">
                                 <li class="nav-item">

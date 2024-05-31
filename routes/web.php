@@ -114,7 +114,7 @@ Route::post('/disable-account', [UserProfileController::class, 'disableAccount']
     Route::get("/course-details", [CoursesController::class, "detail"])->name("course-details");
     Route::get("/course-checkout/{id}", [CoursesController::class, "checkout"])->name("course-checkout");
     Route::post("/checkout-submit", [CoursesController::class, "checkoutSubmit"])->name("checkout-submit");
-    Route::get("/course-pricing/{id}", [CoursesController::class, "pricing"])->name("course-pricing");
+    Route::get('/course-pricing/{id}', [CoursesController::class, 'pricing'])->name('course-pricing');
 
 
 
