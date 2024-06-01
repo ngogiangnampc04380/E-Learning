@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <title>Dreams LMS</title>
 
-    <link rel="shortcut icon" type="image/x-icon" href="/assets-client/img/favicon.svg">
+    <link rel="shortcut icon" type="image/x-icon" href="/assets-client/img/logo.png">
 
     <link rel="stylesheet" href="/assets-client/css/bootstrap.min.css">
 
@@ -859,13 +859,13 @@
                                 </span>
                             </a>
                             <a href="{{ route('Dashboard-client') }}" class="navbar-brand logo">
-                                <img src="{{ asset('/img/logo.svg') }}" class="img-fluid" alt="Logo">
+                                <img src="{{ asset('/img/logo.gif') }}" class="img-fluid" alt="Logo">
                             </a>
                         </div>
                         <div class="main-menu-wrapper">
                             <div class="menu-header">
                                 <a href="" class="menu-logo">
-                                    <img src="{{ asset('/img/logo.png') }}" class="img-fluid" alt="Logo">
+                                    <img src="{{ asset('/img/logo.svg') }}" class="img-fluid" alt="Logo">
                                 </a>
                                 <a id="menu_close" class="menu-close" href="javascript:void(0);">
                                     <i class="fas fa-times"></i>

@@ -112,7 +112,7 @@
         <div class="login-wrapper">
             <div class="loginbox">
             <div class="img-logo">
-                <img src="{{ asset('assets/img/logo.png') }}" class="img-fluid" alt="Logo">
+                <img src="{{ asset('/img/logo.gif') }}" class="img-fluid" alt="Logo">
                 <div class="back-home">
                     <a href="{{ route('Dashboard-client') }}">Go back to home</a>
                 </div>
@@ -210,7 +210,7 @@
             <div class="sign-google">
                 <ul>
                     <li><a style="border-right: none !important" href=""><img
-                                src="{{ asset('assets/img/net-icon-01.png') }}" class="img-fluid" alt="Logo"> Sign In using Google</a></li>
+                                src="{{ asset('/assets-client/img/net-icon-01.png') }}" class="img-fluid" alt="Logo"> Sign In using Google</a></li>
                     {{-- <li><a href="#"><img src="{{asset('assets/img/net-icon-02.png')}}" class="img-fluid" alt="Logo">Sign In using Facebook</a></li> --}}
                 </ul>
             </div>

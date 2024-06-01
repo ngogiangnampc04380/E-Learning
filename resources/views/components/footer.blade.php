@@ -8,7 +8,7 @@
 
                         <div class="footer-widget-three footer-about">
                             <div class="footer-three-logo">
-                                <img class="img-fluid" src="/assets-client/img/logo/logo.png" alt="logo">
+                                <img class="img-fluid" src="/img/logo.gif" width="200" alt="logo">
                             </div>
                             <div class="footer-three-about">
                                 <p>Web này bán khóa học</p>
