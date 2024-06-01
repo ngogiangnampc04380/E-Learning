@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 class Post extends Model
 {
     use HasFactory;
@@ -17,8 +19,12 @@ class Post extends Model
         'content',
         'author'
     ];
-    public function Post_pivot(): BelongsTo
+    public function post_pivots(): BelongsToMany
     {
-        return $this->belongsTo(Post_pivot::class);
+        return $this->belongsToMany(Post_category::class, 'post_pivots')->withTimestamps();
+    }
+    public function post_cate(): BelongsTo
+    {
+        return $this->belongsTo(Post_category::class);
     }
 }

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('post_id');
             $table->foreign('post_id')->references('id')->on('posts')->constrained()->cascadeOnDelete();
-            $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('post_categories')->constrained()->cascadeOnDelete();
+            $table->unsignedBigInteger('post_category_id');
+            $table->foreign('post_category_id')->references('id')->on('post_categories')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

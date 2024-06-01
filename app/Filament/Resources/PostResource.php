@@ -44,21 +44,19 @@ class PostResource extends Resource
                         ])
                     ->label('Đường dẫn')
                     ->maxLength(100),
-                    Forms\Components\FileUpload::make('thumbnail')
+                Forms\Components\FileUpload::make('thumbnail')
                     ->required()
                     ->validationMessages([
                         'required' => 'vui lòng nhập hình ảnh',
                         ])
-                    ->label('Hình ảnh')
-                    
-                    ->columnSpanFull(),
-                // Forms\Components\TextInput::make('author')
-                //     ->required()
-                //     ->validationMessages([
-                //         'required' => 'vui lòng nhập tên tác giả',
-                //         ])
-                //     ->label('Tác giả')
-                //     ->maxLength(50),
+                    ->label('Hình ảnh'),
+
+                Forms\Components\Select::make('post_category')
+                    ->relationship('post_pivots', 'name')
+                    ->preload()
+                    ->label('Danh mục bài viết')
+                    ->multiple(),
+
                 Forms\Components\RichEditor::make('content')
                     ->required()
                     ->validationMessages([

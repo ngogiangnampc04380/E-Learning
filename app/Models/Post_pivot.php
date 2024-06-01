@@ -14,12 +14,12 @@ class Post_pivot extends Model
         'post_id',
         'category_id'
     ];
-    public function posts(): HasMany
+    public function posts(): BelongsTo
     {
-        return $this->hasMany(Post::class);
+        return $this->belongsTo(Post::class);
     }
-    public function post_category(): HasMany
+    public function post_category(): BelongsTo
     {
-        return $this->hasMany(Post_category::class);
+        return $this->belongsTo(Post_category::class);
     }
 }
