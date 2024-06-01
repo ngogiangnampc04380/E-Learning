@@ -117,7 +117,7 @@
                 <div class="loginbox">
             <div class="w-100" >
                 <div class="img-logo">
-                    <img src="{{ asset('assets/img/logo.png') }}" class="img-fluid" alt="Logo">
+                    <img src="{{ asset('assets/img/logo.svg') }}" class="img-fluid" alt="Logo">
                     <div class="back-home">
                         <a href="{{ route('Dashboard-client') }}">Go back to Home</a>
                     </div>
