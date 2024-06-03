@@ -122,14 +122,10 @@ Route::post('/disable-account', [UserProfileController::class, 'disableAccount']
     // -----------------------Mentor-------------------------
 
         // -----------------------Post-------------------------
-    Route::get("/post-list", [PostController::class, "list"])->name("post-list");
-    Route::get("/post-detail", [PostController::class, "detail"])->name("post-detail");
-    // CHƯA HOÀN THÀNH
-    // Route::get("/mentor-register", [MentorControllerr::class, "mentorRegister"])->name("mentor-register");
-    // Route::post('/mentor/register', [MentorControllerr::class, 'handleRegister'])->name("mentor-handleRegister");
-    // Route::get("/mentor-profile", [MentorControllerr::class, "profile"])->name("mentor-profile");
-    // Route::get("/upload_ID_Card", [MentorControllerr::class, "upload_ID_Card"])->name("upload-id-card");
-    // Route::get("/takingPicture", [MentorControllerr::class, "takingPicture"])->name("online-id-card");
+        Route::get('/post-list', [PostController::class, 'posts'])->name('post-list');
+        Route::get('/post-detail/{slug}', [PostController::class, 'show'])->name('post-detail');
+        // Route::get('/post_category/{slug}', [PostController::class, 'show'])->name('category.show');
+        Route::get('/category-detail/{slug}', [PostController::class, 'category_show'])->name('category-detail');
 
 });
 Route::prefix('password')->group(function () {

@@ -13,7 +13,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
                             <li class="breadcrumb-item" aria-current="page">Bài viết</li>
-                            {{-- <li class="breadcrumb-item" aria-current="page">Blog List</li> --}}
+                            <li class="breadcrumb-item" aria-current="page"><img class="img-fluid" src="/img/icon/icon-23.svg" alt>{{ $category->name }}</li>
                         </ol>
                     </nav>
                 </div>
@@ -46,14 +46,12 @@
                     </div>
                     <h3 class="blog-title"><a href="{{ route('client.post-detail', ['slug' => $post->slug]) }}">{{ $post->title }}</a></h3>
                     <div class="blog-content blog-read">
-                        {!! Str::limit($post->content, 500) !!}
+                        <p>{!! Str::limit($post->content, 500) !!}</p>
                         <a href="{{ route('client.post-detail', ['slug' => $post->slug]) }}" class="read-more btn btn-primary">Read More</a>
                     </div>
                 </div>
                 @endforeach
-
-                
-                {{-- <div class="row">
+                <div class="row">
                     <div class="col-md-12">
                         <ul class="pagination lms-page">
                             <li class="page-item prev">
@@ -81,7 +79,7 @@
                             </li>
                         </ul>
                     </div>
-                </div> --}}
+                </div>
 
             </div>
 

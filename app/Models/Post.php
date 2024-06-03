@@ -16,9 +16,14 @@ class Post extends Model
         'title',
         'slug',
         'thumbnail',
-        'content',
-        'author'
+        'content'
+        
     ];
+    
+    public function post_categories()
+    {
+        return $this->belongsToMany(Post_category::class, 'post_pivots', 'post_id', 'post_category_id');
+    }
     public function post_pivots(): BelongsToMany
     {
         return $this->belongsToMany(Post_category::class, 'post_pivots')->withTimestamps();
@@ -27,4 +32,5 @@ class Post extends Model
     {
         return $this->belongsTo(Post_category::class);
     }
+
 }

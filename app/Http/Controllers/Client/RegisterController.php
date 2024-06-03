@@ -19,8 +19,7 @@ class RegisterController extends Controller
     }
     public function register(AuthRequest $request)
     {
-        //Lấy IP từ mấy người dùng
-        // $request->validated();
+        
         User::create([
             'name' => $request->name,
             'phone' => $request->phone,

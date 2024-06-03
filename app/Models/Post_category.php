@@ -19,4 +19,9 @@ class Post_category extends Model
     {
         return $this->belongsToMany(Post::class, 'post_pivots')->withTimestamps();
     }
+    public function posts()
+    {
+        return $this->belongsToMany(Post::class, 'post_pivots', 'post_category_id', 'post_id');
+    }
+   
 }
