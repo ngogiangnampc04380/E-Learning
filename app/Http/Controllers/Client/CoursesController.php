@@ -14,12 +14,19 @@ use App\Models\Course;
 
 class CoursesController extends Controller
 {
-    public function list()
+    public function list(Request $request)
     {
-        $data = DB::table('courses')
-            ->orderBy('id', 'desc')
-            ->get();
-        return view('client.courses.courses-list', ['data' => $data]);
+        $query = $request->input('query');
+
+        $data = Course::orderBy('id', 'desc');
+
+        if ($query) {
+            $data->where('name', 'LIKE', "%$query%");
+        }
+
+        $data = $data->get();
+
+        return view('client.courses.courses-list', compact('data', 'query'));
     }
 
     public function detail()

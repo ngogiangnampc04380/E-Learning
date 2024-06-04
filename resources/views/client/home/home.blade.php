@@ -14,23 +14,22 @@
                             <h1>Hấp dẫn <span>&</span> Các khóa học trực tuyến có thể truy cập cho tất cả mọi người</h1>
                         </div>
                         <div class="banner-three-content">
-                            <form class="form" action="https://dreamslms.dreamstechnologies.com/html/course-list.html">
+                            <form class="form" action="{{ route('client.search') }}" method="GET">
                                 <div class="form-inner-three">
                                     <div class="input-group">
-                                        <input type="email" class="form-control"
-                                            placeholder="Tìm kiếm Giảng viên, khóa học trực tuyến, v.v.">
+                                        <input type="text" name="query" class="form-control" placeholder="Tìm kiếm Giảng viên, khóa học trực tuyến, v.v." value="{{ request()->query('query') }}">
                                         <span class="drop-detail-three">
-                                            <select class="form-three-select select">
-                                                <option>Lựa chọn</option>
+                                            <select name="type" class="form-three-select select">
+                                                <option value="course">Khóa học</option>
+                                                <option value="mentor">Giảng viên</option>
                                             </select>
                                         </span>
-                                        <button class="btn btn-three-primary sub-btn" type="submit"><i
-                                                class="fas fa-arrow-right"></i></button>
+                                        <button class="btn btn-three-primary sub-btn" type="submit"><i class="fas fa-arrow-right"></i></button>
                                     </div>
                                 </div>
                             </form>
                         </div>
-                    </div>
+                        
                 </div>
                 <div class="col-xl-6 col-lg-4 col-md-6 col-12" data-aos="fade-up">
                     <div class="girl-slide-img aos">

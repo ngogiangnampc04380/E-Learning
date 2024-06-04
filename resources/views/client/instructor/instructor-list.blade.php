@@ -11,54 +11,42 @@
                 <div class="showing-list">
                     <div class="row">
                         <div class="col-lg-6">
-                            <div class="d-flex align-items-center">
-                                <div class="view-icons">
-                                    <a href="{{route('client.instructor-list')}}" class="list-view active"><i
-                                            class="feather-list"></i></a>
-                                </div>
-                                <div class="show-result">
-                                    <h4>Showing 1-9 of 50 results</h4>
-                                </div>
-                            </div>
+                            
                         </div>
                         <div class="col-lg-6">
                             <div class="show-filter add-course-info">
-                                <form action="#">
+                                <form action="{{ route('client.instructor-list') }}" method="GET">
                                     <div class="row gx-2 align-items-center">
-                                        <div class="col-md-6 col-item">
-                                            <div class=" search-group">
-                                                <i class="feather-search"></i>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Search our courses">
+                                        <div class="col-item d-flex">
+                                            <div class="search-group">
+                                                <input type="text" name="query" class="form-control" style="width:420px;" placeholder="Tìm kiếm Giảng viên, khóa học trực tuyến, v.v." value="{{ request()->query('query') }}">
                                             </div>
-                                        </div>
-                                        <div class="col-md-6 col-lg-6 col-item">
-                                            <div class="input-block select-form mb-0">
-                                                <select class="form-select select" name="sellist1">
-                                                    <option>Newly published </option>
-                                                    <option>Angular</option>
-                                                    <option>React</option>
-                                                    <option>Nodejs</option>
-                                                </select>
-                                            </div>
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
                                         </div>
                                     </div>
+                                    
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
+                @if(isset($query))
+                <h2>Kết quả tìm kiếm cho: "{{ $query }}"</h2>
+            @endif
+        
+            @if($data->isEmpty())
+                <p>Không tìm thấy giảng viên nào.</p>
+            @else
                 @foreach($data as $mentor)
                     <div class="col-lg-12 d-flex">
-                        
                         <div class="instructor-list flex-fill">
                             <div class="instructor-img">
-                                <a href="{{route('client.mentor_detail', ['id' => $mentor->id]) }}">
-                                    <img class="img-fluid" alt src="{{ $mentor->thumbnail ? Storage::url('assets-client/img/user/' . $mentor->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"  alt="">
+                                <a href="{{ route('client.mentor_detail', ['id' => $mentor->id]) }}">
+                                    <img class="img-fluid" alt src="{{ $mentor->thumbnail ? Storage::url('assets-client/img/user/' . $mentor->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}" alt="{{ $mentor->name }}">
                                 </a>
                             </div>
                             <div class="instructor-content">
-                                <h5><a href="{{route('client.mentor_detail', ['id' => $mentor->id]) }}">{{ $mentor->name }}</a></h5>
+                                <h5><a href="{{ route('client.mentor_detail', ['id' => $mentor->id]) }}">{{ $mentor->name }}</a></h5>
                                 <div class="instructor-info">
                                     <div class="rating-img d-flex align-items-center">
                                         <img src="/assets-client/img/icon/icon-01.svg" class="me-1" alt>
@@ -83,14 +71,16 @@
                                     <a href="#rate" class="rating-count"><i class="fa-regular fa-heart"></i></a>
                                 </div>
                                 <div class="instructor-badge">
-                                    <span class="web-badge">Web Design</span>
-                                    <span class="web-badge">web development</span>
-                                    <span class="web-badge">UI Design</span>
+                                    <div class="blog-content blog-read">
+                                        {!! Str::limit($mentor->introduce, 100) !!}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    @endforeach
+                @endforeach
+            @endif
+    
             </div>
             <div class="col-lg-3">
                 <div class="filter-clear">

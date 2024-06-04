@@ -18,6 +18,9 @@ use App\Http\Controllers\Client\UserDashboardController;
 use App\Http\Controllers\Client\UserProfileController;
 use App\Http\Controllers\Client\PostController;
 
+use App\Http\Controllers\Client\SearchController;
+
+
 use App\Http\Controllers\Client\LogoutController;
 use App\Http\Controllers\Client\RegisterController;
 use App\Http\Controllers\Client\PasswordController;
@@ -115,7 +118,8 @@ Route::post('/disable-account', [UserProfileController::class, 'disableAccount']
     Route::post("/checkout-submit", [CoursesController::class, "checkoutSubmit"])->name("checkout-submit");
     Route::get('/course-pricing/{id}', [CoursesController::class, 'pricing'])->name('course-pricing');
 
-
+// ----------------------------- Search ------------------------------
+Route::get("/search", [SearchController::class, "search"])->name("search");
 
 
     // -----------------------Mentor-------------------------

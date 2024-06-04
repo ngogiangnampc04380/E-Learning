@@ -22,27 +22,17 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="show-filter add-course-info ">
-                                <form action="#">
+                            <div class="show-filter add-course-info">
+                                <form action="{{ route('client.course-lists') }}" method="GET">
                                     <div class="row gx-2 align-items-center">
-                                        <div class="col-md-6 col-item">
-                                            <div class=" search-group">
-                                                <i class="feather-search"></i>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Search our courses">
+                                        <div class="col-item d-flex">
+                                            <div class="search-group">
+                                                <input type="text" name="query" class="form-control" style="width:420px;" placeholder="Tìm kiếm Giảng viên, khóa học trực tuyến, v.v." value="{{ request()->query('query') }}">
                                             </div>
-                                        </div>
-                                        <div class="col-md-6 col-lg-6 col-item">
-                                            <div class="input-block select-form mb-0">
-                                                <select class="form-select select" name="sellist1">
-                                                    <option>Newly published </option>
-                                                    <option>published 1</option>
-                                                    <option>published 2</option>
-                                                    <option>published 3</option>
-                                                </select>
-                                            </div>
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
                                         </div>
                                     </div>
+                                    
                                 </form>
                             </div>
                         </div>
@@ -50,58 +40,61 @@
                 </div>
 
                 <div class="row">
-                    @foreach($data as $item)
-                        <div class="col-lg-12 col-md-12 d-flex">
-                            <div class="course-box course-design list-course d-flex">
-                                <div class="product">
-                                    <div class="product-img">
-                                        <a href="{{ route('client.course-details', $item->id) }}">
-                                            <img src="{{ Storage::url(''. $item->thumbnail) }}" alt="Thumbnail" class="img-fluid" style="max-width: 150px;">
-                                        </a>
-                                        <div class="price">
+                    @if(isset($query))
+        <h2>Kết quả tìm kiếm cho: "{{ $query }}"</h2>
+    @endif
 
-
-                                        </div>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="head-course-title">
-                                            <h2 class="title"><a href="{{ route('client.course-details', $item->id) }}">{{ $item->name }}</a></h2>
-                                            <div class="all-btn all-category d-flex align-items-center">
-                                                <a href="{{route('client.course-checkout', $item->id)}}" class="btn btn-primary">Mua ngay</a>
-                                            </div>
-                                        </div>
-                                        <div class="course-info border-bottom-0 pb-0 d-flex align-items-center">
-                                            <div class="rating-img d-flex align-items-center">
-                                                <h3>{{ number_format($item->price)}} VNĐ</h3>
-                                            </div>
-                                        </div>
-                                        <div class="rating">
-                                            <i class="fas fa-star filled"></i>
-                                            <i class="fas fa-star filled"></i>
-                                            <i class="fas fa-star filled"></i>
-                                            <i class="fas fa-star filled"></i>
-                                            <i class="fas fa-star"></i>
-                                            <span class="d-inline-block average-rating"><span>4.0</span> (15)</span>
-                                        </div>
-                                        <div class="course-group d-flex mb-0">
-                                            <div class="course-group-img d-flex">
-                                                <a href="instructor-profile.html"><img
-                                                        src="assets/img/user/user1.jpg" alt class="img-fluid"></a>
-                                                <div class="course-name">
-                                                    <h4><a href="instructor-profile.html">Rolands R</a></h4>
-                                                    <p>Instructor</p>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="course-share d-flex align-items-center justify-content-center">
-                                                <a href="#rate"><i class="fa-regular fa-heart"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+    @if($data->isEmpty())
+        <p>Không tìm thấy khóa học nào.</p>
+    @else
+    @foreach($data as $item)
+    <div class="col-lg-12 col-md-12 d-flex">
+        <div class="course-box course-design list-course d-flex">
+            <div class="product">
+                <div class="product-img">
+                    <a href="{{ route('client.course-details', $item->id) }}">
+                        <img src="{{ Storage::url(''. $item->thumbnail) }}" alt="Thumbnail" class="img-fluid" style="max-width: 150px;">
+                    </a>
+                </div>
+                <div class="product-content">
+                    <div class="head-course-title">
+                        <h2 class="title"><a href="{{ route('client.course-details', $item->id) }}">{{ $item->name }}</a></h2>
+                        <div class="all-btn all-category d-flex align-items-center">
+                            <a href="{{ route('client.course-checkout', $item->id) }}" class="btn btn-primary">Mua ngay</a>
+                        </div>
+                    </div>
+                    <div class="course-info border-bottom-0 pb-0 d-flex align-items-center">
+                        <div class="rating-img d-flex align-items-center">
+                            <h3>{{ number_format($item->price) }} VNĐ</h3>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <i class="fas fa-star filled"></i>
+                        <i class="fas fa-star filled"></i>
+                        <i class="fas fa-star filled"></i>
+                        <i class="fas fa-star filled"></i>
+                        <i class="fas fa-star"></i>
+                        <span class="d-inline-block average-rating"><span>4.0</span> (15)</span>
+                    </div>
+                    <div class="course-group d-flex mb-0">
+                        <div class="course-group-img d-flex">
+                            <a href="instructor-profile.html"><img src="assets/img/user/user1.jpg" alt class="img-fluid"></a>
+                            <div class="course-name">
+                                <h4><a href="instructor-profile.html">Rolands R</a></h4>
+                                <p>Instructor</p>
                             </div>
                         </div>
-                    @endforeach
+                        <div class="course-share d-flex align-items-center justify-content-center">
+                            <a href="#rate"><i class="fa-regular fa-heart"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endforeach
+
+    @endif
                 </div>
                 <div class="row">
                     <div class="col-md-12">

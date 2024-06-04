@@ -29,7 +29,7 @@
 
                 <div class="blog">
                     <div class="blog-image">
-                        <a href="blog-details.html"><img class="img-fluid" src="{{ $post->thumbnail ? Storage::url($post->thumbnail) : 'https://caodem.com/wp-content/uploads/caodem-hinh-anh-xoa-bai-viet-xoa-luon-hinh-anh-dinh-kem-caodem.jpg' }}"
+                        <a href="#"><img class="img-fluid" src="{{ $post->thumbnail ? Storage::url($post->thumbnail) : 'https://caodem.com/wp-content/uploads/caodem-hinh-anh-xoa-bai-viet-xoa-luon-hinh-anh-dinh-kem-caodem.jpg' }}"
                                 alt="Post Image"></a>
                     </div>
                     <div class="blog-info clearfix">
@@ -44,7 +44,7 @@
                             </ul>
                         </div>
                     </div>
-                    <h3 class="blog-title"><a href="blog-details.html">{{ $post->title }}</a></h3>
+                    <h3 class="blog-title">{{ $post->title }}</h3>
                     <div class="blog-content">
                         {!! $post->content !!}
                     </div>

@@ -46,9 +46,10 @@
                     </div>
                     <h3 class="blog-title"><a href="{{ route('client.post-detail', ['slug' => $post->slug]) }}">{{ $post->title }}</a></h3>
                     <div class="blog-content blog-read">
-                        {!! Str::limit($post->content, 500) !!}
-                        <a href="{{ route('client.post-detail', ['slug' => $post->slug]) }}" class="read-more btn btn-primary">Read More</a>
+                        {!! Str::limit($post->content, 200) !!}
+                        
                     </div>
+                    <a href="{{ route('client.post-detail', ['slug' => $post->slug]) }}" class="read-more btn btn-primary">Read More</a>
                 </div>
                 @endforeach
 

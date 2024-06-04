@@ -15644,7 +15644,7 @@ input[type=password]::-ms-clear
 	max-width: 100%;
 	height: auto;
 }
-.blog-read .btn-primary {
+.blog .btn-primary {
 	background: #FF875A;
 	border: 1px solid #FF875A;
 	box-sizing: border-box;
@@ -15654,7 +15654,7 @@ input[type=password]::-ms-clear
 	text-decoration: none;
 	padding: 9px 28px;
 }
-.blog-read .btn-primary:hover {
+.blog .btn-primary:hover {
 	background: #fff;
 	border: 1px solid #FF875A;
 	color: #FF875A;
@@ -17882,6 +17882,11 @@ input[type=password]::-ms-clear
     border: 1px solid #e9ecef;
     border-radius: 5px;
     min-height: 40px;
+    
+}
+.blog-content {
+    font-size: 0.9em; /* Điều chỉnh kích thước font */
+    opacity: 0.8; /* Điều chỉnh độ mờ */
 }
 .add-course-info .form-control:focus {
 	border: 1px solid #e9ecef;

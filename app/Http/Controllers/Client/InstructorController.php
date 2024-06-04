@@ -15,17 +15,23 @@ use Illuminate\Support\Facades\Auth;
 
 class InstructorController extends Controller
 {
-    public function list()
-    {
-        $currentUserId = Auth::id();
-        $data = DB::table('users')
-        ->where('role', 2)
-        ->where('id', '!=', $currentUserId)
-        ->get();
+    public function list(Request $request)
+{
+    $currentUserId = Auth::id();
+    $query = $request->input('query');
 
-        return view('client.instructor.instructor-list', ['data' => $data]);
-        // return view('client.instructor.instructor-list');
+    $mentors = DB::table('users')
+        ->where('role', 2)
+        ->where('id', '!=', $currentUserId);
+
+    if ($query) {
+        $mentors = $mentors->where('name', 'LIKE', "%$query%");
     }
+
+    $mentors = $mentors->get();
+
+    return view('client.instructor.instructor-list', ['data' => $mentors, 'query' => $query]);
+}
 
 
     public function profile()
