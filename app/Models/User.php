@@ -34,6 +34,7 @@ class User extends Authenticatable  implements FilamentUser
         'thumbnail',
         'password',
         'address',
+        'auth',
         'link_mail',
         'link_face',
         'link_youtube'
@@ -47,6 +48,11 @@ class User extends Authenticatable  implements FilamentUser
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+    protected $attributes = [
+        'phone' => '',
+        'name' => '',
+        'auth' => '',
     ];
 
     /**

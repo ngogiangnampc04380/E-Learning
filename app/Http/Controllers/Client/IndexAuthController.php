@@ -11,6 +11,21 @@ use Laravel\Socialite\Facades\Socialite;
 
 class IndexAuthController extends Controller
 {
+    protected function _registerOrLoginUser($data)
+    {
+
+        $user = User::where('email', '=', $data->email)->first();
+        // dd($user);
+        if (!$user) {
+            $user = new User();
+            $user->auth = $data->id;
+            $user->name = $data->name;
+            $user->email = $data->email;
+            $user->thumbnail = $data->avatar;
+            $user->save();
+        }
+        Auth::login($user);
+    }
     public function index()
     {
         
@@ -20,15 +35,48 @@ class IndexAuthController extends Controller
         }
         return view('client.auth.login');
     }
-    // public function register(){
-    //     return view('client.auth.register');
-    // }
-    // public function forgotpass(){
-    //     return view('client.auth.forgotPassword');
-    // }
+
+    public function handleGoogleCallback()
+    {
+        // try {
+        //     $user = Socialite::driver('google')->user();
+        //     $finduser = User::where('auth', $user->id)->first();
+        //     if($finduser)
+        //     {
+        //         Auth::login($finduser);
+        //         return redirect()->intended('Dashboard-client');
+        //     }
+        //     else
+        //     {
+        //         $newUser = User::create([
+        //             'name' => $user->name,
+        //             'email' => $user->email,
+        //             'auth'=> $user->id,
+        //             
+        //         ]);
+      
+        //         Auth::login($newUser);
+      
+        //         return redirect()->intended('Dashboard-client');
+        //     }
+      
+        // } catch (Exception $e) {
+        //     dd($e->getMessage());
+        // }
 
 
+        $user = Socialite::driver('google')->stateless()->user();
+// dd($user->avatar);
+        $this->_registerOrLoginUser($user);
 
+        return redirect()->route('Dashboard-client');
+    }
+
+    public function redirectToGoogle()
+    {
+
+        return Socialite::driver('google')->redirect();
+    }
     public function login(AuthRequest $request)
     {
         $request->validated();

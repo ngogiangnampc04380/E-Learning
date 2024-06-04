@@ -48,15 +48,28 @@ use App\Http\Controllers\Mentor\SaleController;
 // ---------------------------------------Client-------------------------
 Route::get("/", [HomeController::class, "index"])->name("Dashboard-client");
 
+// -----login Google
+Route::get('/login/google', [IndexAuthController::class, 'redirectToGoogle'])->name('login.google');
+Route::get('/login/google/callback', [IndexAuthController::class, 'handleGoogleCallback']);
+// ------end----
 
+Route::get('/login', [IndexAuthController::class, 'index'])->name('login');
+Route::post('/login', [IndexAuthController::class, 'login']);
+Route::get('/register', [RegisterController::class, 'index'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
+Route::get('/logout', [LogoutController::class, 'index'])->name('logout')->middleware('auth');
+Route::post('/logout', [LogoutController::class, 'logout'])->middleware('auth');
+
+Route::prefix('password')->group(function () {
+    Route::get('enter-email', [PasswordController::class, 'enterEmail'])->name('enter-email');
+    Route::post('enter-email', [PasswordController::class, 'handleEnterEmail']);
+    Route::redirect('/', 'password/enter-email');
+    Route::get('confirm-code', [PasswordController::class, 'confirmCode'])->name('confirm-code');
+    Route::post('confirm-code', [PasswordController::class, 'handleConfirmCode']);
+    Route::get('new-password', [PasswordController::class, 'newPassword'])->name('new-password');
+    Route::post('new-password', [PasswordController::class, 'handleNewPassword']);
+});
 Route::prefix('client')->name('client.')->group(function () {
-
-    // -----------------------AUTH-------------------------
-    // Route::get("/login", [IndexAuthController::class, "login"])->name("Login");
-    Route::get("/register", [IndexAuthController::class, "register"])->name("Register");
-    Route::get("/forgot-password", [IndexAuthController::class, "forgotpass"])->name("ForgotPass");
-
-
     // ----------------------------------instructor-------------------------
     Route::get("/instructor-list", [InstructorController::class, "list"])->name("instructor-list");
     // Route::get("/instructor-profile", [InstructorController::class, "profile"])->name("instructor-profile");
@@ -68,11 +81,11 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::post("/update_education/", [UserProfileController::class, "update_education"])->name("update_education");
     Route::get("/user-profile/{id}", [UserProfileController::class, "education"])->name("user-edu");
     // delete
-// Hiển thị form xác nhận vô hiệu hóa tài khoản
-Route::get('/disable-account', [UserProfileController::class, 'showDisableAccountForm'])->name('disable-account-form');
+    // Hiển thị form xác nhận vô hiệu hóa tài khoản
+    Route::get('/disable-account', [UserProfileController::class, 'showDisableAccountForm'])->name('disable-account-form');
 
-// Xử lý yêu cầu vô hiệu hóa tài khoản
-Route::post('/disable-account', [UserProfileController::class, 'disableAccount'])->name('disable-account');
+    // Xử lý yêu cầu vô hiệu hóa tài khoản
+    Route::post('/disable-account', [UserProfileController::class, 'disableAccount'])->name('disable-account');
 
 
     // education
@@ -82,9 +95,9 @@ Route::post('/disable-account', [UserProfileController::class, 'disableAccount']
     Route::get("/education/{id}", [UserProfileController::class, "getEducation"])->name("getEducation");
 
 
-// instructor
+    // instructor
     Route::get("/instructor-course/{id}", [InstructorController::class, "course"])->name("instructor-course");
-    Route::get("/instructor-addcourse", [InstructorController::class, "addcourse"])->name("instructor-addcourse");
+    Route::get("/create-course", [InstructorController::class, "addcourse"])->name("create-course");
     Route::post("/save-course", [InstructorController::class, "saveCourse"])->name('saveCourse');
     Route::get("/instructor-coursedetails/{id}", [InstructorController::class, "chapter"])->name("instructor-coursedetails");
     Route::get("/instructor-dashboard", [InstructorController::class, "dashboard"])->name("instructor-dashboard");
@@ -92,12 +105,9 @@ Route::post('/disable-account', [UserProfileController::class, 'disableAccount']
     Route::post("/save-chapter", [InstructorController::class, "saveChapter"])->name("saveChapter");
     Route::post("/save-lesson", [InstructorController::class, "saveLesson"])->name("saveLesson");
 
-
-
     Route::post("/delete-course/{id}", [InstructorController::class, "deleteCourse"])->name("deleteCourse");
     Route::post("/delete-chapter/{id}", [InstructorController::class, "deleteChapter"])->name("deleteChapter");
     Route::post("/delete-lesson/{id}", [InstructorController::class, "deleteLesson"])->name("deleteLesson");
-
 
     Route::get("/edit-course/{id}", [InstructorController::class, "editCourse"])->name("editCourse");
     Route::post("/edit-course/{id}", [InstructorController::class, "saveEditCourse"])->name("saveEditCourse");
@@ -105,11 +115,8 @@ Route::post('/disable-account', [UserProfileController::class, 'disableAccount']
     Route::get("/edit-chapter/{id}", [InstructorController::class, "editChapter"])->name("editChapter");
     Route::post("/edit-chapter/{id}", [InstructorController::class, "saveEditChapter"])->name("saveEditChapter");
 
-
     Route::get("/edit-lesson/{id}", [InstructorController::class, "editLesson"])->name("editLesson");
     Route::post("/edit-lesson/{id}", [InstructorController::class, "saveEditLesson"])->name("saveEditLesson");
-
-
 
     // ----------------------------------course-details-------------------------
     Route::get("/course-list", [CoursesController::class, "list"])->name("course-lists");
@@ -118,77 +125,25 @@ Route::post('/disable-account', [UserProfileController::class, 'disableAccount']
     Route::post("/checkout-submit", [CoursesController::class, "checkoutSubmit"])->name("checkout-submit");
     Route::get('/course-pricing/{id}', [CoursesController::class, 'pricing'])->name('course-pricing');
 
-// ----------------------------- Search ------------------------------
-Route::get("/search", [SearchController::class, "search"])->name("search");
+    // ----------------------------- Search ------------------------------
+    Route::get("/search", [SearchController::class, "search"])->name("search");
 
 
     // -----------------------Mentor-------------------------
-
-        // -----------------------Post-------------------------
-        Route::get('/post-list', [PostController::class, 'posts'])->name('post-list');
-        Route::get('/post-detail/{slug}', [PostController::class, 'show'])->name('post-detail');
-        // Route::get('/post_category/{slug}', [PostController::class, 'show'])->name('category.show');
-        Route::get('/category-detail/{slug}', [PostController::class, 'category_show'])->name('category-detail');
-
+    // -----------------------Post-------------------------
+    Route::get('/post-list', [PostController::class, 'posts'])->name('post-list');
+    Route::get('/post-detail/{slug}', [PostController::class, 'show'])->name('post-detail');
+    // Route::get('/post_category/{slug}', [PostController::class, 'show'])->name('category.show');
+    Route::get('/category-detail/{slug}', [PostController::class, 'category_show'])->name('category-detail');
 });
-Route::prefix('password')->group(function () {
-    Route::get('enter-email', [PasswordController::class, 'enterEmail'])->name('enter-email');
-    Route::post('enter-email', [PasswordController::class, 'handleEnterEmail']);
-    Route::redirect('/', 'password/enter-email');
-    Route::get('confirm-code', [PasswordController::class, 'confirmCode'])->name('confirm-code');
-    Route::post('confirm-code', [PasswordController::class, 'handleConfirmCode']);
-    Route::get('new-password', [PasswordController::class, 'newPassword'])->name('new-password');
-    Route::post('new-password', [PasswordController::class, 'handleNewPassword']);
+// ---mentor
+
+// Route::get('/mentor-register', [MentorControllerr::class, "mentorRegister"])->name("mentor-register");
+// Route::post('/mentor-register', [MentorControllerr::class, 'handleRegister']);
+// Route::get('/mentor-profile', [MentorControllerr::class, "profile"])->name("mentor-profile");
+// Route::get('/upload_ID_Card', [MentorControllerr::class, "upload_ID_Card"])->name("upload-id-card");
+// Route::post('/mentor/save-id-card-data', [MentorControllerr::class, 'saveIdCardData'])->name('mentor-save-id-card');
+Route::prefix('mentor')->name('mentor.')->group(function () {
+    Route::get("/sale-course", [SaleController::class, "index"])->name("sale-course");
+    Route::post("/sale-course", [SaleController::class, "AddSale"]);
 });
-
-Route::get('/login', [IndexAuthController::class, 'index'])->name('login');
-Route::post('/login', [IndexAuthController::class, 'login']);
-Route::get('/register', [RegisterController::class, 'index'])->name('register');
-Route::post('/register', [RegisterController::class, 'register']);
-Route::get('/logout', [LogoutController::class, 'index'])->name('logout')->middleware('auth');
-Route::post('/logout', [LogoutController::class, 'logout'])->middleware('auth');
-
-
-// Route::prefix('client')->name('client.')->group(function () {
-
-//     // -----------------------AUTH-------------------------
-//     // Route::get("/login", [IndexAuthController::class, "login"])->name("Login");
-//     // ----------------------------------instructor-------------------------
-//     Route::get("/instructor-list", [InstructorController::class, "list"])->name("instructor-list");
-//     Route::get("/instructor-profile", [InstructorController::class, "profile"])->name("instructor-profile");
-//     Route::get("/user-profile", [UserProfileController::class, "profile"])->name("user-profile");
-
-//     // ----------------------------------course-details-------------------------
-//     Route::get("/course-list", [CoursesController::class, "list"])->name("course-lists");
-//     Route::get("/course-details", [CoursesController::class, "detail"])->name("course-details");
-
-//     // -----------------------Mentor-------------------------
-
-//     Route::get('/mentor-register', [MentorControllerr::class, "mentorRegister"])->name("mentor-register");
-//     Route::post('/mentor-register', [MentorControllerr::class, 'handleRegister']);
-//     Route::get('/mentor-profile', [MentorControllerr::class, "profile"])->name("mentor-profile");
-
-//     Route::get('/upload_ID_Card', [MentorControllerr::class, "upload_ID_Card"])->name("upload-id-card");
-
-// });
-Route::get('/sale-course', [SaleController::class, 'showSaleCourseForm'])->name('mentor.show-sale-course');
-Route::post('/sale-course', [SaleController::class, 'storeSale'])->name('mentor.store-sale');
-
-
-
-Route::get('/mentor/sale-list', [SaleController::class, 'showSaleCourseList'])->name('mentor.list-sale-course');
-//
-Route::get('/mentor/edit-sale/{id}', [SaleController::class, 'editSales'])->name('mentor.edit-sale');
-Route::post('/mentor/update-sale/{id}', [SaleController::class, 'updateSales'])->name('mentor.update-sale');
-
-Route::delete('/mentor/delete-sale/{id}', [SaleController::class, 'deleteSale'])->name('mentor.delete-sale');
-
-
-
-
-
-
-
-
-
-Route::post('/mentor/save-id-card-data', [MentorControllerr::class, 'saveIdCardData'])->name('mentor-save-id-card');

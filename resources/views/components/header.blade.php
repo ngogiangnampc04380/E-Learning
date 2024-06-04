@@ -896,7 +896,7 @@
 {{--                                        </li>--}}
                                     @elseif(auth()->user()->role == 0)
                                         <li class="{{ Route::currentRouteName() == 'client.instructor-course' ? 'active' : '' }}">
-                                            <a href="#">Khóa học của tôi</a>
+                                            <a href="{{ route('client.instructor-course',auth()->user()->id)}}">Khóa học của tôi</a>
                                         </li>
                                         @elseif(auth()->user()->role == 1)
                                         <li class="{{ Route::currentRouteName() == 'client.instructor-course' ? 'active' : '' }}">
@@ -924,8 +924,16 @@
                                     <a href="" class="dropdown-toggle"
                                     data-bs-toggle="dropdown">
                                         <span class="user-img" >
-                                            <img src="{{ auth()->user()->thumbnail ? Storage::url('assets-client/img/user/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}"
-                                                style="transform: scale(0.8);">
+                                            <img src="@if(auth()->user()->thumbnail)
+                                            @if(Str::startsWith(auth()->user()->thumbnail, 'http'))
+                                                {{ auth()->user()->thumbnail }}
+                                            @else
+                                                {{ Storage::url('assets-client/img/user/' . auth()->user()->thumbnail) }}
+                                            @endif
+                                        @else
+                                            https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU
+                                        @endif
+                                    " style="transform: scale(0.8);">
                                             <span class="status online"></span>
                                         </span>
 
