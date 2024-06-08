@@ -26,6 +26,8 @@
     <link rel="stylesheet" href="/assets-client/plugins/select2/css/select2.min.css">
 
     <link rel="stylesheet" href="/assets-client/plugins/swiper/css/swiper.min.css">
+    <link rel="stylesheet" href="/assets-client/css/blue.css">
+
     <!--
 <link rel="stylesheet" href="/assets-client/plugins/aos/aos.css"> -->
 
@@ -885,6 +887,7 @@
                                 <li class="{{ Route::currentRouteName() == 'client.post-list' ? 'active' : '' }}">
                                     <a href="{{ route('client.post-list') }}">Bài viết</a>
                                 </li>
+                                
 
                                 @if(auth()->check())
                                     @if(auth()->user()->role == 2)
@@ -922,7 +925,7 @@
                                 <li class="nav-item user-nav">
                                     <div class="dropdown" >
                                     <a href="" class="dropdown-toggle"
-                                    data-bs-toggle="dropdown">
+                                    data-bs-toggle="">
                                         <span class="user-img" >
                                             <img src="@if(auth()->user()->thumbnail)
                                             @if(Str::startsWith(auth()->user()->thumbnail, 'http'))

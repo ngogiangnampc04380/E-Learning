@@ -11,6 +11,18 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Order extends Model
 {
     use HasFactory;
+
+    protected $fillable =[
+        'order_code',
+        'fullname',
+        'email',
+        'phone',
+        'address',
+        'course_id',
+        'user_id'
+    ];
+
+
     public function user(): BelongsTo{
         return $this ->belongsTo(User::class);
     }

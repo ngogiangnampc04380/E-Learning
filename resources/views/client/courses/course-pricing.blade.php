@@ -20,14 +20,12 @@
                                      style="width: 200px;">
                             </div>
                             <div>
-                                <h3 class="title"><a
-                                            href="{{ route('client.course-details', $course->id) }}">{{ $course->name }}</a>
-                                </h3>
+                                <h3 class="title"><a name="coursename" href="{{ route('client.course-details', $course->id) }}">{{ $course->name }}</a></h3>
                                 <p>{{ $course->description }}</p>
                             </div>
                         </div>
 
-                        <h5 style="color:red">{{ number_format($course->price) }} VNĐ</h5>
+                        <h5 name="price" style="color:red">{{ number_format($course->price) }} VNĐ</h5>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -85,10 +83,18 @@
                                 </label>
                             </li>
                         </ul>
-                        <a href="javascript:void(0);" class="btn btn-secondary w-100">Thanh toán</a>
+                        <form action="{{ route('client.checkout') }}" method="post">
+                            @csrf
+                        {{-- <button name="zalopay" class="btn btn-secondary w-100">Thanh toán zalopay</button>
+                        <hr> --}}
+                        <button name="payUrl" type="submit" class="btn btn-secondary w-100">Thanh toán momo</button>
                         <hr>
-                        <a href="javascript:void(0);" class="btn btn-secondary w-100">Hủy thanh toán</a>
-                    </div>                </div>
+                            
+                            
+                        <a href="javascript:void(0);"  class="btn btn-secondary w-100">Hủy thanh toán</a>
+                        </form>
+                    </div>
+                </div>
 
             </div>
         </div>

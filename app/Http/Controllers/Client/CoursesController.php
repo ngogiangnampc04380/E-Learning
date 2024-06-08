@@ -58,18 +58,27 @@ class CoursesController extends Controller
             'address' => $address,
             'course_id' => $courseId,
         ]);
+        // dd(session([
+        //     'fullname' => $fullname,
+        //     'phone' => $phone,
+        //     'email' => $email,
+        //     'address' => $address,
+        //     'course_id' => $courseId,
+        // ]));
         return redirect()->route('client.course-pricing', ['id' => $courseId]);
     }
     public function pricing($id)
     {
+        $course = Course::find($id);
         $sessionData = [
+            'id' => $id,
             'fullname' => session('fullname'),
             'phone' => session('phone'),
             'email' => session('email'),
             'address' => session('address'),
             'course_id' => session('course_id'),
         ];
-        $course = Course::find($id);
+       
         if (!$course) {
             return redirect()->route('client.courses')->with('error', 'Khóa học không tồn tại.');
         }

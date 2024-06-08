@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Enum\RoleUsers;
 use Closure;
 use Filament\Forms\FormsComponent;
+use App\Notifications\UserDisabledNotification;
+
 
 class UserResource extends Resource
 {
@@ -107,60 +109,66 @@ class UserResource extends Resource
             ]);
     }
     public static function table(Table $table): Table
-    {
-
-        return $table
-            
-            ->columns([
-                Tables\Columns\ImageColumn::make('thumbnail')
-                    ->label('Hình ảnh')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('name')
-                    ->label('Tên người dùng')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('phone')
-                    ->label('Số điện thoại')
-                    // ->value(fn ($record) => match ($record->status) {
-                    //     '123' => 'Draft',
-                    //     '0703374380' => 'Reviewing',
-                    //     default => $record->status,
-                    // })
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('address')
-                    ->label('Địa chỉ')
-                    ->searchable(),
-                Tables\Columns\SelectColumn::make('role')
+{
+    return $table
+        ->columns([
+            Tables\Columns\ImageColumn::make('thumbnail')
+                ->label('Hình ảnh')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('name')
+                ->label('Tên người dùng')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('email')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('phone')
+                ->label('Số điện thoại')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('address')
+                ->label('Địa chỉ')
+                ->searchable(),
+            Tables\Columns\SelectColumn::make('role')
                 ->label('Vai trò')
                 ->options([
                     0 => 'Học viên',
                     1 => 'Admin',
                     2 => 'Giảng viên'
                 ]),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                
-            ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
-    }
+            Tables\Columns\TextColumn::make('created_at')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
+            Tables\Columns\TextColumn::make('updated_at')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
+        ])
+        ->filters([
+            // Các bộ lọc của bạn
+        ])
+        ->actions([
+            Tables\Actions\ViewAction::make(),
+            Tables\Actions\EditAction::make(),
+            Tables\Actions\Action::make('disable')
+                ->label('Vô hiệu hóa')
+                ->action(function (User $record) {
+                    // Vô hiệu hóa tài khoản
+                    $record->is_active = false;
+                    $record->save();
+
+                    // Gửi thông báo qua email
+                    $record->notify(new UserDisabledNotification($record));
+                })
+                ->requiresConfirmation()
+                ->color('danger')
+                ->visible(fn (User $record) => $record->is_active), // Hiển thị nút nếu tài khoản đang hoạt động
+        ])
+        ->bulkActions([
+            Tables\Actions\BulkActionGroup::make([
+                Tables\Actions\DeleteBulkAction::make(),
+            ]),
+        ]);
+}
+
 
     public static function getRelations(): array
     {

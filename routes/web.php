@@ -7,7 +7,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\MentorController;
 use App\Http\Controllers\Admin\BlogController;
-
+use App\Http\Controllers\Client\CheckoutController;
 // ----------------------------client----------------------------*******
 
 use App\Http\Controllers\Client\HomeController;
@@ -128,6 +128,10 @@ Route::prefix('client')->name('client.')->group(function () {
     // ----------------------------- Search ------------------------------
     Route::get("/search", [SearchController::class, "search"])->name("search");
 
+    // ----------------------------------CHECKOUT--------------------------
+    Route::post("/checkout", [CheckoutController::class, "online_pay"])->name('checkout');
+    
+    Route::get("/thank", [CheckoutController::class, "thank"])->name("thank");
 
     // -----------------------Mentor-------------------------
     // -----------------------Post-------------------------

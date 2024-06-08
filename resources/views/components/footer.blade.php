@@ -19,7 +19,8 @@
                             <div class="box-form-newsletter">
                                 <form class="form-newsletter">
                                     <input class="input-newsletter" type="text" placeholder="Email của bạn">
-                                    <button class="btn btn-default font-heading icon-send-letter">Đăng ký ngay bây giò</button>
+                                    <button class="btn btn-default font-heading icon-send-letter">Đăng ký ngay bây
+                                        giò</button>
                                 </form>
                             </div>
                         </div>
@@ -45,7 +46,7 @@
                             <ul>
                                 {{-- <li><a href="{{ route('client.Login') }}">Đăng nhập người dùng</a></li> --}}
                                 {{-- <li><a href="{{ route('client.Register') }}">Đăng ký người dùng</a></li> --}}
-                                
+
                                 <li><a href="{{ route('client.course-lists') }}">Danh sách khóa học</a></li>
                             </ul>
                         </div>
@@ -108,33 +109,41 @@
 </footer>
 
 </div>
-<script src="/assets-client/js/jquery-3.7.1.min.js" ></script>
+<script src="/assets-client/js/jquery-3.7.1.min.js"></script>
 
-<script src="/assets-client/js/bootstrap.bundle.min.js" ></script>
+<script src="/assets-client/js/bootstrap.bundle.min.js"></script>
 
-<script src="/assets-client/js/owl.carousel.min.js" ></script>
+<script src="/assets-client/js/owl.carousel.min.js"></script>
 
-<script src="/assets-client/plugins/aos/aos.js" ></script>
+<script src="/assets-client/plugins/aos/aos.js"></script>
 
-<script src="/assets-client/js/jquery.waypoints.js" ></script>
-<script src="/assets-client/js/jquery.counterup.min.js" ></script>
+<script src="/assets-client/js/jquery.waypoints.js"></script>
+<script src="/assets-client/js/jquery.counterup.min.js"></script>
 
-<script src="/assets-client/plugins/select2/js/select2.min.js" ></script>
+<script src="/assets-client/plugins/select2/js/select2.min.js"></script>
 
 <script src="/assets-client/plugins/slick/slick.js"></script>
 
-<script src="/assets-client/plugins/swiper/js/swiper.min.js" ></script>
+<script src="/assets-client/plugins/swiper/js/swiper.min.js"></script>
 
 <script src="/assets-client/js/script.js"></script>
 {{-- <script src="../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
     data-cf-settings="a24f51fa5374e90d6aa7f4a1-|49" defer></script> --}}
 <script src="/assets-client/js/add.js"></script>
+<script src="/assets-client/js/icheck.js"></script>
+
 <script>
-    $(function(){
-        setTimeout(()=>{
+    $(function() {
+        setTimeout(() => {
             $('#loader').fadeOut(1000);
-        },1000)
+        }, 1000)
     })
+    $(document).ready(function() {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_flat-blue',
+            radioClass: 'iradio_flat-blue'
+        });
+    });
 </script>
 </body>
 
