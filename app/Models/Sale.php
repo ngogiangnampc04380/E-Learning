@@ -8,14 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Sale extends Model
 {
     use HasFactory;
+    protected $table = 'sales';
     protected $fillable = [
         'id',
-        'price_sale',
+        'name',
+        'description',
+        'percent_sale',
         'sales_code',
         'start_date',
         'end_date',
-        'course_id',
         'amount',
         'status',
+        'course_id',
     ];
 }
+

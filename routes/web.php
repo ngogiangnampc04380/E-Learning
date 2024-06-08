@@ -25,7 +25,6 @@ use App\Http\Controllers\Client\PasswordController;
 // ----------------------------Mentor----------------------------*******
 use App\Http\Controllers\Mentor\MentorControllerr;
 use App\Http\Controllers\Mentor\SaleController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -71,14 +70,14 @@ Route::get('/disable-account', [UserProfileController::class, 'showDisableAccoun
 
 // Xử lý yêu cầu vô hiệu hóa tài khoản
 Route::post('/disable-account', [UserProfileController::class, 'disableAccount'])->name('disable-account');
-    
-    
+
+
     // education
     Route::post("/education", [UserProfileController::class, "storeEducation"])->name("storeEducation");
     Route::post("/education/{id}", [UserProfileController::class, "updateEducation"])->name("updateEducation");
     Route::post("/education/delete/{id}", [UserProfileController::class, "deleteEducation"])->name("deleteEducation");
     Route::get("/education/{id}", [UserProfileController::class, "getEducation"])->name("getEducation");
-    
+
 
 // instructor
     Route::get("/instructor-course/{id}", [InstructorController::class, "course"])->name("instructor-course");
@@ -160,18 +159,28 @@ Route::post('/logout', [LogoutController::class, 'logout'])->middleware('auth');
 //     Route::get("/course-details", [CoursesController::class, "detail"])->name("course-details");
 
 //     // -----------------------Mentor-------------------------
-  
+
 //     Route::get('/mentor-register', [MentorControllerr::class, "mentorRegister"])->name("mentor-register");
 //     Route::post('/mentor-register', [MentorControllerr::class, 'handleRegister']);
 //     Route::get('/mentor-profile', [MentorControllerr::class, "profile"])->name("mentor-profile");
-    
+
 //     Route::get('/upload_ID_Card', [MentorControllerr::class, "upload_ID_Card"])->name("upload-id-card");
 
 // });
-Route::prefix('mentor')->name('mentor.')->group(function () {
-    Route::get("/sale-course", [SaleController::class, "index"])->name("sale-course");
-    Route::post("/sale-course", [SaleController::class, "AddSale"]);
-});
+Route::get('/sale-course', [SaleController::class, 'showSaleCourseForm'])->name('mentor.show-sale-course');
+Route::post('/sale-course', [SaleController::class, 'storeSale'])->name('mentor.store-sale');
+
+
+
+Route::get('/mentor/sale-list', [SaleController::class, 'showSaleCourseList'])->name('mentor.list-sale-course');
+//
+Route::get('/mentor/edit-sale/{id}', [SaleController::class, 'editSales'])->name('mentor.edit-sale');
+Route::post('/mentor/update-sale/{id}', [SaleController::class, 'updateSales'])->name('mentor.update-sale');
+
+Route::delete('/mentor/delete-sale/{id}', [SaleController::class, 'deleteSale'])->name('mentor.delete-sale');
+
+
+
 
 
 
