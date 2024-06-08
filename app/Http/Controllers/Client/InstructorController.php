@@ -19,11 +19,10 @@ class InstructorController extends Controller
 {
     $currentUserId = Auth::id();
     $query = $request->input('query');
-
-    $mentors = DB::table('users')
-        ->where('role', 2)
-        ->where('id', '!=', $currentUserId);
-
+    
+    $mentors = User::where('role', 2)
+    ->where('id', '!=', $currentUserId);
+    
     if ($query) {
         $mentors = $mentors->where('name', 'LIKE', "%$query%");
     }

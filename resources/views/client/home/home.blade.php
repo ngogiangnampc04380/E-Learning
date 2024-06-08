@@ -3147,7 +3147,7 @@
 
                 <div class="col-xl-3 col-lg-12 col-md-12" data-aos="fade-down">
                     <div class="acheive-goals-main">
-                        <h2>Acheive you Goals with DreamsLMS</h2>
+                        <h2>Đạt được mục tiêu của bạn với ENT</h2>
                     </div>
                 </div>
 

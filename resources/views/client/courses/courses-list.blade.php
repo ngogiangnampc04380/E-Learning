@@ -12,14 +12,12 @@
                 <div class="showing-list">
                     <div class="row">
                         <div class="col-lg-6">
-                            <div class="d-flex align-items-center">
-                                <div class="view-icons">
-                                    <a href="{{route('client.course-lists')}}" class="list-view active"><i class="feather-list"></i></a>
-                                </div>
-                                <div class="show-result">
-                                    <h4>Showing 1-9 of 50 results</h4>
-                                </div>
-                            </div>
+                            @if(auth()->check())
+                            @if(auth()->user()->role == 1)
+                            <a href="/admin/courses" class="btn btn-secondary"><i class="fa-solid fa-gear"></i> Quản lí khóa học</a>
+                                        @endif
+                                @endif
+                            
                         </div>
                         <div class="col-lg-6">
                             <div class="show-filter add-course-info">

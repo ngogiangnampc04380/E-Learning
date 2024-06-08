@@ -11,6 +11,12 @@
                 <div class="showing-list">
                     <div class="row">
                         <div class="col-lg-6">
+                            @if(auth()->check())
+                                    @if(auth()->user()->role == 1)
+                            <a href="/admin/mentors" class="btn btn-secondary"><i class="fa-solid fa-gear"></i> Quản lí giảng viên</a>
+                                        @endif
+                                @endif
+                            
                             
                         </div>
                         <div class="col-lg-6">

@@ -26,7 +26,9 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-9 col-md-12">
-
+                @if(auth()->user()->role == 1)
+                <a href="/admin/posts" class="btn btn-secondary mb-5"><i class="fa-solid fa-gear"></i> Quản lí bài viết</a>
+                            @endif
                 <div class="blog">
                     <div class="blog-image">
                         <a href="#"><img class="img-fluid" src="{{ $post->thumbnail ? Storage::url($post->thumbnail) : 'https://caodem.com/wp-content/uploads/caodem-hinh-anh-xoa-bai-viet-xoa-luon-hinh-anh-dinh-kem-caodem.jpg' }}"
@@ -133,10 +135,10 @@
                     </div>
                     <div class="card-body">
                         <ul class="tags">
-                            
-                                    @foreach($post->post_categories as $category)
-                            <li><a href="{{ route('client.category-detail', ['slug' => $category->slug]) }}" class="tag">{{ $category->name }}</a></li>
+                            @foreach($categories as $category)
+                                <li><a href="{{ route('client.category-detail', ['slug' => $category->slug]) }}" class="tag">{{ $category->name }}</a></li>
                             @endforeach
+                        </ul>
                             
                         </ul>
                     </div>

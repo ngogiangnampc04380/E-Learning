@@ -26,9 +26,8 @@
                             <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
                         </div>
                         <div class="mentor-course text-center">
-                            <h2>Welcome to <br>DreamsLMS Courses.</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                            <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
+                            <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
                         </div>
                     </div>
                 </div>
@@ -38,9 +37,8 @@
                             <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
                         </div>
                         <div class="mentor-course text-center">
-                            <h2>Welcome to <br>DreamsLMS Courses.</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                            <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
+                            <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
                         </div>
                     </div>
                 </div>
@@ -50,9 +48,8 @@
                             <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
                         </div>
                         <div class="mentor-course text-center">
-                            <h2>Welcome to <br>DreamsLMS Courses.</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                            <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
+                            <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
                         </div>
                     </div>
                 </div>
@@ -62,9 +59,8 @@
                             <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
                         </div>
                         <div class="mentor-course text-center">
-                            <h2>Welcome to <br>DreamsLMS Courses.</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                            <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
+                            <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
                         </div>
                     </div>
                 </div>
@@ -74,9 +70,8 @@
                             <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
                         </div>
                         <div class="mentor-course text-center">
-                            <h2>Welcome to <br>DreamsLMS Courses.</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                            <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
+                            <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
                         </div>
                     </div>
                 </div>
@@ -86,9 +81,8 @@
                             <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
                         </div>
                         <div class="mentor-course text-center">
-                            <h2>Welcome to <br>DreamsLMS Courses.</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                            <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
+                            <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
                         </div>
                     </div>
                 </div>
@@ -98,9 +92,8 @@
                             <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
                         </div>
                         <div class="mentor-course text-center">
-                            <h2>Welcome to <br>DreamsLMS Courses.</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                            <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
+                            <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
                         </div>
                     </div>
                 </div>

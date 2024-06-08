@@ -9,4 +9,8 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateErollment extends CreateRecord
 {
     protected static string $resource = ErollmentResource::class;
+    protected function getRedirectUrl(): string
+    {
+      return $this->getResource()::getUrl('index')   ;
+    }
 }

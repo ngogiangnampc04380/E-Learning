@@ -18,9 +18,8 @@
                                 <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
                             </div>
                             <div class="mentor-course text-center">
-                                <h2>Welcome to <br>DreamsLMS Courses.</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
+                                <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
                             </div>
                         </div>
                     </div>
@@ -30,9 +29,8 @@
                                 <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
                             </div>
                             <div class="mentor-course text-center">
-                                <h2>Welcome to <br>DreamsLMS Courses.</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
+                                <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
                             </div>
                         </div>
                     </div>
@@ -42,9 +40,8 @@
                                 <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
                             </div>
                             <div class="mentor-course text-center">
-                                <h2>Welcome to <br>DreamsLMS Courses.</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
+                                <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
                             </div>
                         </div>
                     </div>
@@ -54,9 +51,8 @@
                                 <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
                             </div>
                             <div class="mentor-course text-center">
-                                <h2>Welcome to <br>DreamsLMS Courses.</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
+                                <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
                             </div>
                         </div>
                     </div>
@@ -66,9 +62,8 @@
                                 <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
                             </div>
                             <div class="mentor-course text-center">
-                                <h2>Welcome to <br>DreamsLMS Courses.</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
+                                <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
                             </div>
                         </div>
                     </div>
@@ -78,9 +73,8 @@
                                 <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
                             </div>
                             <div class="mentor-course text-center">
-                                <h2>Welcome to <br>DreamsLMS Courses.</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
+                                <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
                             </div>
                         </div>
                     </div>
@@ -90,9 +84,8 @@
                                 <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
                             </div>
                             <div class="mentor-course text-center">
-                                <h2>Welcome to <br>DreamsLMS Courses.</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
+                                <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
                             </div>
                         </div>
                     </div>
@@ -114,10 +107,10 @@
             <div class="img-logo">
                 <img src="{{ asset('/img/logo.gif') }}" class="img-fluid" alt="Logo">
                 <div class="back-home">
-                    <a href="{{ route('Dashboard-client') }}">Go back to home</a>
+                    <a href="{{ route('Dashboard-client') }}">Quay về trang chủ</a>
                 </div>
             </div>
-            <h1>Register</h1>
+            <h1>Đăng ký</h1>
             <form action="{{ route('register') }}" method="POST">
                 @csrf
                 <div class="form-group">
@@ -200,7 +193,7 @@
                 </div>
                 <div class="d-grid">
                     <button class="btn btn-primary btn-start" id="registerButton" disabled
-                        type="submit">Register</button>
+                        type="submit">Đăng ký</button>
                 </div>
             </form>
         

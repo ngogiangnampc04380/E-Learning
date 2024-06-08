@@ -17,7 +17,7 @@
                                         <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
                                     </div>
                                     <div class="mentor-course text-center">
-                                        <h2>Welcome to <br>DreamsLMS Courses.</h2>
+                                        <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                                             incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
                                     </div>
@@ -29,7 +29,7 @@
                                         <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
                                     </div>
                                     <div class="mentor-course text-center">
-                                        <h2>Welcome to <br>DreamsLMS Courses.</h2>
+                                        <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                                             incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
                                     </div>
@@ -41,7 +41,7 @@
                                         <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
                                     </div>
                                     <div class="mentor-course text-center">
-                                        <h2>Welcome to <br>DreamsLMS Courses.</h2>
+                                        <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                                             incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
                                     </div>
@@ -53,7 +53,7 @@
                                         <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
                                     </div>
                                     <div class="mentor-course text-center">
-                                        <h2>Welcome to <br>DreamsLMS Courses.</h2>
+                                        <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                                             incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
                                     </div>
@@ -65,7 +65,7 @@
                                         <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
                                     </div>
                                     <div class="mentor-course text-center">
-                                        <h2>Welcome to <br>DreamsLMS Courses.</h2>
+                                        <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                                             incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
                                     </div>
@@ -77,7 +77,7 @@
                                         <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
                                     </div>
                                     <div class="mentor-course text-center">
-                                        <h2>Welcome to <br>DreamsLMS Courses.</h2>
+                                        <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                                             incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
                                     </div>
@@ -89,7 +89,7 @@
                                         <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
                                     </div>
                                     <div class="mentor-course text-center">
-                                        <h2>Welcome to <br>DreamsLMS Courses.</h2>
+                                        <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                                             incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
                                     </div>

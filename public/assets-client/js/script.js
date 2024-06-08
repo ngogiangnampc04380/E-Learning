@@ -1,6 +1,6 @@
 /*
 Author       : Dreamguys
-Template Name: Dreams LMS - Bootstrap Template
+Template Name: E-learning website [ ENT ] - Bootstrap Template
 Version      : 1.0
 */
 
