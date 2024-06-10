@@ -35,6 +35,7 @@ class User extends Authenticatable  implements FilamentUser
         'password',
         'address',
         'auth',
+        'is_active',
         'link_mail',
         'link_face',
         'link_youtube'

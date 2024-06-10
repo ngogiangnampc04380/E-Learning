@@ -73,7 +73,9 @@ class MentorResource extends Resource
                     ->searchable(),
             ])
             ->filters([
-                
+                SelectFilter::make('user.role')
+                    ->label('Giảng viên')
+                    ->default('2'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

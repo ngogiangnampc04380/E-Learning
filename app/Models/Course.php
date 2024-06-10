@@ -16,6 +16,7 @@ class Course extends Model
         'thumbnail',
         'price',
         'view',
+        'mentor_id',
         'description',
         'enrollment',
     ];

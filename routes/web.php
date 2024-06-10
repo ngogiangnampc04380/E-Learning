@@ -28,20 +28,7 @@ use App\Http\Controllers\Client\PasswordController;
 // ----------------------------Mentor----------------------------*******
 use App\Http\Controllers\Mentor\MentorControllerr;
 use App\Http\Controllers\Mentor\SaleController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 
 
@@ -130,7 +117,7 @@ Route::prefix('client')->name('client.')->group(function () {
 
     // ----------------------------------CHECKOUT--------------------------
     Route::post("/checkout", [CheckoutController::class, "online_pay"])->name('checkout');
-    
+
     Route::get("/thank", [CheckoutController::class, "thank"])->name("thank");
 
     // -----------------------Mentor-------------------------
@@ -140,14 +127,15 @@ Route::prefix('client')->name('client.')->group(function () {
     // Route::get('/post_category/{slug}', [PostController::class, 'show'])->name('category.show');
     Route::get('/category-detail/{slug}', [PostController::class, 'category_show'])->name('category-detail');
 });
-// ---mentor
 
-// Route::get('/mentor-register', [MentorControllerr::class, "mentorRegister"])->name("mentor-register");
-// Route::post('/mentor-register', [MentorControllerr::class, 'handleRegister']);
-// Route::get('/mentor-profile', [MentorControllerr::class, "profile"])->name("mentor-profile");
-// Route::get('/upload_ID_Card', [MentorControllerr::class, "upload_ID_Card"])->name("upload-id-card");
-// Route::post('/mentor/save-id-card-data', [MentorControllerr::class, 'saveIdCardData'])->name('mentor-save-id-card');
-Route::prefix('mentor')->name('mentor.')->group(function () {
-    Route::get("/sale-course", [SaleController::class, "index"])->name("sale-course");
-    Route::post("/sale-course", [SaleController::class, "AddSale"]);
-});
+
+// -----------------------Sales-------------------------
+Route::get('/sale-course', [SaleController::class, 'showSaleCourseForm'])->name('mentor.show-sale-course');
+Route::post('/sale-course', [SaleController::class, 'storeSale'])->name('mentor.store-sale');
+
+Route::get('/mentor/sale-list', [SaleController::class, 'showSaleCourseList'])->name('mentor.list-sale-course');
+
+Route::get('/mentor/edit-sale/{id}', [SaleController::class, 'editSales'])->name('mentor.edit-sale');
+Route::post('/mentor/update-sale/{id}', [SaleController::class, 'updateSales'])->name('mentor.update-sale');
+
+Route::delete('/mentor/delete-sale/{id}', [SaleController::class, 'deleteSale'])->name('mentor.delete-sale');

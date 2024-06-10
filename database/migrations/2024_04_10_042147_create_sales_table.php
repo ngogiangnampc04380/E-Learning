@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
+            $table->string('name',50);
+            $table->text('description');
             $table->integer('percent_sale');
             $table->string('sales_code',50);
             $table->date('start_date');

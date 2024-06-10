@@ -39,7 +39,7 @@
                                 </div>
                                 @if(auth()->user()->role == 2)
                                 <div class="go-dashboard text-center">
-                                    <a href="{{ route('client.instructor-addcourse') }}" class="btn btn-primary">Create New Course</a>
+                                    <a href="{{ route('client.create-course') }}" class="btn btn-primary">Create New Course</a>
                                 </div>
                                 @endif
 

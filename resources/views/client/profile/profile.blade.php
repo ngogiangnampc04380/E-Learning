@@ -39,7 +39,7 @@
                                 </div>
                                 @if(auth()->user()->role == 2)
                                 <div class="go-dashboard text-center">
-                                    <a href="{{ route('client.instructor-addcourse') }}" class="btn btn-primary">Create New Course</a>
+                                    <a href="{{ route('client.create-course') }}" class="btn btn-primary">Create New Course</a>
                                 </div>
                                 @endif
 
@@ -172,7 +172,7 @@
                                                             <div class="profile-imgs">
                                                                 <!-- Hiển thị hình ảnh đã lưu sẵn -->
                                                                 <img class="trigger-element"
-                                                                src="{{ auth()->user()->thumbnail ? Storage::url('assets-client/img/user/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}" 
+                                                                src="{{ auth()->user()->thumbnail ? Storage::url('/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}" 
                                                                 <!-- Đặt input type="file" để cho phép người dùng chọn hình ảnh từ ổ cứng -->
                                                                 <input type="file" id="thumbnail" name="thumbnail"
                                                                     accept="image/*" style="display: none;">

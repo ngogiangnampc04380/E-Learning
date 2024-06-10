@@ -51,7 +51,7 @@
             <div class="product">
                 <div class="product-img">
                     <a href="{{ route('client.course-details', $item->id) }}">
-                        <img src="{{ Storage::url(''. $item->thumbnail) }}" alt="Thumbnail" class="img-fluid" style="max-width: 150px;">
+                        <img src="{{ Storage::url('assets-client/img/user/'. $item->thumbnail) }}" alt="Thumbnail" class="img-fluid" style="max-width: 150px;">
                     </a>
                 </div>
                 <div class="product-content">

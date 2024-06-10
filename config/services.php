@@ -36,7 +36,7 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => 'http://127.0.0.1:8000/login/google/callback',
         'http' => [
-            'verify' => base_path('C:\php\cacert.pem'),
+            'verify' => base_path('D:\cacert.pem'),
         ],
     ],
 

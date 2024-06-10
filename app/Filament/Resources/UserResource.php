@@ -19,6 +19,7 @@ use App\Enum\RoleUsers;
 use Closure;
 use Filament\Forms\FormsComponent;
 use App\Notifications\UserDisabledNotification;
+use App\Notifications\UserRestoredNotification;
 
 
 class UserResource extends Resource
@@ -97,24 +98,24 @@ class UserResource extends Resource
                         'alpha_num'=>'Mật khẩu phải từ 6 kí tự bao gồm chữ và số '
                     ])
                     ->maxLength(255),
-                    Forms\Components\FileUpload::make('thumbnail')
+                    // Forms\Components\FileUpload::make('thumbnail')
                     
-                    ->columnSpanFull()
-                    ->image()
-                    ->validationMessages([
+                    // ->columnSpanFull()
+                    // ->image()
+                    // ->validationMessages([
                         
-                        'image'=> 'File tải lên phải là các file JPG, JPEG, PNG và SVG'
-                    ])
-                    ->label('Hình ảnh'),
+                    //     'image'=> 'File tải lên phải là các file JPG, JPEG, PNG và SVG'
+                    // ])
+                    // ->label('Hình ảnh'),
             ]);
     }
     public static function table(Table $table): Table
 {
     return $table
         ->columns([
-            Tables\Columns\ImageColumn::make('thumbnail')
-                ->label('Hình ảnh')
-                ->searchable(),
+            // Tables\Columns\ImageColumn::make('thumbnail')
+            //     ->label('Hình ảnh')
+            //     ->searchable(),
             Tables\Columns\TextColumn::make('name')
                 ->label('Tên người dùng')
                 ->searchable(),
@@ -154,19 +155,34 @@ class UserResource extends Resource
                     // Vô hiệu hóa tài khoản
                     $record->is_active = false;
                     $record->save();
-
+        
                     // Gửi thông báo qua email
                     $record->notify(new UserDisabledNotification($record));
                 })
                 ->requiresConfirmation()
                 ->color('danger')
                 ->visible(fn (User $record) => $record->is_active), // Hiển thị nút nếu tài khoản đang hoạt động
+        
+            Tables\Actions\Action::make('restore')
+                ->label('Khôi phục tài khoản')
+                ->action(function (User $record) {
+                    // Khôi phục tài khoản
+                    $record->is_active = true;
+                    $record->save();
+        
+                    // Gửi thông báo qua email
+                    $record->notify(new UserRestoredNotification($record));
+                })
+                ->requiresConfirmation()
+                ->color('success')
+                ->visible(fn (User $record) => !$record->is_active), // Hiển thị nút nếu tài khoản bị vô hiệu hóa
         ])
         ->bulkActions([
             Tables\Actions\BulkActionGroup::make([
                 Tables\Actions\DeleteBulkAction::make(),
             ]),
         ]);
+        
 }
 
 

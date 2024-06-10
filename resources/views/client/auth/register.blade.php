@@ -108,9 +108,9 @@
             <div class="login-wrapper">
                 <div class="loginbox">
                     <div class="img-logo">
-                        <img src="{{ asset('assets/img/logo.png') }}" class="img-fluid" alt="Logo">
+                        <img src="{{ asset('/img/logo.gif') }}" class="img-fluid" alt="Logo">
                         <div class="back-home">
-                            <a href="{{ route('Dashboard-client') }}">Go back to home</a>
+                            <a href="{{ route('Dashboard-client') }}">Quay về trang chủ</a>
                         </div>
                     </div>
                     <h1>Register</h1>
@@ -196,7 +196,7 @@
                         </div>
                         <div class="d-grid">
                             <button class="btn btn-primary btn-start" id="registerButton" 
-                                type="submit">Register</button>
+                                type="submit">Đăng ký</button>
                         </div>
                     </form>
 
@@ -205,9 +205,8 @@
                         <span><a href="#">Or log in with</a></span>
                         <div class="sign-google">
                             <ul>
-                                <li><a style="border-right: none !important;" href=""><img
-                                            src="{{ asset('assets/img/net-icon-01.png') }}" class="img-fluid"
-                                            alt="Logo"> Login
+                                <li><a style="border-right: none !important;" href="{{ route('login.google') }}"><img
+                                            src="{{ asset('/assets-client/img/net-icon-01.png') }}" class="img-fluid" alt="Logo"> Login
                                         using Google</a></li>
                                 {{-- <li><a href="#"><img src="{{asset('assets/img/net-icon-02.png')}}" class="img-fluid" alt="Logo">Sign In using Facebook</a></li> --}}
                             </ul>

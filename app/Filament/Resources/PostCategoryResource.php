@@ -35,7 +35,7 @@ class PostCategoryResource extends Resource
                     ->required()
                     ->label('Đường dẫn')
                     ->unique(ignoreRecord: true)
-                    ->regex('/^[a-z0-9]+(?:-[a-z0-9]+)*$/')
+                    ->regex('/^[a-z0-9]+(-[a-z0-9]+)+$/')
 
                     ->validationMessages([
                         'required' => 'vui lòng nhập đường dẫn',

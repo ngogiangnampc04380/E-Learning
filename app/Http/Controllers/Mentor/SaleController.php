@@ -15,6 +15,7 @@ class SaleController extends Controller
         $data = DB::table('courses')
             ->orderBy('id', 'desc')
             ->get();
+           
         return view('mentor.sales.sales', ['data' => $data]);
     }
 

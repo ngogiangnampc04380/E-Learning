@@ -10,7 +10,7 @@
                     <div class="student-widget">
                         <div class="student-widget-group add-course-info">
                             <div class="cart-head">
-                                <strong><h3 style="color:red"> ĐỊA CHỈ THANH TOÁN </h3></strong>
+                                <strong><h3 style="color:red">THÔNG TIN THANH TOÁN</h3></strong>
                             </div>
                             <div class="checkout-form">
                                 <form action="{{route('client.checkout-submit')}}" method="post">
@@ -61,7 +61,7 @@
                         <div class="student-widget-group">
 
                             <div class="basic-plan" style="display: flex; align-items: center;">
-                                <img src="{{ Storage::url(''. $data->thumbnail) }}" alt="Thumbnail" class="img-fluid"
+                                <img src="{{ Storage::url('assets-client/img/user/'. $data->thumbnail) }}" alt="Thumbnail" class="img-fluid"
                                      style="max-width: auto;">
 
                             </div>

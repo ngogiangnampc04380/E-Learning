@@ -1,6 +1,5 @@
 @extends('client.layout.master')
 @section('content')
-
     <section class="course-content">
         <div class="container">
             <div class="row">
@@ -16,11 +15,13 @@
                     <div class="plan-box">
                         <div style="display: flex; align-items: center;">
                             <div style="margin-right: 20px;">
-                                <img src="{{ Storage::url($course->thumbnail) }}" alt="Thumbnail" class="img-fluid"
-                                     style="width: 200px;">
+                                <img src="{{ Storage::url('assets-client/img/user/'. $course->thumbnail) }}" alt="Thumbnail" class="img-fluid"
+                                    style="width: 200px;">
                             </div>
                             <div>
-                                <h3 class="title"><a name="coursename" href="{{ route('client.course-details', $course->id) }}">{{ $course->name }}</a></h3>
+                                <h3 class="title"><a name="coursename"
+                                        href="{{ route('client.course-details', $course->id) }}">{{ $course->name }}</a>
+                                </h3>
                                 <p>{{ $course->description }}</p>
                             </div>
                         </div>
@@ -40,18 +41,19 @@
 
                         </ul>
                         <hr>
-                        @if(isset($data->sales_code))
+                        @if (isset($data->sales_code))
                             <div class="discount-card">
-                                <h3>{{$data->name}}</h3>
-                                <p>{{$data->description}}</p>
-                                <p>{{$data->percent_sale}}%</p>
-                                <button onclick="showDiscountCode()" class="btn btn-secondary w-100">Lấy mã giảm giá</button>
+                                <h3>{{ $data->name }}</h3>
+                                <p>{{ $data->description }}</p>
+                                <p>{{ $data->percent_sale }}%</p>
+                                <button onclick="showDiscountCode()" class="btn btn-secondary w-100">Lấy mã giảm
+                                    giá</button>
                             </div>
 
                             <div id="showDiscountCodeDiv" style="display:none; margin-top: 10px;">
                                 <p><strong>Mã giảm giá của bạn:
                                     </strong>
-                                    {{$data->sales_code}}
+                                    {{ $data->sales_code }}
                                 </p>
                             </div>
                             <hr>
@@ -60,7 +62,8 @@
                         <button onclick="toggleDiscountCode()" class="btn btn-secondary w-100">Nhập mã giảm giá</button>
                         <div id="discountCodeDiv" style="margin-top: 10px;">
                             <input type="text" id="discountCode" class="form-control" placeholder="Nhập mã giảm giá">
-                            <button onclick="applyDiscount()" class="btn btn-primary w-100" style="margin-top: 10px;">Áp dụng</button>
+                            <button onclick="applyDiscount()" class="btn btn-primary w-100" style="margin-top: 10px;">Áp
+                                dụng</button>
                         </div>
                         <hr>
                         Giá:{{ number_format($course->price) }} VNĐ
@@ -79,19 +82,21 @@
                             <li style="list-style: none; display: inline-block; margin-right: 10px;">
                                 <label>
                                     <input type="radio" name="payment_method" class="btn" value="momo">
-                                    <img src="https://tse3.mm.bing.net/th?id=OIP.ozc76HTNt1OMfXfNiFShsQHaHa&pid=Api&P=0&h=180" alt="" style="height: 50px; width: auto;">
+                                    <img src="https://tse3.mm.bing.net/th?id=OIP.ozc76HTNt1OMfXfNiFShsQHaHa&pid=Api&P=0&h=180"
+                                        alt="" style="height: 50px; width: auto;">
                                 </label>
                             </li>
                         </ul>
+
                         <form action="{{ route('client.checkout') }}" method="post">
                             @csrf
-                        {{-- <button name="zalopay" class="btn btn-secondary w-100">Thanh toán zalopay</button>
+                            {{-- <button name="zalopay" class="btn btn-secondary w-100">Thanh toán zalopay</button>
                         <hr> --}}
-                        <button name="payUrl" type="submit" class="btn btn-secondary w-100">Thanh toán momo</button>
-                        <hr>
-                            
-                            
-                        <a href="javascript:void(0);"  class="btn btn-secondary w-100">Hủy thanh toán</a>
+                            <button name="payUrl" type="submit" class="btn btn-secondary w-100">Thanh toán momo</button>
+                            <hr>
+
+
+                            <a href="javascript:void(0);" class="btn btn-secondary w-100">Hủy thanh toán</a>
                         </form>
                     </div>
                 </div>
@@ -108,18 +113,22 @@
                 discountDiv.style.display = 'none';
             }
         }
+
         function showDiscountCode() {
             var displayDiscountCodeDiv = document.getElementById('showDiscountCodeDiv');
             displayDiscountCodeDiv.style.display = 'block';
         }
+
         function applyDiscount() {
             var discountCode = document.getElementById('discountCode').value;
-            var validCode = "{{$data->sales_code}}";
+            var validCode = "{{ $data->sales_code }}";
 
             if (discountCode === validCode) {
-                var percentSale = {{$data->percent_sale}};
-                var price = {{$course->price}};
-                var discountedPrice = number_format(price * (1 - percentSale / 100)) ;
+                var percentSale = {{ $data->percent_sale }};
+                var price = {{ $course->price }};
+                var discountedPrice = number_format(price * (1 - percentSale / 100));
+
+
                 document.getElementById('discountedPrice').innerText = discountedPrice;
                 document.getElementById('discountedPriceDiv').style.display = 'block';
                 document.getElementById('invalidCodeDiv').style.display = 'none';
@@ -127,6 +136,12 @@
                 document.getElementById('discountedPriceDiv').style.display = 'none';
                 document.getElementById('invalidCodeDiv').style.display = 'block';
             }
+
+        }
+
+        function number_format(number) {
+            let roundedNumber = Math.round(number).toString();
+            return roundedNumber.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
     </script>
 @endsection

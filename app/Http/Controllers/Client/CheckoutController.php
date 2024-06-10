@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Client;
 use App\Models\Client\Checkout;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Course;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CheckoutController extends Controller
 {
@@ -49,16 +51,21 @@ if ($result === false) {
     
     public function online_pay(request $request)
     {
+        $price = DB::table('courses')
+                ->select('price')
+                ->first();
+        // $discountedPrice = $request->input('discounted_price');
         if (isset($_POST['payUrl'])) {
             $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
             $partnerCode = 'MOMOBKUN20180529';
             $accessKey = 'klm05TvNBzhg7h7j';
             $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
             $orderInfo = "Thanh toán qua MoMo";
-            $amount = "12000";
+            $amount =  $price->price;
             $orderId = rand(00,9999);
+            // $resultCode	= "resultCode";
             $redirectUrl = "http://127.0.0.1:8000/client/thank";
-            $ipnUrl = "http://127.0.0.1:8000/client/thank";
+            $ipnUrl = "http://127.0.0.1:8000";
             $extraData = "";
             $requestId = time() . "";
             $requestType = "payWithATM";
@@ -97,23 +104,28 @@ if ($result === false) {
             $jsonResult = json_decode($result,true); // decode json thành mảng associative
 
             // In ra kết quả để gỡ lỗi
-            // dd($jsonResult["payUrl"]);
+           
         }
+        
+
+        // dd($jsonResult);
+        
        
         return redirect()->to( $jsonResult['payUrl'] );
     }
+    
     public function thank(){
-        if(isset($_GET['partnerCode'])){
 
-                Order::create([
-                    'order_code' => rand(00,9999),
-                    'fullname' => session('fullname'),
-                    'phone' => session('phone'),
-                    'email' => session('email'),
-                    'address' => session('address'),
-                    'course_id' => session('course_id'),
-                    'user_id' => session('id'),
-                ]);
+        if(isset($_GET['partnerCode']) && $_GET['message']=="Successful."){
+            Order::create([
+                'order_code' =>$_GET['orderId'],
+                'fullname' => session('fullname'),
+                'phone' => session('phone'),
+                'email' => session('email'),
+                'address' => session('address'),
+                'course_id' => session('course_id'),
+                'user_id' => session('id'),
+            ]);     
         }
         return view('client.checkout.thank');
     }   

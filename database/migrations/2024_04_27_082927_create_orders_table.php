@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('fullname',50);
+            $table->string('email',50);
+            $table->string('phone',10);
+            $table->string('address',100);
             $table->string('order_code',50);
             $table->unsignedBigInteger('course_id');
             $table->foreign('course_id')->references('id')->on('courses')->constrained()->cascadeOnDelete();
