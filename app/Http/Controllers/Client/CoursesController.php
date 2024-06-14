@@ -58,29 +58,34 @@ class CoursesController extends Controller
             'address' => $address,
             'course_id' => $courseId,
         ]);
-        
+
         return redirect()->route('client.course-pricing', ['id' => $courseId]);
     }
     public function pricing($id)
     {
+        // Lấy thông tin khóa học dựa trên $id
         $course = Course::find($id);
+
+        // Lấy dữ liệu giảm giá cho khóa học cụ thể
+        $data = Sale::where('course_id', $id)->first();
+
+        // Lấy thông tin phiên làm việc
         $sessionData = [
-            'id' => $id,                                                                                     
+            'id' => $id,
             'fullname' => session('fullname'),
             'phone' => session('phone'),
             'email' => session('email'),
             'address' => session('address'),
             'course_id' => session('course_id'),
         ];
-        $data = DB::table('sales')
-        ->first();
-        
+
+        // Kiểm tra xem khóa học có tồn tại hay không
         if (!$course) {
             return redirect()->route('client.courses');
         }
-        
+
+        // Trả về view với dữ liệu đã lấy được
         return view('client.courses.course-pricing', compact('sessionData', 'course', 'data'));
     }
-
 
 }

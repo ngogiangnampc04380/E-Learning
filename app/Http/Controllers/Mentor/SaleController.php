@@ -15,7 +15,7 @@ class SaleController extends Controller
         $data = DB::table('courses')
             ->orderBy('id', 'desc')
             ->get();
-           
+
         return view('mentor.sales.sales', ['data' => $data]);
     }
 
@@ -88,5 +88,27 @@ class SaleController extends Controller
         $sale->save();
         return redirect()->route('mentor.list-sale-course')->with('success', 'Sale added successfully!');
     }
-}
 
+    public function applyPromotion(Request $request)
+    {
+        $courseId = $request->input('course_id'); // Lấy course_id từ request
+        $salesCode = $request->input('sales_code'); // Lấy sales_code từ request
+
+        $sale = DB::table('sales')
+            ->where('sales_code', $salesCode)
+            ->where('course_id', $courseId)
+            ->where('end_date', '>=', now())
+            ->where('status', true)
+            ->first(); // Tìm mã khuyến mãi hợp lệ cho khóa học
+
+        if ($sale) {
+            $course = Course::findOrFail($courseId);
+            $originalPrice = $course->price;
+            $discountedPrice = $originalPrice * ((100 - $sale->percent_sale) / 100);
+
+            return view('client.courses.course-pricing', compact('originalPrice', 'discountedPrice', 'sale', 'course'));
+        } else {
+            return back()->with('error', 'Mã khuyến mãi không hợp lệ hoặc đã hết hạn.');
+        }
+    }
+}

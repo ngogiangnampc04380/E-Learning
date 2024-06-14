@@ -30,5 +30,8 @@ class Course extends Model
     public function comment(): HasManyThrough{
         return $this ->hasManyThrough('Comment::class','Chapters::class', 'course_id', 'chapter_id');
     }
-    
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
 }

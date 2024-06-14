@@ -20,6 +20,12 @@ class Sale extends Model
         'amount',
         'status',
         'course_id',
+
+
     ];
+    public function course()
+    {
+        return $this->belongsTo(Course::class); // Mỗi mã khuyến mãi thuộc về một khóa học
+    }
 }
 

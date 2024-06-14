@@ -32,28 +32,27 @@ class CheckoutController extends Controller
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
         //execute post
         $result = curl_exec($ch);
-if ($result === false) {
-    // Xử lý trường hợp yêu cầu không thành công
-    echo 'Lỗi cURL: ' . curl_error($ch);
-} else {
-    // Xử lý dữ liệu trả về thành công
-    return $result;
-}
+        if ($result === false) {
+            // Xử lý trường hợp yêu cầu không thành công
+            echo 'Lỗi cURL: ' . curl_error($ch);
+        } else {
+            // Xử lý dữ liệu trả về thành công
+            return $result;
+        }
 
-        
+
         //close connection
         curl_close($ch);
         return $result;
-        
-    }
-    
 
-    
+    }
+
+
     public function online_pay(request $request)
     {
         $price = DB::table('courses')
-                ->select('price')
-                ->first();
+            ->select('price')
+            ->first();
         // $discountedPrice = $request->input('discounted_price');
         if (isset($_POST['payUrl'])) {
             $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
@@ -61,8 +60,8 @@ if ($result === false) {
             $accessKey = 'klm05TvNBzhg7h7j';
             $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
             $orderInfo = "Thanh toán qua MoMo";
-            $amount =  $price->price;
-            $orderId = rand(00,9999);
+            $amount = $price->price;
+            $orderId = rand(00, 9999);
             // $resultCode	= "resultCode";
             $redirectUrl = "http://127.0.0.1:8000/client/thank";
             $ipnUrl = "http://127.0.0.1:8000";
@@ -72,15 +71,15 @@ if ($result === false) {
             // $extraData = ($_POST["extraData"] ? $_POST["extraData"] : "");
             // before sign HMAC SHA256 signature
             $rawHash = "accessKey=" . $accessKey .
-             "&amount=" . $amount .
-              "&extraData=" . $extraData .
-               "&ipnUrl=" . $ipnUrl .
+                "&amount=" . $amount .
+                "&extraData=" . $extraData .
+                "&ipnUrl=" . $ipnUrl .
                 "&orderId=" . $orderId .
-                 "&orderInfo=" . $orderInfo .
-                  "&partnerCode=" . $partnerCode .
-                   "&redirectUrl=" . $redirectUrl .
-                    "&requestId=" . $requestId .
-                     "&requestType=" . $requestType;
+                "&orderInfo=" . $orderInfo .
+                "&partnerCode=" . $partnerCode .
+                "&redirectUrl=" . $redirectUrl .
+                "&requestId=" . $requestId .
+                "&requestType=" . $requestType;
             $signature = hash_hmac("sha256", $rawHash, $secretKey);
 
             $data = array(
@@ -101,32 +100,33 @@ if ($result === false) {
 
             // Gửi yêu cầu POST và nhận kết quả
             $result = $this->execPostRequest($endpoint, json_encode($data));
-            $jsonResult = json_decode($result,true); // decode json thành mảng associative
+            $jsonResult = json_decode($result, true); // decode json thành mảng associative
 
             // In ra kết quả để gỡ lỗi
-           
+
         }
-        
+
 
         // dd($jsonResult);
-        
-       
-        return redirect()->to( $jsonResult['payUrl'] );
-    }
-    
-    public function thank(){
 
-        if(isset($_GET['partnerCode']) && $_GET['message']=="Successful."){
+
+        return redirect()->to($jsonResult['payUrl']);
+    }
+
+    public function thank()
+    {
+
+        if (isset($_GET['partnerCode']) && $_GET['message'] == "Successful.") {
             Order::create([
-                'order_code' =>$_GET['orderId'],
+                'order_code' => $_GET['orderId'],
                 'fullname' => session('fullname'),
                 'phone' => session('phone'),
                 'email' => session('email'),
                 'address' => session('address'),
                 'course_id' => session('course_id'),
                 'user_id' => session('id'),
-            ]);     
+            ]);
         }
         return view('client.checkout.thank');
-    }   
+    }
 }

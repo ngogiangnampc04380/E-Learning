@@ -139,3 +139,5 @@ Route::get('/mentor/edit-sale/{id}', [SaleController::class, 'editSales'])->name
 Route::post('/mentor/update-sale/{id}', [SaleController::class, 'updateSales'])->name('mentor.update-sale');
 
 Route::delete('/mentor/delete-sale/{id}', [SaleController::class, 'deleteSale'])->name('mentor.delete-sale');
+
+Route::post('/apply-promotion', [SaleController::class, 'applyPromotion'])->name('apply.promotion');
