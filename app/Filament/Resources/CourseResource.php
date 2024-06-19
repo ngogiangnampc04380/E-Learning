@@ -93,7 +93,7 @@ class CourseResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

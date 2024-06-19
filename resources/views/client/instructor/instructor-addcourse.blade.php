@@ -170,6 +170,15 @@
                                                                                     lòng chọn hình ảnh</span>
                                                                             </div>
                                                                             <div class="form-group mt-3">
+                                                                                <label for="video_demo">Video demo khóa học</label>
+                                                                                <input type="file" id="video_demo"
+                                                                                    name="video_demo" class="form-control">
+                                                                                <span id="video_demo_error"
+                                                                                    class="error-message"
+                                                                                    style="display: none; color:red">Vui
+                                                                                    lòng chọn video</span>
+                                                                            </div>
+                                                                            <div class="form-group mt-3">
                                                                                 <label for="price">Giá</label>
                                                                                 <input type="number" id="price"
                                                                                     name="price" class="form-control"
@@ -206,14 +215,15 @@
                                                                                         class="btn btn-info-light prev">Quay
                                                                                         lại</button>
                                                                                 </a>
-                                                                                <button type="button"
+                                                                                <button type="submit"
                                                                                     class="btn btn-info-light next">Tiếp
                                                                                     theo</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                </form>
                                                                     <!-- Bước 3: Thêm chương -->
-                                                                    <div class="add-course-info">
+                                                                    {{-- <div class="add-course-info">
                                                                         <div class="add-course-form">
                                                                             <div class="table">
                                                                                 <div class="add-course-inner-header my-3">
@@ -304,8 +314,8 @@
                                                                                 </button>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </form>
+                                                                    </div> --}}
+                                                                
                                                             </div>
                                                         </div>
                                                     </div>

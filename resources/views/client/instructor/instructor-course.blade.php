@@ -152,57 +152,87 @@
                                         </div>
                                         <div class="settings-tickets-blk course-instruct-blk table-responsive">
 
-                                            <table class="table table-nowrap mb-2">
+                                            <table class="table table-responsive table-hover">
                                                 <thead>
-                                                <tr>
-                                                    <th>Khóa học </th>
-                                                    <th>Giá</th>
-                                                    <th>Trạng thái</th>
-                                                    <th colspan="2" class="text-center">Thao tác</th>
-                                                </tr>
+                                                    <tr>
+                                                        <th>Hình ảnh</th>
+                                                        <th>Video demo</th>
+                                                        <th>Tên khóa học</th>
+                                                        <th>Giá</th>
+                                                        
+                                                        <th>Hành động</th>
+                                                    </tr>
                                                 </thead>
                                                 <tbody>
-                                                @foreach($data as $post)
+                                                    @foreach($data as $post)
                                                     <tr>
                                                         <td>
-                                                            <div class="sell-table-group d-flex align-items-center">
-                                                                <div class="sell-group-img">
-                                                                    <a href="#">
-                                                                        <img src="{{ Storage::url(''. $post->thumbnail) }}" alt="Thumbnail" class="img-fluid" style="max-width: 150px;">
-                                                                    </a>
-                                                                </div>
-                                                                <div class="sell-tabel-info">
-                                                                    <p><a href="{{ route('client.instructor-coursedetails', $post->id) }}">{{ $post->name }}</a></p>
-                                                                    <div class="course-info d-flex align-items-center border-bottom-0 pb-0">
-                                                                        <div class="rating-img d-flex align-items-center">
-                                                                        </div>
-                                                                        <div class="course-view d-flex align-items-center">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </td>
-                                                        <td>{{ number_format($post->price) }} VNĐ</td>
-                                                        <td><span class="badge info-low">Live</span></td>
-                                                        <td>
-                                                            <form id="deleteForm" action="{{ route('client.deleteCourse', $post->id) }}" method="POST">
-                                                                @csrf
-                                                                <button type="submit" class="btn btn-danger">
-                                                                    <i class="fas fa-trash-alt"></i>
-                                                                </button>
-
-                                                            </form>
-                                                        </td>
-                                                        <td>
-                                                            <a href="{{ route('client.editCourse', $post->id) }}" class="btn btn-danger">
-                                                                <i class="fas fa-edit"></i>
+                                                            <a href="#">
+                                                                <img src="{{ Storage::url('public/assets-client/img/Courses/'.$post->thumbnail) }}" alt="Thumbnail" class="img-fluid" style="max-width: 100px;">
                                                             </a>
                                                         </td>
+                                                        <td>
+                                                            @if($post->video_demo)
+                                                                <video controls class="img-fluid" style="max-width: 150px;">
+                                                                    <source src="{{ Storage::url('public/assets-client/videos/Courses/'.$post->video_demo) }}" type="video/mp4">
+                                                                    Trình duyệt của bạn không hỗ trợ thẻ video.
+                                                                </video>
+                                                            @else
+                                                                Không có video demo
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="sell-tabel-info">
+                                                                    <p>
+                                                                        <a href="{{ route('client.instructor-coursedetails', $post->id) }}">
+                                                                            {{ $post->name }}
+                                                                        </a>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>{{ number_format($post->price) }} VNĐ</td>
+                                                        <td>
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                <!-- Nút Xóa -->
+                                                                <form action="{{ route('client.deleteCourse', $post->id) }}" method="POST" class="delete-course-form">
+                                                                    @csrf
+                                                                    <button type="button" class="btn btn-danger">
+                                                                        <i class="fas fa-trash-alt"></i> Xóa
+                                                                    </button>
+                                                                </form>
+                                                    
+                                                                <!-- Nút Sửa -->
+                                                                <a href="{{ route('client.editCourse', $post->id) }}" class="btn btn-warning">
+                                                                    <i class="fas fa-edit"></i> Sửa
+                                                                </a>
+                                                    
+                                                                <!-- Nút Gửi duyệt -->
+                                                                <form action="{{ route('client.submitCourse', $post->id) }}" method="POST" class="submit-course-form">
+                                                                    @csrf
+                                                                    @method('POST')
+                                                                    <button type="submit" class="btn btn-warning btn-arrow">
+                                                                        Gửi duyệt <i class="bi bi-arrow-right"></i>
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                        </td>
                                                     </tr>
-                                                @endforeach
+                                                    @endforeach
                                                 </tbody>
                                             </table>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="confirmDeleteModal" class="modal">
+                                    <div class="modal-content">
+                                        <span class="close">&times;</span>
+                                        <p>Bạn có chắc chắn muốn xóa khóa học này không?</p>
+                                        <div class="modal-buttons">
+                                            <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">Hủy</button>
+                                            <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Xóa</button>
                                         </div>
                                     </div>
                                 </div>
@@ -214,4 +244,55 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    let formToSubmit;
+    const modal = document.getElementById("confirmDeleteModal");
+    const closeModal = document.getElementsByClassName("close")[0];
+    const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+    const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+
+    // Sự kiện khi nhấn nút xóa khóa học
+    document.querySelectorAll('.delete-course-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            formToSubmit = this.closest('form');
+            modal.style.display = "block";
+        });
+    });
+
+    // Sự kiện khi nhấn nút xóa chương
+    document.querySelectorAll('.delete-chapter-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            formToSubmit = this.closest('form');
+            modal.style.display = "block";
+        });
+    });
+
+    // Sự kiện đóng modal
+    closeModal.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Sự kiện hủy xóa
+    cancelDeleteBtn.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Sự kiện xác nhận xóa
+    confirmDeleteBtn.onclick = function() {
+        if (formToSubmit) {
+            formToSubmit.submit();
+        }
+    }
+
+    // Đóng modal khi nhấp ngoài modal
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+});
+
+
+    </script>
 @endsection

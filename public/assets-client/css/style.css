@@ -4464,34 +4464,139 @@ html.menu-opened body {
 .header-navbar-rht li .dropdown-menu .dropdown-item:last-child {
 	border-radius: 0 0 5px 5px;
 }
-/* .header-navbar-rht li a.header-login:hover {
-    background-color: #f6697b;
-    border-color: #f6697b;
-    color: #fff;
-} */
-/* .header-navbar-rht li a.header-login {
-    border-radius: 50px;
-    text-align: center;
-    font-size: 16px;
-    color: #392C7D;
-    text-transform: capitalize;
-    font-weight: 500;
-	min-width: 150px;
-	border: 3px solid #B4A7F5;
-	padding: 10px 15px;
-} */
-/* .header-navbar-rht li a.header-sign {
-	min-width: 150px;
-	padding: 14px 15px;
-	background: rgb(241 241 241 / 42%);
-	border-radius: 46.9159px;
-	text-align: center;
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
 }
-.header-navbar-rht li a.header-sign:hover {
-	background-color: #f6697b;
-    border-color: #f6697b;
-    color: #fff;
-} */
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-buttons .btn {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+.modal {
+    display: none; /* Ẩn mặc định */
+    position: fixed; /* Định vị cố định */
+    z-index: 1; /* Đảm bảo modal hiển thị phía trên */
+    left: 0;
+    top: 0;
+    width: 100%; /* Chiều rộng đầy đủ */
+    height: 100%; /* Chiều cao đầy đủ */
+    overflow: auto; /* Kích hoạt scroll nếu cần thiết */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% từ trên và tự động căn giữa */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Có thể điều chỉnh để phù hợp với thiết kế của bạn */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.custom-file-label::after {
+    content: "Chọn file";
+}
+
+.custom-file-input::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+.custom-file-input::before {
+    content: 'Chọn video';
+    display: inline-block;
+    background: linear-gradient(top, #f9f9f9, #e3e3e3);
+    border: 1px solid #999;
+    border-radius: 3px;
+    padding: 5px 8px;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    text-shadow: 1px 1px #fff;
+    font-weight: 700;
+    font-size: 10pt;
+}
+
+.custom-file-input:hover::before {
+    border-color: black;
+}
+
+.custom-file-input:active::before {
+    background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
 
 .header .has-arrow .dropdown-toggle:after {
 	border-top: 0;

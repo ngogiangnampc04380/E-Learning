@@ -9,6 +9,7 @@
     <title>E-learning website [ ENT ]</title>
 
     <link rel="shortcut icon" type="image/x-icon" href="/assets-client/img/logo.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="/assets-client/css/bootstrap.min.css">
 

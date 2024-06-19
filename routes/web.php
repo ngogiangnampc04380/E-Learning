@@ -82,29 +82,30 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::post("/education/delete/{id}", [UserProfileController::class, "deleteEducation"])->name("deleteEducation");
     Route::get("/education/{id}", [UserProfileController::class, "getEducation"])->name("getEducation");
 
-
+    Route::get('/courses/{id}/edit', [CoursesController::class, 'editCourse'])->name('editCourse');
+    Route::post('/courses/{id}/add-chapter', [CoursesController::class, 'addChapter'])->name('addChapter');
+    Route::post('/courses/{id}/update', [CoursesController::class, 'updateCourse'])->name('updateCourse');
     // instructor
-    Route::get("/instructor-course/{id}", [InstructorController::class, "course"])->name("instructor-course");
-    Route::get("/create-course", [InstructorController::class, "addcourse"])->name("create-course");
-    Route::post("/save-course", [InstructorController::class, "saveCourse"])->name('saveCourse');
-    Route::get("/instructor-coursedetails/{id}", [InstructorController::class, "chapter"])->name("instructor-coursedetails");
-    Route::get("/instructor-dashboard", [InstructorController::class, "dashboard"])->name("instructor-dashboard");
-    Route::get("/instructor-lesson/{id}", [InstructorController::class, "lesson"])->name("instructor-lesson");
-    Route::post("/save-chapter", [InstructorController::class, "saveChapter"])->name("saveChapter");
-    Route::post("/save-lesson", [InstructorController::class, "saveLesson"])->name("saveLesson");
+    Route::get("/instructor-course/{id}", [CoursesController::class, "course"])->name("instructor-course");
+    Route::get("/create-course", [CoursesController::class, "addcourse"])->name("create-course");
+    Route::post("/save-course", [CoursesController::class, "saveCourse"])->name('saveCourse');
+    Route::get('/courses/autoAddChapter/{course_id}', [CoursesController::class, 'autoAddChapter'])->name('autoAddChapter');
+    Route::delete('/courses/deleteChapter/{id}', [CoursesController::class, 'deleteChapter'])->name('deleteChapter');
+    Route::put('/courses/chapters/{chapter}', [CoursesController::class, 'updateChapters'])->name('updateChapter');
 
-    Route::post("/delete-course/{id}", [InstructorController::class, "deleteCourse"])->name("deleteCourse");
-    Route::post("/delete-chapter/{id}", [InstructorController::class, "deleteChapter"])->name("deleteChapter");
-    Route::post("/delete-lesson/{id}", [InstructorController::class, "deleteLesson"])->name("deleteLesson");
+    Route::post('/client/addLesson', [CoursesController::class, 'addLesson'])->name('addLesson');
+    Route::get('/client/getLessonsByChapterId/{chapterId}', [CoursesController::class, 'getLessonsByChapterId'])->name('getLessonsByChapterId');
+    Route::delete('/courses/lessons/{lesson}', [CoursesController::class, 'destroy'])->name('deleteLesson');
+    Route::put('/lessons/{id}', [CoursesController::class, 'updateLesson'])->name('updateLesson');
+    Route::get("/instructor-coursedetails/{id}", [CoursesController::class, "chapter"])->name("instructor-coursedetails");
+    Route::get("/instructor-dashboard", [CoursesController::class, "dashboard"])->name("instructor-dashboard");
+    Route::get("/instructor-lesson/{id}", [CoursesController::class, "lesson"])->name("instructor-lesson");
+    Route::post("/save-chapter", [CoursesController::class, "saveChapter"])->name("saveChapter");
+    Route::post("/save-lesson", [CoursesController::class, "saveLesson"])->name("saveLesson");
 
-    Route::get("/edit-course/{id}", [InstructorController::class, "editCourse"])->name("editCourse");
-    Route::post("/edit-course/{id}", [InstructorController::class, "saveEditCourse"])->name("saveEditCourse");
-
-    Route::get("/edit-chapter/{id}", [InstructorController::class, "editChapter"])->name("editChapter");
-    Route::post("/edit-chapter/{id}", [InstructorController::class, "saveEditChapter"])->name("saveEditChapter");
-
-    Route::get("/edit-lesson/{id}", [InstructorController::class, "editLesson"])->name("editLesson");
-    Route::post("/edit-lesson/{id}", [InstructorController::class, "saveEditLesson"])->name("saveEditLesson");
+    Route::post("/delete-course/{id}", [CoursesController::class, "deleteCourse"])->name("deleteCourse");
+    
+    Route::post('/courses/{course}/submit', [CoursesController::class, 'submitCourse'])->name('submitCourse');
 
     // ----------------------------------course-details-------------------------
 
