@@ -22,6 +22,6 @@ class Chapter extends Model
     // Mối quan hệ với bảng Course: Một chương thuộc về một khóa học
     public function course()
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsTo(Course::class, 'course_id');
     }
 }

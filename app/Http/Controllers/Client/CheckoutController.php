@@ -19,7 +19,7 @@ class CheckoutController extends Controller
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CAINFO, 'D:\cacert.pem');
+        curl_setopt($ch, CURLOPT_CAINFO, 'D:\Ampps\www\DATN\New folder\cacert.pem');
         curl_setopt(
             $ch,
             CURLOPT_HTTPHEADER,

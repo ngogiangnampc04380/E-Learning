@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name',50);
             $table->text('description');
-            $table->string('thumbnail',50);
+            $table->string('thumbnail',100)->nullable();
+            $table->string('video_demo',100)->nullable();
+            $table->integer('status')->nullable();
             $table->string('price',50);
             $table->integer('view')->nullable();
             $table->integer('enrollment')->nullable();

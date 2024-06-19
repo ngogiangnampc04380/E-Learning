@@ -23,9 +23,14 @@ class Mentor extends Model
             'back_card' => '',
         ],
     ];
-    public function user(): BelongsTo
+    public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
     }
 
 }

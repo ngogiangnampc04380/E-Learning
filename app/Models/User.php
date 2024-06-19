@@ -70,10 +70,10 @@ class User extends Authenticatable  implements FilamentUser
         return $this->hasMany(comment::class);
     }
 
-    public function mentor(): BelongsTo
-    {
-        return $this->belongsTo(Mentor::class);
-    }
+    public function mentor()
+{
+    return $this->hasOne(Mentor::class, 'user_id', 'id');
+}
 
 
     public function orders(): HasMany

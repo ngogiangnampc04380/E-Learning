@@ -15,7 +15,8 @@ class Lesson extends Model
     public function comments(): HasMany{
         return $this->hasMany(Comment::class);
     }
-    public function chapter(): BelongsTo{
-        return $this ->belongsTo(Chapter::class);
+    public function chapter()
+    {
+        return $this->belongsTo(Chapter::class, 'chapter_id');
     }
 }

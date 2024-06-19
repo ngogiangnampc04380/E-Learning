@@ -14,14 +14,17 @@ class Course extends Model
         'category_id',
         'name',
         'thumbnail',
+        'video_demo',
+        'status',
         'price',
         'view',
         'mentor_id',
         'description',
         'enrollment',
     ];
+
     public function category(): BelongsTo{
-        return $this ->belongsTo(Course_category::class);
+        return $this->belongsTo(Course_Category::class, 'category_id');
     }
     public function chapters()
     {
@@ -34,4 +37,12 @@ class Course extends Model
     {
         return $this->hasMany(Sale::class);
     }
+
+    public function mentor()
+    {
+        return $this->belongsTo(Mentor::class, 'mentor_id');
+    }
+
+    
+    
 }

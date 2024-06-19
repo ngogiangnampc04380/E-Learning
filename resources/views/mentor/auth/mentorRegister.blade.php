@@ -14,7 +14,7 @@
                             <div class="owl-item cloned" style="width: 735.6px; margin-right: 24px;">
                                 <div class="welcome-login">
                                     <div class="login-banner">
-                                        <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
+                                        <img src="https://cdnl.iconscout.com/lottie/premium/thumb/account-login-8677600-6981645.gif" class="img-fluid" alt="Logo">
                                     </div>
                                     <div class="mentor-course text-center">
                                         <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
@@ -26,7 +26,7 @@
                             <div class="owl-item cloned" style="width: 735.6px; margin-right: 24px;">
                                 <div class="welcome-login">
                                     <div class="login-banner">
-                                        <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
+                                        <img src="https://cdnl.iconscout.com/lottie/premium/thumb/account-login-8677600-6981645.gif" class="img-fluid" alt="Logo">
                                     </div>
                                     <div class="mentor-course text-center">
                                         <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
@@ -38,7 +38,7 @@
                             <div class="owl-item" style="width: 735.6px; margin-right: 24px;">
                                 <div class="welcome-login">
                                     <div class="login-banner">
-                                        <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
+                                        <img src="https://cdnl.iconscout.com/lottie/premium/thumb/account-login-8677600-6981645.gif" class="img-fluid" alt="Logo">
                                     </div>
                                     <div class="mentor-course text-center">
                                         <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
@@ -50,7 +50,7 @@
                             <div class="owl-item" style="width: 735.6px; margin-right: 24px;">
                                 <div class="welcome-login">
                                     <div class="login-banner">
-                                        <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
+                                        <img src="https://cdnl.iconscout.com/lottie/premium/thumb/account-login-8677600-6981645.gif" class="img-fluid" alt="Logo">
                                     </div>
                                     <div class="mentor-course text-center">
                                         <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
@@ -62,7 +62,7 @@
                             <div class="owl-item" style="width: 735.6px; margin-right: 24px;">
                                 <div class="welcome-login">
                                     <div class="login-banner">
-                                        <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
+                                        <img src="https://cdnl.iconscout.com/lottie/premium/thumb/account-login-8677600-6981645.gif" class="img-fluid" alt="Logo">
                                     </div>
                                     <div class="mentor-course text-center">
                                         <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
@@ -74,7 +74,7 @@
                             <div class="owl-item cloned active" style="width: 735.6px; margin-right: 24px;">
                                 <div class="welcome-login">
                                     <div class="login-banner">
-                                        <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
+                                        <img src="https://cdnl.iconscout.com/lottie/premium/thumb/account-login-8677600-6981645.gif" class="img-fluid" alt="Logo">
                                     </div>
                                     <div class="mentor-course text-center">
                                         <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
@@ -86,7 +86,7 @@
                             <div class="owl-item cloned" style="width: 735.6px; margin-right: 24px;">
                                 <div class="welcome-login">
                                     <div class="login-banner">
-                                        <img src="/assets-client/img/login-img.png" class="img-fluid" alt="Logo">
+                                        <img src="https://cdnl.iconscout.com/lottie/premium/thumb/account-login-8677600-6981645.gif" class="img-fluid" alt="Logo">
                                     </div>
                                     <div class="mentor-course text-center">
                                         <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
