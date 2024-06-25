@@ -267,10 +267,10 @@
                                                         </form>
                                                         <button type="button" class="btn btn-warning ml-2 edit-chapter-btn ms-2 me-2" data-chapter-id="{{ $chapter->id }}">Sửa chương</button>
                                                         <button type="button" class="btn btn-primary ml-2 toggle-lesson-form ms-2 me-2" data-chapter-id="{{ $chapter->id }}">Thêm bài học</button>
-                                                        <button type="button" class="btn btn-info ml-2 toggle-lesson-list" data-chapter-id="{{ $chapter->id }}">Xem bài học</button>
+                                                        <button type="button" class="btn btn-info ml-2 toggle-lesson-list" data-chapter-id="{{ $chapter->id }}">Ẩn bài học</button>
                                                         
                                                     </div>
-                                                    <div class="lesson-list mt-2" data-chapter-id="{{ $chapter->id }}" style="display: none; border: 1px solid #ccc; padding: 10px;">
+                                                    <div class="lesson-list mt-2" data-chapter-id="{{ $chapter->id }}" style="display: block; border: 1px solid #ccc; padding: 10px;">
                                                         <h4 style="margin-bottom: 10px;">Danh sách bài học</h4>
                                                         <ul class="list-group">
                                                             @foreach($chapter->lessons as $lesson)
@@ -319,7 +319,7 @@
                                                                 <input type="file" class="custom-file-input" id="lesson_video" name="video" required accept="video/*">
                                                             </div>
                                                     
-                                                            <button type="submit" class="btn btn-success">Thêm bài học</button>
+                                                            <button type="submit" class="btn btn-success">Lưu bài học</button>
                                                         </form>
                                                     </div>
                                                     <div class="edit-chapter-form mt-2" data-chapter-id="{{ $chapter->id }}" style="display: none;">
@@ -346,15 +346,7 @@
                                         
                                         <button type="button" class="btn btn-primary" id="addChapterBtn">Thêm chương mới</button>
                                     </div>
-                                    <div class="d-flex justify-content-center mt-4">
-                                        <form action="{{ route('client.submitCourse', $course->id) }}" method="POST" class="submit-course-form">
-                                            @csrf
-                                            @method('POST')
-                                            <button type="submit" class="btn btn-lg btn-warning btn-arrow">
-                                                Gửi duyệt <i class="bi bi-arrow-right"></i>
-                                            </button>
-                                        </form>
-                                    </div>
+                                    
                                     <!-- Form thêm chương mới (ẩn mặc định) -->
                                     <div id="addChapterForm" style="display: none;">
                                         <h3 class="mt-4">Thêm chương mới</h3>
@@ -369,6 +361,15 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="d-flex justify-content-center mt-4">
+                            <form action="{{ route('client.submitCourse', $course->id) }}" method="POST" class="submit-course-form">
+                                @csrf
+                                @method('POST')
+                                <button type="submit" class="btn btn-lg btn-warning btn-arrow">
+                                    Gửi duyệt <i class="bi bi-arrow-right"></i>
+                                </button>
+                            </form>
                         </div>
                         <div id="confirmDeleteModal" class="modal">
                             <div class="modal-content">
@@ -492,7 +493,7 @@
     button.addEventListener('click', function() {
         const chapterId = this.getAttribute('data-chapter-id');
         const lessonList = document.querySelector(`.lesson-list[data-chapter-id="${chapterId}"]`);
-        lessonList.style.display = lessonList.style.display === 'none' ? 'block' : 'none';
+        lessonList.style.display = lessonList.style.display === 'block' ? 'none' : 'block';
 
         // Đổi nút Xem bài học thành nút Ẩn khi hiển thị danh sách
         if (lessonList.style.display === 'block') {

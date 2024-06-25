@@ -4464,6 +4464,7 @@ html.menu-opened body {
 .header-navbar-rht li .dropdown-menu .dropdown-item:last-child {
 	border-radius: 0 0 5px 5px;
 }
+
 .modal {
     display: none;
     position: fixed;
@@ -4546,6 +4547,40 @@ html.menu-opened body {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+.search-group input {
+    padding-left: 40px;
+}
+.sell-tabel-info a {
+    font-weight: bold;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+.sell-tabel-info a:hover {
+    color: #007bff;
+}
+.table thead th {
+    vertical-align: middle;
+    background-color: #007bff;
+    color: #fff;
+}
+.table td {
+    vertical-align: middle;
+}
+.btn {
+    transition: all 0.3s ease;
+}
+.btn:hover {
+    transform: scale(1.05);
+}
+.btn i {
+    margin-right: 5px;
+}
+.table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+}
+.text-primary {
+    color: #007bff !important;
 }
 .custom-file-label::after {
     content: "Chọn file";

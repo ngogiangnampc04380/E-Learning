@@ -119,73 +119,49 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="settings-widget">
-                                <div class="settings-inner-blk p-0">
-                                    <div class="sell-course-head comman-space">
-                                        <h3>Courses</h3>
-                                        <p>Manage your courses and its update like live, draft and insight.</p>
+                                @if($data->contains('status', 0))
+                                <div class="settings-inner-blk p-4 bg-light rounded shadow">
+                                    <div class="sell-course-head comman-space text-center mb-4">
+                                        <h3 class="text-primary display-4">Danh sách khóa học đang chỉnh sửa</h3>
+                                        <p class="text-muted lead">Quản lý và cập nhật các khóa học của bạn, bao gồm trạng thái và thông tin chi tiết.</p>
                                     </div>
-                                    <div class="comman-space pb-0">
-                                        <div class="instruct-search-blk">
-                                            <div class="show-filter choose-search-blk">
-                                                <form action="#">
-                                                    <div class="row gx-2 align-items-center">
-                                                        <div class="col-md-6 col-item">
-                                                            <div class=" search-group">
-                                                                <i class="feather-search"></i>
-                                                                <input type="text" class="form-control"
-                                                                       placeholder="Search our courses">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-lg-6 col-item">
-                                                            <div class="input-block select-form mb-0">
-                                                                <select class="form-select select" name="sellist1">
-                                                                    <option>Choose</option>
-                                                                    <option>Angular</option>
-                                                                    <option>React</option>
-                                                                    <option>Node</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <div class="settings-tickets-blk course-instruct-blk table-responsive">
-
-                                            <table class="table table-responsive table-hover">
-                                                <thead>
+                                    
+                                        
+                                        <div class="settings-tickets-blk course-instruct-blk table-responsive rounded shadow-sm p-3 bg-white">
+                                            <table class="table table-striped table-hover">
+                                                <thead class="table-primary">
                                                     <tr>
                                                         <th>Hình ảnh</th>
                                                         <th>Video demo</th>
                                                         <th>Tên khóa học</th>
                                                         <th>Giá</th>
-                                                        
                                                         <th>Hành động</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @foreach($data as $post)
+                                                    @if($post->status == 0)
                                                     <tr>
                                                         <td>
                                                             <a href="#">
-                                                                <img src="{{ Storage::url('public/assets-client/img/Courses/'.$post->thumbnail) }}" alt="Thumbnail" class="img-fluid" style="max-width: 100px;">
+                                                                <img src="{{ Storage::url('public/assets-client/img/Courses/'.$post->thumbnail) }}" alt="Thumbnail" class="img-fluid rounded shadow-sm" style="max-width: 100px;">
                                                             </a>
                                                         </td>
                                                         <td>
                                                             @if($post->video_demo)
-                                                                <video controls class="img-fluid" style="max-width: 150px;">
-                                                                    <source src="{{ Storage::url('public/assets-client/videos/Courses/'.$post->video_demo) }}" type="video/mp4">
-                                                                    Trình duyệt của bạn không hỗ trợ thẻ video.
-                                                                </video>
+                                                            <video controls class="img-fluid rounded shadow-sm" style="max-width: 150px;">
+                                                                <source src="{{ Storage::url('public/assets-client/Videos/Courses/'.$post->video_demo) }}" type="video/mp4">
+                                                                Trình duyệt của bạn không hỗ trợ thẻ video.
+                                                            </video>
                                                             @else
-                                                                Không có video demo
+                                                            <span class="text-muted">Không có video demo</span>
                                                             @endif
                                                         </td>
                                                         <td>
                                                             <div class="d-flex align-items-center">
                                                                 <div class="sell-tabel-info">
-                                                                    <p>
-                                                                        <a href="{{ route('client.instructor-coursedetails', $post->id) }}">
+                                                                    <p class="mb-0">
+                                                                        <a href="{{ route('client.instructor-coursedetails', $post->id) }}" class="text-dark text-decoration-none font-weight-bold">
                                                                             {{ $post->name }}
                                                                         </a>
                                                                     </p>
@@ -198,33 +174,189 @@
                                                                 <!-- Nút Xóa -->
                                                                 <form action="{{ route('client.deleteCourse', $post->id) }}" method="POST" class="delete-course-form">
                                                                     @csrf
-                                                                    <button type="button" class="btn btn-danger">
+                                                                    <button type="button" class="btn btn-danger delete-course-btn ">
                                                                         <i class="fas fa-trash-alt"></i> Xóa
                                                                     </button>
                                                                 </form>
-                                                    
+                                
                                                                 <!-- Nút Sửa -->
-                                                                <a href="{{ route('client.editCourse', $post->id) }}" class="btn btn-warning">
+                                                                <a href="{{ route('client.editCourse', $post->id) }}" class="btn btn-warning mx-2 ">
                                                                     <i class="fas fa-edit"></i> Sửa
                                                                 </a>
-                                                    
+                                
                                                                 <!-- Nút Gửi duyệt -->
                                                                 <form action="{{ route('client.submitCourse', $post->id) }}" method="POST" class="submit-course-form">
                                                                     @csrf
                                                                     @method('POST')
-                                                                    <button type="submit" class="btn btn-warning btn-arrow">
+                                                                    <button type="button" class="btn btn-success submit-course-btn ">
                                                                         Gửi duyệt <i class="bi bi-arrow-right"></i>
                                                                     </button>
                                                                 </form>
                                                             </div>
                                                         </td>
                                                     </tr>
+                                                     @endif
                                                     @endforeach
                                                 </tbody>
                                             </table>
-                                            
                                         </div>
+                                    
+                                </div>
+                                @endif
+                                @if($data->contains('status', 1))
+                                <div class="settings-inner-blk p-4 bg-light rounded shadow">
+                                    <div class="sell-course-head comman-space text-center mb-4">
+                                        <h3 class="text-primary display-4">Danh sách khóa học đã được gửi duyệt</h3>
+                                        <p class="text-muted lead">Các khóa học đã được gửi đến người quản trị trang web để chờ được xét duyệt</p>
                                     </div>
+                                    
+                                        
+                                        <div class="settings-tickets-blk course-instruct-blk table-responsive rounded shadow-sm p-3 bg-white">
+                                            <table class="table table-striped table-hover">
+                                                <thead class="table-primary">
+                                                    <tr>
+                                                        <th>Hình ảnh</th>
+                                                        <th>Video demo</th>
+                                                        <th>Tên khóa học</th>
+                                                        <th>Giá</th>
+                                                        <th>Hành động</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($data as $post)
+                                                    @if($post->status ==1)
+                                                    <tr>
+                                                        <td>
+                                                            <a href="#">
+                                                                <img src="{{ Storage::url('public/assets-client/img/Courses/'.$post->thumbnail) }}" alt="Thumbnail" class="img-fluid rounded shadow-sm" style="max-width: 100px;">
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            @if($post->video_demo)
+                                                            <video controls class="img-fluid rounded shadow-sm" style="max-width: 150px;">
+                                                                <source src="{{ Storage::url('public/assets-client/Videos/Courses/'.$post->video_demo) }}" type="video/mp4">
+                                                                Trình duyệt của bạn không hỗ trợ thẻ video.
+                                                            </video>
+                                                            @else
+                                                            <span class="text-muted">Không có video demo</span>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="sell-tabel-info">
+                                                                    <p class="mb-0">
+                                                                        <a href="{{ route('client.instructor-coursedetails', $post->id) }}" class="text-dark text-decoration-none font-weight-bold">
+                                                                            {{ $post->name }}
+                                                                        </a>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>{{ number_format($post->price) }} VNĐ</td>
+                                                        <td>
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                <!-- Nút Thu hồi -->
+                                <form action="{{ route('client.recallCourse', $post->id) }}" method="POST" class="recall-course-form">
+                                    @csrf
+                                    @method('POST')
+                                    <button type="button" class="btn btn-info recall-course-btn">
+                                        <i class="fas fa-undo"></i> Thu hồi
+                                    </button>
+                                </form>
+
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                     @endif
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    
+                                </div>
+                                @endif
+                                @if($data->contains('status', 2))
+                                <div class="settings-inner-blk p-4 bg-light rounded shadow">
+                                    <div class="sell-course-head comman-space text-center mb-4">
+                                        <h3 class="text-primary display-4">Danh sách khóa học đã được duyệt</h3>
+                                        <p class="text-muted lead">Các khóa học đã được duyệt và sẽ công khai trên website</p>
+                                    </div>
+                                    
+                                        
+                                        <div class="settings-tickets-blk course-instruct-blk table-responsive rounded shadow-sm p-3 bg-white">
+                                            <table class="table table-striped table-hover">
+                                                <thead class="table-primary">
+                                                    <tr>
+                                                        <th>Hình ảnh</th>
+                                                        <th>Video demo</th>
+                                                        <th>Tên khóa học</th>
+                                                        <th>Giá</th>
+                                                        <th>Hành động</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($data as $post)
+                                                    @if($post->status == 2)
+                                                    <tr>
+                                                        <td>
+                                                            <a href="#">
+                                                                <img src="{{ Storage::url('public/assets-client/img/Courses/'.$post->thumbnail) }}" alt="Thumbnail" class="img-fluid rounded shadow-sm" style="max-width: 100px;">
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            @if($post->video_demo)
+                                                            <video controls class="img-fluid rounded shadow-sm" style="max-width: 150px;">
+                                                                <source src="{{ Storage::url('public/assets-client/Videos/Courses/'.$post->video_demo) }}" type="video/mp4">
+                                                                Trình duyệt của bạn không hỗ trợ thẻ video.
+                                                            </video>
+                                                            @else
+                                                            <span class="text-muted">Không có video demo</span>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="sell-tabel-info">
+                                                                    <p class="mb-0">
+                                                                        <a href="{{ route('client.instructor-coursedetails', $post->id) }}" class="text-dark text-decoration-none font-weight-bold">
+                                                                            {{ $post->name }}
+                                                                        </a>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>{{ number_format($post->price) }} VNĐ</td>
+                                                        <td>
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                <!-- Nút Xóa -->
+                                                                <form action="{{ route('client.deleteCourse', $post->id) }}" method="POST" class="delete-course-form">
+                                                                    @csrf
+                                                                    <button type="button" class="btn btn-danger delete-course-btn rounded-pill">
+                                                                        <i class="fas fa-trash-alt"></i> Xóa
+                                                                    </button>
+                                                                </form>
+                                
+                                                                <!-- Nút Sửa -->
+                                                                <a href="{{ route('client.editCourse', $post->id) }}" class="btn btn-warning mx-2 rounded-pill">
+                                                                    <i class="fas fa-edit"></i> Sửa
+                                                                </a>
+                                
+                                                                <!-- Nút Gửi duyệt -->
+                                                                <form action="{{ route('client.submitCourse', $post->id) }}" method="POST" class="submit-course-form">
+                                                                    @csrf
+                                                                    @method('POST')
+                                                                    <button type="button" class="btn btn-success submit-course-btn rounded-pill">
+                                                                        Gửi duyệt <i class="bi bi-arrow-right"></i>
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                     @endif
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        @endif
                                 </div>
                                 <div id="confirmDeleteModal" class="modal">
                                     <div class="modal-content">
@@ -233,6 +365,26 @@
                                         <div class="modal-buttons">
                                             <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">Hủy</button>
                                             <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Xóa</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="confirmSubmitModal" class="modal">
+                                    <div class="modal-content">
+                                        <span class="close">&times;</span>
+                                        <p>Bạn có chắc chắn muốn gửi khóa học này để duyệt không?</p>
+                                        <div class="modal-buttons">
+                                            <button type="button" class="btn btn-secondary" id="cancelSubmitBtn">Hủy</button>
+                                            <button type="button" class="btn btn-warning" id="confirmSubmitBtn">Gửi duyệt</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="confirmRecallModal" class="modal">
+                                    <div class="modal-content">
+                                        <span class="close">&times;</span>
+                                        <p>Bạn có chắc chắn muốn thu hồi khóa học này không?</p>
+                                        <div class="modal-buttons">
+                                            <button type="button" class="btn btn-secondary" id="cancelRecallBtn">Hủy</button>
+                                            <button type="button" class="btn btn-info" id="confirmRecallBtn">Thu hồi</button>
                                         </div>
                                     </div>
                                 </div>
@@ -245,54 +397,102 @@
         </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+   document.addEventListener('DOMContentLoaded', function() {
     let formToSubmit;
-    const modal = document.getElementById("confirmDeleteModal");
-    const closeModal = document.getElementsByClassName("close")[0];
+    const deleteModal = document.getElementById("confirmDeleteModal");
+    const submitModal = document.getElementById("confirmSubmitModal");
+    const recallModal = document.getElementById("confirmRecallModal"); // Thêm modal thu hồi
+
+    const closeModalButtons = document.querySelectorAll(".close");
     const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
     const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+    const cancelSubmitBtn = document.getElementById("cancelSubmitBtn");
+    const confirmSubmitBtn = document.getElementById("confirmSubmitBtn");
+    const cancelRecallBtn = document.getElementById("cancelRecallBtn"); // Button hủy thu hồi
+    const confirmRecallBtn = document.getElementById("confirmRecallBtn"); // Button xác nhận thu hồi
 
     // Sự kiện khi nhấn nút xóa khóa học
     document.querySelectorAll('.delete-course-btn').forEach(button => {
         button.addEventListener('click', function() {
             formToSubmit = this.closest('form');
-            modal.style.display = "block";
+            deleteModal.style.display = "block";
         });
     });
 
-    // Sự kiện khi nhấn nút xóa chương
-    document.querySelectorAll('.delete-chapter-btn').forEach(button => {
+    // Sự kiện khi nhấn nút gửi duyệt khóa học
+    document.querySelectorAll('.submit-course-btn').forEach(button => {
         button.addEventListener('click', function() {
             formToSubmit = this.closest('form');
-            modal.style.display = "block";
+            submitModal.style.display = "block";
+        });
+    });
+
+    // Sự kiện khi nhấn nút thu hồi khóa học
+    document.querySelectorAll('.recall-course-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            formToSubmit = this.closest('form');
+            recallModal.style.display = "block";
         });
     });
 
     // Sự kiện đóng modal
-    closeModal.onclick = function() {
-        modal.style.display = "none";
-    }
+    closeModalButtons.forEach(button => {
+        button.onclick = function() {
+            deleteModal.style.display = "none";
+            submitModal.style.display = "none";
+            recallModal.style.display = "none"; // Đóng modal thu hồi
+        };
+    });
 
     // Sự kiện hủy xóa
     cancelDeleteBtn.onclick = function() {
-        modal.style.display = "none";
-    }
+        deleteModal.style.display = "none";
+    };
+
+    // Sự kiện hủy gửi duyệt
+    cancelSubmitBtn.onclick = function() {
+        submitModal.style.display = "none";
+    };
+
+    // Sự kiện hủy thu hồi
+    cancelRecallBtn.onclick = function() {
+        recallModal.style.display = "none";
+    };
 
     // Sự kiện xác nhận xóa
     confirmDeleteBtn.onclick = function() {
         if (formToSubmit) {
             formToSubmit.submit();
         }
-    }
+    };
+
+    // Sự kiện xác nhận gửi duyệt
+    confirmSubmitBtn.onclick = function() {
+        if (formToSubmit) {
+            formToSubmit.submit();
+        }
+    };
+
+    // Sự kiện xác nhận thu hồi
+    confirmRecallBtn.onclick = function() {
+        if (formToSubmit) {
+            formToSubmit.submit();
+        }
+    };
 
     // Đóng modal khi nhấp ngoài modal
     window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+        if (event.target == deleteModal) {
+            deleteModal.style.display = "none";
         }
-    }
+        if (event.target == submitModal) {
+            submitModal.style.display = "none";
+        }
+        if (event.target == recallModal) {
+            recallModal.style.display = "none";
+        }
+    };
 });
-
-
     </script>
+    
 @endsection

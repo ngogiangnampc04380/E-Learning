@@ -323,7 +323,16 @@ public function updateCourse(Request $request, $id)
         // Redirect về route instructor-course với ID của khóa học
         return redirect()->route('client.instructor-course', ['id' => $id]);
     }
+    public function recallCourse(Request $request, $id)
+    {
+        // Xử lý logic thu hồi khóa học
+        $course = Course::findOrFail($id);
+        $course->status = 0; // Đặt status của khóa học thành 0 (hoặc giá trị tương ứng cho trạng thái thu hồi)
+        $course->save();
 
+        // Redirect về route instructor-course với ID của khóa học
+        return redirect()->route('client.instructor-course', ['id' => $id])->with('success', 'Đã thu hồi khóa học thành công.');
+    }
 
 
 //    public function coursedetails()

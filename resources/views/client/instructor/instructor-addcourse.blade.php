@@ -124,8 +124,8 @@
                                         <div class="container">
                                             <div class="row align-items-center">
                                                 <div class="col-md-12">
-                                                    <div class="add-course-header mt-3">
-                                                        <h2>THÊM KHÓA HỌC MỚI</h2>
+                                                    <div class="add-course-header mt-2 mb-2 text-center">
+                                                        <h2 style="font-size: 36px; font-weight: bold; color: #333;">THÊM KHÓA HỌC MỚI</h2>
                                                     </div>
                                                 </div>
                                             </div>
@@ -222,100 +222,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </form>
-                                                                    <!-- Bước 3: Thêm chương -->
-                                                                    {{-- <div class="add-course-info">
-                                                                        <div class="add-course-form">
-                                                                            <div class="table">
-                                                                                <div class="add-course-inner-header my-3">
-                                                                                    <h4>Thêm chương</h4>
-                                                                                    <div class="form-group mt-3">
-                                                                                        <label for="chapter_name">Tên
-                                                                                            chương</label>
-                                                                                        <input type="text"
-                                                                                            id="chapter_name"
-                                                                                            name="chapter_name"
-                                                                                            class="form-control">
-                                                                                    </div>
-                                                                                    <div class="form-group mt-3">
-                                                                                        <label for="course_id ">Danh mục
-                                                                                            khóa học</label><br>
-                                                                                        <select id="course_id "
-                                                                                            name="course_id"
-                                                                                            class="form-control">
-                                                                                            <option value="">ID khóa
-                                                                                                học
-                                                                                            </option>
-                                                                                            @foreach ($getCourse as $Course)
-                                                                                                <option
-                                                                                                    value="{{ $Course->id }}">
-                                                                                                    {{ $Course->name }}
-                                                                                                </option>
-                                                                                            @endforeach
-                                                                                        </select>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="widget-btn form-group">
-                                                                                <!-- Sử dụng form-group để tạo kích thước cho nút -->
-                                                                                <button type="button"
-                                                                                    class="btn btn-info-light prev">
-                                                                                    Quay lại
-                                                                                </button>
-                                                                                <button type="button"
-                                                                                    class="btn btn-info-light next">
-                                                                                    Tiếp theo
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- Bước 4: Thêm bài học -->
-                                                                    <div class="add-course-info">
-                                                                        <div class="add-course-form">
-                                                                            <div class="add-course-inner-header my-3">
-                                                                                <h4>Thêm bài viết</h4>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="lesson_name">Tên bài
-                                                                                    học</label>
-                                                                                <input type="text" id="lesson_name"
-                                                                                    name="lesson_name"
-                                                                                    class="form-control">
-                                                                            </div>
-                                                                            <div class="form-group mt-3">
-                                                                                <label for="path_video"> Video</label>
-                                                                                <input type="file" id="path_video"
-                                                                                    name="path_video"
-                                                                                    class="form-control">
-                                                                            </div>
-                                                                            <div class="form-group mt-3">
-                                                                                <label for="chapter_id">ID
-                                                                                    Chương</label><br>
-                                                                                <select id="chapter_id" name="chapter_id"
-                                                                                    class="form-control">
-                                                                                    <option value="">Chọn ID</option>
-                                                                                    @foreach ($getChapter as $Chapter)
-                                                                                        <option
-                                                                                            value="{{ $Chapter->id }}">
-                                                                                            {{ $Chapter->name }}</option>
-                                                                                    @endforeach
-                                                                                </select>
-                                                                            </div>
-                                                                            <input type="hidden"
-                                                                                value="{{ auth()->user()->id }}"
-                                                                                name="mentor_id" class="form-control">
-                                                                            <div class="widget-btn">
-                                                                                <button type="button"
-                                                                                    class="btn btn-info-light prev">
-                                                                                    Quay lại
-                                                                                </button>
-                                                                                <button type="submit"
-                                                                                    class="btn btn-info-light"
-                                                                                    id="submit">Hoàn tất
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div> --}}
-                                                                
+                                                                   
                                                             </div>
                                                         </div>
                                                     </div>
