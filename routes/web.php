@@ -19,6 +19,7 @@ use App\Http\Controllers\Client\UserProfileController;
 use App\Http\Controllers\Client\PostController;
 
 use App\Http\Controllers\Client\SearchController;
+use App\Http\Controllers\CourseCategoryController;
 
 
 use App\Http\Controllers\Client\LogoutController;
@@ -106,11 +107,16 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::post("/edit-lesson/{id}", [InstructorController::class, "saveEditLesson"])->name("saveEditLesson");
 
     // ----------------------------------course-details-------------------------
+
     Route::get("/course-list", [CoursesController::class, "list"])->name("course-lists");
     Route::get("/course-details", [CoursesController::class, "detail"])->name("course-details");
     Route::get("/course-checkout/{id}", [CoursesController::class, "checkout"])->name("course-checkout");
     Route::post("/checkout-submit", [CoursesController::class, "checkoutSubmit"])->name("checkout-submit");
     Route::get('/course-pricing/{id}', [CoursesController::class, 'pricing'])->name('course-pricing');
+    Route::get('/lesson', [CoursesController::class, 'lesson'])->name('lesson');
+
+
+
 
     // ----------------------------- Search ------------------------------
     Route::get("/search", [SearchController::class, "search"])->name("search");

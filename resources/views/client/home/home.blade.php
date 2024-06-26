@@ -1,10 +1,10 @@
 @extends('client.layout.master')
 @section('content')
- 
+
     <section class="home-three-slide d-flex align-items-center">
-        
+
         <div class="container">
-            
+
             <div class="row ">
                 <div class="col-xl-6 col-lg-8 col-md-12 col-12" data-aos="fade-down">
                     <div class="home-three-slide-face">
@@ -29,11 +29,11 @@
                                 </div>
                             </form>
                         </div>
-                        
+
                 </div>
                 <div class="col-xl-6 col-lg-4 col-md-6 col-12" data-aos="fade-up">
                     <div class="girl-slide-img aos">
-                        
+
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                                         <img class="img-fluid" src="/assets-client/img/icon-three/course-01.svg" alt>
                                     </div>
                                     <div class="course-content-three">
-                                        <h4 class="text-blue"><span class="counterUp">20</span></h4>
+                                        <h4 class="text-blue"><span>{{ $courseCount }}</span></h4>
                                         <p>Khóa học trực tuyến</p>
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@
                                         <img class="img-fluid" src="/assets-client/img/icon-three/course-04.svg" alt>
                                     </div>
                                     <div class="course-content-three course-count ms-0">
-                                        <h4 class="text-green"><span class="counterUp">60</span></h4>
+                                        <h4 class="text-green"><span class="counterUp">{{ $mentorCount }}</span></h4>
                                         <p>Giảng viên</p>
                                     </div>
                                 </div>
@@ -109,8 +109,6 @@
             </div>
         </div>
     </section>
-
-
     <section class="master-skill-three">
         <div class="master-three-vector">
             <img class="ellipse-right img-fluid" src="/assets-client/img/bg/pattern-01.png" alt>
@@ -212,8 +210,6 @@
                             <div class="nav tablist-three" role="tablist">
                                 <a class="nav-tab active me-3" data-bs-toggle="tab" href="#alltab" role="tab">Tất
                                     cả</a>
-                                <a class="nav-tab me-3" data-bs-toggle="tab" href="#mostpopulartab" role="tab">Phổ
-                                    biến nhất</a>
                                 <a class="nav-tab me-3" data-bs-toggle="tab" href="#businesstab" role="tab">Từ
                                     vựng</a>
                                 <a class="nav-tab me-3" data-bs-toggle="tab" href="#designtab" role="tab">Ngữ
@@ -227,220 +223,53 @@
                                     <div class="all-course">
                                         <div class="row">
 
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="{{ route('client.course-details') }}">
-                                                                <img class="img-fluid" alt=""
-                                                                    src="/assets-client/img/course/course-26.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user1.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="{{ route('client.course-details') }}">
-                                                                    <p>Từ vựng</p>
-                                                                    <h3 class="title instructor-text">Từ vựng thông dụng
-                                                                        trong nhà hàng</h3>
+                                            @foreach($courses as $course)
+                                                <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
+                                                    <div class="course-box-three">
+                                                        <div class="course-three-item">
+                                                            <div class="course-three-img">
+                                                                <a href="{{ route('client.course-details', $course->id) }}">
+                                                                    <img class="img-fluid" alt="Course Image" src="{{ Storage::url('assets-client/img/course/course-26.jpg') }}">
                                                                 </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>450 Học viên</p>
+                                                                <div class="heart-three">
+                                                                    <a href="#"><i class="fa-regular fa-heart"></i></a>
                                                                 </div>
                                                             </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>300$ <span>30$</span></h3>
+                                                            <div class="course-three-content">
+                                                                <div class="course-group-three">
+                                                                    <div class="group-three-img">
+                                                                        <a href="{{ route('client.mentor_detail', ['id' => $course->mentor_id]) }}">
+                                                                            <img src="{{ Storage::url('assets-client/img/user/user1.jpg') }}" alt="Instructor Image" class="img-fluid">
+                                                                        </a>
                                                                     </div>
                                                                 </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
+                                                                <div class="course-three-text">
+                                                                    <a href="{{ route('client.course-details', $course->id) }}">
+                                                                        <h3 class="title instructor-text">{{ $course->name }}</h3>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="student-counts-info d-flex align-items-center">
+                                                                    <div class="students-three-counts d-flex align-items-center">
+                                                                        <img src="/assets-client/img/icon-three/student.svg" alt="Student Icon">
+                                                                        <p>{{ $course->students_count }} Học viên</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="price-three-group d-flex align-items-center justify-content-between justify-content-between">
+                                                                    <div class="price-three-view d-flex align-items-center">
+                                                                        <div class="course-price-three">
+                                                                            <h3>{{ number_format($course->price) }} VNĐ <span>{{ number_format($course->discount_price) }} VNĐ</span></h3>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="price-three-time d-inline-flex align-items-center">
+                                                                        <i class="fa-regular fa-clock me-2"></i>
+                                                                        <span>{{ $course->duration }}</span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="{{ route('client.course-details') }}">
-                                                                <img class="img-fluid" alt=""
-                                                                    src="/assets-client/img/course/course-26.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user1.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="{{ route('client.course-details') }}">
-                                                                    <p>Từ vựng</p>
-                                                                    <h3 class="title instructor-text">Từ vựng thông dụng
-                                                                        trong nhà hàng</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>450 Học viên</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>300$ <span>30$</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="{{ route('client.course-details') }}">
-                                                                <img class="img-fluid" alt=""
-                                                                    src="/assets-client/img/course/course-26.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user1.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="{{ route('client.course-details') }}">
-                                                                    <p>Từ vựng</p>
-                                                                    <h3 class="title instructor-text">Từ vựng thông dụng
-                                                                        trong nhà hàng</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>450 Học viên</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>300$ <span>30$</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="{{ route('client.course-details') }}">
-                                                                <img class="img-fluid" alt=""
-                                                                    src="/assets-client/img/course/course-26.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user1.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="{{ route('client.course-details') }}">
-                                                                    <p>Từ vựng</p>
-                                                                    <h3 class="title instructor-text">Từ vựng thông dụng
-                                                                        trong nhà hàng</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>450 Học viên</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>300$ <span>30$</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
@@ -3144,14 +2973,11 @@
     <section class="home-three-goals">
         <div class="container">
             <div class="row align-items-center">
-
                 <div class="col-xl-3 col-lg-12 col-md-12" data-aos="fade-down">
                     <div class="acheive-goals-main">
                         <h2>Đạt được mục tiêu của bạn với ENT</h2>
                     </div>
                 </div>
-
-
                 <div class="col-xl-3 col-lg-4 col-md-4 col-12" data-aos="fade-down">
                     <div class="acheive-goals">
                         <div class="acheive-elips-one">
@@ -3163,33 +2989,28 @@
                         </div>
                     </div>
                 </div>
-
-
                 <div class="col-xl-3 col-lg-4 col-md-4 col-12" data-aos="fade-down">
                     <div class="acheive-goals">
                         <div class="acheive-elips-two">
                             <img src="/assets-client/img/icon-three/ellipse-2.svg" alt>
                         </div>
                         <div class="acheive-goals-content text-center course-count ms-0">
-                            <h4><span class="counterUp">1,205</span></h4>
+                            <h4><span>{{ $courseCount }}</span></h4>
                             <p>Tổng số khóa học của chúng tôi</p>
                         </div>
                     </div>
                 </div>
-
-
                 <div class="col-xl-3 col-lg-4 col-md-4 col-12" data-aos="fade-down">
                     <div class="acheive-goals">
                         <div class="acheive-elips-three">
                             <img src="/assets-client/img/icon-three/ellipse-3.svg" alt>
                         </div>
                         <div class="acheive-goals-content text-center course-count ms-0">
-                            <h4><span class="counterUp">56</span></h4>
+                            <h4><span class="counterUp">{{ $mentorCount }}</span></h4>
                             <p>Giảng viên của chúng tôi </p>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
@@ -3378,8 +3199,6 @@
         </div>
     </div>
 </section> --}}
-
-
     <section class="latest-blog-three">
         <div class="container">
             <div class="home-three-head section-header-title" data-aos="fade-up">
@@ -3529,5 +3348,5 @@
             </div>
         </div>
     </section>
-   
+
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course_category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Checkout;
@@ -26,14 +27,19 @@ class CoursesController extends Controller
 
         $data = $data->get();
 
-        return view('client.courses.courses-list', compact('data', 'query'));
+        $categories = Course_category::all();
+
+        return view('client.courses.courses-list', compact('data', 'query', 'categories'));
     }
 
     public function detail()
     {
         return view('client.courses.course-details');
     }
-
+    public function lesson()
+    {
+        return view('client.courses.lesson');
+    }
     public function checkout($id)
     {
         $data = DB::table('courses')

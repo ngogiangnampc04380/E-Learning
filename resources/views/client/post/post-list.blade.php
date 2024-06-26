@@ -27,7 +27,6 @@
                         <a href="/admin/posts" class="btn btn-secondary mb-5"><i class="fa-solid fa-gear"></i> Quản lí bài viết</a>
                     @endif
                 @endif
-                
                 @foreach($posts as $post)
                     <div class="blog">
                         <div class="blog-image">
