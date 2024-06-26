@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class idCard extends Model
 {
-    protected $collection = 'id-card';
+    protected $table = 'idcards';
     protected $fillable = [
+        "_id",
         "id",
-        'mentor_id',
+        "id_mentor",
         "id_prob",
         "name",
         "name_prob",
@@ -28,6 +29,7 @@ class idCard extends Model
         "doe_prob",
         "overall_score",
         "address_entities",
+        "number_of_name_lines",
         "type_new",
         "type",
         "religion_prob",
@@ -40,6 +42,9 @@ class idCard extends Model
         "issue_date_prob",
         "issue_loc_prob",
         "issue_loc",
+        "mrz",
+        "mrz_prob",
         
     ];
+
 }

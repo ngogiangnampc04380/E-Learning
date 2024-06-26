@@ -25,7 +25,7 @@ use App\Http\Controllers\CourseCategoryController;
 use App\Http\Controllers\Client\LogoutController;
 use App\Http\Controllers\Client\RegisterController;
 use App\Http\Controllers\Client\PasswordController;
-
+use App\Http\Controllers\Client\CoursesVideoController;
 // ----------------------------Mentor----------------------------*******
 use App\Http\Controllers\Mentor\MentorControllerr;
 use App\Http\Controllers\Mentor\SaleController;
@@ -35,7 +35,7 @@ use App\Http\Controllers\Mentor\SaleController;
 
 // ---------------------------------------Client-------------------------
 Route::get("/", [HomeController::class, "index"])->name("Dashboard-client");
-
+Route::get("/error", [HomeController::class, "error"])->name("error");
 // -----login Google
 Route::get('/login/google', [IndexAuthController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('/login/google/callback', [IndexAuthController::class, 'handleGoogleCallback']);
@@ -47,6 +47,7 @@ Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 Route::get('/logout', [LogoutController::class, 'index'])->name('logout')->middleware('auth');
 Route::post('/logout', [LogoutController::class, 'logout'])->middleware('auth');
+
 
 Route::prefix('password')->group(function () {
     Route::get('enter-email', [PasswordController::class, 'enterEmail'])->name('enter-email');
@@ -135,6 +136,12 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::get('/category-detail/{slug}', [PostController::class, 'category_show'])->name('category-detail');
 });
 
+Route::get('/mentor-register', [MentorControllerr::class, "mentorRegister"])->name("mentor-register")->middleware('auth');
+Route::post('/mentor-register', [MentorControllerr::class, 'handleRegister'])->middleware('auth');
+Route::get('/mentor-profile', [MentorControllerr::class, "profile"])->name("mentor-profile");
+Route::get('/upload_ID_Card', [MentorControllerr::class, "upload_ID_Card"])->name("upload-id-card");
+Route::post('/upload_ID_Card', [MentorControllerr::class, 'handleUploadIdCard'])->middleware('auth');
+Route::post('/mentor/save-id-card-data', [MentorControllerr::class, 'saveIdCardData'])->name('mentor-save-id-card');
 
 // -----------------------Sales-------------------------
 Route::get('/sale-course', [SaleController::class, 'showSaleCourseForm'])->name('mentor.show-sale-course');

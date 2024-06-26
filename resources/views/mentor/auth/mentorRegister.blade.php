@@ -118,11 +118,22 @@
                                 </div>
                             </div>      
                             <h1>Đăng ký mentor</h1>
-                            <form action="{{ route('client.mentor-register') }}" method="POST" >
-                                <input type="hidden" name="user_id" value="{{ auth()->id() }}">
-                                <div class="d-grid">
-                                    <button class="btn btn-primary btn-start" type="submit">Tiếp Tục >></button>
-                                </div>
+                            <form action="{{route('mentor-register')}}" method="POST">
+                                @csrf
+                            <div class="form-group">
+                            <label class="form-control-label">Full Name</label>
+                            <input type="text" id="email" name="name" class="form-control" placeholder="Enter your mentor's name" oninput="enter_data()">
+                            <div class="error_message">
+                                @error('name')
+                                <span style="color: red;font-weight:lighter">{{$message}}</span>
+                                <br>
+                            @enderror
+                            </div>
+                            </div>  
+                            
+                            <div class="d-grid">
+                            <button class="btn btn-primary btn-start" type="submit" disabled >tiếp theo ></button>
+                            </div>
                             </form>
                         </div>
                     </div>
@@ -132,4 +143,21 @@
             </div>
         </div>
     </div>
+    <script>
+        var btn_login = document.querySelector('.btn-start');
+    var inputs = (document.querySelectorAll('input[oninput="enter_data()"]'))
+    var inputs_length = inputs.length
+    function enter_data(){
+    let check_ = true
+        for(let i = 0 ; i < inputs_length; i++) {
+            
+            if(inputs[i].value.length < 5){
+                btn_login.setAttribute('disabled', true);
+                return;
+            }
+        }
+        if(check_)    btn_login.removeAttribute('disabled');
+    
+    }
+    </script>
 @endsection

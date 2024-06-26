@@ -115,16 +115,16 @@
                     {{-- <a href="index.html">Back to Home</a> --}}
                 </div>
             </div>
-            <h1>Enter your confirm code</h1>
+            <h1>Nhập mã xác nhận của bạn</h1>
             <div class="reset-password">
-                <p>We've sent a code to your email to confirm</p>
+                <p>Mã đã gửi mã tới email của bạn. </p>
             </div>
             <form action="{{ route('confirm-code') }}" method="post">
                 @csrf
                 <div class="form-group d-flex gap-2">
                     <input type="hidden" name="token_id" value="{{ $token_id }}">
                     <input type="number" class="form-control" name="confirmCode" id="send_code"
-                        placeholder="Nhập mã xác nhận 6 số">
+                        placeholder="Nhập mã xác nhận">
                 </div>
                 <div class="d-grid">
                     <button class="btn btn-start" type="submit">Confirm</button>

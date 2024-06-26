@@ -53,13 +53,13 @@
                 </div>
         
 
-            </div>
-        <div class="d-grid">
-            <button class="btn btn-primary btn-start" id="btn_submit" disabled>Register mentor</button>
-            <br>
-            {{-- <a class="link-secondary" href="{{route('client.mentor-ID')}}">Or upload photos here</a> --}}
-        </div>
-        </form>
+                </div>
+                <div class="d-grid">
+                <button class="btn btn-primary btn-start" id="btn_submit" disabled>Register mentor</button>
+                <br>
+                {{-- <a class="link-secondary" href="{{route('client.mentor-ID')}}">Or upload photos here</a> --}}
+                </div>
+            </form>
 
     </div>
 </div>
@@ -68,7 +68,7 @@
     var is_both_uploaded = [false,false]
     var loader = document.querySelector('#loader')
     var professions = document.querySelector('.professions')
-    const FPT_API_KEY = 'lJ9YrEnMevE63n4FDlbTCriJx6ielUiz'
+    const FPT_API_KEY = 'AYNQu2o4w2qoRAriKAuMJkjnJcqO87vx'
     const btn_submit = document.querySelector('#btn_submit')
     const FPT_API_ENDPOINT = 'https://api.fpt.ai/vision/idr/vnm'
     var id_infor = document.querySelector('.id-infor')
@@ -109,7 +109,7 @@
                             else {
                                 const successStyle = {
                                     background: '#159f46',
-                                    color: 'white',
+                                    color: 'red',
                                     border: 'none',
                                 }
                                 Object.assign(temp_label.style, successStyle)
@@ -148,7 +148,7 @@
                                     loader.style.display = 'none'
                                     const successStyle = {
                                         background: '#159f46',
-                                        color: 'white',
+                                        color: 'red',
                                         border: 'none',
                                     }
                                     Object.assign(temp_label.style, successStyle)
@@ -196,7 +196,7 @@
     function is_disable_button() {
         if(is_both_uploaded[0] && is_both_uploaded[1]) {
             btn_submit.removeAttribute('disabled')
-            fetch("{{route('mentor-save-id-card')}}", {
+            fetch('http://localhost:8000/api/save-id-card-data', {
                             method: 'POST',
                             body: data_form
                         }).then(res => res.json()).then(data => {

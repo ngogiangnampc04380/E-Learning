@@ -17,6 +17,7 @@
         "laravel/socialite": "^5.14",
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.4",
+        "pion/laravel-chunk-upload": "^1.5",
         "symfony/http-client": "^6.4",
         "symfony/mailgun-mailer": "^6.4"
     },
