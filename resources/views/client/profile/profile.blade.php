@@ -171,9 +171,8 @@
                                                                 alt="">
                                                             <div class="profile-imgs">
                                                                 <!-- Hiển thị hình ảnh đã lưu sẵn -->
-                                                                <img class="trigger-element"
-                                                                src="{{ auth()->user()->thumbnail ? Storage::url('/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}" 
-                                                                <!-- Đặt input type="file" để cho phép người dùng chọn hình ảnh từ ổ cứng -->
+                                                                <img class="trigger-element" src="{{ auth()->user()->thumbnail ? Storage::url('assets-client/img/user/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}"  alt="">
+                                                                
                                                                 <input type="file" id="thumbnail" name="thumbnail"
                                                                     accept="image/*" style="display: none;">
                                                                 <!-- Nút "Chọn file" -->
@@ -232,7 +231,7 @@
                                             </div> --}}
                                             
                                             {{-- <button type="button" class="d-none btn btn-primary position-absolute top-0 start-0 m-5" onclick="submitForm()" id="saveAvt">Lưu ảnh</button> --}}
-                                            <button class="btn btn-primary" type="submit">Sửa thông tin</button>
+                                            <button class="btn btn-primary" type="submit">Lưu thông tin</button>
                                     </form>
                                     @if(auth()->user()->role ==2)
                                     <div class="card-header">
