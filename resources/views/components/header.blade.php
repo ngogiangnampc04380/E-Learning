@@ -959,6 +959,13 @@
                                         <a class="dropdown-item" href="{{ route('client.dashboard-profile') }}"><i
                                             class="feather-user me-1"></i>Thông tin người dùng</a>
                                         </a>
+                                        <a class="dropdown-item" href="{{ route('mentor-register') }}"><i
+                                            class="feather-user me-1"></i>
+                                       
+                                            <span class="d-inline-block">Mentor</span><sup
+                                                class="badge badge-info">Đăng ký</sup>
+                                        
+                                        </a>
                                         @elseif(auth()->user()->role== 2)
                                         <a class="dropdown-item" href="{{route('client.mentor_detail', ['id' =>auth()->user()->id]) }}">
                                             <i class="feather-star me-1"></i> Giới thiệu
