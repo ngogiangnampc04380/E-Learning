@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Models\Course_category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Checkout;
