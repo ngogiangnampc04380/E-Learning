@@ -2,7 +2,7 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Comment;
+// use App\Models\Comment;
 use App\Models\Course;
 use App\Models\User;
 use Filament\Facades\Filament;
@@ -22,8 +22,8 @@ class StatsAdminOverview extends BaseWidget
             Stat::make('Người dùng', User::query()->count())
             ->icon('heroicon-m-user'),
                         
-            Stat::make('Đánh giá',Comment::query()->count() )
-            ->icon('heroicon-m-chat-bubble-oval-left'),
+            // Stat::make('Đánh giá',Comment::query()->count() )
+            // ->icon('heroicon-m-chat-bubble-oval-left'),
 
             Stat::make('Giảng viên',User::where('role',2)->count())
             ->icon('heroicon-m-users'),

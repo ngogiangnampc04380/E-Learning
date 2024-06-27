@@ -105,9 +105,9 @@
                                     <i class="fas fa-angle-down"></i>
                                 </div>
                                 <ul>
-                                    @foreach ($categories as $category)
+                                    {{-- @foreach ($categories as $category)
                                         <li>{{ $category->name }}</li>
-                                    @endforeach
+                                    @endforeach --}}
                                 </ul>
                             </div>
                         </div>
@@ -123,7 +123,7 @@
                                     <div>
                                         <label class="custom_check">
                                             <input type="checkbox" name="select_specialist">
-                                            <span class="checkmark"></span> {{ $mentor->name }} ({{ $mentor->courses_count }})
+                                            {{-- <span class="checkmark"></span> {{ $mentor->name }} ({{ $mentor->courses_count }}) --}}
                                         </label>
                                     </div>
                                 @endforeach

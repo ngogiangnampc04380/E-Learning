@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\Course_category;
 
 class SearchController extends Controller
 {
@@ -21,8 +22,8 @@ class SearchController extends Controller
             ->where('name', 'LIKE', "%{$query}%")
             ->orderBy('id', 'desc')
             ->get();
-
-        return view('client.courses.courses-list', ['data' => $data, 'query' => $query]);
+            $categories = Course_category::all();
+        return view('client.courses.courses-list', ['data' => $data, 'query' => $query, 'categories' => $categories]);
     } elseif ($type === 'mentor') {
         // Tìm kiếm giảng viên
         $currentUserId = Auth::id();

@@ -64,9 +64,16 @@
                                 </label>
                             </li>
                         </ul>
-                        <a href="#" class="btn btn-secondary w-100">Thanh toán</a>
-                        <hr>
-                        <a href="#" class="btn btn-secondary w-100">Hủy thanh toán</a>
+                        <form action="{{ route('client.checkout') }}" method="post">
+                            @csrf
+                            {{-- <button name="zalopay" class="btn btn-secondary w-100">Thanh toán zalopay</button>
+                        <hr> --}}
+                            <button name="payUrl" type="submit" class="btn btn-secondary w-100">Thanh toán momo</button>
+                            <hr>
+
+
+                            <a href="javascript:void(0);" class="btn btn-secondary w-100">Hủy thanh toán</a>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -32,8 +32,9 @@ class CoursesController extends Controller
         $data = $data->get();
 
         $categories = Course_category::all();
-
+        
         return view('client.courses.courses-list', compact('data', 'query', 'categories'));
+
     }
 
     public function detail()
@@ -87,6 +88,7 @@ class CoursesController extends Controller
             'email' => session('email'),
             'address' => session('address'),
             'course_id' => session('course_id'),
+            'price' => session('price'),
         ];
 
         // Kiểm tra xem khóa học có tồn tại hay không

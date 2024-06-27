@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-
+use Illuminate\Notifications\Notifiable;
 class Course extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
     protected $fillable = [
         'category_id',
         'name',
@@ -23,6 +23,7 @@ class Course extends Model
         'enrollment',
     ];
 
+
     public function category(): BelongsTo{
         return $this->belongsTo(Course_Category::class, 'category_id');
     }
@@ -30,9 +31,9 @@ class Course extends Model
     {
         return $this->hasMany(Chapter::class);
     }
-    public function comment(): HasManyThrough{
-        return $this ->hasManyThrough('Comment::class','Chapters::class', 'course_id', 'chapter_id');
-    }
+    // public function comment(): HasManyThrough{
+    //     return $this ->hasManyThrough('Comment::class','Chapters::class', 'course_id', 'chapter_id');
+    // }
     public function sales()
     {
         return $this->hasMany(Sale::class);

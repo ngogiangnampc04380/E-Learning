@@ -98,6 +98,7 @@ class SaleController extends Controller
             ->where('sales_code', $salesCode)
             ->where('course_id', $courseId)
             ->where('end_date', '>=', now())
+            ->where('used_amount','<','amount')
             ->where('status', true)
             ->first(); // Tìm mã khuyến mãi hợp lệ cho khóa học
 
@@ -105,10 +106,18 @@ class SaleController extends Controller
             $course = Course::findOrFail($courseId);
             $originalPrice = $course->price;
             $discountedPrice = $originalPrice * ((100 - $sale->percent_sale) / 100);
-
+            session([
+                'sale_code' => $sale-> sales_code,
+                'price' => $discountedPrice,
+            ]);
             return view('client.courses.course-pricing', compact('originalPrice', 'discountedPrice', 'sale', 'course'));
         } else {
-            return back()->with('error', 'Mã khuyến mãi không hợp lệ hoặc đã hết hạn.');
+            $course = Course::findOrFail($courseId);
+            $originalPrice = $course->price;
+            session([
+                'price' => $originalPrice,
+            ]);
+            return back()->with('error', 'Mã khuyến mãi không hợp lệ hoặc đã hết giá trị sử dụng.');
         }
     }
 }
