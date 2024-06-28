@@ -12,10 +12,17 @@
                     <div class="instructor-wrap border-bottom-0 m-0">
                         <div class="about-instructor align-items-center">
                             <div class="abt-instructor-img">
-                                <a href="instructor-profile.html"><img src="/assets-client/img/user/user1.jpg" alt="img" class="img-fluid"></a>
+                                <a href="instructor-profile.html"><img src="/assets-client/img/user/user1.jpg" alt="img"
+                                                                       class="img-fluid"></a>
                             </div>
                             <div class="instructor-detail me-3">
-                                <h5><a href="#">Nicole Brown</a></h5>
+                                <h5><a href="#">
+                                        @if($course->mentor)
+                                            {{ $course->mentor->name }}
+                                        @else
+                                            Không tìm thấy mentor
+                                        @endif
+                                    </a></h5>
                             </div>
                         </div>
                     </div>
@@ -31,8 +38,7 @@
                         <div class="card-body">
                             <h5 class="subs-title">Mô tả khóa học</h5>
                             <h6>Giới thiệu về khóa học</h6>
-                            <p>Đây là một khóa học từ vựng tiếng Anh, tập trung vào việc xây dựng kỹ năng sử dụng từ vựng trong các tình huống giao tiếp và viết lách hàng ngày.</p>
-                            <p>Khóa học này cung cấp cho bạn kiến thức và kỹ năng cần thiết để nâng cao vốn từ vựng tiếng Anh của mình.</p>
+                            <p>{{ $course->description }}</p>
                         </div>
                     </div>
                     <div class="card instructor-sec">
@@ -41,10 +47,16 @@
                             <div class="instructor-wrap">
                                 <div class="about-instructor">
                                     <div class="abt-instructor-img">
-                                        <a href="instructor-profile.html"><img src="/assets-client/img/user/user1.jpg" alt="img" class="img-fluid"></a>
+                                        <a href="instructor-profile.html"><img src="/assets-client/img/user/user1.jpg"
+                                                                               alt="img" class="img-fluid"></a>
                                     </div>
                                     <div class="instructor-detail">
-                                        <h5><a href="instructor-profile.html">Nicole Brown</a></h5>
+                                        <h5><a href="#">
+                                                @if($course->mentor)
+                                                    {{ $course->mentor->name }}
+                                                @else
+                                                    Không tìm thấy mentor
+                                                @endif</a></h5>
                                     </div>
                                 </div>
                             </div>
@@ -66,17 +78,7 @@
                                     <p>270,866 học viên đã đăng ký</p>
                                 </div>
                             </div>
-                            <p>Thiết kế UX/UI, có hơn 7 năm kinh nghiệm. Cam kết mang lại công việc chất lượng cao.</p>
-                            <p>Kỹ năng: Thiết kế Web, Thiết kế UI, Thiết kế UX/UI, Thiết kế Mobile, Thiết kế Giao diện người dùng, Sketch,
-                                Photoshop, GUI, Html, Css, Hệ thống lưới, Typography, Minimal, Template, Tiếng Anh, Bootstrap, Thiết kế Web Responsive, Pixel Perfect, Thiết kế Đồ họa, Corporate, Sáng tạo, Flat, Luxury và nhiều hơn nữa.</p>
-                            <p>Có sẵn cho:</p>
-                            <ul>
-                                <li>1. Làm việc toàn thời gian tại văn phòng</li>
-                                <li>2. Làm việc từ xa</li>
-                                <li>3. Làm Freelance</li>
-                                <li>4. Hợp đồng</li>
-                                <li>5. Trên toàn thế giới</li>
-                            </ul>
+                            {{$mentor->introduce}}
                         </div>
                     </div>
                     <div class="card comment-sec">
@@ -98,17 +100,22 @@
                         <div class="video-sec vid-bg">
                             <div class="card">
                                 <div class="card-body">
-                                    <a href="https://www.youtube.com/embed/1trvO6dqQUI" class="video-thumbnail" data-fancybox>
-                                        <div class="play-icon">
-                                            <i class="fa-solid fa-play"></i>
+                                    @if($course->video_demo)
+                                        <div class="video-container">
+                                            <video controls class="img-fluid rounded shadow-sm">
+                                                <source src="{{ Storage::url('public/assets-client/Videos/Courses/'.$course->video_demo) }}" type="video/mp4">
+                                                Trình duyệt của bạn không hỗ trợ thẻ video.
+                                            </video>
                                         </div>
-                                        <img src="/assets-client/img/video.jpg" alt="">
-                                    </a>
-                                    <div class="video-details">
+                                    @else
+                                        <span class="text-muted">Không có video demo</span>
+                                    @endif
+
+                                    <div class="video-details mt-3">
                                         <div class="course-fee">
-                                            <span>Giá: 200000</span>
+                                            <span>Giá: {{ $course->price }} VNĐ</span>
                                         </div>
-                                        <div class="row gx-2">
+                                        <div class="row mt-3 gx-2">
                                             <div class="col-md-6">
                                                 <a href="course-wishlist.html" class="btn btn-wish w-100"><i class="feather-heart"></i> Yêu thích</a>
                                             </div>
@@ -116,9 +123,10 @@
                                                 <a href="javascript:void(0);" class="btn btn-wish w-100"><i class="feather-share-2"></i> Chia sẻ</a>
                                             </div>
                                         </div>
-                                        <a href="checkout.html" class="btn btn-enroll w-100">Đăng ký ngay</a>
+                                        <a href="checkout.html" class="btn btn-enroll w-100 mt-3">Đăng ký ngay</a>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                         <div class="card feature-sec">
@@ -127,11 +135,19 @@
                                     <h4>Bao gồm</h4>
                                 </div>
                                 <ul>
-                                    <li><img src="/assets-client/img/icon/users.svg" class="me-2" alt> Đã đăng ký: <span>32 học viên</span></li>
-                                    <li><img src="/assets-client/img/icon/timer.svg" class="me-2" alt> Thời lượng: <span>20 giờ</span></li>
-                                    <li><img src="/assets-client/img/icon/chapter.svg" class="me-2" alt> Chương: <span>15</span></li>
-                                    <li><img src="/assets-client/img/icon/video.svg" class="me-2" alt> Video: <span>12 giờ</span></li>
-                                    <li><img src="/assets-client/img/icon/chart.svg" class="me-2" alt> Cấp độ: <span>Cơ bản</span></li>
+                                    <li><img src="/assets-client/img/icon/users.svg" class="me-2" alt> Đã đăng ký:
+                                        <span>{{ $course->enrollment }}</span> học viên
+                                    </li>
+                                    <li><img src="/assets-client/img/icon/timer.svg" class="me-2" alt> Thời lượng:
+                                        <span>{{ $course->total_duration }}</span> giờ
+                                    </li>
+                                    <li><img src="/assets-client/img/icon/chapter.svg" class="me-2" alt> Chương:
+                                        <span>{{ $course->chapters->count() }}</span></li>
+                                    <li><img src="/assets-client/img/icon/video.svg" class="me-2" alt> Video:
+                                        <span>{{ $course->video_hours }}</span> giờ
+                                    </li>
+                                    <li><img src="/assets-client/img/icon/chart.svg" class="me-2" alt> Cấp độ:
+                                        <span>{{ $course->level }}</span></li>
                                 </ul>
                             </div>
                         </div>
