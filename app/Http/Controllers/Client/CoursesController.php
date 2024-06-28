@@ -32,7 +32,7 @@ class CoursesController extends Controller
         $data = $data->get();
 
         $categories = Course_category::all();
-        
+
         return view('client.courses.courses-list', compact('data', 'query', 'categories'));
 
     }
@@ -44,6 +44,10 @@ class CoursesController extends Controller
     public function lesson()
     {
         return view('client.courses.lesson');
+    }
+    public function quiz()
+    {
+        return view('client.courses.quiz');
     }
     public function checkout($id)
     {
@@ -108,11 +112,11 @@ class CoursesController extends Controller
             ->where('mentor_id', $mentorId)
             ->orderBy('id', 'desc')
             ->get();
-    
+
         return view('client.instructor.instructor-course', ['data' => $data]);
     }
 
-    
+
     public function addcourse()
     {
         $getCategorie = DB::table('course_categories')
@@ -129,7 +133,7 @@ class CoursesController extends Controller
     /*add khóa học*/
     public function saveCourse(Request $request)
     {
-       
+
         $mentorId = auth()->user()->mentor->id;
         // Xử lý lưu dữ liệu khóa học
         $course = new Course();
@@ -157,7 +161,7 @@ class CoursesController extends Controller
         $course->save();
 
         // Lưu dữ liệu chương
-        
+
         return redirect()->route('client.editCourse', $course->id)->with('success', 'Khóa học đã được tạo thành công!');
     }
 
@@ -166,7 +170,7 @@ public function editCourse($id)
 {
     $course = Course::with('chapters')->findOrFail($id);
     $categories = Course_category::all();
-    
+
     return view('client.instructor.instructor-editCourse', compact('course', 'categories'));
 }
 public function deleteChapter($id)
@@ -249,16 +253,16 @@ public function destroy(Lesson $lesson)
     {
         $lesson = Lesson::findOrFail($id);
         $lesson->name = $request->input('name');
-    
+
         if ($request->hasFile('video')) {
             $video = $request->file('video');
             $videoName = $video->getClientOriginalName();
             $video->storeAs('public/assets-client/Videos/Lessons', $videoName);
             $lesson->path_video = $videoName;
         }
-    
+
         $lesson->save();
-    
+
         return redirect()->back()->with('success', 'Đã cập nhật bài học!');
     }
     public function updateChapters(Request $request, Chapter $chapter)
@@ -271,7 +275,7 @@ public function destroy(Lesson $lesson)
         $chapter->save();
 
         return redirect()->back()->with('success', 'Chương đã được cập nhật thành công!');
-    }   
+    }
 public function updateCourse(Request $request, $id)
 {
     $request->validate([
@@ -304,7 +308,7 @@ public function updateCourse(Request $request, $id)
 
     return redirect()->route('client.editCourse', $id)->with('success', 'Khóa học đã được cập nhật thành công!');
 }
-    
+
 
     public function deleteCourse($id)
     {
