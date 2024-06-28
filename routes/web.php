@@ -105,7 +105,7 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::post("/save-lesson", [CoursesController::class, "saveLesson"])->name("saveLesson");
 
     Route::post("/delete-course/{id}", [CoursesController::class, "deleteCourse"])->name("deleteCourse");
-    
+
     Route::post('/courses/{course}/submit', [CoursesController::class, 'submitCourse'])->name('submitCourse');
     Route::post('/recall-course/{id}', [CoursesController::class, 'recallCourse'])->name('recallCourse');
     // ----------------------------------course-details-------------------------
@@ -116,7 +116,7 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::post("/checkout-submit", [CoursesController::class, "checkoutSubmit"])->name("checkout-submit");
     Route::get('/course-pricing/{id}', [CoursesController::class, 'pricing'])->name('course-pricing');
     Route::get('/lesson', [CoursesController::class, 'lesson'])->name('lesson');
-
+    Route::get('/quiz', [CoursesController::class, 'quiz'])->name('quiz');
 
 
 

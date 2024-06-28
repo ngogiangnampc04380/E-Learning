@@ -42,7 +42,7 @@
                         </div>
                     </div>
 
-                    
+
 
         <div class="row">
             @if (isset($query))
@@ -58,8 +58,8 @@
                             <div class="product">
                                 <div class="product-img">
                                     <a href="{{ route('client.course-details', $item->id) }}">
-                                        <img src="{{ Storage::url('assets-client/img/user/' . $item->thumbnail) }}"
-                                            alt="Thumbnail" class="img-fluid" style="max-width: 150px;">
+                                        <img src="{{ Storage::url('public/assets-client/img/Courses/'.$item->thumbnail) }}" alt="Thumbnail" style="width: 250px; height: 150px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+
                                     </a>
                                 </div>
                                 <div class="product-content">
@@ -167,9 +167,9 @@
                                 <li>
                                     <div class="post-thumb">
                                         <a href="{{ route('client.course-details', $course->id) }}">
-                                            <img class="img-fluid"
-                                                src="{{ Storage::url('assets-client/img/blog/blog-01.jpg') }}"
-                                                alt="">
+
+                                            <img src="{{ Storage::url('public/assets-client/img/Courses/'.$course->thumbnail) }}" alt="Thumbnail" class="img-fluid rounded shadow-sm" style="max-width: 100px;">
+
                                         </a>
                                     </div>
                                     <div class="post-info">
