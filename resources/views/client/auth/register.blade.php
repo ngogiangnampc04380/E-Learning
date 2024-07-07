@@ -14,9 +14,8 @@
                                         <img src="https://cdnl.iconscout.com/lottie/premium/thumb/account-login-8677600-6981645.gif" class="img-fluid" alt="Logo">
                                     </div>
                                     <div class="mentor-course text-center">
-                                        <h2>Welcome to <br>DreamsLMS Courses.</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                        <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
+                                    <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
                                     </div>
                                 </div>
                             </div>
@@ -26,9 +25,8 @@
                                         <img src="https://cdnl.iconscout.com/lottie/premium/thumb/account-login-8677600-6981645.gif" class="img-fluid" alt="Logo">
                                     </div>
                                     <div class="mentor-course text-center">
-                                        <h2>Welcome to <br>DreamsLMS Courses.</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                        <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
+                                    <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
                                     </div>
                                 </div>
                             </div>
@@ -38,9 +36,8 @@
                                         <img src="https://cdnl.iconscout.com/lottie/premium/thumb/account-login-8677600-6981645.gif" class="img-fluid" alt="Logo">
                                     </div>
                                     <div class="mentor-course text-center">
-                                        <h2>Welcome to <br>DreamsLMS Courses.</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                        <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
+                                    <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
                                     </div>
                                 </div>
                             </div>
@@ -50,9 +47,8 @@
                                         <img src="https://cdnl.iconscout.com/lottie/premium/thumb/account-login-8677600-6981645.gif" class="img-fluid" alt="Logo">
                                     </div>
                                     <div class="mentor-course text-center">
-                                        <h2>Welcome to <br>DreamsLMS Courses.</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                        <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
+                                    <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
                                     </div>
                                 </div>
                             </div>
@@ -62,9 +58,8 @@
                                         <img src="https://cdnl.iconscout.com/lottie/premium/thumb/account-login-8677600-6981645.gif" class="img-fluid" alt="Logo">
                                     </div>
                                     <div class="mentor-course text-center">
-                                        <h2>Welcome to <br>DreamsLMS Courses.</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                        <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
+                                    <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
                                     </div>
                                 </div>
                             </div>
@@ -74,9 +69,8 @@
                                         <img src="https://cdnl.iconscout.com/lottie/premium/thumb/account-login-8677600-6981645.gif" class="img-fluid" alt="Logo">
                                     </div>
                                     <div class="mentor-course text-center">
-                                        <h2>Welcome to <br>DreamsLMS Courses.</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                        <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
+                                    <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
                                     </div>
                                 </div>
                             </div>
@@ -86,9 +80,8 @@
                                         <img src="https://cdnl.iconscout.com/lottie/premium/thumb/account-login-8677600-6981645.gif" class="img-fluid" alt="Logo">
                                     </div>
                                     <div class="mentor-course text-center">
-                                        <h2>Welcome to <br>DreamsLMS Courses.</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                        <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
+                                    <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
                                     </div>
                                 </div>
                             </div>
@@ -113,7 +106,7 @@
                             <a href="{{ route('Dashboard-client') }}">Quay về trang chủ</a>
                         </div>
                     </div>
-                    <h1>Register</h1>
+                    <h1>Đăng ký</h1>
                     <form action="{{ route('register') }}" method="POST">
                         @csrf
                         <div class="form-group">
@@ -127,6 +120,7 @@
                                 @enderror
                             </div>
                         </div>
+                        <br>
                         <div class="form-group">
                             <label class="form-control-label">Số Điện Thoại</label>
                             <input type="text" pattern="[0-9]{10}" required name="phone" value=""
@@ -138,10 +132,11 @@
                                 @enderror
                             </div>
                         </div>
+                        <br>
                         <div class="form-group">
                             <label class="form-control-label">Email</label>
                             <input type="email" name="email" value="" class="form-control"
-                                placeholder="Enter your email" oninput="enter_data()">
+                                placeholder="Nhập eamil của bạn" oninput="enter_data()">
                             <div class="error_message">
                                 @error('email')
                                     <span style="color: red;font-weight:lighter">{{ $message }}</span>
@@ -149,11 +144,12 @@
                                 @enderror
                             </div>
                         </div>
+                        <br>
                         <div class="form-group">
                             <label class="form-control-label">Mật Khẩu</label>
                             <div class="pass-group" id="passwordInput">
                                 <input type="password" name="password" class="form-control pass-input"
-                                    placeholder="Enter your Mật Khẩu" oninput="enter_data()">
+                                    placeholder="Nhập mật khẩu của bạn" oninput="enter_data()">
                                 <span class="toggle-password feather-eye"></span>
                                 <span class="pass-checked"><i class="feather-check"></i></span>
                             </div>
@@ -201,18 +197,18 @@
                     </form>
 
 
-                    <div class="google-bg text-center">
-                        <span><a href="#">Or log in with</a></span>
-                        <div class="sign-google">
-                            <ul>
-                                <li><a style="border-right: none !important;" href="{{ route('login.google') }}"><img
-                                            src="{{ asset('/assets-client/img/net-icon-01.png') }}" class="img-fluid" alt="Logo"> Login
-                                        using Google</a></li>
-                                {{-- <li><a href="#"><img src="{{asset('assets/img/net-icon-02.png')}}" class="img-fluid" alt="Logo">Sign In using Facebook</a></li> --}}
-                            </ul>
-                        </div>
-                        <p class="mb-0">Are you ready to create an account?<a href="{{ route('login') }}">Login</a></p>
+                    
+                </div>
+                <div class="google-bg text-center">
+                    <span><a href="#">Đăng ký với</a></span>
+                    <div class="sign-google">
+                        <ul>
+                            <li><a style="border-right: none !important;" href="{{ route('login.google') }}"><img
+                                        src="{{ asset('/assets-client/img/net-icon-01.png') }}" class="img-fluid" alt="Logo"> Đăng ký với Google</a></li>
+                            {{-- <li><a href="#"><img src="{{asset('assets/img/net-icon-02.png')}}" class="img-fluid" alt="Logo">Sign In using Facebook</a></li> --}}
+                        </ul>
                     </div>
+                    <p class="mb-0">Bạn đã có tài khoản?<a href="{{ route('login') }}"> Đăng nhập tại đây</a></p>
                 </div>
             </div>
             <script>

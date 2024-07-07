@@ -923,8 +923,7 @@
                             </ul>
                         @endguest
                         @auth
-                            <ul class="nav ">
-
+                            <ul class="nav">
                                 <li class="nav-item user-nav">
                                     <div class="dropdown" >
                                     <a href="" class="dropdown-toggle"
@@ -947,9 +946,13 @@
 
                                     <div class="users dropdown-menu dropdown-user"
                                         data-popper-placement="bottom-end">
-                                        <a href="">{{auth()->user()->name}}</a>
+                                        
                                         @if(auth()->user()->role == 0)
-                                        <p class="text-muted text-center">Học viên</p>
+                                        <p class="text-muted text-center">
+                                            {{auth()->user()->name}} 
+                                            <br> 
+                                            Học viên
+                                        </p>
                                         @elseif(auth()->user()->role == 1)
                                         <p class="text-muted  m-0">ADMIN</p>
                                         @elseif(auth()->user()->role == 2)

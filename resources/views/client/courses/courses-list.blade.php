@@ -87,14 +87,24 @@
                                     </div>
                                     <div class="course-group d-flex mb-0">
                                         <div class="course-group-img d-flex">
-                                            <a href="instructor-profile.html"><img src="assets/img/user/user1.jpg" alt
-                                                    class="img-fluid"></a>
-                                            <div class="course-name">
-                                                <h4><a href="instructor-profile.html">Rolands R</a></h4>
-                                                <p>Instructor</p>
+                                            <div class="course-group-img d-flex">
+                                                <a
+                                                    href="{{ route('client.mentor_detail', $item->mentor->user->id) }}">
+                                                    <img src="{{ $item->mentor->user->thumbnail ? Storage::url('assets-client/img/user/' . $item->mentor->user->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"
+                                                        class="img-fluid rounded-circle">
+                                                </a>
+                                                <div class="course-name">
+                                                    <h4><a
+                                                            href="{{ route('client.mentor_detail', $item->mentor->user->id) }}">{{ $item->mentor->user->name }}</a>
+                                                    </h4>
+                                                    <p>Giảng viên</p>
+                                                </div>
                                             </div>
+
+
                                         </div>
-                                        <div class="course-share d-flex align-items-center justify-content-center">
+                                        <div
+                                            class="course-share d-flex align-items-center justify-content-center">
                                             <a href="#rate"><i class="fa-regular fa-heart"></i></a>
                                         </div>
                                     </div>

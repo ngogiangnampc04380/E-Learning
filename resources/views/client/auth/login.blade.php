@@ -129,6 +129,7 @@
                             @enderror
                         </div>
                     </div>
+                    <br>
                     <div class="form-group">
                         <label class="form-control-label">Mật khẩu</label>
                         <div class="pass-group">
@@ -146,12 +147,7 @@
                     <div class="forgot">
                         <span><a class="forgot-link" href="{{ route('enter-email') }}">Quên mật khẩu ?</a></span>
                     </div>
-                    {{-- <div class="remember-me"> --}}
-                    {{-- <label class="custom_check mr-2 mb-0 d-inline-flex remember-me"> Ghi nhớ tài khoản --}}
-                    {{-- <input type="checkbox" name="radio"> --}}
-                    {{-- <span class="checkmark"></span> --}}
-                    {{-- </label> --}}
-                    {{-- </div> --}}
+                    
                     <div class="d-grid">
                         <button class="btn btn-primary btn-start" type="submit" disabled>Đăng nhập</button>
                     </div>
@@ -160,16 +156,15 @@
             
         </div>
         <div class="google-bg text-center">
-            <span><a href="{{route('login.google')}}">Or log in with</a></span>
+            <span><a href="{{route('login.google')}}">Đăng nhập với</a></span>
             <div class="sign-google">
                 <ul>
                     <li><a style="border-right: none !important;" href="{{ route('login.google') }}"><img
-                                src="{{ asset('/assets-client/img/net-icon-01.png') }}" class="img-fluid" alt="Logo"> Login
-                            using Google</a></li>
+                                src="{{ asset('/assets-client/img/net-icon-01.png') }}" class="img-fluid" alt="Logo"> Đăng nhập với Google</a></li>
                     {{-- <li><a href="#"><img src="{{asset('assets/img/net-icon-02.png')}}" class="img-fluid" alt="Logo">Sign In using Facebook</a></li> --}}
                 </ul>
             </div>
-            <p class="mb-0">New user ? <a href="">Register here</a></p>
+            <p class="mb-0">Bạn chưa có tài khoản? <a href="{{route('register')}}"> Đăng kí tại đây</a></p>
         </div>
         </div>
     </div>
