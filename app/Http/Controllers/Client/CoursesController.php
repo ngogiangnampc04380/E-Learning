@@ -34,7 +34,7 @@ class CoursesController extends Controller
         $data = $data->get();
 
         $categories = Course_category::all();
-
+        
         return view('client.courses.courses-list', compact('data', 'query', 'categories'));
 
     }

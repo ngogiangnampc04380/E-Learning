@@ -59,7 +59,7 @@ class CheckoutController extends Controller
             $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
             $orderInfo = "Thanh toán qua MoMo";
             $amount = session('price');
-            $orderId = rand(00, 9999);
+            $orderId = rand(00, 9999999999);
             // $resultCode	= "resultCode";
             $redirectUrl = "http://127.0.0.1:8000/client/thank";
             $ipnUrl = "http://127.0.0.1:8000";
