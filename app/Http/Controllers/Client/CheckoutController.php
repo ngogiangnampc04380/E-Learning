@@ -6,6 +6,7 @@ use App\Models\Client\Checkout;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Course;
+use App\Models\Course_subrised;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -119,6 +120,21 @@ class CheckoutController extends Controller
         ->where('order_code', $orderID)
         ->first();
 
+        $course = DB::table('courses')
+        ->select('name', 'description', 'thumbnail' , 'category_id', 'mentor_id')
+        ->where('id', session('course_id'))
+        ->first();
+        session([
+            'coursename' => $course->name,
+            'coursedescription' => $course->description,
+            'coursethumbnail' => $course->thumbnail,
+            'category_id' => $course->category_id,
+            'mentor_id' => $course->mentor_id,
+        ]);
+
+
+
+
         if (isset($_GET['partnerCode']) && $_GET['message'] == "Successful." &&  $orderid == null) {
             Order::create([
                 'order_code' => $_GET['orderId'],
@@ -130,14 +146,25 @@ class CheckoutController extends Controller
                 'user_id' => session('id'),
                 'price_paid' => session('price'),
             ]);
-            $used_cupon = DB::table('sales')
-            ->where('sales_code', session('sale_code'))
-            ->select('used_amount')
-            ->first();
-            $used_cupon->used_amount = $used_cupon->used_amount + 1;
-            DB::table('sales')
-            ->where('sales_code', session('sale_code'))
-            ->update(['used_amount' => $used_cupon->used_amount]);
+            
+            Course_subrised::create([
+                'name' => session('coursename'),
+                'description' => session('coursedescription'),
+                'thumbnail' => session('coursethumbnail'),
+                'category_id' => session('category_id'),
+                'mentor_id' => session('mentor_id'),
+                'user_id' => session('id'),
+            ]);
+
+            // $used_cupon = DB::table('sales')
+            // ->where('sales_code', session('sale_code'))
+            // ->select('used_amount')
+            // ->first();
+
+            // $used_cupon->used_amount = $used_cupon->used_amount + 1;
+            // DB::table('sales')
+            // ->where('sales_code', session('sale_code'))
+            // ->update(['used_amount' => $used_cupon->used_amount]);
         }
         return view('client.checkout.thank');
     }

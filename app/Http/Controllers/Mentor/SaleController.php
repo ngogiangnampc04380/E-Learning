@@ -107,7 +107,7 @@ class SaleController extends Controller
             $originalPrice = $course->price;
             $discountedPrice = $originalPrice * ((100 - $sale->percent_sale) / 100);
             session([
-                'sale_code' => $sale-> sales_code,
+                'sale_code' => $sale->sales_code,
                 'price' => $discountedPrice,
             ]);
             return view('client.courses.course-pricing', compact('originalPrice', 'discountedPrice', 'sale', 'course'));

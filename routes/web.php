@@ -109,7 +109,7 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::post('/courses/{course}/submit', [CoursesController::class, 'submitCourse'])->name('submitCourse');
     Route::post('/recall-course/{id}', [CoursesController::class, 'recallCourse'])->name('recallCourse');
     // ----------------------------------course-details-------------------------
-
+    Route::get('/my-course/{id}', [CoursesController::class,   'myCourse'])->name('my-course');
     Route::get("/course-list", [CoursesController::class, "list"])->name("course-lists");
     Route::get("/course-details", [CoursesController::class, "detail"])->name("course-details");
     Route::get("/course-checkout/{id}", [CoursesController::class, "checkout"])->name("course-checkout");

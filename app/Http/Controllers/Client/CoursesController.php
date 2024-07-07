@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course_subrised;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Checkout;
@@ -35,6 +36,15 @@ class CoursesController extends Controller
         $categories = Course_category::all();
 
         return view('client.courses.courses-list', compact('data', 'query', 'categories'));
+
+    }
+    public function myCourse(Request $request)
+    {
+        $data = Course_subrised::orderBy('id', 'desc');
+
+        $data = $data->get();
+        
+        return view('client.courses.my-course', compact('data'));
 
     }
 
@@ -120,7 +130,7 @@ class CoursesController extends Controller
 
     public function course($id)
     {
-        $mentorId = auth()->user()->mentor->id;
+        $mentorId = auth()->user()->id;
 
         $data = DB::table('courses')
             ->where('mentor_id', $mentorId)

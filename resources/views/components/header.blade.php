@@ -901,7 +901,8 @@
 {{--                                        </li>--}}
                                     @elseif(auth()->user()->role == 0)
                                         <li class="{{ Route::currentRouteName() == 'client.instructor-course' ? 'active' : '' }}">
-                                            <a href="{{ route('client.instructor-course',auth()->user()->id)}}">Khóa học của tôi</a>
+                                            {{-- <a href="{{ route('client.instructor-course',auth()->user()->id)}}">Khóa học của tôi</a> --}}
+                                            <a href="{{ route('client.my-course',auth()->user()->id)}}">Khóa học của tôi</a>
                                         </li>
                                         @elseif(auth()->user()->role == 1)
                                         <li class="{{ Route::currentRouteName() == 'client.instructor-course' ? 'active' : '' }}">
