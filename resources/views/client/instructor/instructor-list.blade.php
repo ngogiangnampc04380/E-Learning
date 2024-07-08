@@ -56,7 +56,7 @@
                                 <div class="instructor-info">
                                     <div class="rating-img d-flex align-items-center">
                                         <img src="/assets-client/img/icon/icon-01.svg" class="me-1" alt>
-                                        <p>12+ Lesson</p>
+                                        <p>12+ Bài giảng</p>
                                     </div>
                                     <div class="course-view d-flex align-items-center ms-0">
                                         <img src="/assets-client/img/icon/icon-02.svg" class="me-1" alt>
@@ -64,7 +64,7 @@
                                     </div>
                                     <div class="rating-img d-flex align-items-center">
                                         <img src="/assets-client/img/icon/user-icon.svg" class="me-1" alt>
-                                        <p>50 Students</p>
+                                        <p>50 Học viên</p>
                                     </div>
                                     <div class="rating">
                                         <i class="fas fa-star filled"></i>
@@ -91,10 +91,10 @@
             <div class="col-lg-3">
                 <div class="filter-clear">
                     <div class="clear-filter d-flex align-items-center">
-                        <h4><i class="feather-filter"></i>Filters</h4>
-                        <div class="clear-text">
-                            <p>CLEAR</p>
-                        </div>
+                        <h4><i class="feather-filter"></i>Lọc</h4>
+                        {{-- <div class="clear-text">
+                            <p>clear</p>
+                        </div> --}}
                     </div>
 
                     <div class="card search-filter categories-filter-blk">

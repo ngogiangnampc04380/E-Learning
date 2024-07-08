@@ -36,7 +36,6 @@ class CoursesController extends Controller
         $categories = Course_category::all();
         
         return view('client.courses.courses-list', compact('data', 'query', 'categories'));
-
     }
     public function myCourse(Request $request)
     {
@@ -128,19 +127,16 @@ class CoursesController extends Controller
         return view('client.courses.course-pricing', compact('sessionData', 'course', 'data'));
     }
 
-    public function course($id)
+    public function course()
     {
-        $mentorId = auth()->user()->id;
+        $mentorId = auth()->user()->mentor->id;
 
         $data = DB::table('courses')
             ->where('mentor_id', $mentorId)
             ->orderBy('id', 'desc')
             ->get();
-
         return view('client.instructor.instructor-course', ['data' => $data]);
     }
-
-
     public function addcourse()
     {
         $getCategorie = DB::table('course_categories')

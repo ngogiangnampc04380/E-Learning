@@ -9,14 +9,7 @@ Version      : 1.0
 
     // Stick Sidebar
 	
-	if ($(window).width() > 767) {
-		if($('.theiaStickySidebar').length > 0) {
-			$('.theiaStickySidebar').theiaStickySidebar({
-			  // Settings
-			  additionalMarginTop: 70
-			});
-		}
-	}
+	
 		
 	if($('.toggle-password').length > 0) {
 		$(document).on('click', '.toggle-password', function() {

@@ -58,7 +58,7 @@
                     <div class="card-body">
                         <form class="search-form">
                             <div class="input-group">
-                                <input type="text" placeholder="Search..." class="form-control">
+                                <input type="text" placeholder="Tìm..." class="form-control">
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
                             </div>
                         </form>

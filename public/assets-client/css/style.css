@@ -7161,14 +7161,14 @@ textarea:focus {
     padding-left: 0;
     margin: 0;
 }
-.dropdown:hover .dropdown-menu {
+/* .dropdown:hover .dropdown-menu {
     display: block;
     margin-top: 10px;
 }
 .dropdown:hover .dropdown-menu .dropdown-item{
     display: block;
     margin-top: 10px;
-}
+} */
 .home-four .select2-container--default
 .select2-results__option--highlighted[aria-selected] {
     background-color: #EE009C;

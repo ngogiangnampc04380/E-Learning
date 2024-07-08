@@ -86,7 +86,6 @@
                                         <span class="d-inline-block average-rating"><span>4.0</span> (15)</span>
                                     </div>
                                     <div class="course-group d-flex mb-0">
-                                        <div class="course-group-img d-flex">
                                             <div class="course-group-img d-flex">
                                                 <a
                                                     href="{{ route('client.mentor_detail', $item->mentor->user->id) }}">
@@ -100,9 +99,6 @@
                                                     <p>Giảng viên</p>
                                                 </div>
                                             </div>
-
-
-                                        </div>
                                         <div
                                             class="course-share d-flex align-items-center justify-content-center">
                                             <a href="#rate"><i class="fa-regular fa-heart"></i></a>
@@ -147,10 +143,10 @@
         <div class="col-lg-3 theiaStickySidebar">
             <div class="filter-clear">
                 <div class="clear-filter d-flex align-items-center">
-                    <h4><i class="feather-filter"></i>Filters</h4>
-                    <div class="clear-text">
+                    <h4><i class="feather-filter"></i>Lọc</h4>
+                    {{-- <div class="clear-text">
                         <p>CLEAR</p>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="card search-filter categories-filter-blk">
                     <div class="card-body">

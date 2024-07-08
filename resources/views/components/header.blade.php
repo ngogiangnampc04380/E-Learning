@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="/assets-client/plugins/select2/css/select2.min.css">
 
     <link rel="stylesheet" href="/assets-client/plugins/swiper/css/swiper.min.css">
-    <link rel="stylesheet" href="/assets-client/css/blue.css">
+    {{-- <link rel="stylesheet" href="/assets-client/css/blue.css"> --}}
 
     <!--
 <link rel="stylesheet" href="/assets-client/plugins/aos/aos.css"> -->
@@ -867,14 +867,14 @@
                             </a>
                         </div>
                         <div class="main-menu-wrapper">
-                            <div class="menu-header">
+                            {{-- <div class="menu-header">
                                 <a href="" class="menu-logo">
                                     <img src="{{ asset('/img/logo.svg') }}" class="img-fluid" alt="Logo">
                                 </a>
                                 <a id="menu_close" class="menu-close" href="javascript:void(0);">
                                     <i class="fas fa-times"></i>
                                 </a>
-                            </div>
+                            </div> --}}
                             <ul class="main-nav">
                                 <li class="has-submenu {{ Route::currentRouteName() == 'Dashboard-client' ? 'active' : '' }}">
                                     <a href="{{ route('Dashboard-client') }}">Trang chủ </a>
@@ -894,14 +894,10 @@
                                 @if(auth()->check())
                                     @if(auth()->user()->role == 2)
                                         <li class="{{ Route::currentRouteName() == 'client.instructor-course' ? 'active' : '' }}">
-                                            <a href="{{ route('client.instructor-course',auth()->user()->id)}}">Quản lí Khóa học</a>
+                                            <a href="{{ route('client.instructor-course',auth()->user()->mentor->id)}}">Quản lí Khóa học</a>
                                         </li>
-{{--                                        <li class="{{ Route::currentRouteName() == 'client.instructor-course' ? 'active' : '' }}">--}}
-{{--                                            <a href="{{ route('client.instructor-course') }}">Khóa học của tôi</a>--}}
-{{--                                        </li>--}}
                                     @elseif(auth()->user()->role == 0)
                                         <li class="{{ Route::currentRouteName() == 'client.instructor-course' ? 'active' : '' }}">
-                                            {{-- <a href="{{ route('client.instructor-course',auth()->user()->id)}}">Khóa học của tôi</a> --}}
                                             <a href="{{ route('client.my-course',auth()->user()->id)}}">Khóa học của tôi</a>
                                         </li>
                                         @elseif(auth()->user()->role == 1)
@@ -924,10 +920,9 @@
                         @endguest
                         @auth
                             <ul class="nav">
-                                <li class="nav-item user-nav">
-                                    <div class="dropdown" >
-                                    <a href="" class="dropdown-toggle"
-                                    data-bs-toggle="">
+                                <li class="nav-item user-nav" >
+                                    <div class="dropdown">
+                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                         <span class="user-img" >
                                             <img src="@if(auth()->user()->thumbnail)
                                             @if(Str::startsWith(auth()->user()->thumbnail, 'http'))
@@ -950,13 +945,22 @@
                                         @if(auth()->user()->role == 0)
                                         <p class="text-muted text-center">
                                             {{auth()->user()->name}} 
-                                            <br> 
+                                            <br>
                                             Học viên
                                         </p>
                                         @elseif(auth()->user()->role == 1)
-                                        <p class="text-muted  m-0">ADMIN</p>
+                                        
+                                        <p class="text-muted  m-0 text-center">
+                                            {{auth()->user()->name}}
+                                            <br> 
+                                            ADMIN
+                                        </p>
                                         @elseif(auth()->user()->role == 2)
-                                        <p class="text-muted mb-0">Mentor</p>
+                                        <p class="text-muted mb-0 text-center">
+                                            {{auth()->user()->name}}
+                                            <br>
+                                            Mentor
+                                        </p>
                                         @endif
 
                                         @if(auth()->user()->role == 0)

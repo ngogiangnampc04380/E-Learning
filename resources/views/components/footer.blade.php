@@ -97,7 +97,7 @@
                             </ul>
                         </div>
                         <div class="copyright-text-three">
-                            <p class="mb-0">&copy; 2024 EnglishTour. All rights reserved.</p>
+                            <p class="mb-0">&copy; 2024 ENT Center. Đã đăng ký Bản quyền.</p>
                         </div>
                     </div>
                 </div>
@@ -129,8 +129,8 @@
 <script src="/assets-client/js/script.js"></script>
 {{-- <script src="../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
     data-cf-settings="a24f51fa5374e90d6aa7f4a1-|49" defer></script> --}}
-<script src="/assets-client/js/add.js"></script>
-<script src="/assets-client/js/icheck.js"></script>
+{{-- <script src="/assets-client/js/add.js"></script>
+<script src="/assets-client/js/icheck.js"></script> --}}
 
 <script>
     $(function() {
@@ -138,12 +138,12 @@
             $('#loader').fadeOut(1000);
         }, 1000)
     })
-    $(document).ready(function() {
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_flat-blue',
-            radioClass: 'iradio_flat-blue'
-        });
-    });
+    // $(document).ready(function() {
+    //     $('input').iCheck({
+    //         checkboxClass: 'icheckbox_flat-blue',
+    //         radioClass: 'iradio_flat-blue'
+    //     });
+    // });
 </script>
 </body>
 

@@ -49,7 +49,7 @@
    <ul>
         <li class="nav-item {{ request()->routeIs('client.dashboard-profile') ? 'active' : '' }}">
             <a href="{{ route('client.dashboard-profile') }}" class="nav-link">
-                <i class="feather-home"></i> My Dashboard
+<i class="feather-home"></i> My Dashboard
             </a>
         </li>
         @if(in_array(auth()->user()->role, [0, 2]))
@@ -120,7 +120,7 @@
                         <div class="col-md-12">
                             <div class="settings-widget">
                                 @if($data->contains('status', 0))
-                                <div class="settings-inner-blk p-4 bg-light rounded shadow">
+<div class="settings-inner-blk p-4 bg-light rounded shadow">
                                     <div class="sell-course-head comman-space text-center mb-4">
                                         <h3 class="text-primary display-4">Danh sách khóa học đang chỉnh sửa</h3>
                                         <p class="text-muted lead">Quản lý và cập nhật các khóa học của bạn, bao gồm trạng thái và thông tin chi tiết.</p>
@@ -154,7 +154,7 @@
                                                                 Trình duyệt của bạn không hỗ trợ thẻ video.
                                                             </video>
                                                             @else
-                                                            <span class="text-muted">Không có video demo</span>
+<span class="text-muted">Không có video demo</span>
                                                             @endif
                                                         </td>
                                                         <td>
@@ -186,7 +186,7 @@
                                 
                                                                 <!-- Nút Gửi duyệt -->
                                                                 <form action="{{ route('client.submitCourse', $post->id) }}" method="POST" class="submit-course-form">
-                                                                    @csrf
+@csrf
                                                                     @method('POST')
                                                                     <button type="button" class="btn btn-success submit-course-btn ">
                                                                         Gửi duyệt <i class="bi bi-arrow-right"></i>
@@ -227,7 +227,7 @@
                                                     @if($post->status ==1)
                                                     <tr>
                                                         <td>
-                                                            <a href="#">
+<a href="#">
                                                                 <img src="{{ Storage::url('public/assets-client/img/Courses/'.$post->thumbnail) }}" alt="Thumbnail" class="img-fluid rounded shadow-sm" style="max-width: 100px;">
                                                             </a>
                                                         </td>
@@ -259,7 +259,7 @@
                                 <form action="{{ route('client.recallCourse', $post->id) }}" method="POST" class="recall-course-form">
                                     @csrf
                                     @method('POST')
-                                    <button type="button" class="btn btn-info recall-course-btn">
+<button type="button" class="btn btn-info recall-course-btn">
                                         <i class="fas fa-undo"></i> Thu hồi
                                     </button>
                                 </form>
@@ -301,7 +301,7 @@
                                                         <td>
                                                             <a href="#">
                                                                 <img src="{{ Storage::url('public/assets-client/img/Courses/'.$post->thumbnail) }}" alt="Thumbnail" class="img-fluid rounded shadow-sm" style="max-width: 100px;">
-                                                            </a>
+</a>
                                                         </td>
                                                         <td>
                                                             @if($post->video_demo)
@@ -333,7 +333,7 @@
                                                                     <button type="button" class="btn btn-danger delete-course-btn rounded-pill">
                                                                         <i class="fas fa-trash-alt"></i> Xóa
                                                                     </button>
-                                                                </form>
+</form>
                                 
                                                                 <!-- Nút Sửa -->
                                                                 <a href="{{ route('client.editCourse', $post->id) }}" class="btn btn-warning mx-2 rounded-pill">
@@ -371,7 +371,7 @@
                                 <div id="confirmSubmitModal" class="modal">
                                     <div class="modal-content">
                                         <span class="close">&times;</span>
-                                        <p>Bạn có chắc chắn muốn gửi khóa học này để duyệt không?</p>
+<p>Bạn có chắc chắn muốn gửi khóa học này để duyệt không?</p>
                                         <div class="modal-buttons">
                                             <button type="button" class="btn btn-secondary" id="cancelSubmitBtn">Hủy</button>
                                             <button type="button" class="btn btn-warning" id="confirmSubmitBtn">Gửi duyệt</button>
@@ -425,7 +425,7 @@
             formToSubmit = this.closest('form');
             submitModal.style.display = "block";
         });
-    });
+});
 
     // Sự kiện khi nhấn nút thu hồi khóa học
     document.querySelectorAll('.recall-course-btn').forEach(button => {

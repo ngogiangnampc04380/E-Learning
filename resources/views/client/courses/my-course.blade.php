@@ -37,8 +37,7 @@
                                 <div class="product">
                                     <div class="product-img">
                                         <a href="{{ route('client.course-details', $item->id) }}">
-                                            <img src="{{ Storage::url('assets-client/img/user/' . $item->thumbnail) }}"
-                                                alt="Thumbnail" class="img-fluid" style="max-width: 150px;">
+                                            <img src="{{ Storage::url('public/assets-client/img/Courses/'.$item->thumbnail) }}" alt="Thumbnail" style="width: 250px; height: 150px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
                                         </a>
                                     </div>
                                     <div class="product-content">
@@ -61,11 +60,16 @@
                                         </div>
                                         <div class="course-group d-flex mb-0">
                                             <div class="course-group-img d-flex">
-                                                <a href="instructor-profile.html"><img src="assets/img/user/user1.jpg" alt
-                                                        class="img-fluid"></a>
+                                                <a
+                                                    href="{{ route('client.mentor_detail', $item->mentor->user->id) }}">
+                                                    <img src="{{ $item->mentor->user->thumbnail ? Storage::url('assets-client/img/user/' . $item->mentor->user->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"
+                                                        class="img-fluid rounded-circle">
+                                                </a>
                                                 <div class="course-name">
-                                                    <h4><a href="instructor-profile.html">Rolands R</a></h4>
-                                                    <p>Instructor</p>
+                                                    <h4><a
+                                                            href="{{ route('client.mentor_detail', $item->mentor->user->id) }}">{{ $item->mentor->user->name }}</a>
+                                                    </h4>
+                                                    <p>Giảng viên</p>
                                                 </div>
                                             </div>
                                         </div>
