@@ -68,8 +68,10 @@
                                                 href="{{ route('client.course-details', $item->id) }}">{{ $item->name }}</a>
                                         </h2>
                                         <div class="all-btn all-category d-flex align-items-center">
-                                            <a href="{{ route('client.course-checkout', $item->id) }}"
-                                                class="btn btn-primary">Mua ngay</a>
+                                            <div class="all-btn all-category d-flex align-items-center">
+                                                <a href="{{ route('client.lesson', $item->id) }}"
+                                                    class="btn btn-primary">Học</a>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="course-info border-bottom-0 pb-0 d-flex align-items-center">

@@ -115,7 +115,7 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::get("/course-checkout/{id}", [CoursesController::class, "checkout"])->name("course-checkout");
     Route::post("/checkout-submit", [CoursesController::class, "checkoutSubmit"])->name("checkout-submit");
     Route::get('/course-pricing/{id}', [CoursesController::class, 'pricing'])->name('course-pricing');
-    Route::get('/lesson', [CoursesController::class, 'lesson'])->name('lesson');
+    Route::get('/lesson/{id}', [CoursesController::class, 'lesson'])->name('lesson');
     Route::get('/quiz', [CoursesController::class, 'quiz'])->name('quiz');
 
 

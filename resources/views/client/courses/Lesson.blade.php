@@ -65,12 +65,11 @@
                 <div class="col-lg-8 mb-4">
                     <div class="student-widget lesson-introduction">
                         <div class="lesson-widget-group">
-                            <h2>Bài 1: Từ vựng</h2>
+                            <h2 id="lesson-title">Bài 1: Từ vựng</h2>
                             <div class="ratio ratio-16x9">
-                                <iframe src="https://www.youtube.com/embed/lUdVsouSl4E?si=AC1I1jWfUnxADPan"
-                                        title="YouTube video player" frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                <video id="lesson-video" controls> 
+                                    <source src="{{ Storage::url('assets-client/video/Lessons/' . $firstLessonVideo )}}" type="video/mp4">
+                                </video>
                             </div>
                         </div>
                     </div>
@@ -78,65 +77,32 @@
                 <div class="col-lg-4">
                     <div class="lesson-group">
                         <h2>Danh sách chương</h2>
-                        <div class="accordion" id="accordionExample">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseOne" aria-expanded="true"
-                                            aria-controls="collapseOne">
-                                        Chương 1
-                                    </button>
-                                </h2>
-                                <div id="collapseOne" class="accordion-collapse collapse show"
-                                     data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <ul class="list-group lesson-list">
-                                            <li class="list-group-item">Bài 1: Basic HTML</li>
-                                            <li class="list-group-item">Bài 2: Advanced HTML</li>
-                                            <li class="list-group-item">Bài 3: HTML Forms</li>
-                                        </ul>
+                        @foreach ($chapters as $item)
+                            <div class="accordion" id="accordionExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $item->chapterID }}" aria-expanded="true" aria-controls="collapse{{ $item->chapterID }}">
+                                            {{ $item->chaptername }}
+                                        </button>
+                                    </h2>
+                                    <div id="collapse{{ $item->chapterID }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <ul class="list-group lesson-list">
+                                                @if(isset($chapterLessons[$item->chapterID]))
+                                                    @foreach ($chapterLessons[$item->chapterID] as $lesson)
+                                                        <li class="list-group-item">
+                                                            <a href="#" class="lesson-link" data-video="{{ asset('assets-client/Videos/Lessons/' .$lesson->lessonvideo) }}" data-title="{{ $lesson->lessonname }}">
+                                                                {{ $lesson->lessonname }}
+                                                            </a>
+                                                        </li>
+                                                    @endforeach
+                                                @endif
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseTwo" aria-expanded="false"
-                                            aria-controls="collapseTwo">
-                                        Chương 2
-                                    </button>
-                                </h2>
-                                <div id="collapseTwo" class="accordion-collapse collapse"
-                                     data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <ul class="list-group lesson-list">
-                                            <li class="list-group-item">Bài 1: Basic CSS</li>
-                                            <li class="list-group-item">Bài 2: Advanced CSS</li>
-                                            <li class="list-group-item">Bài 3: CSS Flexbox</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseThree" aria-expanded="false"
-                                            aria-controls="collapseThree">
-                                        Chương 3
-                                    </button>
-                                </h2>
-                                <div id="collapseThree" class="accordion-collapse collapse"
-                                     data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <ul class="list-group lesson-list">
-                                            <li class="list-group-item">Bài 1: Basic JavaScript</li>
-                                            <li class="list-group-item">Bài 2: Advanced JavaScript</li>
-                                            <li class="list-group-item">Bài 3: JavaScript DOM Manipulation</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -159,5 +125,21 @@
             </div>
         </div>
     </section>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.lesson-link').forEach(function (element) {
+                element.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    var videoUrl = this.getAttribute('data-video');
+                    var lessonTitle = this.getAttribute('data-title');
+                    var videoElement = document.getElementById('lesson-video');
+                    videoElement.querySelector('source').src =  videoUrl;
+                    videoElement.load(); // Tải lại video với URL mới
+                    document.getElementById('lesson-title').innerText = lessonTitle;
+                });
+            });
+        });
+    </script>
 
 @endsection

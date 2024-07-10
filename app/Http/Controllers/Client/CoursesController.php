@@ -10,6 +10,7 @@ use App\Models\Checkout;
 use Illuminate\Support\Facades\Validator;
 use function Laravel\Prompts\select;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Database\Query\JoinClause;
 use App\Models\Course;
 use App\Models\Sale;
 use App\Models\Chapter;
@@ -44,26 +45,41 @@ class CoursesController extends Controller
         $data = $data->get();
         
         return view('client.courses.my-course', compact('data'));
-
     }
-
-
-    public function detail($id)
+    public function lesson($id)
     {
-        $course = Course::with('mentor')->findOrFail($id);
-        $mentor = DB::table('courses')
-            ->join('mentors', 'courses.mentor_id', '=', 'mentors.id')
-            ->join('users', 'mentors.user_id', '=', 'users.id')
-            ->select('users.introduce AS introduce', 'users.name AS fullname')
-            ->where('courses.id', $id) // Điều kiện để lấy thông tin cho khóa học cụ thể
-            ->first(); // Lấy ra một đối tượng duy nhất
-        return view('client.courses.course-details', compact('course', 'mentor'));
+        $data = DB::table('courses')
+            ->select('id', 'thumbnail', 'name', 'description')
+            ->where('id', $id)
+            ->first();
+    
+        if (!$data) {
+            return redirect()->back()->with('error', 'Khóa học không tồn tại.');
+        }
+    
+        $chapters = DB::table('chapters')
+            ->join('lessons', 'chapters.id', '=', 'lessons.chapter_id')
+            ->where('chapters.course_id', $data->id)
+            ->select('chapters.name as chaptername', 'chapters.id as chapterID')
+            ->distinct()
+            ->get();
+        $chapterLessons = [];
+        $firstLessonVideo = null;
+    
+        foreach ($chapters as $chapter) {
+            $lessons = DB::table('lessons')
+                ->where('chapter_id', $chapter->chapterID)
+                ->select('lessons.name as lessonname', 'lessons.path_video as lessonvideo', 'lessons.id as lessonID')
+                ->get();
+            $chapterLessons[$chapter->chapterID] = $lessons;
+            if (is_null($firstLessonVideo) && $lessons->isNotEmpty()) {
+                $firstLessonVideo = asset('assets-client/Videos/Lessons/' . $lessons->first()->lessonvideo);
+            }
+        }
+        return view('client.courses.lesson', compact('data', 'chapters', 'chapterLessons', 'firstLessonVideo'));
     }
-
-    public function lesson()
-    {
-        return view('client.courses.lesson');
-    }
+        
+    
 
     public function quiz()
     {

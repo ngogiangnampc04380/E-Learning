@@ -6,7 +6,7 @@ use App\Models\Client\Checkout;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Course;
-use App\Models\Course_subrised;
+use App\Models\Course_user;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +20,7 @@ class CheckoutController extends Controller
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CAINFO, 'D:\cacert.pem');
+        curl_setopt($ch, CURLOPT_CAINFO, 'C:\php\cacert.pem');
         curl_setopt(
             $ch,
             CURLOPT_HTTPHEADER,
@@ -121,18 +121,15 @@ class CheckoutController extends Controller
         ->first();
 
         $course = DB::table('courses')
-        ->select('name', 'description', 'thumbnail' , 'category_id', 'mentor_id')
         ->where('id', session('course_id'))
         ->first();
         session([
-            'coursename' => $course->name,
-            'coursedescription' => $course->description,
-            'coursethumbnail' => $course->thumbnail,
-            'category_id' => $course->category_id,
-            'mentor_id' => $course->mentor_id,
+            'course_id' => $course->id,
+            'user_id'=>auth()->user()->id,
+            
         ]);
 
-
+        dd(session());
 
 
         if (isset($_GET['partnerCode']) && $_GET['message'] == "Successful." &&  $orderid == null) {
@@ -147,13 +144,10 @@ class CheckoutController extends Controller
                 'price_paid' => session('price'),
             ]);
             
-            Course_subrised::create([
-                'name' => session('coursename'),
-                'description' => session('coursedescription'),
-                'thumbnail' => session('coursethumbnail'),
-                'category_id' => session('category_id'),
-                'mentor_id' => session('mentor_id'),
-                'user_id' => session('id'),
+            Course_user::create([
+                
+                'course_id' => session('course_id'),
+                'user_id' => session('user_id'),
             ]);
 
             // $used_cupon = DB::table('sales')
