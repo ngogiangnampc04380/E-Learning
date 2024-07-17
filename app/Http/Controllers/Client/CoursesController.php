@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Models\Course_subrised;
+use App\Models\Course_user;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Checkout;
@@ -25,27 +25,31 @@ class CoursesController extends Controller
     public function list(Request $request)
     {
         $query = $request->input('query');
-
         $data = Course::orderBy('id', 'desc')->with('mentor'); // Load thông tin của mentor
-
         if ($query) {
             $data->where('name', 'LIKE', "%$query%");
         }
-
         $data = $data->get();
-
         $categories = Course_category::all();
-        
         return view('client.courses.courses-list', compact('data', 'query', 'categories'));
     }
-    public function myCourse(Request $request)
-    {
-        $data = Course_subrised::orderBy('id', 'desc');
-
-        $data = $data->get();
-        
-        return view('client.courses.my-course', compact('data'));
-    }
+    public function myCourse($id)
+{
+    $user = DB::table('users')
+        ->select('id', 'thumbnail', 'name')
+        ->where('id', $id)
+        ->first();
+    $myCourses = Course_user::where('user_id', $id)
+        ->with(['course' => function($query) {
+            $query->select('id', 'thumbnail', 'name', 'description', 'mentor_id')
+                  ->with(['mentor' => function($query) {
+                      $query->select('id', 'user_id')
+                            ->with('user:id,thumbnail,name');
+                  }]);
+        }])
+        ->get();
+    return view('client.courses.my-course', compact('myCourses', 'user'));
+}
     public function lesson($id)
     {
         $data = DB::table('courses')
@@ -249,28 +253,33 @@ class CoursesController extends Controller
     {
         // Validate request data
         $request->validate([
-            'name' => 'required|string|max:255',
-            'video' => 'required|file|mimes:mp4,mov,avi,wmv|max:204800', // max 200MB
-            'chapter_id' => 'required|exists:chapters,id',
+            'lessons.*.name' => 'required|string|max:255',
+            'lessons.*.video' => 'required|file|mimes:mp4,mov,avi,wmv|max:204800', // max 200MB
+            'lessons.*.chapter_id' => 'required|exists:chapters,id',
         ]);
-
-        // Lưu video vào storage
-        if ($request->hasFile('video')) {
-            $video = $request->file('video');
-            $videoName = $video->getClientOriginalName();
-            $video->storeAs('public/assets-client/Videos/Lessons', $videoName); // Lưu vào thư mục storage/app/public/assets-client/videos
-        } else {
-            // Xử lí nếu không có file được tải lên
-            return redirect()->back()->with('error', 'Vui lòng chọn video để tải lên.');
+    
+        $lessons = $request->input('lessons');
+        
+        if (empty($lessons)) {
+            return redirect()->back()->with('error', 'Vui lòng thêm ít nhất một bài học.');
         }
-
-        // Tạo mới bài học
-        $lesson = new Lesson();
-        $lesson->name = $request->input('name');
-        $lesson->path_video = $videoName;
-        $lesson->chapter_id = $request->input('chapter_id');
-        $lesson->save();
-
+    
+        foreach ($lessons as $index => $lessonData) {
+            if ($request->hasFile("lessons.{$index}.video")) {
+                $video = $request->file("lessons.{$index}.video");
+                $videoName = $video->getClientOriginalName();
+                $video->storeAs('public/assets-client/videos/Lessons', $videoName);
+    
+                $lesson = new Lesson();
+                $lesson->name = $lessonData['name'];
+                $lesson->path_video = $videoName;
+                $lesson->chapter_id = $lessonData['chapter_id'];
+                $lesson->save();
+            } else {
+                return redirect()->back()->with('error', 'Vui lòng chọn video để tải lên cho bài học ' . ($index + 1));
+            }
+        }
+    
         return redirect()->back()->with('success', 'Đã thêm bài học thành công.');
     }
 

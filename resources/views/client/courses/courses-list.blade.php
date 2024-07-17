@@ -69,8 +69,8 @@
                                         </h2>
                                         <div class="all-btn all-category d-flex align-items-center">
                                             <div class="all-btn all-category d-flex align-items-center">
-                                                <a href="{{ route('client.lesson', $item->id) }}"
-                                                    class="btn btn-primary">Học</a>
+                                                <a href="{{ route('client.course-checkout', $item->id) }}"
+                                                    class="btn btn-primary">Đăng Ký Ngay</a>
                                             </div>
                                         </div>
                                     </div>

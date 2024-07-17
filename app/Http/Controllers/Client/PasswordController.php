@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -16,6 +17,7 @@ class PasswordController extends Controller
     {
         return view('client.auth.password.enter-email');
     }
+    
     public function handleEnterEmail(Request $request)
     {
         $request_mail = $request->email;
@@ -58,7 +60,7 @@ class PasswordController extends Controller
     {
         return view('client.auth.password.new-password', ['id_token' => $request->token_id]);
     }
-
+  
     //Hàm xử lý đổi mật khẩu khi nhập đúng mã xác nhận(send code)
     public function handleNewPassword(Request $request)
     {
@@ -89,4 +91,43 @@ class PasswordController extends Controller
             return redirect()->route('login')->with('success', 'Đổi mật khẩu thành công');
         }
     }
+    public function resetpassword()
+{
+    return view('client.auth.reset-password.reset');
+}
+
+public function handleResetpassword(Request $request)
+{
+    $user = Auth::user();
+
+   
+    $validator = Validator::make($request->all(), [
+        'password' => 'required',
+        'newPassword' => 'required|min:6',
+        'confirmPassword' => 'required|same:newPassword',
+    ],
+    [
+        'password.required' => 'Mật khẩu cũ không được để trống',
+        'newPassword.required' => 'Mật khẩu mới không được để trống',
+        'newPassword.min' => 'Mật khẩu mới phải có ít nhất 6 ký tự',
+        'confirmPassword.required' => 'Xác nhận mật khẩu không được để trống',
+        'confirmPassword.same' => 'Mật khẩu xác nhận không trùng khớp',
+    ]);
+
+    if ($validator->fails()) {
+        return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+    }
+
+    if (Hash::check($request->password, $user->password)) {
+        $user->password = Hash::make($request->newPassword);
+        $user->save();
+
+        return redirect()->route('Dashboard-client')->withSuccess( 'Đổi mật khẩu thành công');
+    } else {
+        return redirect()->back()->with('error', 'Mật khẩu cũ không đúng. <a href="'.route('enter-email').'" style="color: blue;">Quên mật khẩu?</a>')->withInput();
+    }
+}
+
 }

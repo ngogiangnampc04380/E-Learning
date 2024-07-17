@@ -127,6 +127,10 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::post("/checkout", [CheckoutController::class, "online_pay"])->name('checkout');
 
     Route::get("/thank", [CheckoutController::class, "thank"])->name("thank");
+    // -------------------------------resetPassword------------------------------
+    
+    Route::get("/reset-password", [PasswordController::class, "resetpassword"])->name("reset-password");
+    Route::post('/reset-password', [PasswordController::class, 'handleResetpassword']);
 
     // -----------------------Mentor-------------------------
     // -----------------------Post-------------------------

@@ -1,5 +1,6 @@
 @extends('client.layout.authMaster')
 @section('content')
+
 <div class="row">
     <div class="col-md-6 login-bg">
         <div class="login-wrapper">
@@ -112,34 +113,57 @@
                 {{-- <p>You might to reset your password to protect your account</p> --}}
             </div>
             <form action="{{ route('new-password') }}" method="POST">
-                @csrf
-                <div class="form-group">
-                    <label class="form-control-label">Mật khẩu mới</label>
-                    <input type="password" class="form-control" placeholder="nhập mật khẩu mới" name="newPassword">
-                    <input type="hidden"  name="id_token" value="{{ $id_token }}">
-                    @error('newPassword')
-                    <small class="text-danger">
-                        {{ $errors->first('newPassword') }}
-                    </small>
-                @enderror
-                </div>
-              
-                <div class="form-group">
-                    <label class="form-control-label">Lặp lại mật khẩu mới</label>
-                    <input type="password" class="form-control" placeholder="nhập lại mật khẩu mới"
-                        name="confirmPassword">
-                        @error('confirmPassword')
-                        <small class="text-danger">
-                            {{ $errors->first('confirmPassword') }}
-                        </small>
-                    @enderror
-                </div>
-              
-                <div class="d-grid">
-                    <button class="btn btn-start" type="submit">Submit</button>
-                </div>
-            </form>
+    @csrf
+    <div class="form-group">
+        <label class="form-control-label">Mật khẩu mới</label>
+        <div class="pass-group">
+            <input type="password" name="newPassword" id="newPassword" class="form-control pass-input"
+                   placeholder="Nhập mật khẩu mới">
+            <span class="feather-eye toggle-password" onclick="togglePassword('newPassword')"></span>
+        </div>
+        @error('newPassword')
+        <small class="text-danger">
+            {{ $errors->first('newPassword') }}
+        </small>
+        @enderror
+    </div>
+
+    <div class="form-group">
+        <label class="form-control-label">Lặp lại mật khẩu mới</label>
+        <div class="pass-group">
+            <input type="password" class="form-control" id="confirmPassword" placeholder="Nhập lại mật khẩu mới"
+                   name="confirmPassword">
+            <span class="feather-eye toggle-password" onclick="togglePassword('confirmPassword')"></span>
+        </div>
+        @error('confirmPassword')
+        <small class="text-danger">
+            {{ $errors->first('confirmPassword') }}
+        </small>
+        @enderror
+    </div>
+
+    <div class="d-grid">
+        <button class="btn btn-start" type="submit">Submit</button>
+    </div>
+</form>
         </div>
     </div>
 </div>
+<script>
+    function togglePassword(inputId) {
+        var passwordInput = document.getElementById(inputId);
+        var eyeIcon = passwordInput.nextElementSibling;
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.classList.remove('feather-eye');
+            eyeIcon.classList.add('feather-eye-off');
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.classList.remove('feather-eye-off');
+            eyeIcon.classList.add('feather-eye');
+        }
+    }
+</script>
+
 @endsection

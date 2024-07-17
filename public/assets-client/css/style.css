@@ -11614,7 +11614,7 @@ textarea:focus {
     right: 17px;
     top: 50%;
     transform: translateY(-50%);
-    color: #cccccc;
+    color: #000000;
 	cursor: pointer;
 }
 .remember-me .form-check-input {
@@ -25754,6 +25754,25 @@ input[type=password]::-ms-clear
 }
 .btn-group-equal > * {
     margin-left: 5px; /* Adjust the margin as needed */
+}
+
+.feather-eye, .feather-eye-off {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: #000;
+}
+
+.feather-eye::before {
+    
+    font-family: 'Feather';
+}
+
+.feather-eye-off::before {
+    
+    font-family: 'Feather';
 }
 
 

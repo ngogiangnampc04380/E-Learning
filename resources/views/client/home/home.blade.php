@@ -1,5 +1,8 @@
 @extends('client.layout.master')
 @section('content')
+@if ($message = Session::get('success'))
+@include('components.message', ['message' => $message, 'type' => 'success'])
+@endif
 
     <section class="home-three-slide d-flex align-items-center">
 

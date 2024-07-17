@@ -148,9 +148,9 @@
                         <div class="form-group">
                             <label class="form-control-label">Mật Khẩu</label>
                             <div class="pass-group" id="passwordInput">
-                                <input type="password" name="password" class="form-control pass-input"
+                                <input type="password" name="password" id="password" class="form-control pass-input"
                                     placeholder="Nhập mật khẩu của bạn" oninput="enter_data()">
-                                <span class="toggle-password feather-eye"></span>
+                                    <span class="feather-eye toggle-password" onclick="togglePassword('password')"></span>
                                 <span class="pass-checked"><i class="feather-check"></i></span>
                             </div>
                             <div class="password-strength" id="passwordStrength">
@@ -168,28 +168,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-check remember-me">
-                            <label class="form-check-label mb-0 d-flex align-items-center">
-                                <input class="form-check-input me-2" onchange="enter_data()" id="remember"
-                                    type="checkbox" name="remember" />
-                                <span>I agree to the terms</span>
-                                <button type="button" class="btn btn-transparent text-danger" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal">
-                                    service
-                                </button>
-
-                                <span>and </span>
-                                <button type="button" class="btn btn-transparent text-danger" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal2">
-                                    privacy police
-                                </button>
-                                <div class="error_message">
-                                    @error('remember')
-                                        <span style="color: red;font-weight:lighter"></span>
-                                        <br>
-                                    @enderror
-                                </div>
-                        </div>
+                        
                         <div class="d-grid">
                             <button class="btn btn-primary btn-start" id="registerButton" 
                                 type="submit">Đăng ký</button>
@@ -249,13 +228,29 @@
 
                     let check_ = true
                     for (let i = 0; i < inputs_length; i++) {
-                        if (inputs[i].value.length < 5 || !accept_term_checkbox.checked) {
+                        if (inputs[i].value.length < 5 ) {
                             btn_login.setAttribute('disabled', true);
                             return;
                         }
                     }
                     if (check_) btn_login.removeAttribute('disabled');
 
+                }
+            </script>
+            <script>
+                function togglePassword(inputId) {
+                    var passwordInput = document.getElementById(inputId);
+                    var eyeIcon = passwordInput.nextElementSibling;
+            
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        eyeIcon.classList.remove('feather-eye');
+                        eyeIcon.classList.add('feather-eye-off');
+                    } else {
+                        passwordInput.type = 'password';
+                        eyeIcon.classList.remove('feather-eye-off');
+                        eyeIcon.classList.add('feather-eye');
+                    }
                 }
             </script>
         @endsection

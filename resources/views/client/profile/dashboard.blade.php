@@ -1,9 +1,6 @@
 @extends('client.layout.master')
 @section('content')
-<div class="breadcrumb-bar">
-    <div class="container">
-    </div>
-</div>
+
     <div class="page-content instructor-page-content">
         <div class="container">
             <div class="row">
@@ -101,6 +98,11 @@
             </a>
         </li>
         @endif
+        <li class="nav-item">
+            <a href="{{ route('client.reset-password') }}" class="nav-link">
+                <i class="feather-log-out"></i> Đổi mật Khẩu
+            </a>
+        </li>
         <li class="nav-item">
             <a href="{{ route('logout') }}" class="nav-link">
                 <i class="feather-log-out"></i> Đăng xuất

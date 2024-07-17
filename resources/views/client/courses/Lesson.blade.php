@@ -68,7 +68,7 @@
                             <h2 id="lesson-title">Bài 1: Từ vựng</h2>
                             <div class="ratio ratio-16x9">
                                 <video id="lesson-video" controls> 
-                                    <source src="{{ Storage::url('assets-client/video/Lessons/' . $firstLessonVideo )}}" type="video/mp4">
+                                    <source src="{{ Storage::url('public/assets-client/Videos/Lessons/'. $firstLessonVideo )}}" type="video/mp4">
                                 </video>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
                                                 @if(isset($chapterLessons[$item->chapterID]))
                                                     @foreach ($chapterLessons[$item->chapterID] as $lesson)
                                                         <li class="list-group-item">
-                                                            <a href="#" class="lesson-link" data-video="{{ asset('assets-client/Videos/Lessons/' .$lesson->lessonvideo) }}" data-title="{{ $lesson->lessonname }}">
+                                                            <a href="#" class="lesson-link" data-video="{{ Storage::url('public/assets-client/Videos/Lessons/'. $lesson->lessonvideo) }}" data-title="{{ $lesson->lessonname }}">
                                                                 {{ $lesson->lessonname }}
                                                             </a>
                                                         </li>

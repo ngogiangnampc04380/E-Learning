@@ -135,7 +135,7 @@
                         <div class="pass-group">
                             <input type="password" name="password" id="password" class="form-control pass-input"
                                 placeholder="Nhập mật khẩu của bạn" oninput="enter_data()">
-                            <span class="feather-eye toggle-password"></span>
+                                <span class="feather-eye toggle-password" onclick="togglePassword('password')"></span>
                             <div class="error_message">
                                 @error('password')
                                     <span style="color: red;font-weight:lighter">{{ $message }}</span>
@@ -187,5 +187,21 @@
             if (check_) btn_login.removeAttribute('disabled');
 
         }
+    </script>
+    <script>
+       function togglePassword(inputId) {
+        var passwordInput = document.getElementById(inputId);
+        var eyeIcon = passwordInput.nextElementSibling;
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.classList.remove('feather-eye');
+            eyeIcon.classList.add('feather-eye-off');
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.classList.remove('feather-eye-off');
+            eyeIcon.classList.add('feather-eye');
+        }
+    }
     </script>
 @endsection

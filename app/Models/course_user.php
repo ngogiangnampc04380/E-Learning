@@ -14,4 +14,8 @@ class Course_user extends Model
     'user_id',
 
     ];
+    public function course()
+    {
+        return $this->belongsTo(Course::class, 'course_id');
+    }
 }

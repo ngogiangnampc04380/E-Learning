@@ -266,7 +266,7 @@
                                                             <button type="button" class="btn btn-danger delete-chapter-btn " data-chapter-id="{{ $chapter->id }}">Xóa</button>
                                                         </form>
                                                         <button type="button" class="btn btn-warning ml-2 edit-chapter-btn ms-2 me-2" data-chapter-id="{{ $chapter->id }}">Sửa chương</button>
-                                                        <button type="button" class="btn btn-primary ml-2 toggle-lesson-form ms-2 me-2" data-chapter-id="{{ $chapter->id }}">Thêm bài học</button>
+                                                        <button type="button" class="btn btn-primary ml-2 toggle-lesson-form ms-2 me-2" data-chapter-id="{{ $chapter->id }}">bài học</button>
                                                         <button type="button" class="btn btn-info ml-2 toggle-lesson-list" data-chapter-id="{{ $chapter->id }}">Ẩn bài học</button>
                                                         
                                                     </div>
@@ -305,20 +305,12 @@
                                                         
                                                     </div>
                                                     <div class="add-lesson-form mt-2" data-chapter-id="{{ $chapter->id }}" style="display: none;">
-                                                        <form action="{{ route('client.addLesson') }}" method="POST" class="lesson-form" enctype="multipart/form-data">
-                                                            @csrf
-                                                            <input type="hidden" name="chapter_id" value="{{ $chapter->id }}">
-                                                            
-                                                            <div class="form-group">
-                                                                <label for="lesson_name">Tên bài học</label>
-                                                                <input type="text" id="lesson_name" name="name" class="form-control" required>
-                                                            </div>
-                                                    
-                                                            <div class="form-group custom-file">
-                                                                <label class="custom-file-label" for="lesson_video">Chọn video bài học</label>
-                                                                <input type="file" class="custom-file-input" id="lesson_video" name="video" required accept="video/*">
-                                                            </div>
-                                                    
+                                                        <button type="button" class="btn btn-primary ml-2 toggle-lesson-form ms-2 me-2" onclick="addSection(1)">Thêm bài học</button>  
+                                                        <form action="{{ route('client.addLesson') }}" method="POST" class="lesson-form" enctype="multipart/form-data"> 
+                                                            @csrf                                                      
+                                                            <div class="chapter_videos">
+
+                                                            </div>                                                          
                                                             <button type="submit" class="btn btn-success">Lưu bài học</button>
                                                         </form>
                                                     </div>
@@ -484,7 +476,7 @@
                 const chapterId = this.getAttribute('data-chapter-id');
                 const addLessonForm = document.querySelector(`.add-lesson-form[data-chapter-id="${chapterId}"]`);
                 addLessonForm.style.display = addLessonForm.style.display === 'none' ? 'block' : 'none';
-                this.innerText = addLessonForm.style.display === 'none' ? 'Thêm bài học' : 'Ẩn';
+                this.innerText = addLessonForm.style.display === 'none' ? 'bài học' : 'Ẩn';
             });
         });
     });
@@ -575,6 +567,40 @@
             editForm.style.display = 'none';
         });
     });
+
+
+    var index = 0;
+
+function addSection(count) {
+    for (var i = 0; i < count; i++) {
+        document.querySelector('.chapter_videos').innerHTML += `
+        <div class="curriculum-grid mt-4 chapter_video chapter_${index}">
+            <input type="hidden" name="lessons[${index}][chapter_id]" value="{{$chapter->id}}">
+            <div class="form-group">
+                <label for="lesson_name_${index}">Tên bài học</label>
+                <input type="text" id="lesson_name_${index}" name="lessons[${index}][name]" class="form-control" required>
+            </div>
+            <div class="form-group custom-file">
+                <label class="custom-file-label" for="lesson_video_${index}">Chọn video bài học</label>
+                <input type="file" class="custom-file-input" id="lesson_video_${index}" name="lessons[${index}][video]" required accept="video/*">
+            </div>
+            <a href="javascript:void(0);" class="btn text-white border-0" style="background:#ff4667" onclick="removeSection('chapter_${index}')">xóa</a>
+        </div>
+        `;
+        index++;
+    }
+    var el = document.querySelector(`.chapter_${index - 1}`);
+    if (el) {
+        el.scrollIntoView(true);
+    }
+}
+
+function removeSection(sectionClass) {
+    var section = document.querySelector(`.${sectionClass}`);
+    if (section) {
+        section.remove();
+    }
+}
 
 </script>
 @endsection

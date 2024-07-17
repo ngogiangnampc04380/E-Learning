@@ -129,7 +129,7 @@ class CheckoutController extends Controller
             
         ]);
 
-        dd(session());
+        // dd(session());
 
 
         if (isset($_GET['partnerCode']) && $_GET['message'] == "Successful." &&  $orderid == null) {
