@@ -135,13 +135,13 @@
                                         <tr>
                                             <td>
                                                 <a href="#">
-                                                    <img src="{{ Storage::url('public/assets-client/img/Courses/'.$course->thumbnail) }}" alt="Thumbnail" class="img-fluid" style="max-width: 100px;">
+                                                    <img src="{{ Storage::url('assets-client/img/Courses/'.$course->thumbnail) }}" alt="Thumbnail" class="img-fluid" style="max-width: 100px;">
                                                 </a>
                                             </td>
                                             <td>
                                                 @if($course->video_demo)
                                                     <video controls class="img-fluid" style="max-width: 150px;">
-                                                        <source src="{{ Storage::url('public/assets-client/videos/Courses/'.$course->video_demo) }}" type="video/mp4">
+                                                        <source src="{{ Storage::url('assets-client/videos/Courses/'.$course->video_demo) }}" type="video/mp4">
                                                         Trình duyệt của bạn không hỗ trợ thẻ video.
                                                     </video>
                                                 @else
@@ -277,7 +277,7 @@
                                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                                 <span>{{ $lesson->name }}</span>
                                                                 <div>
-                                                                    <a href="{{ asset('public/assets-client/Videos/Lessons/' . $lesson->path_video) }}" target="_blank" class="btn btn-sm btn-primary mr-2">Xem video</a>
+                                                                    <a href="{{ asset('storage/assets-client/Videos/Lessons/' . $lesson->path_video) }}" target="_blank" class="btn btn-sm btn-primary mr-2">Xem video</a>
                                                                     <button type="button" class="btn btn-sm btn-warning edit-lesson-btn" data-lesson-id="{{ $lesson->id }}">Sửa</button>
                                                                     <button type="button" class="btn btn-sm btn-danger delete-lesson-btn" data-lesson-id="{{ $lesson->id }}">Xóa</button>
                                                                     

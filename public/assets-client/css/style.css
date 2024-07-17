@@ -735,7 +735,7 @@ button.bg-danger:hover {
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 3px;
     box-shadow: inherit;
-	font-size: 14px;
+	font-size: 15px;
     transform-origin: left top 0;
 }
 .dropdown-item.active, .dropdown-item:active {

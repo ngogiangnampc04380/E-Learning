@@ -3895,9 +3895,9 @@ fieldset:disabled .btn {
 
 .dropdown-menu {
     --bs-dropdown-zindex: 1000;
-    --bs-dropdown-min-width: 11rem;
-    --bs-dropdown-padding-x: 0;
-    --bs-dropdown-padding-y: 0.5rem;
+    --bs-dropdown-min-width: 12rem;
+    --bs-dropdown-padding-x: 0rem;
+    --bs-dropdown-padding-y: 1rem;
     --bs-dropdown-spacer: 0.125rem;
     --bs-dropdown-font-size: 1rem;
     --bs-dropdown-color: var(--bs-body-color);
@@ -3916,7 +3916,7 @@ fieldset:disabled .btn {
     --bs-dropdown-link-active-bg: #0d6efd;
     --bs-dropdown-link-disabled-color: var(--bs-tertiary-color);
     --bs-dropdown-item-padding-x: 0.5rem;
-    --bs-dropdown-item-padding-y: 0.25rem;
+    --bs-dropdown-item-padding-y: 0.5rem;
     --bs-dropdown-header-color: #6c757d;
     --bs-dropdown-header-padding-x: 1rem;
     --bs-dropdown-header-padding-y: 0.5rem;
