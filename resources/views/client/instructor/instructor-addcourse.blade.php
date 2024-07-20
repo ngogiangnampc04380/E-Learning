@@ -13,7 +13,7 @@
                                 @elseif(auth()->user()->role == 1)
                                     <h5 class="text-muted mb-0">ADMIN</h5>
                                 @elseif(auth()->user()->role == 2)
-                                    <h5 class="text-muted mb-0">Mentor</h5>
+                                    <h5 class="text-muted mb-0">Quảng trị viên</h5>
                                 @endif
                                 <img src="/assets-client/img/instructor-profile-bg.jpg" alt="">
                                 <div class="profile-img">
@@ -29,9 +29,9 @@
                                     @if (auth()->user()->role == 0)
                                         <p class="text-muted mb-0">Học viên</p>
                                     @elseif(auth()->user()->role == 1)
-                                        <p class="text-muted mb-0">ADMIN</p>
+                                        <p class="text-muted mb-0">Quản trị viên</p>
                                     @elseif(auth()->user()->role == 2)
-                                        <p class="text-muted mb-0">Mentor</p>
+                                        <p class="text-muted mb-0">GIảng viên</p>
                                     @endif
                                 </div>
                                 @if (auth()->user()->role == 2)
@@ -49,7 +49,7 @@
                         <ul>
                             <li class="nav-item {{ request()->routeIs('client.dashboard-profile') ? 'active' : '' }}">
                                 <a href="{{ route('client.dashboard-profile') }}" class="nav-link">
-                                    <i class="feather-home"></i> My Dashboard
+                                    <i class="feather-home"></i> Dữ liệu và thống kê
                                 </a>
                             </li>
                             @if (in_array(auth()->user()->role, [0, 2]))
@@ -82,7 +82,7 @@
                                 </li>
                             @endif
                             <div class="instructor-title">
-                                <h3>ACCOUNT SETTINGS</h3>
+                                <h3>Cài đặt tài khoản</h3>
                             </div>
                             <li class="nav-item {{ request()->routeIs('client.user-profile') ? 'active' : '' }}">
                                 <a href="{{ route('client.user-profile') }}" class="nav-link">
@@ -134,90 +134,56 @@
                                                     <div class="card">
                                                         <div class="widget-set">
                                                             <div class="widget-content multistep-form">
-                                                                <form id="multiStepForm"
-                                                                    action="{{ route('client.saveCourse') }}"
-                                                                    method="post" enctype="multipart/form-data">
+                                                                <form id="multiStepForm" action="{{ route('client.saveCourse') }}" method="post" enctype="multipart/form-data">
                                                                     @csrf
                                                                     <div class="add-course-info">
                                                                         <div class="add-course-form">
                                                                             <div class="form-group mt-3">
-                                                                                <label for="course_name">Tên khóa
-                                                                                    học</label>
-                                                                                <input type="text" id="course_name"
-                                                                                    name="course_name" class="form-control">
-                                                                                <!-- Thêm thẻ span để hiển thị thông báo lỗi -->
-                                                                                <span id="course_name_error"
-                                                                                    class="error-message"
-                                                                                    style="display: none; color:red">Vui
-                                                                                    lòng nhập tên khóa học</span>
+                                                                                <label for="course_name">Tên khóa học <span class="required-indicator">*</span></label>
+                                                                                <input type="text" id="course_name" name="course_name" class="form-control">
+                                                                                <span id="course_name_error" class="text-danger"></span>
                                                                             </div>
                                                                             <div class="form-group mt-3">
-                                                                                <label for="description">Mô tả khóa
-                                                                                    học</label>
+                                                                                <label for="description">Mô tả khóa học</label>
                                                                                 <textarea id="description" name="description" class="form-control" rows="2"></textarea>
-                                                                                <span id="description_error"
-                                                                                    class="error-message"
-                                                                                    style="display: none; color:red">Vui
-                                                                                    lòng nhập mô tả khóa học</span>
+                                                                                <span id="description_error" class="text-danger"></span>
                                                                             </div>
                                                                             <div class="form-group mt-3">
-                                                                                <label for="thumbnail">Hình ảnh</label>
-                                                                                <input type="file" id="thumbnail"
-                                                                                    name="thumbnail" class="form-control">
-                                                                                <span id="thumbnail_error"
-                                                                                    class="error-message"
-                                                                                    style="display: none; color:red">Vui
-                                                                                    lòng chọn hình ảnh</span>
+                                                                                <label for="thumbnail">Hình ảnh <span class="required-indicator">*</span></label>
+                                                                                <input type="file" id="thumbnail" name="thumbnail" class="form-control">
+                                                                                <span id="thumbnail_error" class="text-danger"></span>
                                                                             </div>
                                                                             <div class="form-group mt-3">
                                                                                 <label for="video_demo">Video demo khóa học</label>
-                                                                                <input type="file" id="video_demo"
-                                                                                    name="video_demo" class="form-control">
-                                                                                <span id="video_demo_error"
-                                                                                    class="error-message"
-                                                                                    style="display: none; color:red">Vui
-                                                                                    lòng chọn video</span>
+                                                                                <input type="file" id="video_demo" name="video_demo" class="form-control">
+                                                                                <span id="video_demo_error" class="text-danger"></span>
                                                                             </div>
                                                                             <div class="form-group mt-3">
-                                                                                <label for="price">Giá</label>
-                                                                                <input type="number" id="price"
-                                                                                    name="price" class="form-control"
-                                                                                    min="0">
-                                                                                <span id="price_error"
-                                                                                    class="error-message"
-                                                                                    style="display: none; color:red">Vui
-                                                                                    lòng nhập giá</span>
+                                                                                <label for="price">Giá tiền <span class="required-indicator">*</span></label>
+                                                                                <div class="input-group">
+                                                                                    <input type="number" id="price" name="price" class="form-control" min="0">
+                                                                                    <div class="input-group-append">
+                                                                                        <span class="input-group-text">VNĐ</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <span id="price_error" class="text-danger"></span>
                                                                             </div>
                                                                             <div class="form-group mt-3">
-                                                                                <label for="category_id">Danh mục khóa
-                                                                                    học</label><br>
-                                                                                <select id="category_id"
-                                                                                    name="category_id"
-                                                                                    class="form-control">
-                                                                                    <option value="">Chọn danh mục
-                                                                                    </option>
+                                                                                <label for="category_id">Danh mục khóa học <span class="required-indicator">*</span></label><br>
+                                                                                <select id="category_id" name="category_id" class="form-control">
+                                                                                    <option value="">Chọn danh mục</option>
                                                                                     @foreach ($getCategorie as $Categorie)
-                                                                                        <option
-                                                                                            value="{{ $Categorie->id }}">
-                                                                                            {{ $Categorie->name }}</option>
+                                                                                        <option value="{{ $Categorie->id }}">{{ $Categorie->name }}</option>
                                                                                     @endforeach
                                                                                 </select>
-                                                                                <span id="price_error"
-                                                                                    class="error-message"
-                                                                                    style="display: none; color:red">Vui
-                                                                                    lòng chọn danh mục khóa học</span>
+                                                                                <span id="category_id_error" class="text-danger"></span>
                                                                             </div>
                                                                             <!-- Các trường nhập khác -->
                                                                             <div class="widget-btn">
-                                                                                <a
-                                                                                    href="{{ route('client.instructor-course', auth()->user()->id) }}">
-                                                                                    <button type="button"
-                                                                                        class="btn btn-info-light prev">Quay
-                                                                                        lại</button>
+                                                                                <a href="{{ route('client.instructor-course', auth()->user()->id) }}">
+                                                                                    <button type="button" class="btn btn-info-light prev">Quay lại</button>
                                                                                 </a>
-                                                                                <button type="submit"
-                                                                                    class="btn btn-info-light next">Tiếp
-                                                                                    theo</button>
+                                                                                <button type="button" class="btn btn-info-light next" onclick="saveCourse()">Tiếp theo</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -239,4 +205,38 @@
             </div>
         </div>
     </div>
+    <script>
+        function saveCourse() {
+            var formData = new FormData(document.getElementById('multiStepForm'));
+    
+            $.ajax({
+                url: '{{ route("client.saveCourse") }}',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                window.location.href = response.redirect_url;
+            },
+                error: function(xhr) {
+                    var errors = xhr.responseJSON.errors;
+                    if (errors) {
+                        $('#course_name_error').text(errors.course_name ? errors.course_name[0] : '');
+                        $('#description_error').text(errors.description ? errors.description[0] : '');
+                        $('#thumbnail_error').text(errors.thumbnail ? errors.thumbnail[0] : '');
+                        $('#video_demo_error').text(errors.video_demo ? errors.video_demo[0] : '');
+                        $('#price_error').text(errors.price ? errors.price[0] : '');
+                        $('#category_id_error').text(errors.category_id ? errors.category_id[0] : '');
+    
+                        // Scroll đến lỗi đầu tiên
+                        var firstErrorElement = $('.text-danger').filter(':first');
+                        $('html, body').animate({
+                            scrollTop: firstErrorElement.offset().top - 300 // Offset cho thanh header, margin, etc.
+                        }, 500);
+                    }
+                }
+            });
+        }
+    </script>
+    
 @endsection

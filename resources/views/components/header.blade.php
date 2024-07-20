@@ -11,6 +11,7 @@
 
     <link rel="shortcut icon" type="image/x-icon" href="/assets-client/img/logo.png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="/assets-client/css/bootstrap.min.css">
 
@@ -953,13 +954,13 @@
                                         <p class="text-muted  m-0 text-center">
                                             {{auth()->user()->name}}
                                             <br> 
-                                            ADMIN
+                                            Quảng trị viên
                                         </p>
                                         @elseif(auth()->user()->role == 2)
                                         <p class="text-muted mb-0 text-center">
                                             {{auth()->user()->name}}
                                             <br>
-                                            Mentor
+                                            Giảng viên
                                         </p>
                                         @endif
 
@@ -970,7 +971,7 @@
                                         <a class="dropdown-item" href="{{ route('mentor-register') }}"><i
                                             class="feather-user me-1"></i>
                                        
-                                            <span class="d-inline-block">Mentor</span><sup
+                                            <span class="d-inline-block">Giảng viên</span><sup
                                                 class="badge badge-info">Đăng ký</sup>
                                         
                                         </a>
@@ -979,11 +980,11 @@
                                             <i class="feather-star me-1"></i> Giới thiệu
                                         </a>
                                     <a class="dropdown-item" href="{{ route('client.dashboard-profile') }}">
-                                        <i class="feather-star me-1"></i> Thông tin mentor
+                                        <i class="feather-star me-1"></i> Thông tin Giảng viên
                                     </a>
                                     @elseif(auth()->user()->role== 1)
                                     <a class="dropdown-item" href="{{ route('client.dashboard-profile') }}">
-                                        <i class="feather-star me-1"></i> Thông tin ADMIN
+                                        <i class="feather-star me-1"></i> Thông tin QTV
                                     </a>
 
                                     <a class="dropdown-item" href="/admin">

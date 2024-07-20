@@ -58,14 +58,96 @@
         .input-block {
             margin-bottom: 20px;
         }
+        body {
+            background: #f8f9fa;
+            font-family: 'Roboto', sans-serif;
+        }
+        .student-widget {
+            background: linear-gradient(135deg, #ffffff, #f1f3f4);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .lesson-group {
+            background: linear-gradient(135deg, #e3f2fd, #ffffff);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+        .accordion-button {
+            font-weight: bold;
+            color: #0056b3;
+            background-color: #e3f2fd;
+            border: none;
+            border-radius: 10px;
+            margin-bottom: 5px;
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+        }
+        .accordion-button:not(.collapsed) {
+            color: #ffffff;
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .accordion-button:hover {
+            color: #ffffff;
+            background-color: #007bff;
+        }
+        .lesson-list a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 14px;
+            transition: color 0.3s, font-weight 0.3s;
+        }
+        
+        .lesson-list a:hover {
+            text-decoration: none;
+            color: #0056b3;
+            font-weight: bold;
+        }
+        .ratio-16x9 {
+            position: relative;
+            width: 100%;
+            
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+        .ratio-16x9 video {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+        }
+        h2 {
+            font-size: 26px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        .list-group-item {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            margin-bottom: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .list-group-item:hover {
+            background-color: #e3f2fd;
+            transform: translateY(-3px);
+        }
+        
     </style>
     <section class="page-content course-sec course-lesson">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 mb-4">
+                <div class="col-lg-9 mb-4">
                     <div class="student-widget lesson-introduction">
                         <div class="lesson-widget-group">
-                            <h2 id="lesson-title">Bài 1: Từ vựng</h2>
+                            <h2 id="lesson-title"></h2>
                             <div class="ratio ratio-16x9">
                                 <video id="lesson-video" controls> 
                                     <source src="{{ $firstLessonVideo}}" type="video/mp4">
@@ -74,7 +156,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <!-- Sidebar -->
+                <div class="col-lg-3">
                     <div class="lesson-group">
                         <h2>Danh sách chương</h2>
                         @foreach ($chapters as $item)
@@ -151,5 +234,4 @@
             }
         });
         </script>
-
 @endsection

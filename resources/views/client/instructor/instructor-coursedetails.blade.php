@@ -13,7 +13,7 @@
                                 @elseif(auth()->user()->role == 1)
                                     <h5 class="text-muted mb-0">ADMIN</h5>
                                 @elseif(auth()->user()->role == 2)
-                                    <h5 class="text-muted mb-0">Mentor</h5>
+                                    <h5 class="text-muted mb-0">Quảng trị viên</h5>
                                 @endif
                                 <img src="/assets-client/img/instructor-profile-bg.jpg" alt="">
                                 <div class="profile-img">
@@ -29,9 +29,9 @@
                                     @if (auth()->user()->role == 0)
                                         <p class="text-muted mb-0">Học viên</p>
                                     @elseif(auth()->user()->role == 1)
-                                        <p class="text-muted mb-0">ADMIN</p>
+                                        <p class="text-muted mb-0">Quản trị viên</p>
                                     @elseif(auth()->user()->role == 2)
-                                        <p class="text-muted mb-0">Mentor</p>
+                                        <p class="text-muted mb-0">GIảng viên</p>
                                     @endif
                                 </div>
                                 @if (auth()->user()->role == 2)
@@ -49,7 +49,7 @@
                         <ul>
                             <li class="nav-item {{ request()->routeIs('client.dashboard-profile') ? 'active' : '' }}">
                                 <a href="{{ route('client.dashboard-profile') }}" class="nav-link">
-                                    <i class="feather-home"></i> My Dashboard
+                                    <i class="feather-home"></i> Dữ liệu và thống kê
                                 </a>
                             </li>
                             @if (in_array(auth()->user()->role, [0, 2]))
@@ -82,7 +82,7 @@
                                 </li>
                             @endif
                             <div class="instructor-title">
-                                <h3>ACCOUNT SETTINGS</h3>
+                                <h3>Cài đặt tài khoản</h3>
                             </div>
                             <li class="nav-item {{ request()->routeIs('client.user-profile') ? 'active' : '' }}">
                                 <a href="{{ route('client.user-profile') }}" class="nav-link">

@@ -65,7 +65,7 @@
                                 <div class="product-content">
                                     <div class="head-course-title">
                                         <h2 class="title"><a
-                                                href="{{ route('client.course-details', $item->id) }}">{{ $item->name }}</a>
+                                                href="{{ route('client.course-details',$item->id) }}">{{ $item->name }}</a>
                                         </h2>
                                         <div class="all-btn all-category d-flex align-items-center">
                                             <div class="all-btn all-category d-flex align-items-center">

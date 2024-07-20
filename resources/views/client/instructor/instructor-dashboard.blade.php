@@ -20,7 +20,7 @@
                                     <p>Instructor</p>
                                 </div>
                                 <div class="go-dashboard text-center">
-                                    <a href="add-course.html" class="btn btn-primary">Create New Course</a>
+                                    <a href="add-course.html" class="btn btn-primary">THÊM KHÓA HỌC MỚI</a>
                                 </div>
                             </div>
                         </div>
@@ -31,7 +31,7 @@
                             <ul>
                                 <li class="nav-item active">
                                     <a href="{{route('client.intructror-dashboard')}}" class="nav-link">
-                                        <i class="feather-home"></i> My Dashboard
+                                        <i class="feather-home"></i> Dữ liệu và thống kê
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -71,7 +71,7 @@
                                 </li>
                             </ul>
                             <div class="instructor-title">
-                                <h3>ACCOUNT SETTINGS</h3>
+                                <h3>Cài đặt tài khoản</h3>
                             </div>
                             <ul>
                                 <li class="nav-item">

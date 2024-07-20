@@ -17,87 +17,98 @@ use App\Models\Chapter;
 use App\Models\Lesson;
 use App\Models\User;
 use App\Models\Course_category;
-
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
 class CoursesController extends Controller
 {
     public function list(Request $request)
-    {
-        $query = $request->input('query');
-        $data = Course::orderBy('id', 'desc')->with('mentor'); 
-        if ($query) {
-            $data->where('name', 'LIKE', "%$query%");
-        }
-        $data = $data->get();
-        $categories = Course_category::all();
-        return view('client.courses.courses-list', compact('data', 'query', 'categories'));
+{
+    $query = $request->input('query');
+
+    // Khởi tạo truy vấn để lấy danh sách các khóa học có status bằng 2
+    $data = Course::where('status', 2)
+                ->orderBy('id', 'desc')
+                ->with('mentor'); // Load thông tin của mentor
+
+    // Nếu có tham số truy vấn, thêm điều kiện tìm kiếm theo tên khóa học
+    if ($query) {
+        $data->where('name', 'LIKE', "%$query%");
     }
+
+    // Thực hiện truy vấn và lấy danh sách khóa học
+    $data = $data->get();
+
+    // Lấy tất cả các danh mục khóa học
+    $categories = Course_category::all();
+
+    // Trả về view với dữ liệu các khóa học, truy vấn tìm kiếm và danh sách các danh mục
+    return view('client.courses.courses-list', compact('data', 'query', 'categories'));
+}
+
+
+
+
     public function myCourse($id)
-{
-    if (!auth()->check()) {
-        return redirect()->route('login');
-    }
-    $user = DB::table('users')
-        ->select('id', 'thumbnail', 'name')
-        ->where('id', $id)
-        ->first();
-    $myCourses = Course_user::where('user_id', $id)
-        ->with(['course' => function($query) {
-            $query->select('id', 'thumbnail', 'name', 'description', 'mentor_id')
-                  ->with(['mentor' => function($query) {
-                      $query->select('id', 'user_id')
-                            ->with('user:id,thumbnail,name');
-                  }]);
-        }])
-        ->get();
-    return view('client.courses.my-course', compact('myCourses', 'user'));
-}
-public function lesson($id, $lesson_id = null)
-{
-    if (!auth()->check()) {
-        return redirect()->route('login');
-    }
-    
-    $data = DB::table('courses')
-        ->select('id', 'thumbnail', 'name', 'description')
-        ->where('id', $id)
-        ->first();
-
-    if (!$data) {
-        return redirect()->back()->with('error', 'Khóa học không tồn tại.');
-    }
-
-    $chapters = DB::table('chapters')
-        ->join('lessons', 'chapters.id', '=', 'lessons.chapter_id')
-        ->where('chapters.course_id', $data->id)
-        ->select('chapters.name as chaptername', 'chapters.id as chapterID')
-        ->distinct()
-        ->get();
-    $chapterLessons = [];
-    $firstLessonVideo = null;
-
-    foreach ($chapters as $chapter) {
-        $lessons = DB::table('lessons')
-            ->where('chapter_id', $chapter->chapterID)
-            ->select('lessons.name as lessonname', 'lessons.path_video as lessonvideo', 'lessons.id as lessonID')
-            ->get();
-        $chapterLessons[$chapter->chapterID] = $lessons;
-        if (is_null($firstLessonVideo) && $lessons->isNotEmpty()) {
-            $firstLessonVideo = asset('assets-client/Videos/Lessons/' . $lessons->first()->lessonvideo);
+    {
+        if (!auth()->check()) {
+            return redirect()->route('login');
         }
-    }
-
-    $selectedLesson = null;
-    if ($lesson_id) {
-        $selectedLesson = DB::table('lessons')
-            ->where('id', $lesson_id)
+        $user = DB::table('users')
+            ->select('id', 'thumbnail', 'name')
+            ->where('id', $id)
             ->first();
+        $myCourses = Course_user::where('user_id', $id)
+            ->with(['course' => function ($query) {
+                $query->select('id', 'thumbnail', 'name', 'description', 'mentor_id')
+                    ->with(['mentor' => function ($query) {
+                        $query->select('id', 'user_id')
+                            ->with('user:id,thumbnail,name');
+                    }]);
+            }])
+            ->get();
+        return view('client.courses.my-course', compact('myCourses', 'user'));
     }
 
-    return view('client.courses.lesson', compact('data', 'chapters', 'chapterLessons', 'firstLessonVideo', 'selectedLesson'));
-}
-        
+    public function lesson($id, $lesson_id = null)
+    {
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
+        $data = DB::table('courses')
+            ->select('id', 'thumbnail', 'name', 'description')
+            ->where('id', $id)
+            ->first();
+        if (!$data) {
+            return redirect()->back()->with('error', 'Khóa học không tồn tại.');
+        }
+        $chapters = DB::table('chapters')
+            ->join('lessons', 'chapters.id', '=', 'lessons.chapter_id')
+            ->where('chapters.course_id', $data->id)
+            ->select('chapters.name as chaptername', 'chapters.id as chapterID')
+            ->distinct()
+            ->get();
+        $chapterLessons = [];
+        $firstLessonVideo = null;
+        foreach ($chapters as $chapter) {
+            $lessons = DB::table('lessons')
+                ->where('chapter_id', $chapter->chapterID)
+                ->select('lessons.name as lessonname', 'lessons.path_video as lessonvideo', 'lessons.id as lessonID')
+                ->get();
+            $chapterLessons[$chapter->chapterID] = $lessons;
+            if (is_null($firstLessonVideo) && $lessons->isNotEmpty()) {
+                $firstLessonVideo = asset('assets-client/Videos/Lessons/' . $lessons->first()->lessonvideo);
+            }
+        }
+        $selectedLesson = null;
+        if ($lesson_id) {
+            $selectedLesson = DB::table('lessons')
+                ->where('id', $lesson_id)
+                ->first();
+        }
+        return view('client.courses.lesson', compact('data', 'chapters', 'chapterLessons', 'firstLessonVideo', 'selectedLesson'));
+    }
+
     public function quiz()
     {
         return view('client.courses.quiz');
@@ -181,14 +192,44 @@ public function lesson($id, $lesson_id = null)
             ->get();
         $getChapter = DB::table('chapters')
             ->get();
-        return view('client.instructor.instructor-addcourse',
-            ['getCategorie' => $getCategorie, 'getCourse' => $getCourse, 'getChapter' => $getChapter]);
+        return view(
+            'client.instructor.instructor-addcourse',
+            ['getCategorie' => $getCategorie, 'getCourse' => $getCourse, 'getChapter' => $getChapter]
+        );
     }
 
 
     /*add khóa học*/
     public function saveCourse(Request $request)
     {
+        $request->validate([
+            'course_name' => 'required|string|max:100',
+            'description' => 'required|string|max:255',
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'video_demo' => 'nullable|mimes:mp4,avi,mov,wmv|max:20480',
+            'price' => 'required|numeric|min:10000',
+            'category_id' => 'required|exists:course_categories,id',
+        ], [
+            'course_name.required' => 'Vui lòng nhập tên khóa học.',
+            'course_name.string' => 'Tên khóa học phải là chuỗi.',
+            'course_name.max' => 'Tên khóa học không được vượt quá 100 ký tự.',
+            'description.required' => 'Vui lòng nhập mô tả khóa học.',
+            'description.string' => 'Mô tả khóa học phải là chuỗi.',
+            'description.max' => 'Tên khóa học không được vượt quá 255 ký tự.',
+
+            'thumbnail.required' => 'Vui lòng chọn hình ảnh cho khóa học.',
+            'thumbnail.image' => 'File bạn chọn không phải là hình ảnh hợp lệ.',
+            'thumbnail.mimes' => 'Hình ảnh phải có định dạng jpeg, png, jpg hoặc gif.',
+            'thumbnail.max' => 'Kích thước hình ảnh không được vượt quá 2MB.',
+            'video_demo.mimes' => 'Video demo phải có định dạng mp4, avi, mov, wmv.',
+            'video_demo.max' => 'Kích thước video demo không được vượt quá 20MB.',
+            'price.required' => 'Vui lòng nhập giá khóa học.',
+            'price.numeric' => 'Giá khóa học phải là số.',
+            'price.min' => 'Giá khóa học phải lớn hơn hoặc bằng 10.000VNĐ.',
+            'category_id.required' => 'Vui lòng chọn danh mục khóa học.',
+            'category_id.exists' => 'Danh mục khóa học bạn chọn không tồn tại.',
+        ]);
+        $course = $request->only('course_name', 'description', 'price', 'category_id');
 
         $mentorId = auth()->user()->mentor->id;
         // Xử lý lưu dữ liệu khóa học
@@ -205,23 +246,22 @@ public function lesson($id, $lesson_id = null)
             $thumbnailName = $thumbnail->getClientOriginalName();
             $thumbnail->storeAs('public/assets-client/img/Courses', $thumbnailName); // Lưu vào thư mục storage/app/public/images
             $course->thumbnail = $thumbnailName;
-
         }
         if ($request->hasFile('video_demo')) {
             $video_demo = $request->file('video_demo');
             $video_demoName = $video_demo->getClientOriginalName();
             $video_demo->storeAs('public/assets-client/videos/Courses', $video_demoName); // Lưu vào thư mục storage/app/public/images
             $course->video_demo = $video_demoName;
-
         }
         $course->save();
 
         // Lưu dữ liệu chương
+        return response()->json(['redirect_url' => route('client.editCourse', $course->id)]);
 
-        return redirect()->route('client.editCourse', $course->id)->with('success', 'Khóa học đã được tạo thành công!');
+        // return redirect()->route->with('success', 'Khóa học đã được tạo thành công!');
     }
 
-// sửa khóa học
+    // sửa khóa học
     public function editCourse($id)
     {
         $course = Course::with('chapters')->findOrFail($id);
@@ -237,20 +277,6 @@ public function lesson($id, $lesson_id = null)
 
         return redirect()->back()->with('success', 'Đã xóa chương thành công!');
     }
-
-    public function autoAddChapter($course_id)
-    {
-        $chapterCount = Chapter::where('course_id', $course_id)->count();
-
-        // Tạo chương mới với tên "Chương {số thứ tự tiếp theo}"
-        $chapter = new Chapter();
-        $chapter->name = "Chương " . ($chapterCount + 1);
-        $chapter->course_id = $course_id; // Gán id của khóa học cho chương mới
-        $chapter->save();
-
-        return redirect()->back()->with('success', 'Đã thêm chương mới tự động!');
-    }
-
     public function addChapter(Request $request, $course_id)
     {
         $chapter = new Chapter();
@@ -259,9 +285,7 @@ public function lesson($id, $lesson_id = null)
         $chapter->save();
 
         return redirect()->back()->with('success', 'Đã thêm chương mới tự động!');
-
     }
-
     public function addLesson(Request $request)
     {
         // Validate request data
@@ -270,19 +294,19 @@ public function lesson($id, $lesson_id = null)
             'lessons.*.video' => 'required|file|mimes:mp4,mov,avi,wmv|max:204800', // max 200MB
             'lessons.*.chapter_id' => 'required|exists:chapters,id',
         ]);
-    
+
         $lessons = $request->input('lessons');
-        
+
         if (empty($lessons)) {
             return redirect()->back()->with('error', 'Vui lòng thêm ít nhất một bài học.');
         }
-    
+
         foreach ($lessons as $index => $lessonData) {
             if ($request->hasFile("lessons.{$index}.video")) {
                 $video = $request->file("lessons.{$index}.video");
                 $videoName = $video->getClientOriginalName();
                 $video->storeAs('public/assets-client/videos/Lessons', $videoName);
-    
+
                 $lesson = new Lesson();
                 $lesson->name = $lessonData['name'];
                 $lesson->path_video = $videoName;
@@ -292,9 +316,10 @@ public function lesson($id, $lesson_id = null)
                 return redirect()->back()->with('error', 'Vui lòng chọn video để tải lên cho bài học ' . ($index + 1));
             }
         }
-    
+
         return redirect()->back()->with('success', 'Đã thêm bài học thành công.');
     }
+
 
     public function getLessonsByChapterId($chapterId)
     {
@@ -344,15 +369,36 @@ public function lesson($id, $lesson_id = null)
 
     public function updateCourse(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|string|max:50',
-            'description' => 'required|string',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'video_demo' => 'nullable|mimes:mp4,mov,ogg,qt|max:20000',
-            'price' => 'required|string|max:50',
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:100',
+            'description' => 'required|string|max:255',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'video_demo' => 'nullable|mimes:mp4,avi,mov,wmv|max:20480',
+            'price' => 'required|numeric|min:10000',
             'category_id' => 'required|exists:course_categories,id',
+        ], [
+            'name.required' => 'Vui lòng nhập tên khóa học.',
+            'name.string' => 'Tên khóa học phải là chuỗi.',
+            'name.max' => 'Tên khóa học không được vượt quá 100 ký tự.',
+            'description.required' => 'Vui lòng nhập mô tả khóa học.',
+            'description.string' => 'Mô tả khóa học phải là chuỗi.',
+            'description.max' => 'Mô tả khóa học không được vượt quá 255 ký tự.',
+            'thumbnail.image' => 'File bạn chọn không phải là hình ảnh hợp lệ.',
+            'thumbnail.mimes' => 'Hình ảnh phải có định dạng jpeg, png, jpg hoặc gif.',
+            'thumbnail.max' => 'Kích thước hình ảnh không được vượt quá 2MB.',
+            'video_demo.mimes' => 'Video demo phải có định dạng mp4, avi, mov, wmv.',
+            'video_demo.max' => 'Kích thước video demo không được vượt quá 20MB.',
+            'price.required' => 'Vui lòng nhập giá khóa học.',
+            'price.numeric' => 'Giá khóa học phải là số.',
+            'price.min' => 'Giá khóa học phải lớn hơn hoặc bằng 10.000VNĐ.',
+            'category_id.required' => 'Vui lòng chọn danh mục khóa học.',
+            'category_id.exists' => 'Danh mục khóa học bạn chọn không tồn tại.',
         ]);
-
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 422);
+        }
         $course = Course::findOrFail($id);
         $data = $request->only(['name', 'description', 'price', 'category_id']);
 
@@ -371,20 +417,15 @@ public function lesson($id, $lesson_id = null)
         }
 
         $course->update($data);
-
-        return redirect()->route('client.editCourse', $id)->with('success', 'Khóa học đã được cập nhật thành công!');
+        return response()->json(['redirect_url' => route('client.editCourse', $id)]);
     }
-
-
     public function deleteCourse($id)
     {
         DB::table('courses')
             ->where('id', $id)
             ->delete();
-        return redirect()->back();
-
+        return redirect()->route('client.instructor-course', ['id' => $id]);
     }
-
     public function submitCourse(Request $request, $id)
     {
         // Xử lý logic gửi duyệt khóa học ở đây
@@ -409,14 +450,13 @@ public function lesson($id, $lesson_id = null)
     }
 
 
-//    public function coursedetails()
-//    {
-//        return view('client.instructor.instructor-coursedetails');
-//    }
+    //    public function coursedetails()
+    //    {
+    //        return view('client.instructor.instructor-coursedetails');
+    //    }
 
     public function dashboard()
     {
         return view('client.instructor.instructor-dashboard');
     }
 }
-
