@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->string('content');
-            $table->unsignedBigInteger('lesson_id');
+            $table->unsignedBigInteger('course_id ');
 
-            $table->foreign('lesson_id')->references('id')->on('lessons')->constrained()->cascadeOnDelete();
+            $table->foreign('course_id ')->references('id')->on('lessons')->constrained()->cascadeOnDelete();
 
             $table->unsignedBigInteger('user_id');
 

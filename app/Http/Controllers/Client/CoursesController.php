@@ -20,6 +20,10 @@ use App\Models\Lesson;
 use App\Models\User;
 use App\Models\Course_category;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Quiz;
+use App\Models\Question;
+use App\Models\Answer;
+use App\Models\QuizResult;
 use Illuminate\Support\Facades\Auth;
 
 class CoursesController extends Controller
@@ -132,9 +136,155 @@ class CoursesController extends Controller
     }
 
 
-    public function quiz()
+
+    public function quizChapter($id)
     {
-        return view('client.courses.quiz');
+        $quiz = Quiz::findOrFail($id);
+
+        $questions = Question::with(['answers' => function ($query) {
+            $query->inRandomOrder();
+        }])->where('quiz_id', $id)->get();
+
+        return view('client.courses.quiz', compact('questions', 'quiz'));
+    }
+
+    public function submitQuiz(Request $request, $id)
+    {
+        $quiz = Quiz::findOrFail($id);
+        $questions = Question::where('quiz_id', $id)->get();
+
+        $score = 0;
+        $userAnswers = [];
+
+        foreach ($questions as $question) {
+            $correctAnswer = $question->answers()->where('is_correct', 1)->first();
+            $selectedAnswerId = $request->input('question_' . $question->id);
+
+            $userAnswers[$question->id] = $selectedAnswerId;
+
+            if ($correctAnswer && $selectedAnswerId == $correctAnswer->id) {
+                $score++;
+            }
+        }
+
+        session(['user_answers' => $userAnswers]);
+        QuizResult::create([
+            'quiz_id' => $quiz->id,
+            'user_id' => auth()->id(),
+            'score' => $score,
+            'chapter_id' => $quiz->chapter_id ?? null,
+            'course_id' => $quiz->course_id ?? null,
+        ]);
+
+        return view('client.courses.result', [
+            'id' => $id,
+            'score' => $score,
+            'quiz' => $quiz,
+            'questions' => $questions
+        ]);
+    }
+
+    public function quizResult($id, $score)
+    {
+        $quiz = Quiz::findOrFail($id);
+        $questions = Question::with('answers')->where('quiz_id', $id)->get();
+
+        $userAnswers = session()->get('user_answers', []);
+
+        return view('client.courses.quiz-result', compact('quiz', 'score', 'questions', 'userAnswers'));
+    }
+
+    public function store(Request $request)
+    {
+       
+        // Create a new quiz
+        $quiz = new Quiz();
+        $quiz->course_id = $request->course_id;
+        $quiz->chapter_id = $request->chapter_id;
+        $quiz->mentor_id = Auth::id();
+        $quiz->name = $request->title;
+        $quiz->save();
+
+        // Process questions and answers
+        foreach ($request->input('questions') as $questionData) {
+            $question = new Question();
+            $question->quiz_id = $quiz->id;
+            $question->question = $questionData['question'];
+            $question->save();
+
+            foreach ($questionData['answers'] as $answerData) {
+                $answer = new Answer();
+                $answer->question_id = $question->id;
+                $answer->answer = $answerData['answer'];
+                $answer->is_correct = $answerData['is_correct'];
+                $answer->save();
+            }
+        }
+
+        return redirect()->back()->with('success', 'Bài quiz đã được lưu thành công.');
+    }
+
+    public function show($id)
+    {
+        $quiz = Quiz::with(['course', 'chapter', 'questions.answers'])->findOrFail($id);
+
+        return view('client.courses.show', compact('quiz'));
+    }
+
+    public function editQuiz($id)
+    {
+        $quiz = Quiz::with(['questions.correctAnswer', 'questions.wrongAnswers'])->findOrFail($id);
+        return view('client.courses.edit-quiz', compact('quiz'));
+    }
+
+    public function updateQuiz(Request $request, $id)
+    {
+        $quiz = Quiz::findOrFail($id);
+        $quiz->name = $request->input('name');
+        $quiz->save();
+
+        $questionIds = [];
+        foreach ($request->input('questions') as $questionData) {
+            if (isset($questionData['id'])) {
+                $question = Question::findOrFail($questionData['id']);
+            } else {
+                $question = new Question();
+                $question->quiz_id = $quiz->id;
+            }
+
+            $question->question = $questionData['question'];
+            $question->save();
+
+            $correctAnswer = $question->correctAnswer ?? new Answer();
+            $correctAnswer->question_id = $question->id;
+            $correctAnswer->answer = $questionData['correct_answer'];
+            $correctAnswer->is_correct = true;
+            $correctAnswer->save();
+
+            // Update or create wrong answers
+            foreach ($questionData['wrong_answers'] as $index => $wrongAnswerText) {
+                $wrongAnswer = $question->wrongAnswers[$index] ?? new Answer();
+                $wrongAnswer->question_id = $question->id;
+                $wrongAnswer->answer = $wrongAnswerText;
+                $wrongAnswer->is_correct = false;
+                $wrongAnswer->save();
+            }
+
+            $questionIds[] = $question->id;
+        }
+
+        // Delete questions not in the updated list
+        $quiz->questions()->whereNotIn('id', $questionIds)->delete();
+
+        return redirect()->route('client.editCourse', ['id' => $quiz->course_id]);
+    }
+
+    public function deleteQuiz($id)
+    {
+        $quiz = Quiz::findOrFail($id);
+        $quiz->delete();
+
+        return redirect()->route('client.editCourse', ['id' => $quiz->course_id]);
     }
 
     public function checkout($id)
@@ -289,8 +439,10 @@ class CoursesController extends Controller
     {
         $course = Course::with('chapters')->findOrFail($id);
         $categories = Course_category::all();
-
-        return view('client.instructor.instructor-editCourse', compact('course', 'categories'));
+        $mentorId = auth()->user()->mentor->id;
+        $courses = Course::where('mentor_id', $mentorId)->get();
+        $chapters = Chapter::whereIn('course_id', $courses->pluck('id'))->get();
+        return view('client.instructor.instructor-editCourse', compact('course', 'courses', 'chapters', 'categories'));
     }
 
     public function deleteChapter($id)

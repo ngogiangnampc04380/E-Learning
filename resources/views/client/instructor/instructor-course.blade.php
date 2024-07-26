@@ -295,13 +295,13 @@
                                         <div class="settings-tickets-blk course-instruct-blk table-responsive rounded shadow-sm p-3 bg-white">
                                             <table class="table table-striped table-hover">
                                                 <thead class="table-primary">
-                                                    <tr>
-                                                        <th>Hình ảnh</th>
-                                                        <th>Video demo</th>
-                                                        <th>Tên khóa học</th>
-                                                        <th>Giá</th>
-                                                        <th>Hành động</th>
-                                                    </tr>
+                                                <tr>
+                                                    <th>Hình ảnh</th>
+                                                    <th>Video demo</th>
+                                                    <th>Tên khóa học</th>
+                                                    <th>Giá</th>
+                                                    <th>Hành động</th>
+                                                </tr>
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($data as $post)
@@ -393,7 +393,6 @@
                                         <button type="button" class="btn btn-info" id="confirmRecallBtn">Thu
                                             hồi</button>
                                     </div>
-                                </div>
                             </div>
                         </div>
                     </div>

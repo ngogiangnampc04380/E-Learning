@@ -60,11 +60,6 @@
                                 </li>
                             @endif
                             @if (auth()->user()->role == 2)
-                                {{-- <li class="nav-item {{ request()->routeIs('client.instructor-course') ? 'active' : '' }}">
-            <a href="{{ route('client.instructor-course') }}" class="nav-link">
-                <i class="feather-book"></i> Quản lí khóa học
-            </a>
-        </li> --}}
                                 <li class="nav-item {{ request()->is('instructor-student-grid.html') ? 'active' : '' }}">
                                     <a href="instructor-student-grid.html" class="nav-link">
                                         <i class="feather-users"></i> Quản lí học viên
@@ -111,7 +106,6 @@
                             </li>
                         </ul>
                     </div>
-
                 </div>
 
 
@@ -322,7 +316,114 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                             <button type="button"
                                                                 class="btn btn-info ml-2 toggle-lesson-list"
                                                                 data-chapter-id="{{ $chapter->id }}">Ẩn bài học</button>
+                                                            <button id="show-quiz-form"
+                                                                data-course-id="{{ $course->id }}"
+                                                                data-chapter-id="{{ $chapter->id }}"
+                                                                class="btn btn-warning ml-2 edit-chapter-btn ms-2 me-2">
+                                                                Thêm bài quiz
+                                                            </button>
+                                                            <button type="button"
+                                                                class="btn btn-info ml-2 toggle-quiz-list"
+                                                                data-chapter-id="{{ $chapter->id }}">Ẩn bài quiz
+                                                            </button>
 
+                                                        </div>
+                                                        <div id="quiz-form" style="display: none;">
+                                                            <form action="{{ route('client.courses.storequiz') }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                <input type="hidden" id="course_id" name="course_id">
+                                                                <input type="hidden" id="chapter_id" name="chapter_id">
+                                                                <div class="mb-3">
+                                                                    <label for="title" class="form-label">Tiêu đề
+                                                                        Quiz:</label>
+                                                                    <input type="text" id="title" name="title"
+                                                                        class="form-control" required>
+                                                                    @error('title')
+                                                                        <div class="text-danger">{{ $message }}</div>
+                                                                    @enderror
+                                                                </div>
+                                                                <div id="questions-container"></div>
+                                                                <div class="d-flex justify-content-between mb-4">
+                                                                    <button type="button" id="add-question1"
+                                                                        class="btn btn-primary">Thêm câu hỏi
+                                                                    </button>
+                                                                    <button type="submit" class="btn btn-primary">Lưu
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div class="quiz-list mt-2" data-chapter-id="{{ $chapter->id }}"
+                                                            style="display: block; border: 1px solid #ccc; padding: 10px;">
+                                                            <h4 style="margin-bottom: 10px;">Danh sách bài quiz</h4>
+                                                            <ul class="list-group">
+                                                                @forelse($chapter->quizzes as $quiz)
+                                                                    <li
+                                                                        class="list-group-item d-flex justify-content-between align-items-center">
+                                                                        <span>{{ $quiz->name }}</span>
+                                                                        <div class="d-inline">
+                                                                            <a href="{{ route('client.courses.show', $quiz->id) }}"
+                                                                                class="btn btn-sm btn-primary mr-2">Xem chi
+                                                                                tiết</a>
+                                                                            <a href="{{ route('client.courses.edit-quiz', $quiz->id) }}"
+                                                                                class="btn btn-sm btn-warning mr-2">Sửa</a>
+                                                                            <form
+                                                                                action="{{ route('client.courses.delete-quiz', $quiz->id) }}"
+                                                                                method="POST" class="d-inline"
+                                                                                onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button type="submit"
+                                                                                    class="btn btn-sm btn-danger">Xóa</button>
+                                                                            </form>
+                                                                            <a href="{{ route('client.courses.quiz-chapter', $quiz->id) }}"
+                                                                                class="btn btn-sm btn-success">Làm bài</a>
+                                                                        </div>
+
+                                                                    </li>
+                                                                @empty
+                                                                    <li class="list-group-item">Không có bài quiz nào.</li>
+                                                                @endforelse
+                                                            </ul>
+                                                        </div>
+
+                                                        <div class="modal fade" id="editQuizModal" tabindex="-1"
+                                                            aria-labelledby="editQuizModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <form id="editQuizForm" method="POST">
+                                                                        @csrf
+                                                                        @method('PUT')
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title"
+                                                                                id="editQuizModalLabel">
+                                                                                Sửa Quiz</h5>
+                                                                            <button type="button" class="btn-close"
+                                                                                data-bs-dismiss="modal"
+                                                                                aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="form-group">
+                                                                                <label for="quizName">Tên Quiz</label>
+                                                                                <input type="text" class="form-control"
+                                                                                    id="quizName" name="name"
+                                                                                    required>
+                                                                            </div>
+                                                                            <!-- Add other fields as necessary -->
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">Hủy
+                                                                            </button>
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary">
+                                                                                Lưu
+                                                                            </button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div class="lesson-list mt-2"
                                                             data-chapter-id="{{ $chapter->id }}"
@@ -517,8 +618,6 @@ background:    linear-gradient(#f1c232, #ffff00);">
             </div>
         </div>
     </div>
-
-    </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const editCourseBtn = document.getElementById('editCourseBtn');
@@ -616,7 +715,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                         `.add-lesson-form[data-chapter-id="${chapterId}"]`);
                     addLessonForm.style.display = addLessonForm.style.display === 'none' ? 'block' :
                         'none';
-                    this.innerText = addLessonForm.style.display === 'none' ? 'bài học' : 'Ẩn';
+                    this.innerText = addLessonForm.style.display === 'none' ? 'Thêm bài học' : 'Ẩn';
                 });
             });
         });
@@ -792,5 +891,156 @@ background:    linear-gradient(#f1c232, #ffff00);">
                 }
             });
         }
+    </script>
+    <script>
+        document.getElementById('show-quiz-form').addEventListener('click', function() {
+            var courseId = this.getAttribute('data-course-id');
+            var chapterId = this.getAttribute('data-chapter-id');
+            document.getElementById('course_id').value = courseId;
+            document.getElementById('chapter_id').value = chapterId;
+            document.getElementById('quiz-form').style.display = 'block';
+            this.style.display = 'none';
+        });
+
+        document.getElementById('add-question1').addEventListener('click', function() {
+            const questionsContainer = document.getElementById('questions-container');
+            const questionCount = questionsContainer.children.length + 1;
+
+            const questionHtml = `
+        <div class="question-block mb-3">
+            <h5>Câu hỏi ${questionCount}</h5>
+            <div class="mb-3">
+                <label for="question_${questionCount}" class="form-label">Câu hỏi:</label>
+                <input type="text" id="question_${questionCount}" name="questions[${questionCount}][question]"
+                    class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="answer_${questionCount}_0" class="form-label">Đáp án đúng:</label>
+                <input type="text" id="answer_${questionCount}_0" name="questions[${questionCount}][answers][0][answer]"
+                    class="form-control" required>
+                <input type="hidden" name="questions[${questionCount}][answers][0][is_correct]" value="1">
+            </div>
+            <div class="mb-3">
+                <label for="answer_${questionCount}_1" class="form-label">Đáp án sai:</label>
+                <input type="text" id="answer_${questionCount}_1" name="questions[${questionCount}][answers][1][answer]"
+                    class="form-control" required>
+                <input type="hidden" name="questions[${questionCount}][answers][1][is_correct]" value="0">
+            </div>
+            <div class="mb-3">
+                <label for="answer_${questionCount}_2" class="form-label">Đáp án sai:</label>
+                <input type="text" id="answer_${questionCount}_2" name="questions[${questionCount}][answers][2][answer]"
+                    class="form-control" required>
+                <input type="hidden" name="questions[${questionCount}][answers][2][is_correct]" value="0">
+            </div>
+            <div class="mb-3">
+                <label for="answer_${questionCount}_3" class="form-label">Đáp án sai:</label>
+                <input type="text" id="answer_${questionCount}_3" name="questions[${questionCount}][answers][3][answer]"
+                    class="form-control" required>
+                <input type="hidden" name="questions[${questionCount}][answers][3][is_correct]" value="0">
+            </div>
+        </div>
+        `;
+
+            questionsContainer.insertAdjacentHTML('beforeend', questionHtml);
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.toggle-quiz-list').forEach(button => {
+                button.addEventListener('click', function() {
+                    const chapterId = this.getAttribute('data-chapter-id');
+                    const quizList = document.querySelector(
+                        `.quiz-list[data-chapter-id="${chapterId}"]`);
+
+                    if (quizList) {
+                        if (quizList.style.display === 'none') {
+                            quizList.style.display = 'block';
+                            this.textContent = 'Ẩn bài quiz'; // Cập nhật nút thành 'Ẩn bài quiz'
+                        } else {
+                            quizList.style.display = 'none';
+                            this.textContent =
+                            'Hiện bài quiz'; // Cập nhật nút thành 'Hiện bài quiz'
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const editButtons = document.querySelectorAll('.edit-quiz-btn');
+            editButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const quizId = this.getAttribute('data-quiz-id');
+
+                    // Fetch quiz data using AJAX or fill the form directly if data is available in the view
+                    fetch(`/quizzes/${quizId}/edit`)
+                        .then(response => response.json())
+                        .then(data => {
+                            document.getElementById('quizName').value = data.name;
+                            // Fill other fields as necessary
+
+                            // Set form action
+                            document.getElementById('editQuizForm').action =
+                                `/quizzes/${quizId}`;
+
+                            // Show the modal
+                            const editQuizModal = new bootstrap.Modal(document.getElementById(
+                                'editQuizModal'));
+                            editQuizModal.show();
+                        });
+                });
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.delete-quiz-btn').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    if (!confirm('Bạn có chắc chắn muốn xóa không?')) return;
+
+                    let form = this.closest('form');
+                    let formData = new FormData(form);
+                    let url = form.action;
+                    let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute(
+                        'content');
+
+                    fetch(url, {
+                            method: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': csrfToken,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(Object.fromEntries(formData))
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                form.closest('tr').remove(); // Xóa dòng khỏi bảng
+                            } else {
+                                alert('Có lỗi xảy ra.');
+                            }
+                        });
+                });
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const addQuizFinalBtn = document.getElementById('addQuizFinal');
+            const finalQuizForm = document.getElementById('finalQuizForm');
+            const cancelAddQuizBtn = document.getElementById('cancelAddQuiz');
+
+            // Khi nhấn nút "Thêm quiz final", hiển thị form
+            addQuizFinalBtn.addEventListener('click', function() {
+                finalQuizForm.style.display = 'block';
+            });
+
+            // Khi nhấn nút "Hủy", ẩn form
+            cancelAddQuizBtn.addEventListener('click', function() {
+                finalQuizForm.style.display = 'none';
+            });
+        });
     </script>
 @endsection
