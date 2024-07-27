@@ -305,15 +305,14 @@
                                                         
                                                     </div>
                                                     <div class="add-lesson-form mt-2" data-chapter-id="{{ $chapter->id }}" style="display: none;">
-                                                        <button type="button" class="btn btn-primary ml-2 toggle-lesson-form ms-2 me-2" onclick="addSection(1)">Thêm bài học</button>  
+                                                        <button type="button" class="btn btn-primary ml-2 toggle-lesson-form ms-2 me-2" onclick="addSection(1, {{ $chapter->id }})">Thêm bài học</button>  
                                                         <form action="{{ route('client.addLesson') }}" method="POST" class="lesson-form" enctype="multipart/form-data"> 
                                                             @csrf                                                      
-                                                            <div class="chapter_videos">
-
+                                                            <div class="chapter_videos" data-chapter-id="{{ $chapter->id }}">
                                                             </div>                                                          
                                                             <button type="submit" class="btn btn-success">Lưu bài học</button>
                                                         </form>
-                                                    </div>
+                                                     </div>
                                                     <div class="edit-chapter-form mt-2" data-chapter-id="{{ $chapter->id }}" style="display: none;">
                                                         <form action="{{ route('client.updateChapter', $chapter->id) }}" method="POST" class="update-chapter-form">
                                                             @csrf
@@ -571,11 +570,11 @@
 
     var index = 0;
 
-function addSection(count) {
+function addSection(count, chapterId) {
     for (var i = 0; i < count; i++) {
-        document.querySelector('.chapter_videos').innerHTML += `
+        document.querySelector(`.chapter_videos[data-chapter-id="${chapterId}"]`).innerHTML += `
         <div class="curriculum-grid mt-4 chapter_video chapter_${index}">
-            <input type="hidden" name="lessons[${index}][chapter_id]" value="{{$chapter->id}}">
+            <input type="hidden" name="lessons[${index}][chapter_id]" value="${chapterId}">
             <div class="form-group">
                 <label for="lesson_name_${index}">Tên bài học</label>
                 <input type="text" id="lesson_name_${index}" name="lessons[${index}][name]" class="form-control" required>

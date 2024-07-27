@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\idCard;
 use App\Models\Mentor;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -94,68 +95,73 @@ class MentorControllerr extends Controller
     public function saveIdCardData(Request $request)
     {
        
-       // Đảm bảo rằng người dùng đã xác thực
        if (IdCard::where('id', $request->id)->exists()) {
         return response()->json([
             'status' => '0',
+            'message' => 'ID already exists'
         ]);
     }
 
-    // Đảm bảo rằng người dùng có mentor
+
     // $user = auth()->user();
-    // if (!$user->mentor) {
+
+ 
+    // if (!$user) {
     //     return response()->json([
     //         'status' => '0',
-    //         'message' => 'Người dùng không có mentor',
+    //         'message' => 'User not authenticated'
     //     ]);
     // }
 
-    // // Đảm bảo rằng mentor có ID
-    // $mentorId = $user->mentor->id;
-    // if (!$mentorId) {
+    // $mentor = Mentor::where('user_id', $user->id)->first();
+
+    // if (!$mentor) {
     //     return response()->json([
     //         'status' => '0',
-    //         'message' => 'Mentor không có ID',
+    //         'message' => 'Mentor not found for the current user',
     //     ]);
     // }
-        // $mentor = auth()->user()->mentor->id;
-        idCard::create(array_merge([         
-        // 'id_mentor'=> $mentor,
-        'id' => request()->id,
-        'id_prob' => request()->id_prob,
-        'name' => request()->name,
-        'name_prob' => request()->name_prob,
-        'dob' => request()->dob,
-        'dob_prob' => request()->dob_prob,
-        'sex' => request()->sex,
-        'sex_prob' => request()->sex_prob,
-        'nationality' => request()->nationality,
-        'nationality_prob' => request()->nationality_prob,
-        'home' => request()->home,
-        'home_prob' => request()->home_prob,
-        'address' => request()->address,
-        'address_prob' => request()->address_prob,
-        'doe' => request()->doe,
-        'doe_prob' => request()->doe_prob,
-        'overall_score' => request()->overall_score,
-        'number_of_name_lines' => request()->number_of_name_lines,
-        'features' => request()->features,
-        'features_prob' => request()->features_prob,
-        'issue_date' => request()->issue_date,
-        'issue_date_prob' => request()->issue_date_prob,
-        'mrz' => request()->mrz,
-        'mrz_prob' => request()->mrz_prob,
-        'issue_loc' => request()->issue_loc,
-        'issue_loc_prob' => request()->issue_loc_prob,
-        'type_new' => request()->type_new,
-        'type' => request()->type,
-        'mrz_details' => request()->mrz_details,
-    ],
-    // $request->all()
-));
-        return response()->json([
-            'status' => '1',
-        ]);
 
-    }
+    // $mentorId = $mentor->id;
+
+    IdCard::create([
+        // 'id_mentor' => $mentorId,
+        'id' => $request->id,
+        'id_prob' => $request->id_prob,
+        'name' => $request->name,
+        'name_prob' => $request->name_prob,
+        'dob' => $request->dob,
+        'dob_prob' => $request->dob_prob,
+        'sex' => $request->sex,
+        'sex_prob' => $request->sex_prob,
+        'nationality' => $request->nationality,
+        'nationality_prob' => $request->nationality_prob,
+        'home' => $request->home,
+        'home_prob' => $request->home_prob,
+        'address' => $request->address,
+        'address_prob' => $request->address_prob,
+        'doe' => $request->doe,
+        'doe_prob' => $request->doe_prob,
+        'overall_score' => $request->overall_score,
+        'number_of_name_lines' => $request->number_of_name_lines,
+        'features' => $request->features,
+        'features_prob' => $request->features_prob,
+        'issue_date' => $request->issue_date,
+        'issue_date_prob' => $request->issue_date_prob,
+        'mrz' => $request->mrz,
+        'mrz_prob' => $request->mrz_prob,
+        'issue_loc' => $request->issue_loc,
+        'issue_loc_prob' => $request->issue_loc_prob,
+        'type_new' => $request->type_new,
+        'type' => $request->type,
+        'mrz_details' => $request->mrz_details,
+    ]);
+
+    return response()->json([
+        'status' => '1',
+        'message' => 'ID Card data saved successfully',
+        // 'user' => $user,
+        // 'mentor' => $mentor
+    ]);
+}
 }

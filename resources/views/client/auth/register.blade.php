@@ -191,51 +191,53 @@
                 </div>
             </div>
             <script>
-                var btn_login = document.querySelector('#registerButton');
-                var accept_term_checkbox = document.querySelector('#remember');
-                var inputs = (document.querySelectorAll('input[oninput="enter_data()"]'))
-                var inputs_length = inputs.length
-                var poor = document.getElementById('poor');
-                var weak = document.getElementById('weak');
-                var strong = document.getElementById('strong');
-                var heavy = document.getElementById('heavy');
-                var password_input = inputs[inputs_length - 1]
+                 var btn_login = document.querySelector('#registerButton');
+        var accept_term_checkbox = document.querySelector('#remember');
+        var inputs = (document.querySelectorAll('input[oninput="enter_data()"]'))
+        var inputs_length = inputs.length
+        var poor = document.getElementById('poor');
+        var weak = document.getElementById('weak');
+        var strong = document.getElementById('strong');
+        var heavy = document.getElementById('heavy');
+        var password_input = inputs[inputs_length - 1]
 
-                function enter_data() {
+        document.addEventListener('DOMContentLoaded', function() {
+            btn_login.setAttribute('disabled', true);
+        });
 
+        function enter_data() {
+            btn_login.setAttribute('disabled', true);
+            
+            if (!(password_input.value.includes(inputs[inputs_length - 2].value)) && inputs[inputs_length - 2].value.length > 3 && password_input.value.length > 5) {
+                strong.style.backgroundColor = '#ff725e';
+            } else {
+                strong.style.backgroundColor = '#e3e3e3';
+            }
+            if ((/[^a-zA-Z0-9\s]/.test(password_input.value)) && password_input.value.length > 5) {
+                heavy.style.backgroundColor = '#ff725e';
+            } else {
+                heavy.style.backgroundColor = '#e3e3e3';
+            }
+            if (password_input.value.length > 5) {
+                poor.style.backgroundColor = '#ff725e';
+            } else {
+                poor.style.backgroundColor = '#e3e3e3';
+            }
+            if (/\d/.test(password_input.value)) {
+                weak.style.backgroundColor = '#ff725e';
+            } else {
+                weak.style.backgroundColor = '#e3e3e3';
+            }
 
-                    if (!(password_input.value.includes(inputs[inputs_length - 2].value)) && inputs[inputs_length - 2].value
-                        .length > 3 && password_input.value.length > 5) {
-                        strong.style.backgroundColor = '#ff725e';
-                    } else {
-                        strong.style.backgroundColor = '#e3e3e3';
-                    }
-                    if ((/[^a-zA-Z0-9\s]/.test(password_input.value)) && password_input.value.length > 5) {
-                        heavy.style.backgroundColor = '#ff725e';
-                    } else {
-                        heavy.style.backgroundColor = '#e3e3e3';
-                    }
-                    if (password_input.value.length > 5) {
-                        poor.style.backgroundColor = '#ff725e';
-                    } else {
-                        poor.style.backgroundColor = '#e3e3e3';
-                    }
-                    if (/\d/.test(password_input.value)) {
-                        weak.style.backgroundColor = '#ff725e';
-                    } else {
-                        weak.style.backgroundColor = '#e3e3e3';
-                    }
-
-                    let check_ = true
-                    for (let i = 0; i < inputs_length; i++) {
-                        if (inputs[i].value.length < 5 ) {
-                            btn_login.setAttribute('disabled', true);
-                            return;
-                        }
-                    }
-                    if (check_) btn_login.removeAttribute('disabled');
-
+            let check_ = true
+            for (let i = 0; i < inputs_length; i++) {
+                if (inputs[i].value.length < 5) {
+                    btn_login.setAttribute('disabled', true);
+                    return;
                 }
+            }
+            if (check_) btn_login.removeAttribute('disabled');
+        }
             </script>
             <script>
                 function togglePassword(inputId) {

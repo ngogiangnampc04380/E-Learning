@@ -25,7 +25,7 @@ class CoursesController extends Controller
     public function list(Request $request)
     {
         $query = $request->input('query');
-        $data = Course::orderBy('id', 'desc')->with('mentor'); // Load thông tin của mentor
+        $data = Course::orderBy('id', 'desc')->with('mentor'); 
         if ($query) {
             $data->where('name', 'LIKE', "%$query%");
         }
@@ -35,6 +35,9 @@ class CoursesController extends Controller
     }
     public function myCourse($id)
 {
+    if (!auth()->check()) {
+        return redirect()->route('login');
+    }
     $user = DB::table('users')
         ->select('id', 'thumbnail', 'name')
         ->where('id', $id)
@@ -50,41 +53,51 @@ class CoursesController extends Controller
         ->get();
     return view('client.courses.my-course', compact('myCourses', 'user'));
 }
-    public function lesson($id)
-    {
-        $data = DB::table('courses')
-            ->select('id', 'thumbnail', 'name', 'description')
-            ->where('id', $id)
-            ->first();
-    
-        if (!$data) {
-            return redirect()->back()->with('error', 'Khóa học không tồn tại.');
-        }
-    
-        $chapters = DB::table('chapters')
-            ->join('lessons', 'chapters.id', '=', 'lessons.chapter_id')
-            ->where('chapters.course_id', $data->id)
-            ->select('chapters.name as chaptername', 'chapters.id as chapterID')
-            ->distinct()
-            ->get();
-        $chapterLessons = [];
-        $firstLessonVideo = null;
-    
-        foreach ($chapters as $chapter) {
-            $lessons = DB::table('lessons')
-                ->where('chapter_id', $chapter->chapterID)
-                ->select('lessons.name as lessonname', 'lessons.path_video as lessonvideo', 'lessons.id as lessonID')
-                ->get();
-            $chapterLessons[$chapter->chapterID] = $lessons;
-            if (is_null($firstLessonVideo) && $lessons->isNotEmpty()) {
-                $firstLessonVideo = asset('assets-client/Videos/Lessons/' . $lessons->first()->lessonvideo);
-            }
-        }
-        return view('client.courses.lesson', compact('data', 'chapters', 'chapterLessons', 'firstLessonVideo'));
+public function lesson($id, $lesson_id = null)
+{
+    if (!auth()->check()) {
+        return redirect()->route('login');
     }
-        
     
+    $data = DB::table('courses')
+        ->select('id', 'thumbnail', 'name', 'description')
+        ->where('id', $id)
+        ->first();
 
+    if (!$data) {
+        return redirect()->back()->with('error', 'Khóa học không tồn tại.');
+    }
+
+    $chapters = DB::table('chapters')
+        ->join('lessons', 'chapters.id', '=', 'lessons.chapter_id')
+        ->where('chapters.course_id', $data->id)
+        ->select('chapters.name as chaptername', 'chapters.id as chapterID')
+        ->distinct()
+        ->get();
+    $chapterLessons = [];
+    $firstLessonVideo = null;
+
+    foreach ($chapters as $chapter) {
+        $lessons = DB::table('lessons')
+            ->where('chapter_id', $chapter->chapterID)
+            ->select('lessons.name as lessonname', 'lessons.path_video as lessonvideo', 'lessons.id as lessonID')
+            ->get();
+        $chapterLessons[$chapter->chapterID] = $lessons;
+        if (is_null($firstLessonVideo) && $lessons->isNotEmpty()) {
+            $firstLessonVideo = asset('assets-client/Videos/Lessons/' . $lessons->first()->lessonvideo);
+        }
+    }
+
+    $selectedLesson = null;
+    if ($lesson_id) {
+        $selectedLesson = DB::table('lessons')
+            ->where('id', $lesson_id)
+            ->first();
+    }
+
+    return view('client.courses.lesson', compact('data', 'chapters', 'chapterLessons', 'firstLessonVideo', 'selectedLesson'));
+}
+        
     public function quiz()
     {
         return view('client.courses.quiz');
@@ -92,6 +105,9 @@ class CoursesController extends Controller
 
     public function checkout($id)
     {
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
         $data = DB::table('courses')
             ->select('id', 'thumbnail', 'name', 'price', 'description')
             ->where('id', $id)
@@ -224,7 +240,6 @@ class CoursesController extends Controller
 
     public function autoAddChapter($course_id)
     {
-        // Lấy số lượng chương hiện tại của khóa học
         $chapterCount = Chapter::where('course_id', $course_id)->count();
 
         // Tạo chương mới với tên "Chương {số thứ tự tiếp theo}"
@@ -238,13 +253,11 @@ class CoursesController extends Controller
 
     public function addChapter(Request $request, $course_id)
     {
-        // Xử lý logic thêm chương ở đây
         $chapter = new Chapter();
         $chapter->name = $request->input('name');
         $chapter->course_id = $course_id;
         $chapter->save();
 
-        // Trả về JSON response với chapter_id để sử dụng trong form thêm bài học
         return redirect()->back()->with('success', 'Đã thêm chương mới tự động!');
 
     }

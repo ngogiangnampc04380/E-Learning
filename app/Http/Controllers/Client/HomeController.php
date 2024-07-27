@@ -15,6 +15,7 @@ class HomeController extends Controller
         $courses = Course::all();
         $courseCount = Course::count();
         $mentorCount = User::where('role', 2)->count();
+        
         return view('client.home.home',compact('courses','courseCount','mentorCount'));
     }
     public function error(){

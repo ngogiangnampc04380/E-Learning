@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Session;
 class UserDashboardController extends Controller
 {
     public function dashboard(){
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
         $userId = Session::get('id');
         $data = User::find($userId);
         // return view('client.profile.profile',['data' => $data]);

@@ -7,6 +7,9 @@ use Monolog\Processor\PsrLogMessageProcessor;
 
 return [
 
+    
+
+
     /*
     |--------------------------------------------------------------------------
     | Default Log Channel
@@ -30,6 +33,10 @@ return [
     | your application ready for upcoming major versions of dependencies.
     |
     */
+   
+
+        // Các cấu hình khác
+    
 
     'deprecations' => [
         'channel' => env('LOG_DEPRECATIONS_CHANNEL', 'null'),
@@ -62,7 +69,6 @@ return [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
-            'replace_placeholders' => true,
         ],
 
         'daily' => [

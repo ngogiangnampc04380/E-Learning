@@ -18,6 +18,9 @@ class UserProfileController extends Controller
 {
     use HasFactory, Notifiable, SoftDeletes;
     public function userprofile() {
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
         $userId = Session::get('id');
         $data = User::with('educations')->find($userId); // Load cả quan hệ educations
         return view('client.profile.profile', ['data' => $data]);

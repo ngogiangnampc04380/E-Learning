@@ -35,7 +35,7 @@
                             <a href="{{ route('client.course-details', $course->id) }}">{{ $course->name }}</a>
                         </h2>
                         <div class="all-btn all-category d-flex align-items-center">
-                            <a href="{{ route('client.lesson', $course->id) }}" class="btn btn-primary">Học</a>
+                            <a href="{{ route('client.lesson', ['id' => $course->id]) }}" class="btn btn-primary">Học</a>
                         </div>
                     </div>
                     <div class="rating">

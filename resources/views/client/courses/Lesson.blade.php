@@ -68,7 +68,7 @@
                             <h2 id="lesson-title">Bài 1: Từ vựng</h2>
                             <div class="ratio ratio-16x9">
                                 <video id="lesson-video" controls> 
-                                    <source src="{{ Storage::url('public/assets-client/Videos/Lessons/'. $firstLessonVideo )}}" type="video/mp4">
+                                    <source src="{{ $firstLessonVideo}}" type="video/mp4">
                                 </video>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
                                                 @if(isset($chapterLessons[$item->chapterID]))
                                                     @foreach ($chapterLessons[$item->chapterID] as $lesson)
                                                         <li class="list-group-item">
-                                                            <a href="#" class="lesson-link" data-video="{{ Storage::url('public/assets-client/Videos/Lessons/'. $lesson->lessonvideo) }}" data-title="{{ $lesson->lessonname }}">
+                                                            <a href="{{ route('client.lesson', ['id' => $data->id, 'lesson-id' => $lesson->lessonID]) }}" class="lesson-link" data-lesson-id="{{ $lesson->lessonID }}" data-video="{{ Storage::url('public/assets-client/Videos/Lessons/'. $lesson->lessonvideo) }}" data-title="{{ $lesson->lessonname }}" onclick="loadLesson(event, '{{ $lesson->lessonID }}', '{{ $lesson->lessonname }}', '{{ Storage::url('public/assets-client/Videos/Lessons/'. $lesson->lessonvideo) }}')">
                                                                 {{ $lesson->lessonname }}
                                                             </a>
                                                         </li>
@@ -127,19 +127,29 @@
     </section>
     
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.lesson-link').forEach(function (element) {
-                element.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    var videoUrl = this.getAttribute('data-video');
-                    var lessonTitle = this.getAttribute('data-title');
-                    var videoElement = document.getElementById('lesson-video');
-                    videoElement.querySelector('source').src =  videoUrl;
-                    videoElement.load(); // Tải lại video với URL mới
-                    document.getElementById('lesson-title').innerText = lessonTitle;
-                });
-            });
+        function loadLesson(event, lessonID, lessonName, lessonVideo) {
+            event.preventDefault();
+
+            const url = new URL(window.location);
+            url.searchParams.set('lesson-id', lessonID);
+            window.history.pushState({path: url.toString()}, '', url.toString());
+    
+            document.getElementById('lesson-video').src = lessonVideo;
+            document.getElementById('lesson-title').innerText = lessonName;
+        }
+        
+        window.addEventListener('popstate', function(event) {
+            const url = new URL(window.location);
+            const lessonID = url.searchParams.get('lesson-id');
+            
+            if (lessonID) {
+               
+                const lessonLink = document.querySelector(`a[data-lesson-id="${lessonID}"]`);
+                if (lessonLink) {
+                    loadLesson(null, lessonID, lessonLink.dataset.title, lessonLink.dataset.video);
+                }
+            }
         });
-    </script>
+        </script>
 
 @endsection
