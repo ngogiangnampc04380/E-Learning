@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('lesson_id');
             $table->foreign('lesson_id')->references('id')->on('lessons')->constrained()->cascadeOnDelete();
-            $table->string('name',255);
             $table->timestamps();
         });
     }

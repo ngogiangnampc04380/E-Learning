@@ -11,19 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('answers', function (Blueprint $table) {
+
+
+        Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->string('name',255);
-            $table->enum('is_correct', ['true', 'false']);
+            $table->unsignedBigInteger('quiz_id');
+            $table->foreign('quiz_id')->references('id')->on('quizzes')->cascadeOnDelete();
+            $table->string('name', 255);
+            $table->string('question');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('answers');
+        Schema::dropIfExists('questions');
     }
 };
