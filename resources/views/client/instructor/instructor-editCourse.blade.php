@@ -290,12 +290,10 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                         <thead>
                                             <tr>
                                                 <th
-                                                    style="background:    #f1c232;
-background:    linear-gradient(#f1c232, #ffff00);">
+                                                    style="background:    #f1c232; background:    linear-gradient(#f1c232, #ffff00);">
                                                     Tên chương</th>
                                                 <th
-                                                    style="background:    #f1c232;
-background:    linear-gradient(#f1c232, #ffff00);">
+                                                    style="background:    #f1c232; background:    linear-gradient(#f1c232, #ffff00);">
                                                     Hành động</th>
                                             </tr>
                                         </thead>
@@ -394,50 +392,44 @@ background:    linear-gradient(#f1c232, #ffff00);">
 
                                                         <div class="add-lesson-form mt-2"
                                                             data-chapter-id="{{ $chapter->id }}" style="display: none;">
-                                                            <<<<<<< HEAD <button type="button"
+                                                            <button type="button"
                                                                 class="btn btn-primary ml-2 toggle-lesson-form ms-2 me-2"
                                                                 onclick="addSection(1, {{ $chapter->id }})">Thêm bài
                                                                 học</button>
+                                                            <form action="{{ route('client.addLesson') }}" method="POST"
+                                                                class="lesson-form" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="chapter_videos"
+                                                                    data-chapter-id="{{ $chapter->id }}">
+                                                                </div>
+                                                                <button type="submit" class="btn btn-success">Lưu bài
+                                                                    học</button>
                                                                 <form action="{{ route('client.addLesson') }}"
                                                                     method="POST" class="lesson-form"
                                                                     enctype="multipart/form-data">
                                                                     @csrf
-                                                                    <div class="chapter_videos"
-                                                                        data-chapter-id="{{ $chapter->id }}">
+                                                                    <input type="hidden" name="chapter_id"
+                                                                        value="{{ $chapter->id }}">
+
+                                                                    <div class="form-group">
+                                                                        <label for="lesson_name">Tên bài học</label>
+                                                                        <input type="text" id="lesson_name"
+                                                                            name="name" class="form-control" required>
                                                                     </div>
-                                                                    <button type="submit" class="btn btn-success">Lưu bài
+
+                                                                    <div class="form-group custom-file">
+                                                                        <label class="custom-file-label"
+                                                                            for="lesson_video">Chọn video bài
+                                                                            học</label>
+                                                                        <input type="file" class="custom-file-input"
+                                                                            id="lesson_video" name="video" required
+                                                                            accept="video/*">
+                                                                    </div>
+
+                                                                    <button type="submit"
+                                                                        class="btn btn-outline-success">Lưu bài
                                                                         học</button>
-                                                                    =======
-                                                                    <form action="{{ route('client.addLesson') }}"
-                                                                        method="POST" class="lesson-form"
-                                                                        enctype="multipart/form-data">
-                                                                        @csrf
-                                                                        <input type="hidden" name="chapter_id"
-                                                                            value="{{ $chapter->id }}">
-
-                                                                        <div class="form-group">
-                                                                            <label for="lesson_name">Tên bài học</label>
-                                                                            <input type="text" id="lesson_name"
-                                                                                name="name" class="form-control"
-                                                                                required>
-                                                                        </div>
-
-                                                                        <div class="form-group custom-file">
-                                                                            <label class="custom-file-label"
-                                                                                for="lesson_video">Chọn video bài
-                                                                                học</label>
-                                                                            <input type="file"
-                                                                                class="custom-file-input"
-                                                                                id="lesson_video" name="video" required
-                                                                                accept="video/*">
-                                                                        </div>
-
-                                                                        <button type="submit"
-                                                                            class="btn btn-outline-success">Lưu bài
-                                                                            học</button>
-                                                                        >>>>>>> c29cc26 (Check form - chỉnh sửa giao diện -
-                                                                        thêm chức năng)
-                                                                    </form>
+                                                                </form>
                                                         </div>
                                                         <div class="edit-chapter-form mt-2"
                                                             data-chapter-id="{{ $chapter->id }}" style="display: none;">

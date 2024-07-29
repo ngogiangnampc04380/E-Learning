@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course_user;
+use App\Models\Video_done;
+use App\Models\Video_not_done;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Checkout;
@@ -23,28 +25,28 @@ use Illuminate\Support\Facades\Auth;
 class CoursesController extends Controller
 {
     public function list(Request $request)
-{
-    $query = $request->input('query');
+    {
+        $query = $request->input('query');
 
-    // Khởi tạo truy vấn để lấy danh sách các khóa học có status bằng 2
-    $data = Course::where('status', 2)
-                ->orderBy('id', 'desc')
-                ->with('mentor'); // Load thông tin của mentor
+        // Khởi tạo truy vấn để lấy danh sách các khóa học có status bằng 2
+        $data = Course::where('status', 2)
+            ->orderBy('id', 'desc')
+            ->with('mentor'); // Load thông tin của mentor
 
-    // Nếu có tham số truy vấn, thêm điều kiện tìm kiếm theo tên khóa học
-    if ($query) {
-        $data->where('name', 'LIKE', "%$query%");
+        // Nếu có tham số truy vấn, thêm điều kiện tìm kiếm theo tên khóa học
+        if ($query) {
+            $data->where('name', 'LIKE', "%$query%");
+        }
+
+        // Thực hiện truy vấn và lấy danh sách khóa học
+        $data = $data->get();
+
+        // Lấy tất cả các danh mục khóa học
+        $categories = Course_category::all();
+
+        // Trả về view với dữ liệu các khóa học, truy vấn tìm kiếm và danh sách các danh mục
+        return view('client.courses.courses-list', compact('data', 'query', 'categories'));
     }
-
-    // Thực hiện truy vấn và lấy danh sách khóa học
-    $data = $data->get();
-
-    // Lấy tất cả các danh mục khóa học
-    $categories = Course_category::all();
-
-    // Trả về view với dữ liệu các khóa học, truy vấn tìm kiếm và danh sách các danh mục
-    return view('client.courses.courses-list', compact('data', 'query', 'categories'));
-}
 
 
 
@@ -75,39 +77,60 @@ class CoursesController extends Controller
         if (!auth()->check()) {
             return redirect()->route('login');
         }
+
         $data = DB::table('courses')
             ->select('id', 'thumbnail', 'name', 'description')
             ->where('id', $id)
             ->first();
+
         if (!$data) {
             return redirect()->back()->with('error', 'Khóa học không tồn tại.');
         }
+
         $chapters = DB::table('chapters')
             ->join('lessons', 'chapters.id', '=', 'lessons.chapter_id')
             ->where('chapters.course_id', $data->id)
             ->select('chapters.name as chaptername', 'chapters.id as chapterID')
             ->distinct()
             ->get();
+
         $chapterLessons = [];
         $firstLessonVideo = null;
+
         foreach ($chapters as $chapter) {
             $lessons = DB::table('lessons')
                 ->where('chapter_id', $chapter->chapterID)
                 ->select('lessons.name as lessonname', 'lessons.path_video as lessonvideo', 'lessons.id as lessonID')
                 ->get();
+
             $chapterLessons[$chapter->chapterID] = $lessons;
+
             if (is_null($firstLessonVideo) && $lessons->isNotEmpty()) {
                 $firstLessonVideo = asset('assets-client/Videos/Lessons/' . $lessons->first()->lessonvideo);
             }
         }
+
         $selectedLesson = null;
         if ($lesson_id) {
             $selectedLesson = DB::table('lessons')
                 ->where('id', $lesson_id)
                 ->first();
         }
-        return view('client.courses.lesson', compact('data', 'chapters', 'chapterLessons', 'firstLessonVideo', 'selectedLesson'));
+
+        $user = Auth::user();
+        $checklesson = [];
+
+        if ($user) {
+            $checklesson = DB::table('video_done')
+                ->where('user_id', $user->id)
+                ->where('course_id', $data->id)
+                ->pluck('lesson_id')
+                ->toArray();
+        }
+
+        return view('client.courses.lesson', compact('data', 'checklesson', 'chapters', 'chapterLessons', 'firstLessonVideo', 'selectedLesson'));
     }
+
 
     public function quiz()
     {
@@ -458,5 +481,61 @@ class CoursesController extends Controller
     public function dashboard()
     {
         return view('client.instructor.instructor-dashboard');
+    }
+    public function saveProgress(Request $request)
+    {
+        $user = Auth::user();
+
+        if ($user) {
+            $videoProgress = Video_not_done::updateOrCreate(
+                [
+                    'user_id' => $user->id,
+                    'course_id' => $request->course_id,
+                    'chapter_id' => $request->chapter_id,
+                    'lesson_id' => $request->lesson_id
+                ],
+                [
+                    'percent' => $request->percent
+                ]
+            );
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Video progress updated successfully!',
+                'data' => $videoProgress,
+            ]);
+        }
+
+        return response()->json(['status' => 'error'], 403);
+    }
+    public function completeProgress(Request $request)
+    {
+        $user = Auth::user();
+
+        if ($user) {
+            Video_not_done::where([
+                'user_id' => $user->id,
+                'course_id' => $request->course_id,
+                'chapter_id' => $request->chapter_id,
+                'lesson_id' => $request->lesson_id
+            ])->delete();
+            Video_done::updateOrCreate(
+                [
+                    'user_id' => $user->id,
+                    'course_id' => $request->course_id,
+                    'chapter_id' => $request->chapter_id,
+                    'lesson_id' => $request->lesson_id
+                ],
+                [
+                    'percent' => 1
+                ]
+            );
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Video progress completed and data removed successfully!',
+            ]);
+        }
+
+        return response()->json(['status' => 'error'], 403);
     }
 }
