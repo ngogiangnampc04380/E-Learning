@@ -1,5 +1,4 @@
 {
-  
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
@@ -12,7 +11,7 @@
         "php": "^8.2",
         "filament/filament": "3.2",
         "filament/infolists": "3.2",
-        "guzzlehttp/guzzle": "^7.8",
+        "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/socialite": "^5.14",
@@ -23,6 +22,7 @@
         "symfony/mailgun-mailer": "^6.4"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.13",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
@@ -38,11 +38,6 @@
             "Database\\Seeders\\": "database/seeders/"
         }
     },
-    
-    "github-oauth": {
-        "github.com": "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"
-    },
-    
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
@@ -80,5 +75,4 @@
     },
     "minimum-stability": "stable",
     "prefer-stable": true
-    
 }
