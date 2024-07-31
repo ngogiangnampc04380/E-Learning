@@ -201,7 +201,7 @@ class CoursesController extends Controller
         $quiz = new Quiz();
         $quiz->course_id = $request->course_id;
         $quiz->chapter_id = $request->chapter_id;
-        $quiz->mentor_id = Auth::id();
+        $quiz->mentor_id = Auth::user()->mentor->id;
         $quiz->name = $request->title;
         $quiz->save();
 

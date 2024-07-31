@@ -310,9 +310,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                             <button type="button"
                                                                 class="btn btn-warning ml-2 edit-chapter-btn ms-2 me-2"
                                                                 data-chapter-id="{{ $chapter->id }}">Sửa chương</button>
-                                                            <button type="button"
-                                                                class="btn btn-primary ml-2 toggle-lesson-form ms-2 me-2"
-                                                                data-chapter-id="{{ $chapter->id }}">bài học</button>
+                                                            
                                                             <button type="button"
                                                                 class="btn btn-info ml-2 toggle-lesson-list"
                                                                 data-chapter-id="{{ $chapter->id }}">Ẩn bài học</button>
@@ -428,10 +426,17 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                         <div class="lesson-list mt-2"
                                                             data-chapter-id="{{ $chapter->id }}"
                                                             style="display: block; border: 1px solid #ccc; padding: 10px;">
-                                                            <h4 style="margin-bottom: 10px;">Danh sách bài học</h4>
+                                                            <h4 style="margin-bottom: 10px;">Danh sách bài học </h4>
+                                                            
                                                             @if ($chapter->lessons->isEmpty())
                                                                 <p>Hiện chưa có bài học nào</p>
+                                                                <button type="button"
+                                                                class="btn btn-primary ml-2 toggle-lesson-form ms-2 me-2"
+                                                                data-chapter-id="{{ $chapter->id }}">Thêm bài học</button>
                                                             @else
+                                                            <button type="button"
+                                                                class="btn btn-primary ml-2 toggle-lesson-form ms-2 me-2"
+                                                                data-chapter-id="{{ $chapter->id }}">Thêm bài học</button>
                                                                 <ul class="list-group">
                                                                     @foreach ($chapter->lessons as $lesson)
                                                                         <li
@@ -505,32 +510,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                 </div>
                                                                 <button type="submit" class="btn btn-success">Lưu bài
                                                                     học</button>
-                                                                <form action="{{ route('client.addLesson') }}"
-                                                                    method="POST" class="lesson-form"
-                                                                    enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <input type="hidden" name="chapter_id"
-                                                                        value="{{ $chapter->id }}">
-
-                                                                    <div class="form-group">
-                                                                        <label for="lesson_name">Tên bài học</label>
-                                                                        <input type="text" id="lesson_name"
-                                                                            name="name" class="form-control" required>
-                                                                    </div>
-
-                                                                    <div class="form-group custom-file">
-                                                                        <label class="custom-file-label"
-                                                                            for="lesson_video">Chọn video bài
-                                                                            học</label>
-                                                                        <input type="file" class="custom-file-input"
-                                                                            id="lesson_video" name="video" required
-                                                                            accept="video/*">
-                                                                    </div>
-
-                                                                    <button type="submit"
-                                                                        class="btn btn-outline-success">Lưu bài
-                                                                        học</button>
-                                                                </form>
+                                                                
                                                         </div>
                                                         <div class="edit-chapter-form mt-2"
                                                             data-chapter-id="{{ $chapter->id }}" style="display: none;">
@@ -538,7 +518,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                 action="{{ route('client.updateChapter', $chapter->id) }}"
                                                                 method="POST" class="update-chapter-form">
                                                                 @csrf
-                                                                @method('PUT')
+                                                                @method('POST')
                                                                 <div class="form-group">
                                                                     <label for="edit_chapter_name">Tên chương</label>
                                                                     <input type="text" id="edit_chapter_name"

@@ -90,7 +90,7 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::post('/client/addLesson', [CoursesController::class, 'addLesson'])->name('addLesson');
     Route::get('/client/getLessonsByChapterId/{chapterId}', [CoursesController::class, 'getLessonsByChapterId'])->name('getLessonsByChapterId');
     Route::delete('/courses/lessons/{lesson}', [CoursesController::class, 'destroy'])->name('deleteLesson');
-    Route::put('/lessons/{id}', [CoursesController::class, 'updateLesson'])->name('updateLesson');
+    Route::post('/lessons/{id}', [CoursesController::class, 'updateLesson'])->name('updateLesson');
     Route::get("/instructor-coursedetails/{id}", [CoursesController::class, "chapter"])->name("instructor-coursedetails");
     Route::get("/instructor-dashboard", [CoursesController::class, "dashboard"])->name("instructor-dashboard");
     Route::get("/instructor-lesson/{id}", [CoursesController::class, "lesson"])->name("instructor-lesson");
