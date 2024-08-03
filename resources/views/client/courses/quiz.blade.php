@@ -34,7 +34,7 @@
         }
     </style>
 
-    <section class="page-content quiz-sec">
+    <section class="page-content quiz-sec d-none" id="quizSection">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mb-4">
@@ -64,31 +64,26 @@
                                     </ul>
                                     <div class="d-flex justify-content-end">
                                         @if($index > 0)
-                                            <button type="button" class="btn btn-primary btn-start prev-btn me-5">Quay
-                                                lại
-                                            </button>
+                                            <button type="button" class="btn btn-primary btn-start prev-btn me-5">Quay lại</button>
                                         @endif
                                         @if($index < count($questions) - 1)
-                                            <button type="button" class="btn btn-primary btn-end next-btn ml-auto">Tiếp
-                                                theo
-                                            </button>
+                                            <button type="button" class="btn btn-primary btn-end next-btn ml-auto">Tiếp theo</button>
                                         @else
                                             <button type="submit" class="btn btn-success">Nộp bài</button>
                                         @endif
                                     </div>
                                 </div>
-                            </div>
-                            <!-- Các câu hỏi khác -->
+                            @endforeach
                         </form>
                     </div>
                 </div>
-                <div class="col-lg-4 mb-4"> <!-- Cột phải -->
+                <div class="col-lg-4 mb-4">
                     <div class="quiz-widget p-5 bg-white shadow-sm rounded">
                         <h2 class="mb-5">Danh sách câu hỏi</h2>
                         <ul class="list-unstyled">
                             @foreach($questions as $index => $question)
-                                <li class="mb-3"><a href="#" class="quiz-link" data-question="question{{ $index + 1 }}">Câu
-                                        hỏi {{ $index + 1 }}</a></li>
+                                <li class="mb-3"><a href="#" class="quiz-link"
+                                                    data-question="question{{ $index + 1 }}">Câu hỏi {{ $index + 1 }}</a></li>
                             @endforeach
                         </ul>
                     </div>
@@ -112,6 +107,10 @@
             const nextBtns = document.querySelectorAll('.next-btn');
             const prevBtns = document.querySelectorAll('.prev-btn');
             const questions = document.querySelectorAll('.question');
+            const startQuizBtn = document.getElementById('startQuizBtn');
+            const startQuizContainer = document.getElementById('startQuizContainer');
+            const quizSection = document.getElementById('quizSection');
+            const quizName = document.getElementById('quizName');
 
             let currentQuestion = 0;
             let fullscreenEnabled = false;
@@ -164,8 +163,8 @@
 
             startQuizBtn.addEventListener('click', function () {
                 startQuizContainer.style.display = 'none';
-                quizSection.style.display = 'block';
-                quizSections[0].style.display = 'block';
+                quizSection.classList.remove('d-none');
+                questions[currentQuestion].style.display = 'block';
                 quizName.textContent = '{{ $quiz->name }}';
                 enableFullScreen();
                 hideOtherElements();
@@ -183,13 +182,6 @@
                     if (currentQuestion < questions.length) {
                         questions[currentQuestion].style.display = 'block';
                     }
-                    if (currentQuestion === questions.length - 1) {
-                        document.querySelector('.next-btn').style.display = 'none';
-                        document.querySelector('.prev-btn').style.display = 'none';
-                    } else {
-                        document.querySelector('.prev-btn').style.display = 'block';
-                        document.querySelector('.next-btn').style.display = 'block';
-                    }
                 });
             });
 
@@ -200,23 +192,16 @@
                     if (currentQuestion >= 0) {
                         questions[currentQuestion].style.display = 'block';
                     }
-                    if (currentQuestion === 0) {
-                        document.querySelector('.prev-btn').style.display = 'none';
-                    } else {
-                        document.querySelector('.next-btn').style.display = 'block';
-                        document.querySelector('.prev-btn').style.display = 'block';
-                    }
                 });
-            }
+            });
 
             document.querySelectorAll('.quiz-link').forEach(link => {
                 link.addEventListener('click', function (e) {
                     e.preventDefault();
                     const questionId = this.dataset.question;
-                    quizSections.forEach(section => section.style.display = 'none');
+                    questions.forEach(section => section.style.display = 'none');
                     document.getElementById(questionId).style.display = 'block';
                     currentQuestion = parseInt(questionId.replace('question', '')) - 1;
-                    togglePrevButtonVisibility();
                 });
             });
 

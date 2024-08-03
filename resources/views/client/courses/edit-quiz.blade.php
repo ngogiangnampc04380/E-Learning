@@ -105,67 +105,70 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-xl-9 col-lg-8 col-md-12 mx-auto mt-5">
-                <h2 class="mb-4">Chỉnh sửa Quiz</h2>
-                <form action="{{ route('client.courses.update-quiz', $quiz->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
+            <div class="col-xl-9 col-lg-8 col-md-12 my-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="mb-4">Chỉnh sửa Quiz</h2>
+                        <form action="{{ route('client.courses.update-quiz', $quiz->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
 
-                    <div class="mb-4">
-                        <label for="name" class="form-label">Tiêu đề Quiz:</label>
-                        <input type="text" id="name" name="name" class="form-control" value="{{ $quiz->name }}" required>
-                    </div>
+                            <div class="mb-4">
+                                <label for="name" class="form-label">Tiêu đề Quiz:</label>
+                                <input type="text" id="name" name="name" class="form-control" value="{{ $quiz->name }}" required>
+                            </div>
 
-                    <div id="questions-container">
-                        @foreach ($quiz->questions as $index => $question)
-                            <div class="question-block mb-4 p-3 border rounded" data-index="{{ $index }}">
-                                <h5 class="mb-3">Câu hỏi {{ $index + 1 }}</h5>
-                                <input type="hidden" name="questions[{{ $index }}][id]" value="{{ $question->id }}">
+                            <div id="questions-container">
+                                @foreach ($quiz->questions as $index => $question)
+                                    <div class="question-block mb-4 p-3 border rounded" data-index="{{ $index }}">
+                                        <h5 class="mb-3">Câu hỏi {{ $index + 1 }}</h5>
+                                        <input type="hidden" name="questions[{{ $index }}][id]" value="{{ $question->id }}">
 
-                                <div class="mb-3">
-                                    <label for="question_{{ $index }}" class="form-label">Câu hỏi:</label>
-                                    <input type="text" id="question_{{ $index }}"
-                                           name="questions[{{ $index }}][question]"
-                                           class="form-control" value="{{ $question->question }}" required>
-                                </div>
+                                        <div class="mb-3">
+                                            <label for="question_{{ $index }}" class="form-label">Câu hỏi:</label>
+                                            <input type="text" id="question_{{ $index }}"
+                                                   name="questions[{{ $index }}][question]"
+                                                   class="form-control" value="{{ $question->question }}" required>
+                                        </div>
 
-                                <div class="mb-3">
-                                    <label for="correct_answer_{{ $index }}" class="form-label">Đáp án đúng:</label>
-                                    <input type="text" id="correct_answer_{{ $index }}"
-                                           name="questions[{{ $index }}][correct_answer]" class="form-control"
-                                           value="{{ $question->correctAnswer->answer }}" required>
-                                </div>
+                                        <div class="mb-3">
+                                            <label for="correct_answer_{{ $index }}" class="form-label">Đáp án đúng:</label>
+                                            <input type="text" id="correct_answer_{{ $index }}"
+                                                   name="questions[{{ $index }}][correct_answer]" class="form-control"
+                                                   value="{{ $question->correctAnswer->answer }}" required>
+                                        </div>
 
-                                @foreach ($question->wrongAnswers as $i => $wrongAnswer)
-                                    <div class="mb-3">
-                                        <label for="wrong_answer{{ $i + 1 }}_{{ $index }}" class="form-label">Đáp án
-                                            sai {{ $i + 1 }}:</label>
-                                        <input type="text" id="wrong_answer{{ $i + 1 }}_{{ $index }}"
-                                               name="questions[{{ $index }}][wrong_answers][]" class="form-control"
-                                               value="{{ $wrongAnswer->answer }}" required>
+                                        @foreach ($question->wrongAnswers as $i => $wrongAnswer)
+                                            <div class="mb-3">
+                                                <label for="wrong_answer{{ $i + 1 }}_{{ $index }}" class="form-label">Đáp án
+                                                    sai {{ $i + 1 }}:</label>
+                                                <input type="text" id="wrong_answer{{ $i + 1 }}_{{ $index }}"
+                                                       name="questions[{{ $index }}][wrong_answers][]" class="form-control"
+                                                       value="{{ $wrongAnswer->answer }}" required>
+                                            </div>
+                                        @endforeach
+                                        <button type="button" class="btn btn-danger btn-sm remove-question">Xóa câu hỏi</button>
                                     </div>
                                 @endforeach
-
-                                <button type="button" class="btn btn-danger btn-sm remove-question">Xóa câu hỏi</button>
                             </div>
-                        @endforeach
-                    </div>
 
-                    <button type="button" class="btn btn-success btn-sm mb-3" id="add-question">Thêm câu hỏi</button>
+                            <button type="button" class="btn btn-success btn-sm mb-3" id="add-question">Thêm câu hỏi</button>
 
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <a href="{{ route('client.editCourse', $quiz->course_id) }}" class="btn btn-secondary">
-                            <i class="bi bi-arrow-left"></i> Quay lại danh sách quiz
-                        </a>
-                        <button type="submit" class="btn btn-primary">Lưu</button>
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <a href="{{ route('client.editCourse', $quiz->course_id) }}" class="btn btn-secondary">
+                                    <i class="bi bi-arrow-left"></i> Quay lại danh sách quiz
+                                </a>
+                                <button type="submit" class="btn btn-primary">Lưu</button>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
 
     <template id="question-template">
-        <div class="question-block mb-4 p-3 border rounded">
+        <div class="question-block mb-4 p-3 rounded">
             <h5 class="mb-3">Câu hỏi</h5>
             <input type="hidden" name="questions[INDEX][id]" value="">
 
@@ -209,6 +212,25 @@
         document.addEventListener('DOMContentLoaded', function () {
             let questionIndex = {{ count($quiz->questions) }};
 
+            function updateQuestionIndices() {
+                document.querySelectorAll('.question-block').forEach((block, index) => {
+                    block.querySelector('h5').textContent = `Câu hỏi ${index + 1}`;
+                    block.dataset.index = index;
+                    block.querySelectorAll('input, label').forEach(el => {
+                        if (el.htmlFor) {
+                            el.htmlFor = el.htmlFor.replace(/\d+/, index);
+                        }
+                        if (el.id) {
+                            el.id = el.id.replace(/\d+/, index);
+                        }
+                        if (el.name) {
+                            el.name = el.name.replace(/\d+/, index);
+                        }
+                    });
+                });
+                questionIndex = document.querySelectorAll('.question-block').length;
+            }
+
             document.getElementById('add-question').addEventListener('click', function () {
                 const template = document.getElementById('question-template').content.cloneNode(true);
                 template.querySelectorAll('input, label').forEach(el => {
@@ -226,12 +248,13 @@
                 template.querySelector('.question-block').dataset.index = questionIndex;
 
                 document.getElementById('questions-container').appendChild(template);
-                questionIndex++;
+                updateQuestionIndices();
             });
 
             document.getElementById('questions-container').addEventListener('click', function (e) {
                 if (e.target.classList.contains('remove-question')) {
                     e.target.closest('.question-block').remove();
+                    updateQuestionIndices();
                 }
             });
         });

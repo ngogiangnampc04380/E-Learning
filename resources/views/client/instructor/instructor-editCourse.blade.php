@@ -310,16 +310,15 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                             <button type="button"
                                                                 class="btn btn-warning ml-2 edit-chapter-btn ms-2 me-2"
                                                                 data-chapter-id="{{ $chapter->id }}">Sửa chương</button>
-                                                            
+
                                                             <button type="button"
                                                                 class="btn btn-info ml-2 toggle-lesson-list"
                                                                 data-chapter-id="{{ $chapter->id }}">Ẩn bài học</button>
-                                                            <button id="show-quiz-form"
-                                                                data-course-id="{{ $course->id }}"
-                                                                data-chapter-id="{{ $chapter->id }}"
-                                                                class="btn btn-warning ml-2 edit-chapter-btn ms-2 me-2">
+                                                            <a href="{{ route('client.courses.add-quiz', ['course_id' => $course->id, 'chapter_id' => $chapter->id]) }}"
+                                                               class="btn btn-warning ml-2 edit-chapter-btn ms-2 me-2" id="add-quiz-link">
                                                                 Thêm bài quiz
-                                                            </button>
+                                                            </a>
+
                                                             <button type="button"
                                                                 class="btn btn-info ml-2 toggle-quiz-list"
                                                                 data-chapter-id="{{ $chapter->id }}">Ẩn bài quiz
@@ -427,7 +426,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                             data-chapter-id="{{ $chapter->id }}"
                                                             style="display: block; border: 1px solid #ccc; padding: 10px;">
                                                             <h4 style="margin-bottom: 10px;">Danh sách bài học </h4>
-                                                            
+
                                                             @if ($chapter->lessons->isEmpty())
                                                                 <p>Hiện chưa có bài học nào</p>
                                                                 <button type="button"
@@ -510,7 +509,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                 </div>
                                                                 <button type="submit" class="btn btn-success">Lưu bài
                                                                     học</button>
-                                                                
+
                                                         </div>
                                                         <div class="edit-chapter-form mt-2"
                                                             data-chapter-id="{{ $chapter->id }}" style="display: none;">
@@ -872,58 +871,58 @@ background:    linear-gradient(#f1c232, #ffff00);">
             });
         }
     </script>
-    <script>
-        document.getElementById('show-quiz-form').addEventListener('click', function() {
-            var courseId = this.getAttribute('data-course-id');
-            var chapterId = this.getAttribute('data-chapter-id');
-            document.getElementById('course_id').value = courseId;
-            document.getElementById('chapter_id').value = chapterId;
-            document.getElementById('quiz-form').style.display = 'block';
-            this.style.display = 'none';
-        });
+{{--    <script>--}}
+{{--        document.getElementById('show-quiz-form').addEventListener('click', function() {--}}
+{{--            var courseId = this.getAttribute('data-course-id');--}}
+{{--            var chapterId = this.getAttribute('data-chapter-id');--}}
+{{--            document.getElementById('course_id').value = courseId;--}}
+{{--            document.getElementById('chapter_id').value = chapterId;--}}
+{{--            document.getElementById('quiz-form').style.display = 'block';--}}
+{{--            this.style.display = 'none';--}}
+{{--        });--}}
 
-        document.getElementById('add-question1').addEventListener('click', function() {
-            const questionsContainer = document.getElementById('questions-container');
-            const questionCount = questionsContainer.children.length + 1;
+{{--        document.getElementById('add-question1').addEventListener('click', function() {--}}
+{{--            const questionsContainer = document.getElementById('questions-container');--}}
+{{--            const questionCount = questionsContainer.children.length + 1;--}}
 
-            const questionHtml = `
-        <div class="question-block mb-3">
-            <h5>Câu hỏi ${questionCount}</h5>
-            <div class="mb-3">
-                <label for="question_${questionCount}" class="form-label">Câu hỏi:</label>
-                <input type="text" id="question_${questionCount}" name="questions[${questionCount}][question]"
-                    class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label for="answer_${questionCount}_0" class="form-label">Đáp án đúng:</label>
-                <input type="text" id="answer_${questionCount}_0" name="questions[${questionCount}][answers][0][answer]"
-                    class="form-control" required>
-                <input type="hidden" name="questions[${questionCount}][answers][0][is_correct]" value="1">
-            </div>
-            <div class="mb-3">
-                <label for="answer_${questionCount}_1" class="form-label">Đáp án sai:</label>
-                <input type="text" id="answer_${questionCount}_1" name="questions[${questionCount}][answers][1][answer]"
-                    class="form-control" required>
-                <input type="hidden" name="questions[${questionCount}][answers][1][is_correct]" value="0">
-            </div>
-            <div class="mb-3">
-                <label for="answer_${questionCount}_2" class="form-label">Đáp án sai:</label>
-                <input type="text" id="answer_${questionCount}_2" name="questions[${questionCount}][answers][2][answer]"
-                    class="form-control" required>
-                <input type="hidden" name="questions[${questionCount}][answers][2][is_correct]" value="0">
-            </div>
-            <div class="mb-3">
-                <label for="answer_${questionCount}_3" class="form-label">Đáp án sai:</label>
-                <input type="text" id="answer_${questionCount}_3" name="questions[${questionCount}][answers][3][answer]"
-                    class="form-control" required>
-                <input type="hidden" name="questions[${questionCount}][answers][3][is_correct]" value="0">
-            </div>
-        </div>
-        `;
+{{--            const questionHtml = `--}}
+{{--        <div class="question-block mb-3">--}}
+{{--            <h5>Câu hỏi ${questionCount}</h5>--}}
+{{--            <div class="mb-3">--}}
+{{--                <label for="question_${questionCount}" class="form-label">Câu hỏi:</label>--}}
+{{--                <input type="text" id="question_${questionCount}" name="questions[${questionCount}][question]"--}}
+{{--                    class="form-control" required>--}}
+{{--            </div>--}}
+{{--            <div class="mb-3">--}}
+{{--                <label for="answer_${questionCount}_0" class="form-label">Đáp án đúng:</label>--}}
+{{--                <input type="text" id="answer_${questionCount}_0" name="questions[${questionCount}][answers][0][answer]"--}}
+{{--                    class="form-control" required>--}}
+{{--                <input type="hidden" name="questions[${questionCount}][answers][0][is_correct]" value="1">--}}
+{{--            </div>--}}
+{{--            <div class="mb-3">--}}
+{{--                <label for="answer_${questionCount}_1" class="form-label">Đáp án sai:</label>--}}
+{{--                <input type="text" id="answer_${questionCount}_1" name="questions[${questionCount}][answers][1][answer]"--}}
+{{--                    class="form-control" required>--}}
+{{--                <input type="hidden" name="questions[${questionCount}][answers][1][is_correct]" value="0">--}}
+{{--            </div>--}}
+{{--            <div class="mb-3">--}}
+{{--                <label for="answer_${questionCount}_2" class="form-label">Đáp án sai:</label>--}}
+{{--                <input type="text" id="answer_${questionCount}_2" name="questions[${questionCount}][answers][2][answer]"--}}
+{{--                    class="form-control" required>--}}
+{{--                <input type="hidden" name="questions[${questionCount}][answers][2][is_correct]" value="0">--}}
+{{--            </div>--}}
+{{--            <div class="mb-3">--}}
+{{--                <label for="answer_${questionCount}_3" class="form-label">Đáp án sai:</label>--}}
+{{--                <input type="text" id="answer_${questionCount}_3" name="questions[${questionCount}][answers][3][answer]"--}}
+{{--                    class="form-control" required>--}}
+{{--                <input type="hidden" name="questions[${questionCount}][answers][3][is_correct]" value="0">--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--        `;--}}
 
-            questionsContainer.insertAdjacentHTML('beforeend', questionHtml);
-        });
-    </script>
+{{--            questionsContainer.insertAdjacentHTML('beforeend', questionHtml);--}}
+{{--        });--}}
+{{--    </script>--}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.toggle-quiz-list').forEach(button => {
