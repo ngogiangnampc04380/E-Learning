@@ -3,6 +3,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\CheckoutController;
+
 // ----------------------------client----------------------------*******
 
 use App\Http\Controllers\Client\HomeController;
@@ -19,11 +20,10 @@ use App\Http\Controllers\Client\SearchController;
 use App\Http\Controllers\Client\LogoutController;
 use App\Http\Controllers\Client\RegisterController;
 use App\Http\Controllers\Client\PasswordController;
+
 // ----------------------------Mentor----------------------------*******
 use App\Http\Controllers\Mentor\MentorControllerr;
 use App\Http\Controllers\Mentor\SaleController;
-
-
 
 
 // ---------------------------------------Client-------------------------
@@ -102,13 +102,14 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::post('/courses/{course}/submit', [CoursesController::class, 'submitCourse'])->name('submitCourse');
     Route::post('/recall-course/{id}', [CoursesController::class, 'recallCourse'])->name('recallCourse');
     // ----------------------------------course-details-------------------------
-    Route::get('/my-course/{id}', [CoursesController::class,   'myCourse'])->name('my-course');
+    Route::get('/my-course/{id}', [CoursesController::class, 'myCourse'])->name('my-course');
     Route::get("/course-list", [CoursesController::class, "list"])->name("course-lists");
     Route::get("/course-details/{id}", [CoursesController::class, "detail"])->name("course-details");
     Route::get("/course-checkout/{id}", [CoursesController::class, "checkout"])->name("course-checkout");
     Route::post("/checkout-submit", [CoursesController::class, "checkoutSubmit"])->name("checkout-submit");
     Route::get('/course-pricing/{id}', [CoursesController::class, 'pricing'])->name('course-pricing');
     Route::get('/chapter/{id}/{lesson_id?}', [CoursesController::class, 'lesson'])->name('lesson');
+    Route::get('/courses/{course_id}/chapters/{chapter_id}/add-quiz', [CoursesController::class, 'addQuiz'])->name('courses.add-quiz');
     Route::post('/add-quiz', [CoursesController::class, 'store'])->name('courses.storequiz');
     Route::post('/storequiz', [CoursesController::class, 'store'])->name('courses.storequiz');
     Route::get('/list-quiz', [CoursesController::class, 'listquiz'])->name('list-quiz');

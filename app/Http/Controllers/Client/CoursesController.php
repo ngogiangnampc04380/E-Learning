@@ -52,7 +52,17 @@ class CoursesController extends Controller
         return view('client.courses.courses-list', compact('data', 'query', 'categories'));
     }
 
-
+    public function detail($id)
+    {
+        $course = Course::with('mentor')->findOrFail($id);
+        $mentor = DB::table('courses')
+            ->join('mentors', 'courses.mentor_id', '=', 'mentors.id')
+            ->join('users', 'mentors.user_id', '=', 'users.id')
+            ->select('users.introduce AS introduce', 'users.name AS fullname')
+            ->where('courses.id', $id) // Điều kiện để lấy thông tin cho khóa học cụ thể
+            ->first(); // Lấy ra một đối tượng duy nhất
+        return view('client.courses.course-details', compact('course', 'mentor'));
+    }
 
 
     public function myCourse($id)
@@ -132,10 +142,21 @@ class CoursesController extends Controller
                 ->toArray();
         }
 
-        return view('client.courses.lesson', compact('data', 'checklesson', 'chapters', 'chapterLessons', 'firstLessonVideo', 'selectedLesson'));
+
+        $quizzes = DB::table('quizzes')
+            ->where('course_id', $data->id)
+            ->select('id', 'name')
+            ->get();
+
+        return view('client.courses.lesson', compact('data', 'checklesson', 'chapters', 'chapterLessons', 'firstLessonVideo', 'selectedLesson', 'quizzes'));
     }
 
 
+
+    public function addQuiz($course_id, $chapter_id)
+    {
+        return view('client.courses.add-quiz', compact('course_id', 'chapter_id'));
+    }
 
     public function quizChapter($id)
     {
@@ -147,7 +168,6 @@ class CoursesController extends Controller
 
         return view('client.courses.quiz', compact('questions', 'quiz'));
     }
-
     public function submitQuiz(Request $request, $id)
     {
         $quiz = Quiz::findOrFail($id);
@@ -196,8 +216,6 @@ class CoursesController extends Controller
 
     public function store(Request $request)
     {
-       
-        // Create a new quiz
         $quiz = new Quiz();
         $quiz->course_id = $request->course_id;
         $quiz->chapter_id = $request->chapter_id;
