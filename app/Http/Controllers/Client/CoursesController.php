@@ -110,7 +110,7 @@ class CoursesController extends Controller
 
         $chapterLessons = [];
         $firstLessonVideo = null;
-
+        $Lessonname  = null;
         foreach ($chapters as $chapter) {
             $lessons = DB::table('lessons')
                 ->where('chapter_id', $chapter->chapterID)
@@ -120,7 +120,10 @@ class CoursesController extends Controller
             $chapterLessons[$chapter->chapterID] = $lessons;
 
             if (is_null($firstLessonVideo) && $lessons->isNotEmpty()) {
-                $firstLessonVideo = asset('assets-client/Videos/Lessons/' . $lessons->first()->lessonvideo);
+                $firstLessonVideo = Storage::url('public/assets-client/Videos/Lessons/' . $lessons->first()->lessonvideo);
+            }
+            if (is_null($Lessonname) && $lessons->isNotEmpty()) {
+                $Lessonname = $lessons->first()->lessonname;
             }
         }
 
@@ -148,7 +151,7 @@ class CoursesController extends Controller
             ->select('id', 'name')
             ->get();
 
-        return view('client.courses.lesson', compact('data', 'checklesson', 'chapters', 'chapterLessons', 'firstLessonVideo', 'selectedLesson', 'quizzes'));
+        return view('client.courses.lesson', compact('data', 'checklesson', 'chapters', 'chapterLessons','Lessonname', 'firstLessonVideo', 'selectedLesson', 'quizzes'));
     }
 
 

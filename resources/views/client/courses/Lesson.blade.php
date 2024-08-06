@@ -158,7 +158,7 @@
                 <div class="col-lg-9 mb-4">
                     <div class="student-widget lesson-introduction">
                         <div class="lesson-widget-group">
-                            <h2 id="lesson-title"></h2>
+                            <h2 id="lesson-title">{{ $Lessonname }}</h2>
                             <input type="hidden" id="courseID" name="courseID" value="">
                             <input type="hidden" id="chapterID" name="chapterID" value="">
                             <input type="hidden" id="lessonID" name="lessonID" value="">

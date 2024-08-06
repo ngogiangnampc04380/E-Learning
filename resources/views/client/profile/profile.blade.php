@@ -48,7 +48,7 @@
                     </div>
                     <div class="settings-menu">
     <h3>Thông tin tài khoản</h3>
-    <ul>
+   <ul>
         <li class="nav-item {{ request()->routeIs('client.dashboard-profile') ? 'active' : '' }}">
             <a href="{{ route('client.dashboard-profile') }}" class="nav-link">
                 <i class="feather-home"></i> Dữ liệu và thống kê
@@ -86,7 +86,11 @@
         <div class="instructor-title">
             <h3>Cài đặt tài khoản</h3>
         </div>
-        
+        <li class="nav-item {{ request()->routeIs('client.user-profile') ? 'active' : '' }}">
+            <a href="{{ route('client.user-profile') }}" class="nav-link">
+                <i class="feather-settings"></i> Thông tin cá nhân
+            </a>
+        </li>
         @if(auth()->user()->role == 1)
         <div class="instructor-title">
             <h3>ADMIN</h3>
@@ -97,9 +101,9 @@
             </a>
         </li>
         @endif
-        <li class="nav-item {{ request()->routeIs('client.user-profile') ? 'active' : '' }}">
-            <a href="" class="nav-link">
-                <i class="feather-settings"></i> Thông tin cá nhân
+        <li class="nav-item">
+            <a href="{{ route('client.reset-password') }}" class="nav-link">
+                <i class="feather-log-out"></i> Đổi mật Khẩu
             </a>
         </li>
         <li class="nav-item">

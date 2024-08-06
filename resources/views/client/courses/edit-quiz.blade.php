@@ -3,164 +3,174 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-xl-3 col-lg-4 col-md-12 py-5">
+            <div class="col-xl-3 col-lg-4 col-md-12 theiaStickySidebar">
                 <div class="settings-widget dash-profile">
                     <div class="settings-menu p-0">
                         <div class="profile-bg">
                             @if(auth()->user()->role == 0)
-                                <h5 class="text-muted mb-0">Học viên</h5>
+                            <h5 class="text-muted mb-0">Học viên</h5>
                             @elseif(auth()->user()->role == 1)
-                                <h5 class="text-muted mb-0">ADMIN</h5>
+                            <h5 class="text-muted mb-0">Quảng trị viên</h5>
                             @elseif(auth()->user()->role == 2)
-                                <h5 class="text-muted mb-0">Mentor</h5>
+                            <h5 class="text-muted mb-0">Giảng viên</h5>
                             @endif
                             <img src="/assets-client/img/instructor-profile-bg.jpg" alt="">
                             <div class="profile-img">
                                 <a href="">
-                                    <img
-                                        src="{{ auth()->user()->thumbnail ? Storage::url('assets-client/img/user/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}"
-                                        alt="">
+                                    <img src="{{ auth()->user()->thumbnail ? Storage::url('assets-client/img/user/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}"  alt="">
                                 </a>
                             </div>
                         </div>
                         <div class="profile-group">
                             <div class="profile-name text-center">
-                                <h4><a href="">{{auth()->user()->name}}</a></h4>
+                                <h4><a href="">{{auth()->user()-> name}}</a></h4>
                                 @if(auth()->user()->role == 0)
                                     <p class="text-muted mb-0">Học viên</p>
-                                @elseif(auth()->user()->role == 1)
-                                    <p class="text-muted mb-0">ADMIN</p>
-                                @elseif(auth()->user()->role == 2)
-                                    <p class="text-muted mb-0">Mentor</p>
-                                @endif
+                                    @elseif(auth()->user()->role == 1)
+                                    <p class="text-muted mb-0">Quản trị viên</p>
+                                    @elseif(auth()->user()->role == 2)
+                                    <p class="text-muted mb-0">GIảng viên</p>
+                                    @endif
                             </div>
                             @if(auth()->user()->role == 2)
-                                <div class="go-dashboard text-center mt-3">
-                                    <a href="{{ route('client.create-course') }}" class="btn btn-primary">Tạo Khóa Học Mới</a>
-                                </div>
+                            <div class="go-dashboard text-center">
+                                <a href="{{ route('client.create-course') }}" class="btn btn-primary">THÊM KHÓA HỌC MỚI</a>
+                            </div>
                             @endif
+
                         </div>
                     </div>
                 </div>
-                <div class="settings-menu mt-4">
-                    <h3>Thông tin tài khoản</h3>
-                    <ul class="nav flex-column">
-                        <li class="nav-item {{ request()->routeIs('client.dashboard-profile') ? 'active' : '' }}">
-                            <a href="{{ route('client.dashboard-profile') }}" class="nav-link">
-                                <i class="feather-home"></i> My Dashboard
-                            </a>
-                        </li>
-                        @if(in_array(auth()->user()->role, [0, 2]))
-                            <li class="nav-item {{ request()->is('instructor-course') ? 'active' : '' }}">
-                                <a href="instructor-course.html" class="nav-link">
-                                    <i class="feather-shopping-bag"></i> Khóa học của tôi
-                                </a>
-                            </li>
-                        @endif
-                        @if(auth()->user()->role == 2)
-                            <li class="nav-item {{ request()->is('instructor-student-grid.html') ? 'active' : '' }}">
-                                <a href="instructor-student-grid.html" class="nav-link">
-                                    <i class="feather-users"></i> Quản lí học viên
-                                </a>
-                            </li>
-                            <li class="nav-item {{ request()->is('instructor-earnings.html') ? 'active' : '' }}">
-                                <a href="instructor-earnings.html" class="nav-link">
-                                    <i class="feather-pie-chart"></i> Doanh thu
-                                </a>
-                            </li>
-                            <li class="nav-item {{ request()->is('instructor-orders.html') ? 'active' : '' }}">
-                                <a href="instructor-orders.html" class="nav-link">
-                                    <i class="feather-shopping-bag"></i> Đơn hàng
-                                </a>
-                            </li>
-                        @endif
-                        <div class="instructor-title mt-4">
-                            <h3>CÀI ĐẶT TÀI KHOẢN</h3>
-                        </div>
-                        <li class="nav-item {{ request()->routeIs('client.user-profile') ? 'active' : '' }}">
-                            <a href="{{ route('client.user-profile') }}" class="nav-link">
-                                <i class="feather-settings"></i> Thông tin cá nhân
-                            </a>
-                        </li>
-                        @if(auth()->user()->role == 1)
-                            <div class="instructor-title mt-4">
-                                <h3>ADMIN</h3>
-                            </div>
-                            <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
-                                <a href="/admin" class="nav-link">
-                                    <i class="feather-cpu"></i> Quản trị website
-                                </a>
-                            </li>
-                        @endif
-                        <li class="nav-item mt-4">
-                            <a href="{{ route('logout') }}" class="nav-link">
-                                <i class="feather-log-out"></i> Đăng xuất
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('client.disable-account-form') }}" class="nav-link">
-                                <i class="feather-user-x"></i> Vô hiệu hóa tài khoản
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <div class="settings-menu">
+<h3>Thông tin tài khoản</h3>
+<ul>
+    <li class="nav-item {{ request()->routeIs('client.dashboard-profile') ? 'active' : '' }}">
+        <a href="{{ route('client.dashboard-profile') }}" class="nav-link">
+            <i class="feather-home"></i> Dữ liệu và thống kê
+        </a>
+    </li>
+    @if(in_array(auth()->user()->role, [0, 2]))
+    <li class="nav-item {{ request()->is('instructor-course') ? 'active' : '' }}">
+        <a href="instructor-course.html" class="nav-link">
+            <i class="feather-shopping-bag"></i> Khóa học của tôi
+        </a>
+    </li>
+    @endif
+    @if(auth()->user()->role == 2)
+    <li class="nav-item {{ request()->routeIs('client.instructor-course') ? 'active' : '' }}">
+        <a href="{{ route('client.instructor-course',auth()->user()->id) }}" class="nav-link">
+            <i class="feather-book"></i> Quản lí khóa học
+        </a>
+    </li>
+    <li class="nav-item {{ request()->is('instructor-student-grid.html') ? 'active' : '' }}">
+        <a href="instructor-student-grid.html" class="nav-link">
+            <i class="feather-users"></i> Quản lí học viên
+        </a>
+    </li>
+    <li class="nav-item {{ request()->is('instructor-earnings.html') ? 'active' : '' }}">
+        <a href="instructor-earnings.html" class="nav-link">
+            <i class="feather-pie-chart"></i> Nam Béo
+        </a>
+    </li>
+    <li class="nav-item {{ request()->is('instructor-orders.html') ? 'active' : '' }}">
+        <a href="instructor-orders.html" class="nav-link">
+            <i class="feather-shopping-bag"></i> Nam Béo
+        </a>
+    </li>
+    @endif
+    <div class="instructor-title">
+        <h3>Cài đặt tài khoản</h3>
+    </div>
+    <li class="nav-item {{ request()->routeIs('client.user-profile') ? 'active' : '' }}">
+        <a href="{{ route('client.user-profile') }}" class="nav-link">
+            <i class="feather-settings"></i> Thông tin cá nhân
+        </a>
+    </li>
+    @if(auth()->user()->role == 1)
+    <div class="instructor-title">
+        <h3>ADMIN</h3>
+    </div>
+    <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
+        <a href="/admin" class="nav-link">
+            <i class="feather-cpu"></i> Quảng trị website
+        </a>
+    </li>
+    @endif
+    <li class="nav-item">
+        <a href="{{ route('client.reset-password') }}" class="nav-link">
+            <i class="feather-log-out"></i> Đổi mật Khẩu
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ route('logout') }}" class="nav-link">
+            <i class="feather-log-out"></i> Đăng xuất
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ route('client.disable-account-form') }}" class="nav-link">
+            <i class="feather-user-x"></i> Vô hiệu hóa tài khoản
+        </a>
+    </li>
+</ul>
+</div>
+
             </div>
             <div class="col-xl-9 col-lg-8 col-md-12 my-5">
                 <div class="card">
                     <div class="card-body">
                         <h2 class="mb-4">Chỉnh sửa Quiz</h2>
-                        <form action="{{ route('client.courses.update-quiz', $quiz->id) }}" method="POST">
+                        <form action="{{ route('client.courses.update-quiz', $quiz->id) }}" method="POST" class="p-4 bg-light rounded shadow-sm">
                             @csrf
                             @method('PUT')
-
+                        
                             <div class="mb-4">
-                                <label for="name" class="form-label">Tiêu đề Quiz:</label>
+                                <label for="name" class="form-label fw-bold">Tiêu đề Quiz:</label>
                                 <input type="text" id="name" name="name" class="form-control" value="{{ $quiz->name }}" required>
                             </div>
-
+                        
                             <div id="questions-container">
                                 @foreach ($quiz->questions as $index => $question)
-                                    <div class="question-block mb-4 p-3 border rounded" data-index="{{ $index }}">
-                                        <h5 class="mb-3">Câu hỏi {{ $index + 1 }}</h5>
+                                    <div class="question-block mb-4 p-4 border border-primary rounded" data-index="{{ $index }}">
+                                        <h5 class="mb-3 question-title">Câu hỏi {{ $index + 1 }}</h5>
                                         <input type="hidden" name="questions[{{ $index }}][id]" value="{{ $question->id }}">
-
+                        
                                         <div class="mb-3">
                                             <label for="question_{{ $index }}" class="form-label">Câu hỏi:</label>
                                             <input type="text" id="question_{{ $index }}"
                                                    name="questions[{{ $index }}][question]"
                                                    class="form-control" value="{{ $question->question }}" required>
                                         </div>
-
+                        
                                         <div class="mb-3">
                                             <label for="correct_answer_{{ $index }}" class="form-label">Đáp án đúng:</label>
                                             <input type="text" id="correct_answer_{{ $index }}"
                                                    name="questions[{{ $index }}][correct_answer]" class="form-control"
                                                    value="{{ $question->correctAnswer->answer }}" required>
                                         </div>
-
+                        
                                         @foreach ($question->wrongAnswers as $i => $wrongAnswer)
                                             <div class="mb-3">
-                                                <label for="wrong_answer{{ $i + 1 }}_{{ $index }}" class="form-label">Đáp án
-                                                    sai {{ $i + 1 }}:</label>
+                                                <label for="wrong_answer{{ $i + 1 }}_{{ $index }}" class="form-label">Đáp án sai {{ $i + 1 }}:</label>
                                                 <input type="text" id="wrong_answer{{ $i + 1 }}_{{ $index }}"
                                                        name="questions[{{ $index }}][wrong_answers][]" class="form-control"
                                                        value="{{ $wrongAnswer->answer }}" required>
                                             </div>
                                         @endforeach
-                                        <button type="button" class="btn btn-danger btn-sm remove-question">Xóa câu hỏi</button>
+                                        <button type="button" class="btn btn-outline-danger btn-sm remove-question mt-2">Xóa câu hỏi</button>
                                     </div>
                                 @endforeach
                             </div>
-
-                            <button type="button" class="btn btn-success btn-sm mb-3" id="add-question">Thêm câu hỏi</button>
-
+                        
+                            <button type="button" class="btn btn-outline-success mb-3" id="add-question">Thêm câu hỏi</button>
+                        
                             <div class="d-flex justify-content-between align-items-center mb-4">
-                                <a href="{{ route('client.editCourse', $quiz->course_id) }}" class="btn btn-secondary">
-                                    <i class="bi bi-arrow-left"></i> Quay lại danh sách quiz
+                                <a href="#" class="btn btn-secondary" onclick="window.history.back(); return false;">
+                                    <i class="bi bi-arrow-left"></i> Quay lại
                                 </a>
-                                <button type="submit" class="btn btn-primary">Lưu</button>
+                                <button type="submit" class="btn btn-success">Lưu</button>
                             </div>
                         </form>
+                        
                     </div>
                 </div>
             </div>

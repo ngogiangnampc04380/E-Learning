@@ -46,7 +46,7 @@
                     </div>
                     <div class="mt-4">
                         <a href="{{ route('client.editCourse', $quiz->course_id) }}" class="btn btn-secondary">
-                            <i class="bi bi-arrow-left"></i> Quay lại danh sách quiz
+                            <i class="bi bi-arrow-left"></i> Quay lại 
                         </a>
                     </div>
                 </div>

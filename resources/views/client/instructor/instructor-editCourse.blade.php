@@ -8,104 +8,113 @@
                     <div class="settings-widget dash-profile">
                         <div class="settings-menu p-0">
                             <div class="profile-bg">
-                                @if (auth()->user()->role == 0)
-                                    <h5 class="text-muted mb-0">Học viên</h5>
+                                @if(auth()->user()->role == 0)
+                                <h5 class="text-muted mb-0">Học viên</h5>
                                 @elseif(auth()->user()->role == 1)
-                                    <h5 class="text-muted mb-0">Quảng trị viên</h5>
+                                <h5 class="text-muted mb-0">Quảng trị viên</h5>
                                 @elseif(auth()->user()->role == 2)
-                                    <h5 class="text-muted mb-0">Giảng viên</h5>
+                                <h5 class="text-muted mb-0">Giảng viên</h5>
                                 @endif
                                 <img src="/assets-client/img/instructor-profile-bg.jpg" alt="">
                                 <div class="profile-img">
                                     <a href="">
-                                        <img src="{{ auth()->user()->thumbnail ? Storage::url('assets-client/img/user/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}"
-                                            alt="">
+                                        <img src="{{ auth()->user()->thumbnail ? Storage::url('assets-client/img/user/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}"  alt="">
                                     </a>
                                 </div>
                             </div>
                             <div class="profile-group">
                                 <div class="profile-name text-center">
-                                    <h4><a href="">{{ auth()->user()->name }}</a></h4>
-                                    @if (auth()->user()->role == 0)
+                                    <h4><a href="">{{auth()->user()-> name}}</a></h4>
+                                    @if(auth()->user()->role == 0)
                                         <p class="text-muted mb-0">Học viên</p>
-                                    @elseif(auth()->user()->role == 1)
+                                        @elseif(auth()->user()->role == 1)
                                         <p class="text-muted mb-0">Quản trị viên</p>
-                                    @elseif(auth()->user()->role == 2)
+                                        @elseif(auth()->user()->role == 2)
                                         <p class="text-muted mb-0">GIảng viên</p>
-                                    @endif
+                                        @endif
                                 </div>
-                                @if (auth()->user()->role == 2)
-                                    <div class="go-dashboard text-center">
-                                        <a href="{{ route('client.create-course') }}" class="btn btn-primary">THÊM KHÓA HỌC
-                                            MỚI</a>
-                                    </div>
+                                @if(auth()->user()->role == 2)
+                                <div class="go-dashboard text-center">
+                                    <a href="{{ route('client.create-course') }}" class="btn btn-primary">THÊM KHÓA HỌC MỚI</a>
+                                </div>
                                 @endif
 
                             </div>
                         </div>
                     </div>
                     <div class="settings-menu">
-                        <h3>Thông tin tài khoản</h3>
-                        <ul>
-                            <li class="nav-item {{ request()->routeIs('client.dashboard-profile') ? 'active' : '' }}">
-                                <a href="{{ route('client.dashboard-profile') }}" class="nav-link">
-                                    <i class="feather-home"></i> Dữ liệu và thống kê
-                                </a>
-                            </li>
-                            @if (in_array(auth()->user()->role, [0, 2]))
-                                <li class="nav-item {{ request()->is('instructor-course') ? 'active' : '' }}">
-                                    <a href="instructor-course.html" class="nav-link">
-                                        <i class="feather-shopping-bag"></i> Khóa học của tôi
-                                    </a>
-                                </li>
-                            @endif
-                            @if (auth()->user()->role == 2)
-                                <li class="nav-item {{ request()->is('instructor-student-grid.html') ? 'active' : '' }}">
-                                    <a href="instructor-student-grid.html" class="nav-link">
-                                        <i class="feather-users"></i> Quản lí học viên
-                                    </a>
-                                </li>
-                                <li class="nav-item {{ request()->is('instructor-earnings.html') ? 'active' : '' }}">
-                                    <a href="instructor-earnings.html" class="nav-link">
-                                        <i class="feather-pie-chart"></i> Nam Béo
-                                    </a>
-                                </li>
-                                <li class="nav-item {{ request()->is('instructor-orders.html') ? 'active' : '' }}">
-                                    <a href="instructor-orders.html" class="nav-link">
-                                        <i class="feather-shopping-bag"></i> Nam Béo
-                                    </a>
-                                </li>
-                            @endif
-                            <div class="instructor-title">
-                                <h3>Cài đặt tài khoản</h3>
-                            </div>
-                            <li class="nav-item {{ request()->routeIs('client.user-profile') ? 'active' : '' }}">
-                                <a href="{{ route('client.user-profile') }}" class="nav-link">
-                                    <i class="feather-settings"></i> Thông tin cá nhân
-                                </a>
-                            </li>
-                            @if (auth()->user()->role == 1)
-                                <div class="instructor-title">
-                                    <h3>ADMIN</h3>
-                                </div>
-                                <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
-                                    <a href="/admin" class="nav-link">
-                                        <i class="feather-cpu"></i> Quảng trị website
-                                    </a>
-                                </li>
-                            @endif
-                            <li class="nav-item">
-                                <a href="{{ route('logout') }}" class="nav-link">
-                                    <i class="feather-log-out"></i> Đăng xuất
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('client.disable-account-form') }}" class="nav-link">
-                                    <i class="feather-user-x"></i> Vô hiệu hóa tài khoản
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+    <h3>Thông tin tài khoản</h3>
+   <ul>
+        <li class="nav-item {{ request()->routeIs('client.dashboard-profile') ? 'active' : '' }}">
+            <a href="{{ route('client.dashboard-profile') }}" class="nav-link">
+                <i class="feather-home"></i> Dữ liệu và thống kê
+            </a>
+        </li>
+        @if(in_array(auth()->user()->role, [0, 2]))
+        <li class="nav-item {{ request()->is('instructor-course') ? 'active' : '' }}">
+            <a href="instructor-course.html" class="nav-link">
+                <i class="feather-shopping-bag"></i> Khóa học của tôi
+            </a>
+        </li>
+        @endif
+        @if(auth()->user()->role == 2)
+        <li class="nav-item {{ request()->routeIs('client.instructor-course') ? 'active' : '' }}">
+            <a href="{{ route('client.instructor-course',auth()->user()->id) }}" class="nav-link">
+                <i class="feather-book"></i> Quản lí khóa học
+            </a>
+        </li>
+        <li class="nav-item {{ request()->is('instructor-student-grid.html') ? 'active' : '' }}">
+            <a href="instructor-student-grid.html" class="nav-link">
+                <i class="feather-users"></i> Quản lí học viên
+            </a>
+        </li>
+        <li class="nav-item {{ request()->is('instructor-earnings.html') ? 'active' : '' }}">
+            <a href="instructor-earnings.html" class="nav-link">
+                <i class="feather-pie-chart"></i> Nam Béo
+            </a>
+        </li>
+        <li class="nav-item {{ request()->is('instructor-orders.html') ? 'active' : '' }}">
+            <a href="instructor-orders.html" class="nav-link">
+                <i class="feather-shopping-bag"></i> Nam Béo
+            </a>
+        </li>
+        @endif
+        <div class="instructor-title">
+            <h3>Cài đặt tài khoản</h3>
+        </div>
+        <li class="nav-item {{ request()->routeIs('client.user-profile') ? 'active' : '' }}">
+            <a href="{{ route('client.user-profile') }}" class="nav-link">
+                <i class="feather-settings"></i> Thông tin cá nhân
+            </a>
+        </li>
+        @if(auth()->user()->role == 1)
+        <div class="instructor-title">
+            <h3>ADMIN</h3>
+        </div>
+        <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
+            <a href="/admin" class="nav-link">
+                <i class="feather-cpu"></i> Quảng trị website
+            </a>
+        </li>
+        @endif
+        <li class="nav-item">
+            <a href="{{ route('client.reset-password') }}" class="nav-link">
+                <i class="feather-log-out"></i> Đổi mật Khẩu
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('logout') }}" class="nav-link">
+                <i class="feather-log-out"></i> Đăng xuất
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('client.disable-account-form') }}" class="nav-link">
+                <i class="feather-user-x"></i> Vô hiệu hóa tài khoản
+            </a>
+        </li>
+    </ul>
+</div>
+
                 </div>
 
 
@@ -118,23 +127,23 @@
                                 <thead>
                                     <tr>
                                         <th
-                                            style="background:    #f1c232;
+                                            style="color: black; background:    #f1c232;
 background:    linear-gradient(#f1c232, #ffff00);">
                                             Hình ảnh</th>
                                         <th
-                                            style="background:    #f1c232;
+                                            style=" color: black; background:    #f1c232;
 background:    linear-gradient(#f1c232, #ffff00);">
                                             Video demo</th>
                                         <th
-                                            style="background:    #f1c232;
+                                            style="color: black; background:    #f1c232;
 background:    linear-gradient(#f1c232, #ffff00);">
                                             Tên khóa học</th>
                                         <th
-                                            style="background:    #f1c232;
+                                            style="color: black; background:    #f1c232;
 background:    linear-gradient(#f1c232, #ffff00);">
                                             Giá</th>
                                         <th
-                                            style="background:    #f1c232;
+                                            style="color: black; background:    #f1c232;
 background:    linear-gradient(#f1c232, #ffff00);">
                                             Hành động</th>
                                     </tr>
@@ -284,10 +293,10 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                         <thead>
                                             <tr>
                                                 <th
-                                                    style="background:    #f1c232; background:    linear-gradient(#f1c232, #ffff00);">
+                                                    style="color: black; background:    #f1c232; background:    linear-gradient(#f1c232, #ffff00);">
                                                     Tên chương</th>
                                                 <th
-                                                    style="background:    #f1c232; background:    linear-gradient(#f1c232, #ffff00);">
+                                                    style="color: black; background:    #f1c232; background:    linear-gradient(#f1c232, #ffff00);">
                                                     Hành động</th>
                                             </tr>
                                         </thead>
@@ -304,23 +313,20 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="button"
-                                                                    class="btn btn-danger delete-chapter-btn "
+                                                                    class="btn btn-outline-danger delete-chapter-btn "
                                                                     data-chapter-id="{{ $chapter->id }}">Xóa</button>
                                                             </form>
                                                             <button type="button"
-                                                                class="btn btn-warning ml-2 edit-chapter-btn ms-2 me-2"
+                                                                class="btn btn-outline-warning ml-2 edit-chapter-btn ms-2 me-2"
                                                                 data-chapter-id="{{ $chapter->id }}">Sửa chương</button>
 
                                                             <button type="button"
-                                                                class="btn btn-info ml-2 toggle-lesson-list"
+                                                                class="btn btn-outline-secondary  ml-2 toggle-lesson-list"
                                                                 data-chapter-id="{{ $chapter->id }}">Ẩn bài học</button>
-                                                            <a href="{{ route('client.courses.add-quiz', ['course_id' => $course->id, 'chapter_id' => $chapter->id]) }}"
-                                                               class="btn btn-warning ml-2 edit-chapter-btn ms-2 me-2" id="add-quiz-link">
-                                                                Thêm bài quiz
-                                                            </a>
+                                                            
 
                                                             <button type="button"
-                                                                class="btn btn-info ml-2 toggle-quiz-list"
+                                                                class="btn btn-outline-secondary  ml-2 toggle-quiz-list"
                                                                 data-chapter-id="{{ $chapter->id }}">Ẩn bài quiz
                                                             </button>
 
@@ -352,7 +358,12 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                         </div>
                                                         <div class="quiz-list mt-2" data-chapter-id="{{ $chapter->id }}"
                                                             style="display: block; border: 1px solid #ccc; padding: 10px;">
-                                                            <h4 style="margin-bottom: 10px;">Danh sách bài quiz</h4>
+                                                            <h4  style="margin-bottom: 10px;">Danh sách bài quiz</h4>
+                                                            
+                                                            <a href="{{ route('client.courses.add-quiz', ['course_id' => $course->id, 'chapter_id' => $chapter->id]) }}"
+                                                                class="btn btn-outline-primary m-2 edit-chapter-btn " id="add-quiz-link">
+                                                                 Thêm bài quiz
+                                                             </a>
                                                             <ul class="list-group">
                                                                 @forelse($chapter->quizzes as $quiz)
                                                                     <li
@@ -360,10 +371,10 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                         <span>{{ $quiz->name }}</span>
                                                                         <div class="d-inline">
                                                                             <a href="{{ route('client.courses.show', $quiz->id) }}"
-                                                                                class="btn btn-sm btn-primary mr-2">Xem chi
+                                                                                class="btn btn-sm btn-outline-dark  mr-2">Xem chi
                                                                                 tiết</a>
                                                                             <a href="{{ route('client.courses.edit-quiz', $quiz->id) }}"
-                                                                                class="btn btn-sm btn-warning mr-2">Sửa</a>
+                                                                                class="btn btn-sm btn-outline-warning mr-2">Sửa</a>
                                                                             <form
                                                                                 action="{{ route('client.courses.delete-quiz', $quiz->id) }}"
                                                                                 method="POST" class="d-inline"
@@ -371,7 +382,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                                 @csrf
                                                                                 @method('DELETE')
                                                                                 <button type="submit"
-                                                                                    class="btn btn-sm btn-danger">Xóa</button>
+                                                                                    class="btn btn-sm btn-outline-danger">Xóa</button>
                                                                             </form>
                                                                             <a href="{{ route('client.courses.quiz-chapter', $quiz->id) }}"
                                                                                 class="btn btn-sm btn-success">Làm bài</a>
@@ -430,11 +441,11 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                             @if ($chapter->lessons->isEmpty())
                                                                 <p>Hiện chưa có bài học nào</p>
                                                                 <button type="button"
-                                                                class="btn btn-primary ml-2 toggle-lesson-form ms-2 me-2"
+                                                                class="btn btn-outline-primary m-2 toggle-lesson-form "
                                                                 data-chapter-id="{{ $chapter->id }}">Thêm bài học</button>
                                                             @else
                                                             <button type="button"
-                                                                class="btn btn-primary ml-2 toggle-lesson-form ms-2 me-2"
+                                                                class="btn btn-outline-primary m-2 toggle-lesson-form "
                                                                 data-chapter-id="{{ $chapter->id }}">Thêm bài học</button>
                                                                 <ul class="list-group">
                                                                     @foreach ($chapter->lessons as $lesson)
@@ -444,13 +455,13 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                             <div>
                                                                                 <a href="{{ asset('storage/assets-client/Videos/Lessons/' . $lesson->path_video) }}"
                                                                                     target="_blank"
-                                                                                    class="btn btn-sm btn-primary mr-2">Xem
+                                                                                    class="btn btn-sm btn-outline-dark  mr-2">Xem
                                                                                     video</a>
                                                                                 <button type="button"
-                                                                                    class="btn btn-sm btn-warning edit-lesson-btn"
+                                                                                    class="btn btn-sm btn-outline-warning edit-lesson-btn"
                                                                                     data-lesson-id="{{ $lesson->id }}">Sửa</button>
                                                                                 <button type="button"
-                                                                                    class="btn btn-sm btn-danger delete-lesson-btn"
+                                                                                    class="btn btn-sm btn-outline-danger delete-lesson-btn"
                                                                                     data-lesson-id="{{ $lesson->id }}">Xóa</button>
 
                                                                             </div>

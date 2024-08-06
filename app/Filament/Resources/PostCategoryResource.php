@@ -43,6 +43,10 @@ class PostCategoryResource extends Resource
                         'regex' => 'đường dẫn không hợp lệ (ví dụ dẫn hợp lệ là: abc-abc)'
                         ])
                     ->maxLength(100),
+                    Forms\Components\TextInput::make('description')
+                    ->required()
+                    ->label('Mô tả')
+                    
             ]);
     }
 

@@ -48,7 +48,7 @@
                         <div class="blog-content blog-read">
                             {!! Str::limit($post->content, 200) !!}
                         </div>
-                        <a href="{{ route('client.post-detail', ['slug' => $post->slug]) }}" class="read-more btn btn-primary">Read More</a>
+                        <a href="{{ route('client.post-detail', ['slug' => $post->slug]) }}" class="read-more btn btn-primary">Xem thêm</a>
                     </div>
                 @endforeach
             </div>
@@ -65,48 +65,7 @@
                     </div>
                 </div>
 
-                <div class="card post-widget blog-widget">
-                    <div class="card-header">
-                        <h4 class="card-title">Bài viết liên quan</h4>
-                    </div>
-                    <div class="card-body">
-                        <ul class="latest-posts">
-                            <li>
-                                <div class="post-thumb">
-                                    <a href=" ">
-                                        <img class="img-fluid" src="/img/blog/blog-01.jpg" alt>
-                                    </a>
-                                </div>
-                                <div class="post-info">
-                                    <h4><a href=" ">Learn Webs Applications Development from Experts</a></h4>
-                                    <p><img class="img-fluid" src="/img/icon/icon-22.svg" alt>Jun 14, 2022</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="post-thumb">
-                                    <a href=" ">
-                                        <img class="img-fluid" src="/img/blog/blog-02.jpg" alt>
-                                    </a>
-                                </div>
-                                <div class="post-info">
-                                    <h4><a href=" ">Expand Your Career Opportunities With Python</a></h4>
-                                    <p><img class="img-fluid" src="/img/icon/icon-22.svg" alt> 3 Dec 2019</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="post-thumb">
-                                    <a href=" ">
-                                        <img class="img-fluid" src="/img/blog/blog-03.jpg" alt>
-                                    </a>
-                                </div>
-                                <div class="post-info">
-                                    <h4><a href=" ">Complete PHP Programming Career Guideline</a></h4>
-                                    <p><img class="img-fluid" src="/img/icon/icon-22.svg" alt> 3 Dec 2019</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                
 
                 <div class="card tags-widget blog-widget tags-card">
                     <div class="card-header">

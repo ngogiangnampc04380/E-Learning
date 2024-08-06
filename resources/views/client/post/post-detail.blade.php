@@ -76,7 +76,7 @@
                     </div>
                     <div class="card-body">
                         <ul class="latest-posts">
-                            <li>
+                            {{-- <li>
                                 <div class="post-thumb">
                                     <a href="blog-details.html">
                                         <img class="img-fluid" src="/img/blog/blog-01.jpg" alt>
@@ -120,7 +120,7 @@
                                     <p><img class="img-fluid" src="/img/icon/icon-22.svg" alt> 3 Dec 2019
                                     </p>
                                 </div>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </div>

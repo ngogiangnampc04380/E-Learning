@@ -11,18 +11,12 @@
                 <div class="col-lg-8">
                     <div class="instructor-wrap border-bottom-0 m-0">
                         <div class="about-instructor align-items-center">
-                            <div class="abt-instructor-img">
+                            {{-- <div class="abt-instructor-img">
                                 <a href="instructor-profile.html"><img src="/assets-client/img/user/user1.jpg" alt="img"
                                                                        class="img-fluid"></a>
-                            </div>
+                            </div> --}}
                             <div class="instructor-detail me-3">
-                                <h5><a href="#">
-                                        @if($course->mentor)
-                                            {{ $course->mentor->name }}
-                                        @else
-                                            Không tìm thấy mentor
-                                        @endif
-                                    </a></h5>
+                                <h2>{{ $course->name}}</h2>
                             </div>
                         </div>
                     </div>
@@ -47,8 +41,9 @@
                             <div class="instructor-wrap">
                                 <div class="about-instructor">
                                     <div class="abt-instructor-img">
-                                        <a href="instructor-profile.html"><img src="/assets-client/img/user/user1.jpg"
-                                                                               alt="img" class="img-fluid"></a>
+                                        <a href="javascript:void(0);" class="profile-info-img">
+                                            <img src="{{ $course->mentor->thumbnail ? Storage::url('assets-client/img/user/' . $course->mentor->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"   alt class="img-fluid">
+                                        </a>
                                     </div>
                                     <div class="instructor-detail">
                                         <h5><a href="#">

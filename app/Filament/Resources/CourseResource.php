@@ -13,6 +13,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Filters\SelectFilter;
 
 class CourseResource extends Resource
 {
@@ -93,7 +94,9 @@ class CourseResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                
+                SelectFilter::make('status')
+                    ->label('Học viên')
+                    ->default('2'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

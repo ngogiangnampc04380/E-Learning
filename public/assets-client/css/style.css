@@ -25756,4 +25756,29 @@ input[type=password]::-ms-clear
     margin-left: 5px; /* Adjust the margin as needed */
 }
 
+.required-indicator {
+    color: red;
+  }
+  .question-title {
+    font-size: 1.25rem; /* Tăng kích thước chữ */
+    font-weight: 700;   /* Đậm hơn */
+    color: #0056b3;     /* Màu xanh đậm */
+    border-bottom: 2px solid #0056b3; /* Đường gạch chân màu xanh */
+    padding-bottom: 0.5rem; /* Khoảng cách dưới chữ */
+    margin-bottom: 1rem; /* Khoảng cách dưới tiêu đề */
+}
+/* CSS để làm tiêu đề quiz nổi bật */
+.form-label.fw-bold {
+    font-size: 1.5rem; /* Tăng kích thước chữ */
+    font-weight: 700;  /* Đậm hơn */
+    color: #007bff;    /* Màu xanh nổi bật */
+    border-bottom: 3px solid #007bff; /* Đường gạch chân dày màu xanh */
+    padding-bottom: 0.5rem; /* Khoảng cách dưới chữ */
+    margin-bottom: 1rem; /* Khoảng cách dưới tiêu đề */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Hiệu ứng bóng nhẹ */
+    background-color: #f8f9fa; /* Nền sáng nhẹ */
+    border-radius: 0.25rem; /* Bo góc cho nền */
+    padding: 0.5rem; /* Khoảng cách nội dung với viền */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bóng đổ nhẹ */
+}
 
