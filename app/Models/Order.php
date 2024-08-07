@@ -19,6 +19,7 @@ class Order extends Model
         'phone',
         'address',
         'course_id',
+        'price_paid',
         'user_id'
     ];
 

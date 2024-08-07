@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('phone',10);
             $table->string('address',100);
             $table->string('order_code',50);
+            $table->string('price_paid',50);
             $table->unsignedBigInteger('course_id');
             $table->foreign('course_id')->references('id')->on('courses')->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('user_id');

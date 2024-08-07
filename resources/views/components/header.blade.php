@@ -944,23 +944,23 @@
                                         data-popper-placement="bottom-end">
                                         
                                         @if(auth()->user()->role == 0)
-                                        <p class="text-muted text-center">
-                                            {{auth()->user()->name}} 
+                                        <p class="mb-0 text-center text-danger">
+                                            <strong>{{auth()->user()->name}}</strong>
                                             <br>
-                                            Học viên
+                                           <p class="text-center">Học viên</p>
                                         </p>
                                         @elseif(auth()->user()->role == 1)
                                         
-                                        <p class="text-muted  m-0 text-center">
-                                            {{auth()->user()->name}}
-                                            <br> 
-                                            Quảng trị viên
+                                        <p class="mb-0 text-center text-danger">
+                                            <strong>{{auth()->user()->name}}</strong>
+                                            <br>
+                                           <p class="text-center">Quản trị viên</p>
                                         </p>
                                         @elseif(auth()->user()->role == 2)
-                                        <p class="text-muted mb-0 text-center">
-                                            {{auth()->user()->name}}
+                                        <p class="mb-0 text-center text-danger">
+                                            <strong>{{auth()->user()->name}}</strong>
                                             <br>
-                                            Giảng viên
+                                           <p class="text-center">Học viên</p>
                                         </p>
                                         @endif
 

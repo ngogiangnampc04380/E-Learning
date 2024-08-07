@@ -63,7 +63,8 @@
                                                     <span class="error-text text-danger" ng-show="checkoutForm.address.$error.required">Vui lòng nhập địa chỉ.</span>
                                                 </div>
                                             </div>
-                                            <input type="hidden" class="form-control" name="course_id" value="{{ $data->id }}">
+                                            <input type="hidden" class="form-control" name="course_id" value="{{ $data->id }}">                                            
+                                            <input type="hidden" class="form-control" name="price" value="{{ $data->price }}">
                                         </div>
                                         <div class="col-lg-12 d-flex justify-content-between">
                                             <a href="#" class="btn btn-secondary mr-2 prev">Quay lại</a>

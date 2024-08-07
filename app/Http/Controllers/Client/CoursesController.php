@@ -325,13 +325,14 @@ class CoursesController extends Controller
         $email = $request->input('email');
         $address = $request->input('address');
         $courseId = $request->input('course_id');
-
+        $price = $request->input('price');
         session([
             'fullname' => $fullname,
             'phone' => $phone,
             'email' => $email,
             'address' => $address,
             'course_id' => $courseId,
+            'price' => $price,
         ]);
 
         return redirect()->route('client.course-pricing', ['id' => $courseId]);
@@ -353,7 +354,6 @@ class CoursesController extends Controller
             'email' => session('email'),
             'address' => session('address'),
             'course_id' => session('course_id'),
-            'price' => session('price'),
         ];
 
         // Kiểm tra xem khóa học có tồn tại hay không
