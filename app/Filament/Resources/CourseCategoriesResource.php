@@ -32,10 +32,13 @@ class CourseCategoriesResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->label('Tên danh mục')
                     ->required()
+                    ->unique(ignoreRecord: true)
                     // ->rules('regex:/^[a-zA-Z]+$/')
 
                     ->validationMessages([
                         'required' => 'vui lòng nhập Tên danh mục',
+                        'unique' =>'Danh mục đã tồn tại'
+
                         // 'regex'=>'Tên danh mục không chứa ký tự đặc biệt'
                         ]),
                     

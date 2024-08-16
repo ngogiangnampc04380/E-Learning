@@ -10,8 +10,11 @@ class Lesson extends Model
 {
     protected $fillable = [
         'name',
-        'chapter_id'
+        'chapter_id',
+        'path_video',
+
     ];
+    
     public function comments(): HasMany{
         return $this->hasMany(Comment::class);
     }

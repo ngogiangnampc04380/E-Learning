@@ -103,7 +103,7 @@
                                             </div>
                                         <div
                                             class="course-share d-flex align-items-center justify-content-center">
-                                            <a href="#rate"><i class="fa-regular fa-heart"></i></a>
+                                            {{-- <a href="#rate"><i class="fa-regular fa-heart"></i></a> --}}
                                         </div>
                                     </div>
                                 </div>

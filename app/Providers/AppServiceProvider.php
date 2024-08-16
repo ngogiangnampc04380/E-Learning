@@ -1,24 +1,33 @@
 <?php
 
 namespace App\Providers;
-
+use Illuminate\Support\Facades\Storage;
+use Google\Cloud\Storage\StorageClient;
+use League\Flysystem\Filesystem;
+use League\Flysystem\GoogleCloudStorage\GoogleCloudStorageAdapter;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
+    public function boot()
+    {
+        Storage::extend('gcs', function ($app, $config) {
+            $storageClient = new StorageClient([
+                'projectId' => $config['project_id'],
+                'keyFilePath' => $config['key_file'],
+            ]);
+
+            $bucket = $storageClient->bucket($config['bucket']);
+            $adapter = new GoogleCloudStorageAdapter($bucket, $config['path_prefix'] ?? '');
+
+            return new Filesystem($adapter);
+        });
+    }
+    
     public function register(): void
     {
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-        //
-    }
+   
 }

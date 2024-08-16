@@ -164,6 +164,9 @@
                             <input type="hidden" id="lessonID" name="lessonID" value="">
                             {{-- <input type="hidden" id="completed" name ="completed" value="1"> --}}
                             <div class="ratio ratio-16x9">
+                                
+                              
+                               
                                 <video id="lesson-video" controls>
                                     <source src="{{ $firstLessonVideo }}" type="video/mp4">
                                 </video>
@@ -198,9 +201,16 @@
                                                             <a href="{{ route('client.lesson', ['id' => $data->id, 'lesson-id' => $lesson->lessonID]) }}"
                                                                class="lesson-link"
                                                                data-lesson-id="{{ $lesson->lessonID }}"
+                                                               @php
+                                                                                        $bucketName = 'entweb01';
+                                                                                        $path_prefix ='ENT01';
+                                                                                        $filePath = 'folder-name';
+                                                                                        $namefile= $lesson->path_video;
+                                                                                        $url = "https://storage.googleapis.com/{$bucketName}/{$path_prefix}/{$filePath}/{$namefile}";
+                                                                                @endphp
                                                                data-video="{{ Storage::url('public/assets-client/Videos/Lessons/' . $lesson->lessonvideo) }}"
                                                                data-title="{{ $lesson->lessonname }}"
-                                                               onclick="loadLesson(event, '{{ $data->id }}', '{{ $item->chapterID }}', '{{ $lesson->lessonID }}', '{{ $lesson->lessonname }}', '{{ Storage::url('public/assets-client/Videos/Lessons/' . $lesson->lessonvideo) }}')">
+                                                               onclick="loadLesson(event, '{{ $data->id }}', '{{ $item->chapterID }}', '{{ $lesson->lessonID }}', '{{ $lesson->lessonname }}', '{{ $url }}')">
                                                                 {{ $lesson->lessonname }}
                                                             </a>
                                                             @if (in_array($lesson->lessonID, $checklesson))

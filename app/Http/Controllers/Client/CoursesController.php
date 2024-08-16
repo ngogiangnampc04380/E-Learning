@@ -120,13 +120,13 @@ class CoursesController extends Controller
             $chapterLessons[$chapter->chapterID] = $lessons;
 
             if (is_null($firstLessonVideo) && $lessons->isNotEmpty()) {
-                $firstLessonVideo = Storage::url('public/assets-client/Videos/Lessons/' . $lessons->first()->lessonvideo);
+                $firstLessonVideo = 'https://storage.googleapis.com/webent01/Video-ENT/' . $lessons->first()->lessonvideo;
             }
             if (is_null($Lessonname) && $lessons->isNotEmpty()) {
                 $Lessonname = $lessons->first()->lessonname;
             }
         }
-
+        
         $selectedLesson = null;
         if ($lesson_id) {
             $selectedLesson = DB::table('lessons')
@@ -496,23 +496,35 @@ class CoursesController extends Controller
         if (empty($lessons)) {
             return redirect()->back()->with('error', 'Vui lòng thêm ít nhất một bài học.');
         }
-
+       
+       
         foreach ($lessons as $index => $lessonData) {
+            
             if ($request->hasFile("lessons.{$index}.video")) {
                 $video = $request->file("lessons.{$index}.video");
-                $videoName = $video->getClientOriginalName();
-                $video->storeAs('public/assets-client/videos/Lessons', $videoName);
-
+                
+                $videoName = $video->hashName();
+                $stream = fopen($video->getRealPath(), 'r');
+                Storage::disk('gcs')->writeStream('folder-name/' . $videoName, $stream);
+                if (is_resource($stream)) {
+                    fclose($stream);
+                }
+                // dd(123);
+                // die;
                 $lesson = new Lesson();
                 $lesson->name = $lessonData['name'];
                 $lesson->path_video = $videoName;
                 $lesson->chapter_id = $lessonData['chapter_id'];
                 $lesson->save();
             } else {
+                // dd('sai rồi làm lại đi');
+                // die;
+              
                 return redirect()->back()->with('error', 'Vui lòng chọn video để tải lên cho bài học ' . ($index + 1));
             }
         }
-
+        // dd(456);
+        // die;
         return redirect()->back()->with('success', 'Đã thêm bài học thành công.');
     }
 

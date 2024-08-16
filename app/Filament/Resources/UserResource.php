@@ -60,6 +60,7 @@ class UserResource extends Resource
                     ->required()
                     ->minLength(10)
                     ->maxLength(10)
+                    ->unique(ignoreRecord: true)
                     ->startsWith(['0'])
                     ->validationMessages([
                         'start_with'=>'Vui lòng nhập đúng định dạng số điện thoại',
@@ -67,6 +68,7 @@ class UserResource extends Resource
                         'regex' => 'Vui lòng nhập đúng định dạng số điện thoại',
                         'min' => 'Vui lòng nhập đúng độ dài số điện thoại',
                         'max' => 'Vui lòng nhập đúng độ dài số điện thoại',
+                        'unique' =>'SDT đã tồn tại'
                         
                     ]),
 

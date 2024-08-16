@@ -70,8 +70,8 @@
             </a>
         </li>
         <li class="nav-item {{ request()->is('instructor-earnings.html') ? 'active' : '' }}">
-            <a href="instructor-earnings.html" class="nav-link">
-                <i class="feather-pie-chart"></i> Nam Béo
+            <a href="{{ route('mentor.store-sale')}}" class="nav-link">
+                <i class="feather-pie-chart"></i> SALES
             </a>
         </li>
         <li class="nav-item {{ request()->is('instructor-orders.html') ? 'active' : '' }}">

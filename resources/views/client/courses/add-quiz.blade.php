@@ -193,45 +193,45 @@
             const questionsContainer = document.getElementById('questions-container');
 
             const questionHtml = `
-                
-                <div class="question-block mb-4 p-4 border border-primary rounded">
-                                    <h5 class="mb-3 question-title">Câu hỏi 1</h5>
-                                    <div class="mb-3">
-                                        <label for="question_1" class="form-label">Câu hỏi:</label>
-                                        <input type="text" id="question_1" name="questions[1][question]" class="form-control" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="answer_1_0" class="form-label">Đáp án đúng:</label>
-                                        <input type="text" id="answer_1_0" name="questions[1][answers][0][answer]" class="form-control" required>
-                                        <input type="hidden" name="questions[1][answers][0][is_correct]" value="1">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="answer_1_1" class="form-label">Đáp án sai:</label>
-                                        <input type="text" id="answer_1_1" name="questions[1][answers][1][answer]" class="form-control" required>
-                                        <input type="hidden" name="questions[1][answers][1][is_correct]" value="0">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="answer_1_2" class="form-label">Đáp án sai:</label>
-                                        <input type="text" id="answer_1_2" name="questions[1][answers][2][answer]" class="form-control" required>
-                                        <input type="hidden" name="questions[1][answers][2][is_correct]" value="0">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="answer_1_3" class="form-label">Đáp án sai:</label>
-                                        <input type="text" id="answer_1_3" name="questions[1][answers][3][answer]" class="form-control" required>
-                                        <input type="hidden" name="questions[1][answers][3][is_correct]" value="0">
-                                    </div>
-                                    <button type="button" class="btn btn-outline-danger btn-sm delete-question">Xóa câu hỏi</button>
-                                </div>
-            `;
+            <div class="question-block mb-4 p-4 border border-primary rounded">
+                <h5 class="mb-3 question-title">Câu hỏi ${questionCount}</h5>
+                <div class="mb-3">
+                    <label for="question_${questionCount}" class="form-label">Câu hỏi:</label>
+                    <input type="text" id="question_${questionCount}" name="questions[${questionCount}][question]" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="answer_${questionCount}_0" class="form-label">Đáp án đúng:</label>
+                    <input type="text" id="answer_${questionCount}_0" name="questions[${questionCount}][answers][0][answer]" class="form-control" required>
+                    <input type="hidden" name="questions[${questionCount}][answers][0][is_correct]" value="1">
+                </div>
+                <div class="mb-3">
+                    <label for="answer_${questionCount}_1" class="form-label">Đáp án sai:</label>
+                    <input type="text" id="answer_${questionCount}_1" name="questions[${questionCount}][answers][1][answer]" class="form-control" required>
+                    <input type="hidden" name="questions[${questionCount}][answers][1][is_correct]" value="0">
+                </div>
+                <div class="mb-3">
+                    <label for="answer_${questionCount}_2" class="form-label">Đáp án sai:</label>
+                    <input type="text" id="answer_${questionCount}_2" name="questions[${questionCount}][answers][2][answer]" class="form-control" required>
+                    <input type="hidden" name="questions[${questionCount}][answers][2][is_correct]" value="0">
+                </div>
+                <div class="mb-3">
+                    <label for="answer_${questionCount}_3" class="form-label">Đáp án sai:</label>
+                    <input type="text" id="answer_${questionCount}_3" name="questions[${questionCount}][answers][3][answer]" class="form-control" required>
+                    <input type="hidden" name="questions[${questionCount}][answers][3][is_correct]" value="0">
+                </div>
+                <button type="button" class="btn btn-outline-danger btn-sm delete-question">Xóa câu hỏi</button>
+            </div>
+        `;
 
             questionsContainer.insertAdjacentHTML('beforeend', questionHtml);
         });
+
         document.addEventListener('click', function(event) {
             if (event.target && event.target.classList.contains('delete-question')) {
                 const questionBlock = event.target.closest('.question-block');
                 questionBlock.remove();
                 updateQuestionNumbers();
-            }
+}
         });
 
         function updateQuestionNumbers() {

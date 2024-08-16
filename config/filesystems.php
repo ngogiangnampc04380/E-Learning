@@ -43,7 +43,17 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+// uppload googleCloud
+        'gcs' => [
+        'driver' => 'gcs',
+        'project_id' => 'ent-web03',
+        'key_file' => storage_path('app/google-cloud.json'), 
+        'bucket' => 'entweb01',
+        'path_prefix' =>'ENT01', // Tùy chọn
+        'storage_api_uri' => 'https://storage.googleapis.com', // Tùy chọn
+         ],
 
+         
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

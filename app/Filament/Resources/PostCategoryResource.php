@@ -27,8 +27,11 @@ class PostCategoryResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->label('Danh mục')
+                    ->unique(ignoreRecord: true)
                     ->validationMessages([
                         'required' => 'vui lòng nhập tên danh mục',
+                        'unique' =>'Danh mục đã tồn tại'
+
                         ])
                     ->maxLength(100),
                 Forms\Components\TextInput::make('slug')

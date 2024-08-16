@@ -949,6 +949,7 @@
                                             <br>
                                            <p class="text-center">Học viên</p>
                                         </p>
+                                        
                                         @elseif(auth()->user()->role == 1)
                                         
                                         <p class="mb-0 text-center text-danger">
@@ -956,12 +957,14 @@
                                             <br>
                                            <p class="text-center">Quản trị viên</p>
                                         </p>
+                                        
                                         @elseif(auth()->user()->role == 2)
                                         <p class="mb-0 text-center text-danger">
                                             <strong>{{auth()->user()->name}}</strong>
                                             <br>
-                                           <p class="text-center">Học viên</p>
+                                            Giảng viên
                                         </p>
+                                        
                                         @endif
 
                                         @if(auth()->user()->role == 0)

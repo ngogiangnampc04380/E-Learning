@@ -453,7 +453,14 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                             class="list-group-item d-flex justify-content-between align-items-center">
                                                                             <span>{{ $lesson->name }}</span>
                                                                             <div>
-                                                                                <a href="{{ asset('storage/assets-client/Videos/Lessons/' . $lesson->path_video) }}"
+                                                                                @php
+                                                                                        $bucketName = 'entweb01';
+                                                                                        $path_prefix ='ENT01';
+                                                                                        $filePath = 'folder-name';
+                                                                                        $namefile= $lesson->path_video;
+                                                                                        $url = "https://storage.googleapis.com/{$bucketName}/{$path_prefix}/{$filePath}/{$namefile}";
+                                                                                @endphp
+                                                                                <a href="{{$url}}"
                                                                                     target="_blank"
                                                                                     class="btn btn-sm btn-outline-dark  mr-2">Xem
                                                                                     video</a>
@@ -509,7 +516,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                         <div class="add-lesson-form mt-2"
                                                             data-chapter-id="{{ $chapter->id }}" style="display: none;">
                                                             <button type="button"
-                                                                class="btn btn-primary ml-2 toggle-lesson-form ms-2 me-2"
+                                                                class="btn btn-outline-primary mr-2 mt-2 mb-2  toggle-lesson-form "
                                                                 onclick="addSection(1, {{ $chapter->id }})">Thêm bài
                                                                 học</button>
                                                             <form action="{{ route('client.addLesson') }}" method="POST"
@@ -817,7 +824,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                 <label class="custom-file-label" for="lesson_video_${index}">Chọn video bài học</label>
                 <input type="file" class="custom-file-input" id="lesson_video_${index}" name="lessons[${index}][video]" required accept="video/*">
             </div>
-            <a href="javascript:void(0);" class="btn text-white border-0" style="background:#ff4667" onclick="removeSection('chapter_${index}')">xóa</a>
+            <a href="javascript:void(0);" class="btn btn-outline-danger m-2 " onclick="removeSection('chapter_${index}')">xóa</a>
         </div>
         `;
                 index++;
