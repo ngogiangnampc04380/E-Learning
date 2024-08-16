@@ -164,9 +164,10 @@
                                                                         </form>
                             
                                                                         <!-- Nút Sửa -->
-                                                                        <a href="{{ route('client.editCourse', $post->id) }}" class="btn btn-outline-warning mx-2 ">
+                                                                        <a href="{{ route('client.editCourse', $post->id) }}" class="btn btn-outline-common mx-2">
                                                                             <i class="fas fa-edit"></i> Sửa
                                                                         </a>
+                                                                        
                             
                                                                         <!-- Nút Gửi duyệt -->
                                                                         <form action="{{ route('client.submitCourse', $post->id) }}" method="POST" class="submit-course-form">
@@ -328,9 +329,10 @@
                                                                         </form>
                             
                                                                         <!-- Nút Sửa -->
-                                                                        <a href="{{ route('client.editCourse', $post->id) }}" class="btn btn-outline-warning mx-2 rounded-pill">
+                                                                        <a href="{{ route('client.editCourse', $post->id) }}" class="btn btn-outline-common mx-2">
                                                                             <i class="fas fa-edit"></i> Sửa
                                                                         </a>
+                                                                        
                                                                     </div>
                                                                 </td>
                                                             </tr>

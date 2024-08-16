@@ -13,6 +13,7 @@ use App\Http\Controllers\Client\IndexAuthController;
 use App\Http\Controllers\Client\UserDashboardController;
 use App\Http\Controllers\Client\UserProfileController;
 use App\Http\Controllers\Client\PostController;
+use App\Http\Controllers\Client\SupportController;
 
 use App\Http\Controllers\Client\SearchController;
 
@@ -79,6 +80,8 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::get('/courses/{id}/edit', [CoursesController::class, 'editCourse'])->name('editCourse');
     Route::post('/courses/{id}/add-chapter', [CoursesController::class, 'addChapter'])->name('addChapter');
     Route::post('/courses/{id}/update', [CoursesController::class, 'updateCourse'])->name('updateCourse');
+    Route::get('/courses', [CoursesController::class, 'list'])->name('course-lists');
+
     // instructor
     Route::get("/instructor-course/{id}", [CoursesController::class, "course"])->name("instructor-course");
     Route::get("/create-course", [CoursesController::class, "addcourse"])->name("create-course");
@@ -120,6 +123,15 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::get('/quiz-chapter/{id}', [CoursesController::class, 'quizChapter'])->name('courses.quiz-chapter');
     Route::post('/quiz-chapter/{id}/submit', [CoursesController::class, 'submitQuiz'])->name('courses.submit');
     Route::get('/quiz-chapter/{id}/result/{score}', [CoursesController::class, 'quizResult'])->name('courses.quiz.result');
+    Route::get('/header-categories', [HomeController::class, 'getCourseCategories'])->name('header.categories');
+// suport mail
+Route::get('/contact', [SupportController::class, 'contact'])->name('contact');
+Route::post('/contact', [SupportController::class, 'submitSupportForm'])->name('contact.submit');
+
+// thứ tự bài học
+Route::post('/update-lesson-order', [CoursesController::class, 'updateOrder'])->name('lesson-order');
+// thứ tự chương
+Route::post('/chapter-order', [CoursesController::class, 'updateOrderChapter'])->name('chapter-order');
 
 
     // ----------------------------- Search ------------------------------

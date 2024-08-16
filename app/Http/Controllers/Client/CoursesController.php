@@ -28,41 +28,85 @@ use Illuminate\Support\Facades\Auth;
 
 class CoursesController extends Controller
 {
+
     public function list(Request $request)
     {
         $query = $request->input('query');
+        $categoryIds = $request->input('categories', []);
+        $priceRanges = $request->input('price_range', []);
+        $sort = $request->input('sort');
 
-        // Khởi tạo truy vấn để lấy danh sách các khóa học có status bằng 2
-        $data = Course::where('status', 2)
-            ->orderBy('id', 'desc')
-            ->with('mentor'); // Load thông tin của mentor
+        // Đảm bảo $categoryIds là một mảng
+        $categoryIds = is_array($categoryIds) ? $categoryIds : [];
 
-        // Nếu có tham số truy vấn, thêm điều kiện tìm kiếm theo tên khóa học
+        // Đảm bảo $priceRanges là một mảng
+        $priceRanges = is_array($priceRanges) ? $priceRanges : [];
+
+        $data = Course::where('status', 2)->with('mentor');
+
+        // Lọc theo tên khóa học
         if ($query) {
-            $data->where('name', 'LIKE', "%$query%");
+            $data = $data->where('name', 'LIKE', "%$query%");
         }
 
-        // Thực hiện truy vấn và lấy danh sách khóa học
-        $data = $data->get();
+        // Lọc theo danh mục
+        if (in_array('all', $categoryIds)) {
+            // Nếu chọn "Tất cả", không cần lọc theo danh mục
+        } elseif (!empty($categoryIds)) {
+            $data = $data->whereIn('category_id', $categoryIds);
+        }
 
-        // Lấy tất cả các danh mục khóa học
-        $categories = Course_category::all();
+        // Lọc theo khoảng giá
+        if (!empty($priceRanges)) {
+            $data->where(function ($query) use ($priceRanges) {
+                foreach ($priceRanges as $range) {
+                    list($minPrice, $maxPrice) = explode('-', $range);
+                    $minPrice = (int)$minPrice * 1000; // Convert to đồng
+                    $maxPrice = (int)$maxPrice * 1000; // Convert to đồng
+                    $query->orWhereBetween('price', [$minPrice, $maxPrice]);
+                }
+            });
+        }
 
-        // Trả về view với dữ liệu các khóa học, truy vấn tìm kiếm và danh sách các danh mục
-        return view('client.courses.courses-list', compact('data', 'query', 'categories'));
+        // Sắp xếp theo giá
+        if ($sort) {
+            $data = $data->orderBy('price', $sort);
+        } else {
+            $data = $data->inRandomOrder(); // Sắp xếp ngẫu nhiên nếu không có tùy chọn sắp xếp
+        }
+
+        $data = $data->paginate(10);
+
+        $categories = Course_Category::all();
+        $latestCourses = Course::where('status', 2)->orderBy('created_at', 'desc')->take(5)->get(); // Lấy 5 khóa học mới nhất
+
+        return view('client.courses.courses-list', compact('data', 'query', 'categories', 'categoryIds', 'latestCourses', 'priceRanges', 'sort'));
     }
+
+
+
+
 
     public function detail($id)
     {
+        // Lấy thông tin khóa học với mentor
         $course = Course::with('mentor')->findOrFail($id);
+
+        // Lấy thông tin của mentor dựa trên khóa học
         $mentor = DB::table('courses')
             ->join('mentors', 'courses.mentor_id', '=', 'mentors.id')
             ->join('users', 'mentors.user_id', '=', 'users.id')
             ->select('users.introduce AS introduce', 'users.name AS fullname')
-            ->where('courses.id', $id) // Điều kiện để lấy thông tin cho khóa học cụ thể
-            ->first(); // Lấy ra một đối tượng duy nhất
-        return view('client.courses.course-details', compact('course', 'mentor'));
+            ->where('courses.id', $id)
+            ->first();
+
+        // Lấy danh sách các categories
+        $categories = Course_Category::all();
+
+        // Truyền biến categories vào view
+        return view('client.courses.course-details', compact('course', 'mentor', 'categories'));
     }
+
 
 
     public function myCourse($id)
@@ -126,7 +170,7 @@ class CoursesController extends Controller
                 $Lessonname = $lessons->first()->lessonname;
             }
         }
-        
+
         $selectedLesson = null;
         if ($lesson_id) {
             $selectedLesson = DB::table('lessons')
@@ -152,15 +196,19 @@ class CoursesController extends Controller
             ->select('id', 'name')
             ->get();
 
-        return view('client.courses.lesson', compact('data', 'checklesson', 'chapters', 'chapterLessons','Lessonname', 'firstLessonVideo', 'selectedLesson', 'quizzes'));
+        return view('client.courses.lesson', compact('data', 'checklesson', 'chapters', 'chapterLessons', 'Lessonname', 'firstLessonVideo', 'selectedLesson', 'quizzes'));
     }
 
 
 
     public function addQuiz($course_id, $chapter_id)
     {
-        return view('client.courses.add-quiz', compact('course_id', 'chapter_id'));
+        // Lấy danh sách danh mục khóa học
+        $categories = Course_category::all(); // Thay thế với logic lấy danh mục phù hợp nếu cần
+
+        return view('client.courses.add-quiz', compact('course_id', 'chapter_id', 'categories'));
     }
+
 
     public function quizChapter($id)
     {
@@ -249,15 +297,22 @@ class CoursesController extends Controller
     public function show($id)
     {
         $quiz = Quiz::with(['course', 'chapter', 'questions.answers'])->findOrFail($id);
+        $categories = Course_category::all(); // Hoặc phương thức phù hợp để lấy danh mục khóa học
 
-        return view('client.courses.show', compact('quiz'));
+        return view('client.courses.show', compact('quiz', 'categories'));
     }
+
 
     public function editQuiz($id)
     {
         $quiz = Quiz::with(['questions.correctAnswer', 'questions.wrongAnswers'])->findOrFail($id);
-        return view('client.courses.edit-quiz', compact('quiz'));
+
+        // Giả sử bạn đang lấy danh mục từ cơ sở dữ liệu
+        $categories = Course_category::all(); // Hoặc một truy vấn tương tự để lấy danh mục
+
+        return view('client.courses.edit-quiz', compact('quiz', 'categories'));
     }
+
 
     public function updateQuiz(Request $request, $id)
     {
@@ -373,25 +428,38 @@ class CoursesController extends Controller
     {
         $mentorId = auth()->user()->mentor->id;
 
+        // Lấy danh sách khóa học của giảng viên
         $data = DB::table('courses')
             ->where('mentor_id', $mentorId)
             ->orderBy('id', 'desc')
             ->get();
-        return view('client.instructor.instructor-course', ['data' => $data]);
+
+        // Lấy tất cả các danh mục khóa học
+        $categories = Course_Category::all();
+
+        return view('client.instructor.instructor-course', [
+            'data' => $data,
+            'categories' => $categories,
+        ]);
     }
+
     public function addcourse()
     {
-        $getCategorie = DB::table('course_categories')
-            ->get();
-        $getCourse = DB::table('courses')
-            ->get();
-        $getChapter = DB::table('chapters')
-            ->get();
-        return view(
-            'client.instructor.instructor-addcourse',
-            ['getCategorie' => $getCategorie, 'getCourse' => $getCourse, 'getChapter' => $getChapter]
-        );
+        $getCategorie = DB::table('course_categories')->get();
+        $getCourse = DB::table('courses')->get();
+        $getChapter = DB::table('chapters')->get();
+
+        // Lấy danh sách các categories
+        $categories = Course_Category::all();
+
+        return view('client.instructor.instructor-addcourse', [
+            'getCategorie' => $getCategorie,
+            'getCourse' => $getCourse,
+            'getChapter' => $getChapter,
+            'categories' => $categories, // Truyền biến $categories vào view
+        ]);
     }
+
 
 
     /*add khóa học*/
@@ -469,20 +537,43 @@ class CoursesController extends Controller
 
     public function deleteChapter($id)
     {
+        // Tìm chương cần xóa
         $chapter = Chapter::findOrFail($id);
+        $course_id = $chapter->course_id;
+
+        // Xóa chương
         $chapter->delete();
+
+        // Cập nhật số thứ tự của các chương còn lại
+        Chapter::where('course_id', $course_id)
+            ->where('number', '>', $chapter->number) // Chỉ cập nhật các chương có số thứ tự lớn hơn số thứ tự của chương bị xóa
+            ->decrement('number'); // Giảm số thứ tự của các chương còn lại
 
         return redirect()->back()->with('success', 'Đã xóa chương thành công!');
     }
+
     public function addChapter(Request $request, $course_id)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+
+        ]);
         $chapter = new Chapter();
         $chapter->name = $request->input('name');
         $chapter->course_id = $course_id;
+
+        // Lấy số thứ tự lớn nhất hiện tại của chương trong khóa học
+        $lastChapter = Chapter::where('course_id', $course_id)->orderBy('number', 'desc')->first();
+        $chapter->number = $lastChapter ? $lastChapter->number + 1 : 1; // Nếu không có chương nào, đặt number là 1
+
         $chapter->save();
 
         return redirect()->back()->with('success', 'Đã thêm chương mới tự động!');
     }
+
+
+
+
     public function addLesson(Request $request)
     {
         // Validate request data
@@ -497,37 +588,77 @@ class CoursesController extends Controller
         if (empty($lessons)) {
             return redirect()->back()->with('error', 'Vui lòng thêm ít nhất một bài học.');
         }
-       
-       
+
         foreach ($lessons as $index => $lessonData) {
-            
             if ($request->hasFile("lessons.{$index}.video")) {
                 $video = $request->file("lessons.{$index}.video");
-                
-                $videoName = $video->hashName();
-                $stream = fopen($video->getRealPath(), 'r');
-                Storage::disk('gcs')->writeStream('folder-name/' . $videoName, $stream);
-                if (is_resource($stream)) {
-                    fclose($stream);
-                }
-                // dd(123);
-                // die;
+                $videoName = $video->getClientOriginalName();
+                $video->storeAs('public/assets-client/videos/Lessons', $videoName);
+
                 $lesson = new Lesson();
                 $lesson->name = $lessonData['name'];
                 $lesson->path_video = $videoName;
                 $lesson->chapter_id = $lessonData['chapter_id'];
+
+                // Get the maximum number value for the current chapter and increment it
+                $maxNumber = Lesson::where('chapter_id', $lessonData['chapter_id'])->max('number');
+                $lesson->number = $maxNumber ? $maxNumber + 1 : 1;
+
                 $lesson->save();
             } else {
-                // dd('sai rồi làm lại đi');
-                // die;
-              
                 return redirect()->back()->with('error', 'Vui lòng chọn video để tải lên cho bài học ' . ($index + 1));
             }
+            foreach ($lessons as $index => $lessonData) {
+
+                if ($request->hasFile("lessons.{$index}.video")) {
+                    $video = $request->file("lessons.{$index}.video");
+
+                    $videoName = $video->hashName();
+                    $stream = fopen($video->getRealPath(), 'r');
+                    Storage::disk('gcs')->writeStream('folder-name/' . $videoName, $stream);
+                    if (is_resource($stream)) {
+                        fclose($stream);
+                    }
+                    // dd(123);
+                    // die;
+                    $lesson = new Lesson();
+                    $lesson->name = $lessonData['name'];
+                    $lesson->path_video = $videoName;
+                    $lesson->chapter_id = $lessonData['chapter_id'];
+                    $lesson->save();
+                } else {
+                    // dd('sai rồi làm lại đi');
+                    // die;
+
+                    return redirect()->back()->with('error', 'Vui lòng chọn video để tải lên cho bài học ' . ($index + 1));
+                }
+            }
+            // dd(456);
+            // die;
+            return redirect()->back()->with('success', 'Đã thêm bài học thành công.');
         }
-        // dd(456);
-        // die;
+
         return redirect()->back()->with('success', 'Đã thêm bài học thành công.');
     }
+    public function updateOrder(Request $request)
+    {
+        $request->validate([
+            'chapter_id' => 'required|exists:chapters,id',
+            'lesson_data' => 'required'
+        ]);
+
+        $lessonData = json_decode($request->input('lesson_data'), true);
+
+        // Sử dụng transaction để đảm bảo dữ liệu được cập nhật đúng
+        DB::transaction(function () use ($lessonData) {
+            foreach ($lessonData as $data) {
+                Lesson::where('id', $data['id'])->update(['number' => $data['number']]);
+            }
+        });
+
+        return redirect()->back()->with('success', 'Thứ tự bài học đã được lưu.');
+    }
+
 
 
     public function getLessonsByChapterId($chapterId)
@@ -551,7 +682,7 @@ class CoursesController extends Controller
     {
         $lesson = Lesson::findOrFail($id);
         $lesson->name = $request->input('name');
-
+        $categories = Course_Category::all();
         if ($request->hasFile('video')) {
             $video = $request->file('video');
             $videoName = $video->getClientOriginalName();
@@ -575,6 +706,26 @@ class CoursesController extends Controller
 
         return redirect()->back()->with('success', 'Chương đã được cập nhật thành công!');
     }
+
+    public function updateOrderChapter(Request $request)
+    {
+        $chapterIds = $request->input('chapter_ids');
+
+        foreach ($chapterIds as $index => $id) {
+            $chapter = Chapter::find($id);
+            if ($chapter) {
+                $chapter->number = $index + 1;
+                $chapter->save();
+            }
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+
+
+
+
 
     public function updateCourse(Request $request, $id)
     {

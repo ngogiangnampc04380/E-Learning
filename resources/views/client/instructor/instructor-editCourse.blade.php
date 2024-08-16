@@ -8,112 +8,114 @@
                     <div class="settings-widget dash-profile">
                         <div class="settings-menu p-0">
                             <div class="profile-bg">
-                                @if(auth()->user()->role == 0)
-                                <h5 class="text-muted mb-0">Học viên</h5>
+                                @if (auth()->user()->role == 0)
+                                    <h5 class="text-muted mb-0">Học viên</h5>
                                 @elseif(auth()->user()->role == 1)
-                                <h5 class="text-muted mb-0">Quảng trị viên</h5>
+                                    <h5 class="text-muted mb-0">Quản trị viên</h5>
                                 @elseif(auth()->user()->role == 2)
-                                <h5 class="text-muted mb-0">Giảng viên</h5>
+                                    <h5 class="text-muted mb-0">Giảng viên</h5>
                                 @endif
                                 <img src="/assets-client/img/instructor-profile-bg.jpg" alt="">
                                 <div class="profile-img">
                                     <a href="">
-                                        <img src="{{ auth()->user()->thumbnail ? Storage::url('assets-client/img/user/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}"  alt="">
+                                        <img src="{{ auth()->user()->thumbnail ? Storage::url('assets-client/img/user/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}"
+                                            alt="">
                                     </a>
                                 </div>
                             </div>
                             <div class="profile-group">
                                 <div class="profile-name text-center">
-                                    <h4><a href="">{{auth()->user()-> name}}</a></h4>
-                                    @if(auth()->user()->role == 0)
+                                    <h4><a href="">{{ auth()->user()->name }}</a></h4>
+                                    @if (auth()->user()->role == 0)
                                         <p class="text-muted mb-0">Học viên</p>
-                                        @elseif(auth()->user()->role == 1)
+                                    @elseif(auth()->user()->role == 1)
                                         <p class="text-muted mb-0">Quản trị viên</p>
-                                        @elseif(auth()->user()->role == 2)
+                                    @elseif(auth()->user()->role == 2)
                                         <p class="text-muted mb-0">GIảng viên</p>
-                                        @endif
+                                    @endif
                                 </div>
-                                @if(auth()->user()->role == 2)
-                                <div class="go-dashboard text-center">
-                                    <a href="{{ route('client.create-course') }}" class="btn btn-primary">THÊM KHÓA HỌC MỚI</a>
-                                </div>
+                                @if (auth()->user()->role == 2)
+                                    <div class="go-dashboard text-center">
+                                        <a href="{{ route('client.create-course') }}" class="btn btn-primary">THÊM KHÓA HỌC
+                                            MỚI</a>
+                                    </div>
                                 @endif
 
                             </div>
                         </div>
                     </div>
                     <div class="settings-menu">
-    <h3>Thông tin tài khoản</h3>
-   <ul>
-        <li class="nav-item {{ request()->routeIs('client.dashboard-profile') ? 'active' : '' }}">
-            <a href="{{ route('client.dashboard-profile') }}" class="nav-link">
-                <i class="feather-home"></i> Dữ liệu và thống kê
-            </a>
-        </li>
-        @if(in_array(auth()->user()->role, [0, 2]))
-        <li class="nav-item {{ request()->is('instructor-course') ? 'active' : '' }}">
-            <a href="instructor-course.html" class="nav-link">
-                <i class="feather-shopping-bag"></i> Khóa học của tôi
-            </a>
-        </li>
-        @endif
-        @if(auth()->user()->role == 2)
-        <li class="nav-item {{ request()->routeIs('client.instructor-course') ? 'active' : '' }}">
-            <a href="{{ route('client.instructor-course',auth()->user()->id) }}" class="nav-link">
-                <i class="feather-book"></i> Quản lí khóa học
-            </a>
-        </li>
-        <li class="nav-item {{ request()->is('instructor-student-grid.html') ? 'active' : '' }}">
-            <a href="instructor-student-grid.html" class="nav-link">
-                <i class="feather-users"></i> Quản lí học viên
-            </a>
-        </li>
-        <li class="nav-item {{ request()->is('instructor-earnings.html') ? 'active' : '' }}">
-            <a href="instructor-earnings.html" class="nav-link">
-                <i class="feather-pie-chart"></i> Nam Béo
-            </a>
-        </li>
-        <li class="nav-item {{ request()->is('instructor-orders.html') ? 'active' : '' }}">
-            <a href="instructor-orders.html" class="nav-link">
-                <i class="feather-shopping-bag"></i> Nam Béo
-            </a>
-        </li>
-        @endif
-        <div class="instructor-title">
-            <h3>Cài đặt tài khoản</h3>
-        </div>
-        <li class="nav-item {{ request()->routeIs('client.user-profile') ? 'active' : '' }}">
-            <a href="{{ route('client.user-profile') }}" class="nav-link">
-                <i class="feather-settings"></i> Thông tin cá nhân
-            </a>
-        </li>
-        @if(auth()->user()->role == 1)
-        <div class="instructor-title">
-            <h3>ADMIN</h3>
-        </div>
-        <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
-            <a href="/admin" class="nav-link">
-                <i class="feather-cpu"></i> Quảng trị website
-            </a>
-        </li>
-        @endif
-        <li class="nav-item">
-            <a href="{{ route('client.reset-password') }}" class="nav-link">
-                <i class="feather-log-out"></i> Đổi mật Khẩu
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('logout') }}" class="nav-link">
-                <i class="feather-log-out"></i> Đăng xuất
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('client.disable-account-form') }}" class="nav-link">
-                <i class="feather-user-x"></i> Vô hiệu hóa tài khoản
-            </a>
-        </li>
-    </ul>
-</div>
+                        <h3>Thông tin tài khoản</h3>
+                        <ul>
+                            <li class="nav-item {{ request()->routeIs('client.dashboard-profile') ? 'active' : '' }}">
+                                <a href="{{ route('client.dashboard-profile') }}" class="nav-link">
+                                    <i class="feather-home"></i> Dữ liệu và thống kê
+                                </a>
+                            </li>
+                            @if (in_array(auth()->user()->role, [0, 2]))
+                                <li class="nav-item {{ request()->is('instructor-course') ? 'active' : '' }}">
+                                    <a href="instructor-course.html" class="nav-link">
+                                        <i class="feather-shopping-bag"></i> Khóa học của tôi
+                                    </a>
+                                </li>
+                            @endif
+                            @if (auth()->user()->role == 2)
+                                <li class="nav-item {{ request()->routeIs('client.instructor-course') ? 'active' : '' }}">
+                                    <a href="{{ route('client.instructor-course', auth()->user()->id) }}" class="nav-link">
+                                        <i class="feather-book"></i> Quản lí khóa học
+                                    </a>
+                                </li>
+                                <li class="nav-item {{ request()->is('instructor-student-grid.html') ? 'active' : '' }}">
+                                    <a href="instructor-student-grid.html" class="nav-link">
+                                        <i class="feather-users"></i> Quản lí học viên
+                                    </a>
+                                </li>
+                                <li class="nav-item {{ request()->is('instructor-earnings.html') ? 'active' : '' }}">
+                                    <a href="instructor-earnings.html" class="nav-link">
+                                        <i class="feather-pie-chart"></i> Nam Béo
+                                    </a>
+                                </li>
+                                <li class="nav-item {{ request()->is('instructor-orders.html') ? 'active' : '' }}">
+                                    <a href="instructor-orders.html" class="nav-link">
+                                        <i class="feather-shopping-bag"></i> Nam Béo
+                                    </a>
+                                </li>
+                            @endif
+                            <div class="instructor-title">
+                                <h3>Cài đặt tài khoản</h3>
+                            </div>
+                            <li class="nav-item {{ request()->routeIs('client.user-profile') ? 'active' : '' }}">
+                                <a href="{{ route('client.user-profile') }}" class="nav-link">
+                                    <i class="feather-settings"></i> Thông tin cá nhân
+                                </a>
+                            </li>
+                            @if (auth()->user()->role == 1)
+                                <div class="instructor-title">
+                                    <h3>Quản trị viên</h3>
+                                </div>
+                                <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
+                                    <a href="/admin" class="nav-link">
+                                        <i class="feather-cpu"></i> Quản trị website
+                                    </a>
+                                </li>
+                            @endif
+                            <li class="nav-item">
+                                <a href="{{ route('client.reset-password') }}" class="nav-link">
+                                    <i class="feather-log-out"></i> Đổi mật Khẩu
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('logout') }}" class="nav-link">
+                                    <i class="feather-log-out"></i> Đăng xuất
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('client.disable-account-form') }}" class="nav-link">
+                                    <i class="feather-user-x"></i> Vô hiệu hóa tài khoản
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
 
                 </div>
 
@@ -153,7 +155,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                     <tr>
                                         <td>
                                             <a href="#">
-                                                <img src="{{ Storage::url('' . $course->thumbnail) }}"
+                                                <img src="{{ Storage::url('assets-client/img/Courses/' . $course->thumbnail) }}"
                                                     alt="Thumbnail" class="img-fluid" style="max-width: 100px;">
                                             </a>
                                         </td>
@@ -199,7 +201,8 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                 </tbody>
 
                             </table>
-                            <button type="button" class="btn btn-primary mt-3" id="backBtn" style="display: none;">Quay
+                            <button type="button" class="btn btn-secondary mt-3" id="backBtn"
+                                style="display: none;">Quay
                                 lại</button>
 
                             @if (session('success'))
@@ -209,8 +212,9 @@ background:    linear-gradient(#f1c232, #ffff00);">
                             @endif
 
                             <!-- Nút chỉnh sửa thông tin khóa học -->
-                            <button type="button" class="btn  btn-outline-warning mt-3 mb-3" id="editCourseBtn">Chỉnh sửa
-                                thông tin khóa học</button>
+                            <button type="button" class="btn btn-outline-edit-course mt-3 mb-3" id="editCourseBtn">Chỉnh
+                                sửa thông tin khóa học</button>
+
 
                             <!-- Form cập nhật thông tin khóa học -->
                             <form id="editCourseForm" action="{{ route('client.updateCourse', $course->id) }}"
@@ -289,6 +293,15 @@ background:    linear-gradient(#f1c232, #ffff00);">
                             <div class="row">
                                 <div class="col-md-12">
                                     <h3 class="mt-5">Danh sách chương</h3>
+                                    <!-- Nút thêm chương mới -->
+                                    <div class="mt-3 mb-3">
+
+                                        <button type="button" class="btn btn-outline-info addChapterBtn">Thêm chương
+                                            mới</button>
+                                        <button type="button" id="sort-chapters-btn"
+                                            class="btn btn-outline-sort-chapters m-2">Sắp xếp chương</button>
+
+                                    </div>
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
@@ -301,10 +314,10 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($course->chapters as $chapter)
+                                            @foreach ($course->chapters->sortBy('number') as $chapter)
                                                 <tr>
-                                                    <td>{{ $chapter->name }}</td>
-
+                                                    <td class="special-cell">{{ $chapter->name }}</td>
+                                                    <!-- Hiển thị tên chương -->
                                                     <td>
                                                         <div class="d-flex">
                                                             <form
@@ -313,23 +326,21 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="button"
-                                                                    class="btn btn-outline-danger delete-chapter-btn "
+                                                                    class="btn btn-outline-danger delete-chapter-btn"
                                                                     data-chapter-id="{{ $chapter->id }}">Xóa</button>
                                                             </form>
                                                             <button type="button"
-                                                                class="btn btn-outline-warning ml-2 edit-chapter-btn ms-2 me-2"
+                                                                class="btn btn-outline-edit-chapter ml-2 edit-chapter-btn ms-2 me-2"
                                                                 data-chapter-id="{{ $chapter->id }}">Sửa chương</button>
 
                                                             <button type="button"
-                                                                class="btn btn-outline-primary  ml-2 toggle-lesson-list"
-                                                                data-chapter-id="{{ $chapter->id }}">Ẩn bài học</button>
-                                                            
-
+                                                                class="btn btn-outline-secondary ml-2 toggle-quiz-list"
+                                                                data-chapter-id="{{ $chapter->id }}">Ẩn bài quiz</button>
                                                             <button type="button"
-                                                                class="btn btn-outline-primary  ml-2 toggle-quiz-list"
-                                                                data-chapter-id="{{ $chapter->id }}">Ẩn bài quiz
-                                                            </button>
-
+                                                                class="btn btn-outline-secondary ml-2 toggle-lesson-list"
+                                                                data-chapter-id="{{ $chapter->id }}">Ẩn bài học</button>
+                                                            <button type="button" id="toggle-expand-collapse"
+                                                                class="btn btn-outline-info ml-2">Mở rộng</button>
                                                         </div>
                                                         <div id="quiz-form" style="display: none;">
                                                             <form action="{{ route('client.courses.storequiz') }}"
@@ -356,14 +367,13 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                 </div>
                                                             </form>
                                                         </div>
-                                                        <div class="quiz-list mt-2" data-chapter-id="{{ $chapter->id }}"
+                                                        <div class="quiz-list quiz-list2 mt-2"
+                                                            data-chapter-id="{{ $chapter->id }}"
                                                             style="display: block; border: 1px solid #ccc; padding: 10px;">
-                                                            <h4  style="margin-bottom: 10px;">Danh sách bài quiz</h4>
-                                                            
+                                                            <h4 style="margin-bottom: 10px;">Danh sách bài quiz</h4>
                                                             <a href="{{ route('client.courses.add-quiz', ['course_id' => $course->id, 'chapter_id' => $chapter->id]) }}"
-                                                                class="btn btn-outline-primary m-2 edit-chapter-btn " id="add-quiz-link">
-                                                                 Thêm bài quiz
-                                                             </a>
+                                                                class="btn btn-outline-primary m-2 edit-chapter-btn"
+                                                                id="add-quiz-link">Thêm bài quiz</a>
                                                             <ul class="list-group">
                                                                 @forelse($chapter->quizzes as $quiz)
                                                                     <li
@@ -371,10 +381,11 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                         <span>{{ $quiz->name }}</span>
                                                                         <div class="d-inline">
                                                                             <a href="{{ route('client.courses.show', $quiz->id) }}"
-                                                                                class="btn btn-sm btn-outline-dark  mr-2">Xem chi
-                                                                                tiết</a>
+                                                                                class="btn btn-sm btn-outline-dark mr-2">Xem
+                                                                                chi tiết</a>
                                                                             <a href="{{ route('client.courses.edit-quiz', $quiz->id) }}"
-                                                                                class="btn btn-sm btn-outline-warning mr-2">Sửa</a>
+                                                                                class="btn btn-sm btn-outline-edit-quiz mr-2">Sửa</a>
+
                                                                             <form
                                                                                 action="{{ route('client.courses.delete-quiz', $quiz->id) }}"
                                                                                 method="POST" class="d-inline"
@@ -387,7 +398,6 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                             <a href="{{ route('client.courses.quiz-chapter', $quiz->id) }}"
                                                                                 class="btn btn-sm btn-success">Làm bài</a>
                                                                         </div>
-
                                                                     </li>
                                                                 @empty
                                                                     <li class="list-group-item">Không có bài quiz nào.</li>
@@ -395,128 +405,102 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                             </ul>
                                                         </div>
 
-                                                        <div class="modal fade" id="editQuizModal" tabindex="-1"
-                                                            aria-labelledby="editQuizModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content">
-                                                                    <form id="editQuizForm" method="POST">
-                                                                        @csrf
-                                                                        @method('POST')
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title"
-                                                                                id="editQuizModalLabel">
-                                                                                Sửa Quiz</h5>
-                                                                            <button type="button" class="btn-close"
-                                                                                data-bs-dismiss="modal"
-                                                                                aria-label="Close"></button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <div class="form-group">
-                                                                                <label for="quizName">Tên Quiz</label>
-                                                                                <input type="text" class="form-control"
-                                                                                    id="quizName" name="name"
-                                                                                    required>
-                                                                            </div>
-                                                                            <!-- Add other fields as necessary -->
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button"
-                                                                                class="btn btn-primary"
-                                                                                data-bs-dismiss="modal">Hủy
-                                                                            </button>
-                                                                            <button type="submit"
-                                                                                class="btn btn-primary">
-                                                                                Lưu
-                                                                            </button>
-                                                                        </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="lesson-list mt-2"
+                                                        <div class="lesson-list mt-2 lesson-list "
                                                             data-chapter-id="{{ $chapter->id }}"
                                                             style="display: block; border: 1px solid #ccc; padding: 10px;">
-                                                            <h4 style="margin-bottom: 10px;">Danh sách bài học </h4>
+                                                            <h4 style="margin-bottom: 10px;">Danh sách bài học</h4>
 
                                                             @if ($chapter->lessons->isEmpty())
                                                                 <p>Hiện chưa có bài học nào</p>
                                                                 <button type="button"
-                                                                class="btn btn-outline-primary m-2 toggle-lesson-form "
-                                                                data-chapter-id="{{ $chapter->id }}">Thêm bài học</button>
+                                                                    class="btn btn-outline-primary m-2 toggle-lesson-form"
+                                                                    data-chapter-id="{{ $chapter->id }}">Thêm bài
+                                                                    học</button>
                                                             @else
-                                                            <button type="button"
-                                                                class="btn btn-outline-primary m-2 toggle-lesson-form "
-                                                                data-chapter-id="{{ $chapter->id }}">Thêm bài học</button>
-                                                                <ul class="list-group">
-                                                                    @foreach ($chapter->lessons as $lesson)
-                                                                        <li
-                                                                            class="list-group-item d-flex justify-content-between align-items-center">
-                                                                            <span>{{ $lesson->name }}</span>
-                                                                            <div>
-                                                                                @php
-                                                                                        $bucketName = 'entweb01';
-                                                                                        $path_prefix ='ENT01';
-                                                                                        $filePath = 'folder-name';
-                                                                                        $namefile= $lesson->path_video;
-                                                                                        $url = "https://storage.googleapis.com/{$bucketName}/{$path_prefix}/{$filePath}/{$namefile}";
-                                                                                @endphp
-                                                                                <a href="{{$url}}"
-                                                                                    target="_blank"
-                                                                                    class="btn btn-sm btn-outline-dark  mr-2">Xem
-                                                                                    video</a>
-                                                                                <button type="button"
-                                                                                    class="btn btn-sm btn-outline-warning edit-lesson-btn"
-                                                                                    data-lesson-id="{{ $lesson->id }}">Sửa</button>
-                                                                                <button type="button"
-                                                                                    class="btn btn-sm btn-outline-danger delete-lesson-btn"
-                                                                                    data-lesson-id="{{ $lesson->id }}">Xóa</button>
-
+                                                                <button type="button"
+                                                                    class="btn btn-outline-primary m-2 toggle-lesson-form"
+                                                                    data-chapter-id="{{ $chapter->id }}">Thêm bài
+                                                                    học</button>
+                                                                <button type="button" id="sort-lessons-btn"
+                                                                    class="btn btn-outline-warning m-2">Sắp xếp vị
+                                                                    trí</button>
+                                                                <form id="lesson-order-form"
+                                                                    action="{{ route('client.lesson-order') }}"
+                                                                    method="POST" style="display: block;">
+                                                                    @csrf
+                                                                    <input type="hidden" name="chapter_id"
+                                                                        value="{{ $chapter->id }}">
+                                                                    <ul class="list-group sortable-list">
+                                                                        @foreach ($chapter->lessons->sortBy('number') as $lesson)
+                                                                            <li class="list-group-item d-flex justify-content-between align-items-center"
+                                                                                data-id="{{ $lesson->id }}">
+                                                                                <span>{{ $lesson->name }}</span>
+                                                                                <div>
+                                                                                    <a href="{{ asset('storage/assets-client/Videos/Lessons/' . $lesson->path_video) }}"
+                                                                                        target="_blank"
+                                                                                        class="btn btn-sm btn-outline-dark mr-2">Xem
+                                                                                        video</a>
+                                                                                    <button type="button"
+                                                                                        class="btn btn-sm btn-outline-edit-lesson edit-lesson-btn"
+                                                                                        data-lesson-id="{{ $lesson->id }}">Sửa</button>
+                                                                                    <button type="button"
+                                                                                        class="btn btn-sm btn-outline-danger delete-lesson-btn"
+                                                                                        data-lesson-id="{{ $lesson->id }}">Xóa</button>
+                                                                                </div>
+                                                                            </li>
+                                                                            <div class="edit-lesson-form mb-2"
+                                                                                data-lesson-id="{{ $lesson->id }}"
+                                                                                style="display: none;">
+                                                                                <form
+                                                                                    action="{{ route('client.updateLesson', $lesson->id) }}"
+                                                                                    method="POST"
+                                                                                    class="lesson-update-form"
+                                                                                    enctype="multipart/form-data">
+                                                                                    @csrf
+                                                                                    @method('POST')
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="edit_lesson_name_{{ $lesson->id }}">Tên
+                                                                                            bài học</label>
+                                                                                        <input type="text"
+                                                                                            id="edit_lesson_name_{{ $lesson->id }}"
+                                                                                            name="name"
+                                                                                            class="form-control"
+                                                                                            value="{{ $lesson->name }}"
+                                                                                            required>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <label
+                                                                                            for="edit_lesson_video_{{ $lesson->id }}">Video
+                                                                                            bài học</label>
+                                                                                        <input type="file"
+                                                                                            id="edit_lesson_video_{{ $lesson->id }}"
+                                                                                            name="video"
+                                                                                            class="form-control-file">
+                                                                                    </div>
+                                                                                    <button type="submit"
+                                                                                        class="btn btn-success save-lesson-btn">Lưu</button>
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary cancel-edit-lesson-btn"
+                                                                                        data-lesson-id="{{ $lesson->id }}">Hủy</button>
+                                                                                </form>
                                                                             </div>
-                                                                        </li>
-                                                                        <div class="edit-lesson-form mt-2"
-                                                                            data-lesson-id="{{ $lesson->id }}"
-                                                                            style="display: none;">
-                                                                            <form
-                                                                                action="{{ route('client.updateLesson', $lesson->id) }}"
-                                                                                method="POST" class="lesson-update-form"
-                                                                                enctype="multipart/form-data">
-                                                                                @csrf
-                                                                                @method('post')
-                                                                                <div class="form-group">
-                                                                                    <label for="edit_lesson_name">Tên bài
-                                                                                        học</label>
-                                                                                    <input type="text"
-                                                                                        id="edit_lesson_name"
-                                                                                        name="name"
-                                                                                        class="form-control"
-                                                                                        value="{{ $lesson->name }}"
-                                                                                        required>
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="edit_lesson_video">Video
-                                                                                        bài học</label>
-                                                                                    <input type="file"
-                                                                                        id="edit_lesson_video"
-                                                                                        name="video"
-                                                                                        class="form-control-file">
-                                                                                </div>
-                                                                                <button type="submit"
-                                                                                    class="btn btn-success save-lesson-btn m-2">Lưu</button>
-                                                                                <button type="button"
-                                                                                    class="btn btn-primary cancel-edit-lesson-btn m-2"
-                                                                                    data-lesson-id="{{ $lesson->id }}">Hủy</button>
-                                                                                <hr>
-                                                                            </form>
-                                                                        </div>
-                                                                    @endforeach
-                                                                </ul>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                    <button type="submit" id="save-order-btn"
+                                                                        class="btn btn-success m-2"
+                                                                        style="display: none;">Lưu</button>
+                                                                    <button type="button" id="cancel-sort-btn"
+                                                                        class="btn btn-secondary m-2"
+                                                                        style="display: none;">Hủy</button>
+                                                                </form>
                                                             @endif
                                                         </div>
 
                                                         <div class="add-lesson-form mt-2"
                                                             data-chapter-id="{{ $chapter->id }}" style="display: none;">
                                                             <button type="button"
-                                                                class="btn btn-outline-primary mr-2 mt-2 mb-2  toggle-lesson-form "
+                                                                class="btn btn-primary ml-2 toggle-lesson-form ms-2 me-2"
                                                                 onclick="addSection(1, {{ $chapter->id }})">Thêm bài
                                                                 học</button>
                                                             <form action="{{ route('client.addLesson') }}" method="POST"
@@ -525,7 +509,8 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                 <div class="chapter_videos"
                                                                     data-chapter-id="{{ $chapter->id }}">
                                                                 </div>
-                                                                <button type="submit" class="btn btn-success">Lưu bài
+                                                                <button type="submit" class="btn btn-success mt-3   ">Lưu
+                                                                    bài
                                                                     học</button>
                                                             </form>
 
@@ -546,22 +531,62 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                 <button type="submit"
                                                                     class="btn btn-success">Lưu</button>
                                                                 <button type="button"
-                                                                    class="btn btn-primary cancel-edit-chapter-btn"
+                                                                    class="btn btn-secondary cancel-edit-chapter-btn"
                                                                     data-chapter-id="{{ $chapter->id }}">Hủy</button>
                                                             </form>
                                                         </div>
-                                                    </td>
 
+
+
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
+                                    {{-- thao tác kéo thả --}}
+                                    <!-- Modal Dialog cho danh sách chương -->
+                                    <div id="sort-chapters-modal" class="modal fade" tabindex="-1" role="dialog"
+                                        aria-labelledby="sortChaptersModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="sortChaptersModalLabel">Danh sách chương
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="text-danger">Hãy kéo thả để sắp xếp lại vị trí</p>
+
+                                                    <form id="sort-chapters-form-inner"
+                                                        action="{{ route('client.chapter-order') }}" method="POST">
+                                                        @csrf
+                                                        <ul id="sortable-chapters" class="list-group">
+                                                            @foreach ($course->chapters->sortBy('number') as $chapter)
+                                                                <li class="list-group-item"
+                                                                    data-id="{{ $chapter->id }}">
+                                                                    {{ $chapter->name }}
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                        <button type="submit" id="save-chapter-order-btn"
+                                                            class="btn btn-success mt-3">Lưu thứ tự</button>
+                                                        <button type="button" class="btn btn-secondary mt-3"
+                                                            data-dismiss="modal">Hủy</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
 
                                     <!-- Nút thêm chương mới -->
                                     <div class="mt-4">
 
-                                        <button type="button" class="btn btn-outline-info" id="addChapterBtn">Thêm
-                                            chương mới</button>
+                                        <button type="button" class="btn btn-outline-info addChapterBtn">Thêm chương
+                                            mới</button>
                                     </div>
 
                                     <!-- Form thêm chương mới (ẩn mặc định) -->
@@ -587,6 +612,10 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                             </div>
                                         @endif
                                     </div>
+
+
+
+
                                 </div>
                             </div>
                         </div>
@@ -605,7 +634,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                 <span class="close">&times;</span>
                                 <p>Bạn có chắc chắn muốn xóa khóa học này không?</p>
                                 <div class="modal-buttons">
-                                    <button type="button" class="btn btn-primary" id="cancelDeleteBtn">Hủy</button>
+                                    <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">Hủy</button>
                                     <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Xóa</button>
                                 </div>
                             </div>
@@ -680,11 +709,21 @@ background:    linear-gradient(#f1c232, #ffff00);">
         });
     </script>
     <script>
-        // Script để hiển thị form thêm chương mới khi click vào nút
-        document.getElementById('addChapterBtn').addEventListener('click', function() {
-            document.getElementById('addChapterForm').style.display = 'block';
+        // Script để hiển thị form thêm chương mới khi click vào bất kỳ nút nào
+        document.querySelectorAll('.addChapterBtn').forEach(button => {
+            button.addEventListener('click', function() {
+                const addChapterForm = document.getElementById('addChapterForm');
+                addChapterForm.style.display = 'block';
+                // Cuộn màn hình để form hiển thị ở giữa màn hình
+                addChapterForm.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            });
         });
     </script>
+
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const deleteButtons = document.querySelectorAll('.delete-chapter-btn');
@@ -718,6 +757,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
             });
         });
     </script>
+    {{-- ẩn hiện bài học  --}}
     <script>
         document.querySelectorAll('.toggle-lesson-list').forEach(button => {
             button.addEventListener('click', function() {
@@ -734,6 +774,31 @@ background:    linear-gradient(#f1c232, #ffff00);">
             });
         });
     </script>
+    {{-- ẩn hiện bài quiz --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.toggle-quiz-list').forEach(button => {
+                button.addEventListener('click', function() {
+                    const chapterId = this.getAttribute('data-chapter-id');
+                    const quizList = document.querySelector(
+                        `.quiz-list[data-chapter-id="${chapterId}"]`);
+
+                    if (quizList) {
+                        if (quizList.style.display === 'none') {
+                            quizList.style.display = 'block';
+                            this.textContent = 'Ẩn bài quiz'; // Cập nhật nút thành 'Ẩn bài quiz'
+                        } else {
+                            quizList.style.display = 'none';
+                            this.textContent =
+                                'Hiện bài quiz'; // Cập nhật nút thành 'Hiện bài quiz'
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+
     <script>
         document.querySelectorAll('.edit-lesson-btn').forEach(button => {
             button.addEventListener('click', function() {
@@ -790,12 +855,26 @@ background:    linear-gradient(#f1c232, #ffff00);">
                 });
             });
         });
+
         document.querySelectorAll('.edit-chapter-btn').forEach(button => {
             button.addEventListener('click', function() {
                 const chapterId = this.getAttribute('data-chapter-id');
                 const editForm = document.querySelector(
                     `.edit-chapter-form[data-chapter-id="${chapterId}"]`);
                 editForm.style.display = editForm.style.display === 'none' ? 'block' : 'none';
+
+                // Di chuyển màn hình đến form
+                if (editForm.style.display === 'block') {
+                    // Cuộn màn hình đến giữa
+                    const rect = editForm.getBoundingClientRect();
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    const scrollToPosition = rect.top + scrollTop - (window.innerHeight / 2) + (editForm
+                        .offsetHeight / 2);
+                    window.scrollTo({
+                        top: scrollToPosition,
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
 
@@ -808,6 +887,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                 editForm.style.display = 'none';
             });
         });
+
 
 
         var index = 0;
@@ -825,14 +905,18 @@ background:    linear-gradient(#f1c232, #ffff00);">
                 <label class="custom-file-label" for="lesson_video_${index}">Chọn video bài học</label>
                 <input type="file" class="custom-file-input" id="lesson_video_${index}" name="lessons[${index}][video]" required accept="video/*">
             </div>
-            <a href="javascript:void(0);" class="btn btn-outline-danger m-2 " onclick="removeSection('chapter_${index}')">xóa</a>
+            <a href="javascript:void(0);" class="btn text-white border-0 mt-2" style="background:#ff4667" onclick="removeSection('chapter_${index}')">xóa</a>
         </div>
         `;
                 index++;
             }
+
             var el = document.querySelector(`.chapter_${index - 1}`);
             if (el) {
-                el.scrollIntoView(true);
+                el.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
             }
         }
 
@@ -890,80 +974,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
             });
         }
     </script>
-{{--    <script>--}}
-{{--        document.getElementById('show-quiz-form').addEventListener('click', function() {--}}
-{{--            var courseId = this.getAttribute('data-course-id');--}}
-{{--            var chapterId = this.getAttribute('data-chapter-id');--}}
-{{--            document.getElementById('course_id').value = courseId;--}}
-{{--            document.getElementById('chapter_id').value = chapterId;--}}
-{{--            document.getElementById('quiz-form').style.display = 'block';--}}
-{{--            this.style.display = 'none';--}}
-{{--        });--}}
 
-{{--        document.getElementById('add-question1').addEventListener('click', function() {--}}
-{{--            const questionsContainer = document.getElementById('questions-container');--}}
-{{--            const questionCount = questionsContainer.children.length + 1;--}}
-
-{{--            const questionHtml = `--}}
-{{--        <div class="question-block mb-3">--}}
-{{--            <h5>Câu hỏi ${questionCount}</h5>--}}
-{{--            <div class="mb-3">--}}
-{{--                <label for="question_${questionCount}" class="form-label">Câu hỏi:</label>--}}
-{{--                <input type="text" id="question_${questionCount}" name="questions[${questionCount}][question]"--}}
-{{--                    class="form-control" required>--}}
-{{--            </div>--}}
-{{--            <div class="mb-3">--}}
-{{--                <label for="answer_${questionCount}_0" class="form-label">Đáp án đúng:</label>--}}
-{{--                <input type="text" id="answer_${questionCount}_0" name="questions[${questionCount}][answers][0][answer]"--}}
-{{--                    class="form-control" required>--}}
-{{--                <input type="hidden" name="questions[${questionCount}][answers][0][is_correct]" value="1">--}}
-{{--            </div>--}}
-{{--            <div class="mb-3">--}}
-{{--                <label for="answer_${questionCount}_1" class="form-label">Đáp án sai:</label>--}}
-{{--                <input type="text" id="answer_${questionCount}_1" name="questions[${questionCount}][answers][1][answer]"--}}
-{{--                    class="form-control" required>--}}
-{{--                <input type="hidden" name="questions[${questionCount}][answers][1][is_correct]" value="0">--}}
-{{--            </div>--}}
-{{--            <div class="mb-3">--}}
-{{--                <label for="answer_${questionCount}_2" class="form-label">Đáp án sai:</label>--}}
-{{--                <input type="text" id="answer_${questionCount}_2" name="questions[${questionCount}][answers][2][answer]"--}}
-{{--                    class="form-control" required>--}}
-{{--                <input type="hidden" name="questions[${questionCount}][answers][2][is_correct]" value="0">--}}
-{{--            </div>--}}
-{{--            <div class="mb-3">--}}
-{{--                <label for="answer_${questionCount}_3" class="form-label">Đáp án sai:</label>--}}
-{{--                <input type="text" id="answer_${questionCount}_3" name="questions[${questionCount}][answers][3][answer]"--}}
-{{--                    class="form-control" required>--}}
-{{--                <input type="hidden" name="questions[${questionCount}][answers][3][is_correct]" value="0">--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--        `;--}}
-
-{{--            questionsContainer.insertAdjacentHTML('beforeend', questionHtml);--}}
-{{--        });--}}
-{{--    </script>--}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.toggle-quiz-list').forEach(button => {
-                button.addEventListener('click', function() {
-                    const chapterId = this.getAttribute('data-chapter-id');
-                    const quizList = document.querySelector(
-                        `.quiz-list[data-chapter-id="${chapterId}"]`);
-
-                    if (quizList) {
-                        if (quizList.style.display === 'none') {
-                            quizList.style.display = 'block';
-                            this.textContent = 'Ẩn bài quiz'; // Cập nhật nút thành 'Ẩn bài quiz'
-                        } else {
-                            quizList.style.display = 'none';
-                            this.textContent =
-                            'Hiện bài quiz'; // Cập nhật nút thành 'Hiện bài quiz'
-                        }
-                    }
-                });
-            });
-        });
-    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const editButtons = document.querySelectorAll('.edit-quiz-btn');
@@ -1038,6 +1049,172 @@ background:    linear-gradient(#f1c232, #ffff00);">
             // Khi nhấn nút "Hủy", ẩn form
             cancelAddQuizBtn.addEventListener('click', function() {
                 finalQuizForm.style.display = 'none';
+            });
+        });
+    </script>
+
+
+    {{-- kéo thả vị trí bài học --}}
+    <script src="{{ asset('js/Sortable.min.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sortLessonsBtn = document.getElementById('sort-lessons-btn');
+            const saveOrderBtn = document.getElementById('save-order-btn');
+            const cancelSortBtn = document.getElementById('cancel-sort-btn');
+            const sortableList = document.querySelector('.sortable-list');
+            const lessonOrderForm = document.getElementById('lesson-order-form');
+            const sortMessage = document.createElement('p'); // Dòng chữ hướng dẫn
+
+            sortMessage.textContent = 'Kéo thả để sắp xếp';
+            sortMessage.style.color = 'gray';
+            sortMessage.style.fontStyle = 'italic';
+            sortMessage.style.marginTop = '10px';
+            sortMessage.style.display = 'none'; // Ẩn dòng chữ khi chưa kích hoạt sắp xếp
+
+            if (sortableList) {
+                sortableList.parentElement.appendChild(sortMessage); // Thêm dòng chữ hướng dẫn vào container
+
+                const sortable = Sortable.create(sortableList, {
+                    handle: '.list-group-item',
+                    animation: 150,
+                    disabled: true, // Kéo thả bị vô hiệu hóa mặc định
+                    onEnd: function(evt) {
+                        console.log('Item moved:', evt);
+                    }
+                });
+
+                sortLessonsBtn.addEventListener('click', function() {
+                    sortable.option('disabled', false);
+                    sortLessonsBtn.style.display = 'none';
+                    saveOrderBtn.style.display = 'inline-block';
+                    cancelSortBtn.style.display = 'inline-block';
+                    lessonOrderForm.style.display = 'block';
+                    sortMessage.style.display = 'block'; // Hiển thị dòng chữ hướng dẫn
+                });
+
+                saveOrderBtn.addEventListener('click', function() {
+                    sortable.option('disabled', true);
+                    sortLessonsBtn.style.display = 'inline-block';
+                    saveOrderBtn.style.display = 'none';
+                    cancelSortBtn.style.display = 'none';
+                    lessonOrderForm.style.display = 'block';
+                    sortMessage.style.display = 'none'; // Ẩn dòng chữ khi không cần sắp xếp
+
+                    // Cập nhật thứ tự bài học trong form
+                    const sortedIds = Array.from(sortableList.children).map((li, index) => {
+                        return {
+                            id: li.getAttribute('data-id'),
+                            number: index + 1
+                        };
+                    });
+
+                    // Gắn dữ liệu vào input hidden và submit form
+                    const lessonDataInput = document.createElement('input');
+                    lessonDataInput.type = 'hidden';
+                    lessonDataInput.name = 'lesson_data';
+                    lessonDataInput.value = JSON.stringify(sortedIds);
+                    lessonOrderForm.appendChild(lessonDataInput);
+
+                    lessonOrderForm.submit();
+                });
+
+                cancelSortBtn.addEventListener('click', function() {
+                    sortable.option('disabled', true);
+                    sortLessonsBtn.style.display = 'inline-block';
+                    saveOrderBtn.style.display = 'none';
+                    cancelSortBtn.style.display = 'none';
+                    lessonOrderForm.style.display = 'block';
+                    sortMessage.style.display = 'none'; // Ẩn dòng chữ khi không cần sắp xếp
+                });
+            }
+        });
+    </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleButtons = document.querySelectorAll('#toggle-expand-collapse');
+
+            toggleButtons.forEach(toggleButton => {
+                const chapterId = toggleButton.closest('.d-flex').querySelector('.delete-chapter-btn')
+                    .getAttribute('data-chapter-id');
+                const quizList = document.querySelector(`.quiz-list2[data-chapter-id="${chapterId}"]`);
+                const lessonList = document.querySelector(`.lesson-list[data-chapter-id="${chapterId}"]`);
+
+                // Mặc định ẩn danh sách
+                quizList.style.display = 'none';
+                lessonList.style.display = 'none';
+
+                toggleButton.addEventListener('click', function() {
+                    const isHidden = quizList.style.display === 'none' && lessonList.style
+                        .display === 'none';
+
+                    if (isHidden) {
+                        // Hiển thị danh sách
+                        quizList.style.display = 'block';
+                        lessonList.style.display = 'block';
+                        toggleButton.textContent = 'Thu nhỏ';
+                    } else {
+                        // Ẩn danh sách
+                        quizList.style.display = 'none';
+                        lessonList.style.display = 'none';
+                        toggleButton.textContent = 'Mở rộng';
+                    }
+                });
+            });
+        });
+    </script>
+    {{-- sử lí kéo thả chương --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sortChaptersBtn = document.getElementById('sort-chapters-btn');
+            const sortChaptersModal = new bootstrap.Modal(document.getElementById('sort-chapters-modal'));
+            const saveChapterOrderBtn = document.getElementById('save-chapter-order-btn');
+            const sortableChapters = document.getElementById('sortable-chapters');
+
+            // Hiển thị modal khi nhấn nút "Sắp xếp chương"
+            sortChaptersBtn.addEventListener('click', function() {
+                sortChaptersModal.show();
+                Sortable.create(sortableChapters, {
+                    animation: 150,
+                    onEnd: function(evt) {
+                        console.log('Chương được di chuyển:', evt);
+                    }
+                });
+            });
+
+            // Lưu thứ tự chương khi nhấn nút "Lưu thứ tự"
+            document.getElementById('sort-chapters-form-inner').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Lấy thứ tự các chương hiện tại
+                const sortedIds = Array.from(sortableChapters.children).map(li => li.getAttribute(
+                    'data-id'));
+
+                fetch('{{ route('client.chapter-order') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                .getAttribute('content')
+                        },
+                        body: JSON.stringify({
+                            chapter_ids: sortedIds
+                        })
+                    }).then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Thứ tự chương đã được lưu.');
+                            sortChaptersModal.hide();
+                            location.reload(); // Tải lại trang sau khi lưu thành công
+                        } else {
+                            alert('Lỗi khi lưu thứ tự chương.');
+                        }
+                    });
             });
         });
     </script>

@@ -10,9 +10,10 @@ class Lesson extends Model
 {
     protected $fillable = [
         'name',
+        'number',
         'chapter_id',
-        'path_video',
-
+        'path_video'
+        
     ];
     
     public function comments(): HasMany{

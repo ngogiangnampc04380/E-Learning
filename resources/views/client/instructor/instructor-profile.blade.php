@@ -6,7 +6,7 @@
 </div>
     <div class="page-banner instructor-bg-blk">
         <div class="container">
-            <div class="row">
+            <div class="row" >
                 <div class="col-md-12 col-12">
                     <div class="profile-info-blk">
                         

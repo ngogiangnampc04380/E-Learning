@@ -34,66 +34,60 @@ return [
     */
 
     'mailers' => [
-        'smtp' => [
-            'transport' => 'smtp',
-            'host' => 'smtp.gmail.com',
-            'port' =>  587,
-            'encryption' => 'tls',
-            'username' => 'iosvietnam48@gmail.com',
-            'password' => 'bwjcgwpueebujgaa',
-            'timeout' => null,
-            'local_domain' => env('MAIL_EHLO_DOMAIN'),
-        ],
+    'smtp' => [
+        'transport' => 'smtp',
+        'host' => 'smtp.gmail.com',
+        'port' => 587,
+        'encryption' => 'tls',
+        'username' => env('MAIL_USERNAME'),
+        'password' => env('MAIL_PASSWORD'),
+        'timeout' => null,
+        'auth_mode' => null,
+    ],
 
-        'ses' => [
-            'transport' => 'ses',
-        ],
+    'ses' => [
+        'transport' => 'ses',
+    ],
 
-        'postmark' => [
-            'transport' => 'postmark',
-            // 'message_stream_id' => null,
-            // 'client' => [
-            //     'timeout' => 5,
-            // ],
-        ],
+    'postmark' => [
+        'transport' => 'postmark',
+    ],
 
-        'mailgun' => [
-            'transport' => 'mailgun',
-            // 'client' => [
-            //     'timeout' => 5,
-            // ],
-        ],
+    'mailgun' => [
+        'transport' => 'mailgun',
+    ],
 
-        'sendmail' => [
-            'transport' => 'sendmail',
-            'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -bs -i'),
-        ],
+    'sendmail' => [
+        'transport' => 'sendmail',
+        'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -bs -i'),
+    ],
 
-        'log' => [
-            'transport' => 'log',
-            'channel' => env('MAIL_LOG_CHANNEL'),
-        ],
+    'log' => [
+        'transport' => 'log',
+        'channel' => env('MAIL_LOG_CHANNEL'),
+    ],
 
-        'array' => [
-            'transport' => 'array',
-        ],
+    'array' => [
+        'transport' => 'array',
+    ],
 
-        'failover' => [
-            'transport' => 'failover',
-            'mailers' => [
-                'smtp',
-                'log',
-            ],
-        ],
-
-        'roundrobin' => [
-            'transport' => 'roundrobin',
-            'mailers' => [
-                'ses',
-                'postmark',
-            ],
+    'failover' => [
+        'transport' => 'failover',
+        'mailers' => [
+            'smtp',
+            'log',
         ],
     ],
+
+    'roundrobin' => [
+        'transport' => 'roundrobin',
+        'mailers' => [
+            'ses',
+            'postmark',
+        ],
+    ],
+],
+
 
     /*
     |--------------------------------------------------------------------------

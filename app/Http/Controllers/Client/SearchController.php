@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
+use App\Models\Course_category;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Models\Course_category;
+
 
 class SearchController extends Controller
 {
@@ -23,7 +24,9 @@ class SearchController extends Controller
             ->orderBy('id', 'desc')
             ->get();
             $categories = Course_category::all();
-        return view('client.courses.courses-list', ['data' => $data, 'query' => $query, 'categories' => $categories]);
+         // Lấy danh sách các categories
+    $categories = Course_Category::all();
+return view('client.courses.courses-list', ['data' => $data, 'query' => $query, 'categories' => $categories]);
     } elseif ($type === 'mentor') {
         // Tìm kiếm giảng viên
         $currentUserId = Auth::id();
@@ -33,7 +36,9 @@ class SearchController extends Controller
             ->where('id', '!=', $currentUserId)
             ->get();
 
-        return view('client.instructor.instructor-list', ['data' => $data, 'query' => $query]);
+         // Lấy danh sách các categories
+    $categories = Course_Category::all();
+return view('client.instructor.instructor-list', ['data' => $data, 'query' => $query]);
     }
 
     // Trường hợp không khớp với loại nào cả

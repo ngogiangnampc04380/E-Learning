@@ -27,9 +27,11 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-9 col-md-12">
+                @auth
                 @if(auth()->user()->role == 1)
                             <a href="/admin/posts" class="btn btn-secondary mb-5"><i class="fa-solid fa-gear"></i> Quản lí bài viết</a>
                                         @endif
+                                        @endauth
                 @foreach($posts as $post)
                 <div class="blog">
                     <div class="blog-image">
@@ -100,7 +102,18 @@
                     </div>
                 </div>
 
-
+                <div class="card tags-widget blog-widget tags-card">
+                    <div class="card-header">
+                        <h4 class="card-title">Danh mục bài viết</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="tags">
+                            @foreach($post->post_categories as $category)
+                                <li><a href="{{ route('client.category-detail', ['slug' => $category->slug]) }}" class="tag">{{ $category->name }}</a></li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
                 <div class="card post-widget blog-widget">
                     <div class="card-header">
                         <h4 class="card-title">Bài viết liên quan</h4>
@@ -177,18 +190,7 @@
                 </div> --}}
 
 
-                <div class="card tags-widget blog-widget tags-card">
-                    <div class="card-header">
-                        <h4 class="card-title"> Danh mục bài viết</h4>
-                    </div>
-                    <div class="card-body">
-                        <ul class="tags">
-                            @foreach($categories as $category)
-                                <li><a href="{{ route('client.category-detail', ['slug' => $category->slug]) }}" class="tag">{{ $category->name }}</a></li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
+                
 
             </div>
 

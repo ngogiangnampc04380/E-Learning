@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Providers;
+
 use Illuminate\Support\Facades\Storage;
 use Google\Cloud\Storage\StorageClient;
 use League\Flysystem\Filesystem;
 use League\Flysystem\GoogleCloudStorage\GoogleCloudStorageAdapter;
+use App\Models\Course_Category;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,12 +24,14 @@ class AppServiceProvider extends ServiceProvider
 
             return new Filesystem($adapter);
         });
+        view()->composer('*', function ($view) {
+            $categories = Course_Category::all();
+            $view->with('categories', $categories);
+        });
     }
-    
+
     public function register(): void
     {
         //
     }
-
-   
 }

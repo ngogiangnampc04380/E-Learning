@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
             $table->string('name',50);
+            $table->string('number',10)->nullable();
             $table->string('path_video');
             $table->unsignedBigInteger('chapter_id');
             $table->foreign('chapter_id')->references('id')->on('chapters')->constrained()->cascadeOnDelete();

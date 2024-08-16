@@ -8,6 +8,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <title>E-learning website [ ENT ]</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
 
     <link rel="shortcut icon" type="image/x-icon" href="/assets-client/img/logo.png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -114,6 +116,7 @@
             -webkit-animation: moveGradient 15s infinite, sixMove 3.5s 0.875s infinite;
             animation: moveGradient 15s infinite, sixMove 3.5s 0.875s infinite;
         }
+        
 
         @-webkit-keyframes moveGradient {
             to {
@@ -878,44 +881,69 @@
                             </div> --}}
                             <ul class="main-nav">
                                 <li class="has-submenu {{ Route::currentRouteName() == 'Dashboard-client' ? 'active' : '' }}">
-                                    <a href="{{ route('Dashboard-client') }}">Trang chủ </a>
+                                    <a href="{{ route('Dashboard-client') }}">TRANG CHỦ</a>
                                 </li>
                                 <li class="has-submenu {{ Route::currentRouteName() == 'client.instructor-list' ? 'active' : '' }}">
-                                    <a href="{{ route('client.instructor-list') }}">Danh sách giảng viên</a>
-                                   
+                                    <a href="{{ route('client.instructor-list') }}">GIẢNG VIÊN</a>
                                 </li>
-                                <li class="{{ Route::currentRouteName() == 'client.course-lists' ? 'active' : '' }}">
-                                    <a href="{{ route('client.course-lists') }}">Khóa học</a>
-                                </li>
-                                <li class="{{ Route::currentRouteName() == 'client.post-list' ? 'active' : '' }}">
-                                    <a href="{{ route('client.post-list') }}">Bài viết</a>
+                                <li class="has-submenu {{ Route::currentRouteName() == 'client.course-lists' ? 'active' : '' }}">
+                                    <a href="{{ route('client.course-lists') }}">KHÓA HỌC</a>
+                                    <ul class="submenu">
+                                        <li><a href="{{ route('client.course-lists') }}" class="{{ request()->is('course-lists') ? 'active' : '' }}">TẤT CẢ</a></li>
+                                        @foreach ($categories as $category)
+                                            @if (strlen($category->name) > 20)
+                                                <li class="full-width">
+                                                    <a href="{{ route('client.course-lists', ['categories' => [$category->id]]) }}" title="{{ $category->name }}">
+                                                        {!! Str::limit($category->name, 35) !!}
+                                                    </a>
+                                                </li>
+                                            @else
+                                                <li>
+                                                    <a href="{{ route('client.course-lists', ['categories' => [$category->id]]) }}" class="{{ request()->is('course-lists?categories=' . $category->id) ? 'active' : '' }}">
+                                                        {{ $category->name }}
+                                                    </a>
+                                                </li>
+                                            @endif
+                                        @endforeach
+                                    </ul>
                                 </li>
                                 
-
+                                
+                                
+                                
+                                
+                                
+                                <li class="{{ Route::currentRouteName() == 'client.post-list' ? 'active' : '' }}">
+                                    <a href="{{ route('client.post-list') }}">BÀI VIẾT</a>
+                                </li>
                                 @if(auth()->check())
                                     @if(auth()->user()->role == 2)
                                         <li class="{{ Route::currentRouteName() == 'client.instructor-course' ? 'active' : '' }}">
-                                            <a href="{{ route('client.instructor-course',auth()->user()->mentor->id)}}">Quản lí Khóa học</a>
+                                            <a href="{{ route('client.instructor-course', auth()->user()->mentor->id) }}">QUẢN LÝ KHÓA HỌC</a>
                                         </li>
                                     @elseif(auth()->user()->role == 0)
-                                        <li class="{{ Route::currentRouteName() == 'client.instructor-course' ? 'active' : '' }}">
-                                            <a href="{{ route('client.my-course',auth()->user()->id)}}">Khóa học của tôi</a>
+                                        <li class="{{ Route::currentRouteName() == 'client.my-course' ? 'active' : '' }}">
+                                            <a href="{{ route('client.my-course', auth()->user()->id) }}">KHÓA HỌC CỦA TÔI</a>
                                         </li>
-                                        @elseif(auth()->user()->role == 1)
+                                    @elseif(auth()->user()->role == 1)
                                         <li class="{{ Route::currentRouteName() == 'client.instructor-course' ? 'active' : '' }}">
-                                            <a href="/admin">Quản trị website</a>
+                                            <a href="/admin">QUẢN TRỊ WEBSITE</a>
                                         </li>
-                                        @endif
+                                    @endif
                                 @endif
+                                <li class="{{ Route::currentRouteName() == 'client.contact' ? 'active' : '' }}">
+                                    <a  href="{{ route('client.contact') }}">LIÊN HỆ & HỖ TRỢ</a>
+                                </li>
                             </ul>
+                            
                         </div>
                         @guest
                             <ul class="nav header-navbar-rht">
                                 <li class="nav-item">
-                                    <a class="nav-link header-sign" href="{{route('login')}}">Đăng nhập</a>
+                                    <a class="nav-link header-sign" href="{{route('login')}}">ĐĂNG NHẬP</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link header-login" href="{{route('register')}}" >Đăng ký</a>
+                                    <a class="nav-link header-login" href="{{route('register')}}" >ĐĂNG KÝ</a>
                                 </li>
                             </ul>
                         @endguest

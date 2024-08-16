@@ -871,18 +871,7 @@ button.bg-danger:hover {
 .main-nav > li.active > a {
 	color: #F66962;
 }
-.main-nav > li .submenu li a {
-    display: block;
-    padding: 10px 15px;
-    clear: both;
-    white-space: nowrap;
-    font-size: 14px;
-    color: #26292c;
-    -webkit-transition: all .35s ease;
-    transition: all .35s ease;
-	width: 100%;
-	border-top: 1px solid #f0f0f0;
-}
+/* f */
 .main-nav > li .submenu > li.has-submenu > a::after {
     content: "\f054";
     font-family: "Font Awesome 5 Free";
@@ -2239,8 +2228,9 @@ html.menu-opened body {
 .product-content h3 a:hover {
 	color: #F66962;
 }
-.product-content .instructor-text {
+.instructor-text {
 	max-width: 320px;
+    height: 100px;
 }
 .product .rating {
     margin-left: auto;
@@ -5666,6 +5656,7 @@ body.home-three :-ms-input-placeholder {
     -o-transition: all 2000ms cubic-bezier(.19,1,.22,1) 0ms;
     -webkit-transition: all 2000ms cubic-bezier(.19,1,.22,1) 0ms;
     transition: all 2000ms cubic-bezier(.19,1,.22,1) 0ms;
+    
 }
 .course-box-three:hover .course-three-img img {
     -webkit-transform: scale(1.15);
@@ -5673,8 +5664,10 @@ body.home-three :-ms-input-placeholder {
     transform: scale(1.15);
     overflow: hidden;
     position: relative;
+    
 }
 .course-three-img {
+    height: 260px;
     position: relative;
     overflow: hidden;
     padding: 0;
@@ -5682,6 +5675,7 @@ body.home-three :-ms-input-placeholder {
     -moz-transition: 0.7s;
     -o-transition: 0.7s;
     transition: 0.7s;
+    
 }
 .course-three-text {
     margin-top: 30px;
@@ -13246,17 +13240,15 @@ input[type=password]::-ms-clear
 	bottom: 0;
 }
 .page-banner {
+    height:225px;
 	padding: 88px 0;
 	text-align: center;
-	background: url('../img/ban-bg.png') #1565C0;
+	background: url('../img/banner-support.gif');
 	background-repeat: no-repeat;
 	background-size: cover;
+    
 }
-.page-banner h1 {
-	font-weight: 600;
-	margin-bottom: 15px;
-	color: #FFF;
-}
+
 .page-banner p {
 	color: #FFF;
 	margin-bottom: 0;
@@ -13642,7 +13634,7 @@ input[type=password]::-ms-clear
 	color: #fff;
 }
 .profile-info-social {
-	margin-top: 8px;
+	/* margin-top: 8px; */
 	margin-bottom: 0px;
 }
 .profile-info-social li a {
@@ -25781,4 +25773,502 @@ input[type=password]::-ms-clear
     padding: 0.5rem; /* Khoảng cách nội dung với viền */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bóng đổ nhẹ */
 }
+.pagination {
+    justify-content: center;
+}
 
+.pagination .page-item .page-link {
+    border-radius: 50%;
+    margin: 0 5px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+}
+.pagination {
+    justify-content: center;
+}
+
+.page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.page-link {
+    color: #007bff;
+}
+
+.page-link:hover {
+    color: #0056b3;
+    text-decoration: none;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+.button-apdung{
+    background:    #32e0e0;
+    background:    linear-gradient(#32e0e0, #073763);
+    border-radius: 1000px;
+    padding:       10px 15px;
+    color:         #ffffff;
+    display:       inline-block;
+    font:          normal bold 20px/1 "Open Sans", sans-serif;
+    text-align:    center;
+}
+/* Kiểu dáng chung cho submenu */
+.submenu {
+    display: flex;
+    flex-wrap: wrap; /* Cho phép các mục bọc sang dòng kế tiếp */
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    background-color: #fff; /* Màu nền của submenu */
+    border: 1px solid #ddd; /* Viền quanh submenu */
+    border-radius: 6px; /* Góc bo tròn mềm mại */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng nhẹ */
+    position: absolute;
+    top: 100%; /* Đặt submenu bên dưới mục cha */
+    left: 0;
+    width: 300px; /* Chiều rộng của submenu */
+    z-index: 1000; /* Đảm bảo submenu xuất hiện trên cùng */
+    padding: 8px; /* Padding chung cho submenu */
+    box-sizing: border-box;
+}
+
+/* Kiểu dáng cho từng mục submenu */
+.submenu li {
+    width: calc(100% / 3); /* Chia submenu thành 3 cột */
+    box-sizing: border-box;
+    padding: 6px 0; /* Padding trên và dưới cho mỗi mục */
+    border-bottom: 1px solid #eee; /* Đường phân cách giữa các mục */
+    white-space: nowrap; /* Không cho phép xuống dòng trong mỗi mục */
+    overflow: hidden; /* Ẩn phần văn bản bị tràn */
+    text-overflow: ellipsis; /* Hiển thị dấu ba chấm khi văn bản quá dài */
+}
+
+/* Đặt một mục chiếm toàn bộ dòng nếu cần */
+.submenu li.full-width {
+    width: 100%; /* Một mục chiếm toàn bộ chiều rộng của submenu */
+    white-space: normal; /* Cho phép xuống dòng */
+    overflow: visible; /* Hiển thị nội dung bị tràn */
+    text-overflow: clip; /* Không hiển thị dấu ba chấm */
+}
+
+/* Loại bỏ đường phân cách dưới cùng của submenu */
+.submenu li:last-child {
+    border-bottom: none;
+}
+
+/* Kiểu dáng cho các liên kết trong submenu */
+.submenu a {
+    display: block;
+    padding: 8px;
+    color: #333; /* Màu chữ */
+    text-decoration: none;
+    border-radius: 4px; /* Bo góc cho liên kết */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng chuyển màu nền và chữ khi hover */
+}
+
+/* Hiệu ứng hover cho các liên kết */
+.submenu a:hover {
+    background-color: #f0f0f0; /* Màu nền khi hover */
+    color: #007bff; /* Màu chữ khi hover */
+}
+
+/* Hiển thị submenu khi di chuột qua */
+.has-submenu {
+    position: relative;
+}
+
+.has-submenu:hover .submenu {
+    display: flex; /* Hiển thị submenu khi hover */
+}
+
+/* Ẩn submenu mặc định */
+.submenu {
+    display: none;
+}
+
+/* Đảm bảo căn chỉnh các mục submenu */
+.submenu li {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Canh giữa nội dung */
+}
+
+/* Tạo đường phân cách giữa các cột */
+.submenu {
+    border: 1px solid #ddd; /* Đường viền cho submenu */
+}
+.button-apdung,
+.button-loaibo {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-apdung {
+    background-color: #007bff;
+    color: white;
+}
+
+.button-loaibo {
+    background-color: #dc3545;
+    color: white;
+    margin-left: 10px;
+}
+
+.button-loaibo:hover {
+    background-color: #c82333;
+}
+/* Add this CSS to your stylesheet */
+.support-wrap {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.input-block {
+    margin-bottom: 15px;
+}
+
+.input-block label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.input-block .form-control {
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    padding: 10px;
+}
+
+.btn-submit {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.loading, .success-message {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid #007bff;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.checkmark {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #28a745;
+    display: inline-block;
+    position: relative;
+}
+
+.checkmark-svg {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: 8px;
+    left: 8px;
+}
+
+.success-message p {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #28a745;
+}
+/* form sửa bài học */
+.edit-lesson-form {
+    background-color: #e0e0e0; /* Nền xám sậm hơn để nổi bật hơn so với nền */
+    border: 1px solid #b0b0b0; /* Đường viền xám nhạt hơn để tạo điểm nhấn */
+    border-radius: 0px 0px 8px 8px; /* Bo góc để tạo cảm giác mềm mại */
+    padding: 15px; /* Khoảng cách bên trong form */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng nhẹ */
+}
+
+.form-group {
+    margin-bottom: 15px; /* Khoảng cách giữa các nhóm form */
+}
+
+.form-group label {
+    display: block; /* Hiển thị label như khối để dễ định dạng */
+    margin-bottom: 5px; /* Khoảng cách giữa nhãn và trường nhập liệu */
+    color: #333; /* Màu chữ nhãn tối hơn để dễ đọc */
+}
+
+.form-control,
+.form-control-file {
+    border: 1px solid #a0a0a0; /* Đường viền xám để tạo điểm nhấn tốt hơn */
+    border-radius: 4px; /* Bo góc nhẹ cho các trường nhập liệu */
+    padding: 8px; /* Khoảng cách bên trong */
+    font-size: 14px; /* Kích thước font nhỏ hơn để hài hòa */
+    width: 100%; /* Chiều rộng đầy đủ */
+}
+
+.form-control {
+    background-color: #fff; /* Nền trắng cho trường nhập liệu */
+}
+
+.form-control-file {
+    background-color: #f0f0f0; /* Nền xám nhạt hơn cho file input */
+}
+
+.btn-success {
+    background-color: #218838; /* Màu nền xanh lá cây sậm hơn */
+    color: #fff; /* Màu chữ trắng */
+    border: 1px solid #1e7e34; /* Đường viền xanh lá cây đậm hơn */
+}
+
+.btn-success:hover {
+    background-color: #1e7e34; /* Màu nền xanh lá cây đậm hơn khi hover */
+}
+
+.btn-secondary {
+    background-color: #5a6268; /* Màu nền xám đậm hơn */
+    color: #fff; /* Màu chữ trắng */
+    border: 1px solid #545b62; /* Đường viền xám tối hơn */
+}
+
+.btn-secondary:hover {
+    background-color: #545b62; /* Màu nền xám tối hơn khi hover */
+}
+
+hr {
+    border: 0; /* Loại bỏ đường viền mặc định của hr */
+    border-top: 1px solid #b0b0b0; /* Đường viền trên cho hr */
+    margin: 20px 0; /* Khoảng cách trên và dưới của hr */
+}
+/* sửa chương form  */
+.edit-chapter-form {
+    background-color: #f9f9f9; /* Nền xám nhạt hơn để nổi bật hơn so với nền */
+    border: 1px solid #c0c0c0; /* Đường viền xám nhạt hơn để tạo điểm nhấn */
+    border-radius: 8px; /* Bo góc để tạo cảm giác mềm mại */
+    padding: 15px; /* Khoảng cách bên trong form */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng nhẹ */
+}
+
+.form-group {
+    margin-bottom: 15px; /* Khoảng cách giữa các nhóm form */
+}
+
+.form-group label {
+    display: block; /* Hiển thị label như khối để dễ định dạng */
+    margin-bottom: 5px; /* Khoảng cách giữa nhãn và trường nhập liệu */
+    color: #333; /* Màu chữ nhãn tối hơn để dễ đọc */
+}
+
+.form-control {
+    border: 1px solid #a0a0a0; /* Đường viền xám để tạo điểm nhấn tốt hơn */
+    border-radius: 4px; /* Bo góc nhẹ cho các trường nhập liệu */
+    padding: 8px; /* Khoảng cách bên trong */
+    font-size: 14px; /* Kích thước font nhỏ hơn để hài hòa */
+    width: 100%; /* Chiều rộng đầy đủ */
+    background-color: #fff; /* Nền trắng cho trường nhập liệu */
+}
+
+.form-control:focus {
+    border-color: #80b3ff; /* Màu viền khi trường nhập liệu được chọn */
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25); /* Hiệu ứng bóng nhẹ khi trường nhập liệu được chọn */
+}
+
+.btn-success {
+    background-color: #28a745; /* Màu nền xanh lá cây nổi bật */
+    color: #fff; /* Màu chữ trắng */
+    border: 1px solid #218838; /* Đường viền xanh lá cây đậm hơn */
+}
+
+.btn-success:hover {
+    background-color: #218838; /* Màu nền xanh lá cây đậm hơn khi hover */
+}
+
+.btn-secondary {
+    background-color: #6c757d; /* Màu nền xám đậm */
+    color: #fff; /* Màu chữ trắng */
+    border: 1px solid #5a6268; /* Đường viền xám tối hơn */
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268; /* Màu nền xám tối hơn khi hover */
+}
+
+.invalid-feedback {
+    color: #dc3545; /* Màu đỏ cho thông báo lỗi */
+}
+.table td.special-cell {
+    text-align: center;
+    color: #4a5d77; /* Màu chữ xanh xám, dễ nhìn và hiện đại */
+    font-weight: 600; /* Chữ đậm nhưng không quá nặng */
+    font-size: 1.2rem; /* Kích thước chữ lớn hơn để dễ đọc */
+    background-color: #f0f4f7; /* Màu nền nhẹ nhàng cho ô để tạo sự tương phản */
+    border-radius: 4px; /* Bo tròn góc cho ô để tạo cảm giác mềm mại */
+    padding: 10px; /* Thêm khoảng cách bên trong ô */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng chữ nhẹ nhàng */
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng bên trong để tạo chiều sâu */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng chuyển tiếp mượt mà khi hover */
+}
+
+.table td.special-cell:hover {
+    background-color: #e0e6ed; /* Màu nền sáng hơn khi hover để làm nổi bật ô */
+    color: #2c3e50; /* Màu chữ tối hơn khi hover để tăng cường sự tương phản */
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2); /* Hiệu ứng bóng chữ mạnh hơn khi hover */
+}
+
+
+.modal {
+    display: none; /* Đảm bảo rằng modal không hiển thị mặc định */
+    position: fixed;
+    z-index: 1050; /* Đảm bảo modal có z-index cao hơn các phần tử khác */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    outline: 0;
+}
+.modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 1.75rem auto;
+}
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.3rem;
+    box-shadow: 0 3px 9px rgba(0,0,0,.5);
+}
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: .5;
+    z-index: 1040; /* Đảm bảo backdrop có z-index thấp hơn modal */
+}
+.btn-outline-edit-chapter {
+    background-color: #fff; /* Màu nền trắng để nổi bật */
+    color: #f39c12; /* Màu chữ vàng đậm */
+    border: 1px solid #000; /* Màu viền đen */
+    font-weight: bold; /* Chữ đậm để nổi bật hơn */
+    transition: all 0.3s ease; /* Hiệu ứng chuyển tiếp mượt mà */
+}
+
+.btn-outline-edit-chapter:hover,
+.btn-outline-edit-chapter:focus {
+    background-color: #f39c12; /* Màu nền vàng đậm khi hover */
+    color: #fff; /* Màu chữ trắng khi hover */
+    border-color: #f39c12; /* Màu viền vàng đậm khi hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Bóng đổ để nổi bật */
+    outline: none; /* Loại bỏ viền khi focus */
+}
+
+.btn-outline-sort-chapters {
+    background-color: #fff; /* Màu nền trắng để nổi bật */
+    color: #f39c12; /* Màu chữ vàng đậm */
+    border: 1px solid #000; /* Màu viền đen */
+    font-weight: bold; /* Chữ đậm để nổi bật hơn */
+    transition: all 0.3s ease; /* Hiệu ứng chuyển tiếp mượt mà */
+}
+
+.btn-outline-sort-chapters:hover,
+.btn-outline-sort-chapters:focus {
+    background-color: #f39c12; /* Màu nền vàng đậm khi hover */
+    color: #fff; /* Màu chữ trắng khi hover */
+    border-color: #f39c12; /* Màu viền vàng đậm khi hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Bóng đổ để nổi bật */
+    outline: none; /* Loại bỏ viền khi focus */
+}
+.btn-outline-edit-course {
+    background-color: #fff; /* Màu nền trắng để nổi bật */
+    color: #f39c12; /* Màu chữ vàng đậm */
+    border: 1px solid #000; /* Màu viền đen */
+    font-weight: bold; /* Chữ đậm để nổi bật hơn */
+    transition: all 0.3s ease; /* Hiệu ứng chuyển tiếp mượt mà */
+}
+/* Các thuộc tính giống nhau cho tất cả các lớp */
+.btn-outline-edit-chapter,
+.btn-outline-sort-chapters,
+.btn-outline-edit-course,
+.btn-outline-edit-quiz,
+.btn-outline-edit-lesson {
+    background-color: #fff; /* Màu nền trắng để nổi bật */
+    color: #f39c12; /* Màu chữ vàng đậm */
+    border: 1px solid #000; /* Màu viền đen */
+    font-weight: bold; /* Chữ đậm để nổi bật hơn */
+    transition: all 0.3s ease; /* Hiệu ứng chuyển tiếp mượt mà */
+}
+
+/* Hiệu ứng hover và focus cho các lớp cụ thể */
+.btn-outline-edit-chapter:hover,
+.btn-outline-edit-chapter:focus,
+.btn-outline-sort-chapters:hover,
+.btn-outline-sort-chapters:focus,
+.btn-outline-edit-course:hover,
+.btn-outline-edit-course:focus,
+.btn-outline-edit-quiz:hover,
+.btn-outline-edit-quiz:focus,
+.btn-outline-edit-lesson:hover,
+.btn-outline-edit-lesson:focus {
+    background-color: #f39c12; /* Màu nền vàng đậm khi hover */
+    color: #fff; /* Màu chữ trắng khi hover */
+    border-color: #e67e22; /* Màu viền đậm hơn khi hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bóng đổ để nổi bật */
+    outline: none; /* Loại bỏ viền khi focus */
+}
+
+
+.btn-outline-common {
+    background-color: #fff; /* Màu nền trắng để nổi bật */
+    color: #f39c12; /* Màu chữ vàng đậm */
+    border: 1px solid #000; /* Màu viền đen */
+    font-weight: bold; /* Chữ đậm để nổi bật hơn */
+    transition: all 0.3s ease; /* Hiệu ứng chuyển tiếp mượt mà */
+}
+
+.btn-outline-common:hover,
+.btn-outline-common:focus {
+    background-color: #f39c12; /* Màu nền vàng đậm khi hover */
+    color: #fff; /* Màu chữ trắng khi hover */
+    border-color: #e67e22; /* Màu viền đậm hơn khi hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bóng đổ để nổi bật */
+    outline: none; /* Loại bỏ viền khi focus */
+}

@@ -39,7 +39,7 @@
                 @if(isset($query))
                 <h2>Kết quả tìm kiếm cho: "{{ $query }}"</h2>
             @endif
-
+        
             @if($data->isEmpty())
                 <p>Không tìm thấy giảng viên nào.</p>
             @else
@@ -86,8 +86,14 @@
                     </div>
                 @endforeach
             @endif
-
+<!-- Pagination -->
+<div class="row">
+    <div class="col-md-12">
+        {{ $data->links('pagination::bootstrap-4') }}
+    </div>
+</div>
             </div>
+            
             <div class="col-lg-3">
                 <div class="filter-clear">
                     <div class="clear-filter d-flex align-items-center">

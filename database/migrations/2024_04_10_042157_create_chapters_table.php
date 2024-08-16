@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('chapters', function (Blueprint $table) {
             $table->id();
             $table->string('name',50);
+            $table->string('number',10)->nullable();
             $table->unsignedBigInteger('course_id');
             $table->foreign('course_id')->references('id')->on('courses')->constrained()->cascadeOnDelete();
             $table->timestamps();
+
         });
     }
 

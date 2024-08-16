@@ -1,8 +1,8 @@
 @extends('client.layout.master')
 @section('content')
-@if ($message = Session::get('success'))
-@include('components.message', ['message' => $message, 'type' => 'success'])
-@endif
+    @if ($message = Session::get('success'))
+        @include('components.message', ['message' => $message, 'type' => 'success'])
+    @endif
 
     <section class="home-three-slide d-flex align-items-center">
 
@@ -17,30 +17,39 @@
                             <h1>Hấp dẫn <span>&</span> Các khóa học trực tuyến có thể truy cập cho tất cả mọi người</h1>
                         </div>
                         <div class="banner-three-content">
-                            <form class="form" action="{{ route('client.search') }}" method="GET">
+                            <form class="form" id="searchForm" method="GET">
                                 <div class="form-inner-three">
                                     <div class="input-group">
-                                        <input type="text" name="query" class="form-control" placeholder="Tìm kiếm Giảng viên, khóa học trực tuyến, v.v." value="{{ request()->query('query') }}">
+                                        <input type="text" name="query" class="form-control"
+                                            placeholder="Tìm kiếm Giảng viên, khóa học trực tuyến, v.v."
+                                            value="{{ request()->query('query') }}">
                                         <span class="drop-detail-three">
-                                            <select name="type" class="form-three-select select">
-                                                <option value="course">Khóa học</option>
-                                                <option value="mentor">Giảng viên</option>
+                                            <select name="type" class="form-three-select select"
+                                                onchange="updateFormAction()">
+                                                <option value="course"
+                                                    {{ request()->query('type') == 'course' ? 'selected' : '' }}>Khóa học
+                                                </option>
+                                                <option value="mentor"
+                                                    {{ request()->query('type') == 'mentor' ? 'selected' : '' }}>Giảng viên
+                                                </option>
                                             </select>
                                         </span>
-                                        <button class="btn btn-three-primary sub-btn" type="submit"><i class="fas fa-arrow-right"></i></button>
+                                        <button class="btn btn-three-primary sub-btn" type="submit"><i
+                                                class="fas fa-arrow-right"></i></button>
                                     </div>
                                 </div>
                             </form>
                         </div>
 
-                </div>
-                <div class="col-xl-6 col-lg-4 col-md-6 col-12" data-aos="fade-up">
-                    <div class="girl-slide-img aos">
 
+                    </div>
+                    <div class="col-xl-6 col-lg-4 col-md-6 col-12" data-aos="fade-up">
+                        <div class="girl-slide-img aos">
+
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
 
 
@@ -71,7 +80,7 @@
                                         <img class="img-fluid" src="/assets-client/img/icon-three/course-02.svg" alt>
                                     </div>
                                     <div class="course-content-three">
-                                        <h4 class="text-yellow"><span class="counterUp">200</span> triệu</h4>
+                                        <h4 class="text-yellow"><span class="counterUp">{{ $mentorCounts }}</span> </h4>
                                         <p>Người dùng</p>
                                     </div>
                                 </div>
@@ -202,7 +211,7 @@
                             </div>
                             <div class="col-lg-6 col-sm-4">
                                 <div class="see-all">
-                                    <a href="#">Xem tất cả<span class="see-all-icon"><i
+                                    <a href="{{ route('client.course-lists') }}">Xem tất cả<span class="see-all-icon"><i
                                                 class="fas fa-arrow-right"></i></span></a>
                                 </div>
                             </div>
@@ -213,59 +222,60 @@
                             <div class="nav tablist-three" role="tablist">
                                 <a class="nav-tab active me-3" data-bs-toggle="tab" href="#alltab" role="tab">Tất
                                     cả</a>
-                                <a class="nav-tab me-3" data-bs-toggle="tab" href="#businesstab" role="tab">Từ
-                                    vựng</a>
-                                <a class="nav-tab me-3" data-bs-toggle="tab" href="#designtab" role="tab">Ngữ
-                                    pháp</a>
-                                <a class="nav-tab me-3" data-bs-toggle="tab" href="#databasetab" role="tab">Giao
-                                    tiếp</a>
+                                @foreach ($categories as $category)
+                                    <a class="nav-tab me-3" data-bs-toggle="tab" href="#category{{ $category->id }}"
+                                        role="tab">{{ $category->name }}</a>
+                                @endforeach
                             </div>
-                            <div class="tab-content">
 
+                            <div class="tab-content">
                                 <div class="tab-pane fade active show" id="alltab" role="tabpanel">
                                     <div class="all-course">
                                         <div class="row">
-
-                                            @foreach($courses as $course)
+                                            @foreach ($courses as $course)
                                                 <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
                                                     <div class="course-box-three">
                                                         <div class="course-three-item">
                                                             <div class="course-three-img">
-                                                                <a href="{{ route('client.course-details', $course->id) }}">
-                                                                    <img class="img-fluid" alt="Course Image" src="{{ Storage::url('public/'.$course->thumbnail) }}">
+                                                                <a
+                                                                    href="{{ route('client.course-details', $course->id) }}">
+                                                                    <img class="img-fluid" alt="Course Image"
+                                                                        src="{{ Storage::url('public/assets-client/img/Courses/' . $course->thumbnail) }}">
                                                                 </a>
                                                                 <div class="heart-three">
-                                                                    <a href="#"><i class="fa-regular fa-heart"></i></a>
+                                                                    <a href="#"><i
+                                                                            class="fa-regular fa-heart"></i></a>
                                                                 </div>
                                                             </div>
                                                             <div class="course-three-content">
-                                                                {{-- <div class="course-group-three">
-                                                                    <div class="group-three-img">
-                                                                        <a href="{{ route('client.mentor_detail', ['id' => $course->mentor_id]) }}">
-                                                                            <img src="{{ Storage::url('assets-client/img/user/user1.jpg') }}" alt="Instructor Image" class="img-fluid">
+                                                                <a
+                                                                    href="{{ route('client.course-details', $course->id) }}">
+                                                                    <h4 class="title instructor-text">
+                                                                        {{ Str::limit($course->name, 40, '...') }}
+                                                                    </h4>
+                                                                </a>
+
+                                                                <div class="mentor-info d-flex align-items-center mt-2">
+                                                                    <a
+                                                                        href="{{ route('client.mentor_detail', $course->mentor->user->id) }}">
+                                                                        <img class="mentor-img img-fluid rounded-circle"
+                                                                            alt="Mentor Image"
+                                                                            src="{{ $course->mentor->user->thumbnail ? Storage::url('assets-client/img/user/' . $course->mentor->user->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"
+                                                                            style="width: 40px; height: 40px;">
+                                                                    </a>
+                                                                    <div class="mentor-name ms-2">
+                                                                        <a
+                                                                            href="{{ route('client.mentor_detail', $course->mentor->user->id) }}">
+                                                                            <h5>{{ $course->mentor->user->name }}</h5>
                                                                         </a>
                                                                     </div>
-                                                                </div> --}}
-                                                                <div class="course-three-text">
-                                                                    <a href="{{ route('client.course-details', $course->id) }}">
-                                                                        <h3 class="title instructor-text">{{ $course->name }}</h3>
-                                                                    </a>
                                                                 </div>
-                                                                <div class="student-counts-info d-flex align-items-center">
-                                                                    <div class="students-three-counts d-flex align-items-center">
-                                                                        <img src="/assets-client/img/icon-three/student.svg" alt="Student Icon">
-                                                                        <p>{{ $course->students_count }} Học viên</p>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="price-three-group d-flex align-items-center justify-content-between justify-content-between">
-                                                                    <div class="price-three-view d-flex align-items-center">
-                                                                        <div class="course-price-three">
-                                                                            <h3>{{ number_format($course->price) }} VNĐ <span>{{ number_format($course->discount_price) }} VNĐ</span></h3>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="price-three-time d-inline-flex align-items-center">
-                                                                        <i class="fa-regular fa-clock me-2"></i>
-                                                                        <span>{{ $course->duration }}</span>
+                                                                <div
+                                                                    class="price-three-group d-flex align-items-center justify-content-between mt-3">
+                                                                    <div class="course-price-three">
+                                                                        <h3>{{ number_format($course->price) }} VNĐ
+                                                                            <span>{{ number_format($course->discount_price) }}
+                                                                                VNĐ</span></h3>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -273,2679 +283,79 @@
                                                     </div>
                                                 </div>
                                             @endforeach
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="tab-pane fade" id="mostpopulartab">
-                                    <div class="all-course">
-                                        <div class="row">
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-21.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user4.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Creative Arts & media</p>
-                                                                    <h3 class="title instructor-text">Build Creative Arts &
-                                                                        media Course Completed</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>250 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$700 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-22.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user5.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Personalized Learning</p>
-                                                                    <h3 class="title instructor-text">Build Responsive
-                                                                        Websites with HTML</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 </h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-23.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user6.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Pyhton Development</p>
-                                                                    <h3 class="title instructor-text">The Complete Pyhton
-                                                                        Development Course</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>Free </h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-26.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user1.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Personalized Learning</p>
-                                                                    <h3 class="title instructor-text">Build Responsive
-                                                                        Websites with HTML</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>450 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-27.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user2.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Pyhton Development</p>
-                                                                    <h3 class="title instructor-text">The Complete Web
-                                                                        Developer PHP Course</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>500 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-20.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user3.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Business Management</p>
-                                                                    <h3 class="title instructor-text">The Complete Business
-                                                                        Management Course</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$300 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-24.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user7.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Business Management</p>
-                                                                    <h3 class="title instructor-text">Build Websites with
-                                                                        HTML5 CSS3 Javascript</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-25.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user8.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Creative Arts & media</p>
-                                                                    <h3 class="title instructor-text">Build Responsive
-                                                                        Websites with HTML</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$300 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
 
                                         </div>
                                     </div>
                                 </div>
 
+                                @foreach ($categories as $category)
+                                    <div class="tab-pane fade" id="category{{ $category->id }}" role="tabpanel">
+                                        <div class="all-course">
+                                            <div class="row">
+                                                @if ($coursesByCategory[$category->id]->isEmpty())
+                                                    <p>Hiện chưa có khóa học nào trong danh mục này.</p>
+                                                @else
+                                                    @foreach ($coursesByCategory[$category->id] as $course)
+                                                        <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
+                                                            <div class="course-box-three">
+                                                                <div class="course-three-item">
+                                                                    <div class="course-three-img">
+                                                                        <a
+                                                                            href="{{ route('client.course-details', $course->id) }}">
+                                                                            <img class="img-fluid" alt="Course Image"
+                                                                                src="{{ Storage::url('public/assets-client/img/Courses/' . $course->thumbnail) }}">
+                                                                        </a>
+                                                                        <div class="heart-three">
+                                                                            <a href="#"><i
+                                                                                    class="fa-regular fa-heart"></i></a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="course-three-content">
+                                                                        <a
+                                                                            href="{{ route('client.course-details', $course->id) }}">
+                                                                            <h4 class="title instructor-text">
+                                                                                {{ Str::limit($course->name, 40, '...') }}
+                                                                            </h4>
+                                                                        </a>
 
-                                <div class="tab-pane fade" id="businesstab">
-                                    <div class="businesstab">
-                                        <div class="row">
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-23.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user6.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Pyhton Development</p>
-                                                                    <h3 class="title instructor-text">The Complete Pyhton
-                                                                        Development Course</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>Free </h3>
+                                                                        <div
+                                                                            class="mentor-info d-flex align-items-center mt-2">
+                                                                            <a
+                                                                                href="{{ route('client.mentor_detail', $course->mentor->user->id) }}">
+                                                                                <img class="mentor-img img-fluid rounded-circle"
+                                                                                    alt="Mentor Image"
+                                                                                    src="{{ $course->mentor->user->thumbnail ? Storage::url('assets-client/img/user/' . $course->mentor->user->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"
+                                                                                    style="width: 40px; height: 40px;">
+                                                                            </a>
+                                                                            <div class="mentor-name ms-2">
+                                                                                <a
+                                                                                    href="{{ route('client.mentor_detail', $course->mentor->user->id) }}">
+                                                                                    <h5>{{ $course->mentor->user->name }}
+                                                                                    </h5>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div
+                                                                            class="price-three-group d-flex align-items-center justify-content-between mt-3">
+                                                                            <div class="course-price-three">
+                                                                                <h3>{{ number_format($course->price) }} VNĐ
+                                                                                    <span>{{ number_format($course->discount_price) }}
+                                                                                        VNĐ</span></h3>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
+                                                    @endforeach
+                                                @endif
                                             </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-26.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user1.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Personalized Learning</p>
-                                                                    <h3 class="title instructor-text">Build Responsive
-                                                                        Websites with HTML</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>450 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-21.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user4.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Creative Arts & media</p>
-                                                                    <h3 class="title instructor-text">Build Creative Arts &
-                                                                        media Course Completed</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>250 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$700 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-22.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user5.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Personalized Learning</p>
-                                                                    <h3 class="title instructor-text">Build Responsive
-                                                                        Websites with HTML</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 </h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-27.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user2.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Pyhton Development</p>
-                                                                    <h3 class="title instructor-text">The Complete Web
-                                                                        Developer PHP Course</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>500 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-20.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user3.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Business Management</p>
-                                                                    <h3 class="title instructor-text">The Complete Business
-                                                                        Management Course</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$300 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-24.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user7.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Business Management</p>
-                                                                    <h3 class="title instructor-text">Build Websites with
-                                                                        HTML5 CSS3 Javascript</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-25.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user8.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Creative Arts & media</p>
-                                                                    <h3 class="title instructor-text">Build Responsive
-                                                                        Websites with HTML</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$300 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
                                         </div>
                                     </div>
-                                </div>
-
-
-                                <div class="tab-pane fade" id="designtab">
-                                    <div class="designtab">
-                                        <div class="row">
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-27.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user2.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Pyhton Development</p>
-                                                                    <h3 class="title instructor-text">The Complete Web
-                                                                        Developer PHP Course</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>500 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-23.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user6.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Pyhton Development</p>
-                                                                    <h3 class="title instructor-text">The Complete Pyhton
-                                                                        Development Course</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>Free </h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-26.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user1.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Personalized Learning</p>
-                                                                    <h3 class="title instructor-text">Build Responsive
-                                                                        Websites with HTML</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>450 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-21.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user4.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Creative Arts & media</p>
-                                                                    <h3 class="title instructor-text">Build Creative Arts &
-                                                                        media Course Completed</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>250 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$700 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-20.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user3.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Business Management</p>
-                                                                    <h3 class="title instructor-text">The Complete Business
-                                                                        Management Course</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$300 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-24.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user7.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Business Management</p>
-                                                                    <h3 class="title instructor-text">Build Websites with
-                                                                        HTML5 CSS3 Javascript</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-22.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user5.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Personalized Learning</p>
-                                                                    <h3 class="title instructor-text">Build Responsive
-                                                                        Websites with HTML</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 </h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-25.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user8.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Creative Arts & media</p>
-                                                                    <h3 class="title instructor-text">Build Responsive
-                                                                        Websites with HTML</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$300 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="tab-pane fade" id="musictab">
-                                    <div class="music-label">
-                                        <div class="row">
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-21.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user4.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Creative Arts & media</p>
-                                                                    <h3 class="title instructor-text">Build Creative Arts &
-                                                                        media Course Completed</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>250 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$700 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-22.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user5.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Personalized Learning</p>
-                                                                    <h3 class="title instructor-text">Build Responsive
-                                                                        Websites with HTML</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 </h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-23.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user6.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Pyhton Development</p>
-                                                                    <h3 class="title instructor-text">The Complete Pyhton
-                                                                        Development Course</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>Free </h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-26.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user1.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Personalized Learning</p>
-                                                                    <h3 class="title instructor-text">Build Responsive
-                                                                        Websites with HTML</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>450 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-27.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user2.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Pyhton Development</p>
-                                                                    <h3 class="title instructor-text">The Complete Web
-                                                                        Developer PHP Course</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>500 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-20.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user3.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Business Management</p>
-                                                                    <h3 class="title instructor-text">The Complete
-                                                                        Business
-                                                                        Management Course</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$300 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-24.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user7.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Business Management</p>
-                                                                    <h3 class="title instructor-text">Build Websites with
-                                                                        HTML5 CSS3 Javascript</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-25.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user8.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Creative Arts & media</p>
-                                                                    <h3 class="title instructor-text">Build Responsive
-                                                                        Websites with HTML</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$300 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="tab-pane fade" id="programmingtab">
-                                    <div class="programmingtab">
-                                        <div class="row">
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-23.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user6.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Pyhton Development</p>
-                                                                    <h3 class="title instructor-text">The Complete Pyhton
-                                                                        Development Course</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>Free </h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-26.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user1.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Personalized Learning</p>
-                                                                    <h3 class="title instructor-text">Build Responsive
-                                                                        Websites with HTML</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>450 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-21.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user4.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Creative Arts & media</p>
-                                                                    <h3 class="title instructor-text">Build Creative Arts
-                                                                        &
-                                                                        media Course Completed</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>250 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$700 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-22.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user5.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Personalized Learning</p>
-                                                                    <h3 class="title instructor-text">Build Responsive
-                                                                        Websites with HTML CSS</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 </h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-27.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user2.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Pyhton Development</p>
-                                                                    <h3 class="title instructor-text">The Complete Web
-                                                                        Developer PHP Course</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>500 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-20.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user3.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Business Management</p>
-                                                                    <h3 class="title instructor-text">The Complete
-                                                                        Business
-                                                                        Management Course</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$300 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-24.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user7.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Business Management</p>
-                                                                    <h3 class="title instructor-text">Build Websites with
-                                                                        HTML5 CSS3 Javascript</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-25.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user8.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Creative Arts & media</p>
-                                                                    <h3 class="title instructor-text">Build Responsive
-                                                                        Websites with HTML CSS</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$300 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="tab-pane fade" id="databasetab">
-                                    <div class="databasetab">
-                                        <div class="row">
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-22.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user5.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Personalized Learning</p>
-                                                                    <h3 class="title instructor-text">Build Responsive
-                                                                        Websites with HTML CSS</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 </h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-27.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user2.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Pyhton Development</p>
-                                                                    <h3 class="title instructor-text">The Complete Web
-                                                                        Developer PHP Course</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>500 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-23.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user6.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Pyhton Development</p>
-                                                                    <h3 class="title instructor-text">The Complete Pyhton
-                                                                        Development Course</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>Free </h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-26.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user1.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Personalized Learning</p>
-                                                                    <h3 class="title instructor-text">Build Responsive
-                                                                        Websites with HTML CSS</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>450 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-21.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user4.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Creative Arts & media</p>
-                                                                    <h3 class="title instructor-text">Build Creative Arts
-                                                                        &
-                                                                        media Course Completed</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>250 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$700 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-20.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user3.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Business Management</p>
-                                                                    <h3 class="title instructor-text">The Complete
-                                                                        Business
-                                                                        Management Course</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$300 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-24.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user7.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Business Management</p>
-                                                                    <h3 class="title instructor-text">Build Websites with
-                                                                        HTML5 CSS3 Javascript</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$650 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
-                                                <div class="course-box-three">
-                                                    <div class="course-three-item">
-                                                        <div class="course-three-img">
-                                                            <a href="course-details.html">
-                                                                <img class="img-fluid" alt
-                                                                    src="/assets-client/img/course/course-25.jpg">
-                                                            </a>
-                                                            <div class="heart-three">
-                                                                <a href="#"><i
-                                                                        class="fa-regular fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="course-three-content">
-                                                            <div class="course-group-three">
-                                                                <div class="group-three-img">
-                                                                    <a href="instructor-profile.html"><img
-                                                                            src="/assets-client/img/user/user8.jpg" alt
-                                                                            class="img-fluid"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="course-three-text">
-                                                                <a href="course-details.html">
-                                                                    <p>Creative Arts & media</p>
-                                                                    <h3 class="title instructor-text">Build Responsive
-                                                                        Websites with HTML CSS</h3>
-                                                                </a>
-                                                            </div>
-                                                            <div class="student-counts-info d-flex align-items-center">
-                                                                <div
-                                                                    class="students-three-counts d-flex align-items-center">
-                                                                    <img src="/assets-client/img/icon-three/student.svg"
-                                                                        alt>
-                                                                    <p>400 Students</p>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="price-three-group d-flex align-items-center justify-content-between">
-                                                                <div class="price-three-view d-flex align-items-center">
-                                                                    <div class="course-price-three">
-                                                                        <h3>$300 <span>$99.00</span></h3>
-                                                                    </div>
-                                                                </div>
-                                                                <div
-                                                                    class="price-three-time d-inline-flex align-items-center">
-                                                                    <i class="fa-regular fa-clock me-2"></i>
-                                                                    <span>6hr 30min</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
 
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -2960,10 +370,7 @@
                         <h2>Tin tức và sự kiện</h2>
                     </div>
                     <div class="col-lg-6 col-md-4">
-                        <div class="see-all">
-                            <a href="blog-list.html">Xem tất cả<span class="see-all-icon"><i
-                                        class="fas fa-arrow-right"></i></span></a>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -2975,22 +382,25 @@
                                 <div class="event-blog-three blog-three-one">
                                     <div class="blog-img-three">
                                         <a href="blog-list.html">
-                                            <img class="img-fluid" alt src="/assets-client/img/blog/blog-20.jpg">
+                                            <img style="width: 100%; margin-bottom: 10%;margin-top: 10%;"
+                                                class="img-fluid" alt src="/assets-client/img/blog/posts.gif">
                                         </a>
                                     </div>
                                     <div class="latest-blog-content">
                                         <div class="event-three-title">
                                             <div class="event-span-three">
-                                                <span class="span-name-three badge-green">Giảm giá</span>
+                                                <a href="{{ route('client.post-list') }}"><span
+                                                        class="span-name-three badge-green">XEM NGAY </span></a>
                                             </div>
                                             <a href="blog-list.html">
-                                                <h5>TIn tức hot mỗi ngày</h5>
-                                                <p>TIn tức hot mỗi ngày</p>
+                                                <h5>Tin tức hot mỗi ngày</h5>
+                                                <p>Tin tức hot mỗi ngày của ENT</p>
                                             </a>
                                             <div class="blog-student-count">
                                                 <i class="fa-solid fa-calendar-days"></i>
-                                                <span>Jun 15, 2022</span>
+                                                <span class="current-date"></span>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -2999,21 +409,22 @@
                                 <div class="event-blog-three blog-three-two">
                                     <div class="blog-img-three">
                                         <a href="blog-list.html">
-                                            <img class="img-fluid" alt src="/assets-client/img/blog/blog-21.jpg">
+                                            <img style="width: 100%; margin-bottom: 10%;margin-top: 10%;"
+                                                class="img-fluid" alt src="/assets-client/img/blog/teacher.gif">
                                         </a>
                                     </div>
                                     <div class="latest-blog-content">
                                         <div class="event-three-title">
                                             <div class="event-span-three">
-                                                <span class="span-name-three badge-info">Giảm giá</span>
+                                                <span class="span-name-three badge-info">Xem ngay</span>
                                             </div>
                                             <a href="blog-list.html">
-                                                <h5>TIn tức hot mỗi ngày</h5>
-                                                <p>TIn tức hot mỗi ngày TIn tức hot mỗi ngày </p>
+                                                <h5>Các giảng viên trình độ chuyên môn và tiềm năng</h5>
+                                                <p>Giảng viên</p>
                                             </a>
                                             <div class="blog-student-count">
                                                 <i class="fa-solid fa-calendar-days"></i>
-                                                <span>Jun 15, 2022</span>
+                                                <span class="current-date"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -3027,21 +438,22 @@
                                 <div class="event-blog-three blog-three-three">
                                     <div class="blog-img-three">
                                         <a href="blog-list.html">
-                                            <img class="img-fluid" alt src="/assets-client/img/blog/blog-22.jpg">
+                                            <img class="img-fluid" alt src="/assets-client/img/blog/voucher.gif">
                                         </a>
                                     </div>
                                     <div class="latest-blog-content">
                                         <div class="event-three-title">
                                             <div class="event-span-three">
-                                                <span class="span-name-three badge-info">Giảm giá</span>
+                                                <a href=""><span class="span-name-three badge-info">Sử dụng
+                                                        ngay</span></a>
                                             </div>
                                             <a href="blog-list.html">
-                                                <h5>TIn tức hot mỗi ngày</h5>
-                                                <p>TIn tức hot mỗi ngày TIn tức hot mỗi ngày </p>
+                                                <h5>Voucher siêu ưu đãi giành cho học viên</h5>
+
                                             </a>
                                             <div class="blog-student-count">
                                                 <i class="fa-solid fa-calendar-days"></i>
-                                                <span>Jun 15, 2022</span>
+                                                <span class="current-date"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -3051,21 +463,21 @@
                                 <div class="event-blog-three blog-three-four">
                                     <div class="blog-img-three">
                                         <a href="blog-list.html">
-                                            <img class="img-fluid" alt src="/assets-client/img/blog/blog-23.jpg">
+                                            <img class="img-fluid" alt src="/assets-client/img/blog/Contact.gif">
                                         </a>
                                     </div>
                                     <div class="latest-blog-content">
                                         <div class="event-three-title">
                                             <div class="event-span-three">
-                                                <span class="span-name-three badge-info">Giảm giá</span>
+                                                <span class="span-name-three badge-info">Liên hệ giải đáp</span>
                                             </div>
                                             <a href="blog-list.html">
-                                                <h5>TIn tức hot mỗi ngày</h5>
-                                                <p>TIn tức hot mỗi ngày TIn tức hot mỗi ngày </p>
+                                                <h5>Giải đáp thắc mắc của người dùng nhanh chóng</h5>
+                                                <p>Liên hệ với chúng tôi</p>
                                             </a>
                                             <div class="blog-student-count">
                                                 <i class="fa-solid fa-calendar-days"></i>
-                                                <span>Jun 15, 2022</span>
+                                                <span class="current-date"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -3075,22 +487,20 @@
                                 <div class="event-blog-three blog-three-five">
                                     <div class="blog-img-three">
                                         <a href="blog-list.html">
-                                            <img class="img-fluid" alt src="/assets-client/img/blog/blog-24.jpg">
+                                            <img class="img-fluid" alt src="/assets-client/img/blog/ent.gif">
                                         </a>
                                     </div>
                                     <div class="latest-blog-content">
                                         <div class="event-three-title">
                                             <div class="event-span-three">
-                                                <span class="span-name-three badge-yellow">Giảm giá</span>
+                                                <a href=""><span class="span-name-three badge-yellow">Thông
+                                                        tin</span></a>
                                             </div>
                                             <a href="blog-list.html">
-                                                <h5>TIn tức hot mỗi ngày</h5>
-                                                <p>TIn tức hot mỗi ngày TIn tức hot mỗi ngày </p>
+                                                <h5>Giới thiệu về ENT</h5>
+                                                <p>Về chúng tôi</p>
                                             </a>
-                                            <div class="blog-student-count">
-                                                <i class="fa-solid fa-calendar-days"></i>
-                                                <span>Jun 15, 2022</span>
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -3101,5 +511,40 @@
             </div>
         </div>
     </section>
+    <script>
+        // Hàm để định dạng ngày tháng theo tiếng Việt
+        function formatDate(date) {
+            const options = {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            };
+            return date.toLocaleDateString('vi-VN', options);
+        }
 
+        // Lấy ngày hiện tại
+        const today = new Date();
+        const formattedDate = formatDate(today);
+
+        // Cập nhật nội dung ngày tháng cho tất cả các phần tử có lớp 'current-date'
+        document.querySelectorAll('.current-date').forEach(element => {
+            element.textContent = formattedDate;
+        });
+    </script>
+    <script>
+        function updateFormAction() {
+            const form = document.getElementById('searchForm');
+            const typeSelect = form.querySelector('select[name="type"]');
+            const selectedType = typeSelect.value;
+
+            if (selectedType === 'course') {
+                form.action = "{{ route('client.course-lists') }}";
+            } else if (selectedType === 'mentor') {
+                form.action = "{{ route('client.instructor-list') }}";
+            }
+        }
+
+        // Gọi hàm khi trang được tải để đảm bảo hành động được thiết lập chính xác
+        document.addEventListener('DOMContentLoaded', updateFormAction);
+    </script>
 @endsection

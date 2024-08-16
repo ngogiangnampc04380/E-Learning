@@ -21,28 +21,42 @@ class InstructorController extends Controller
     $currentUserId = Auth::id();
     $query = $request->input('query');
 
+    // Truy vấn danh sách giảng viên, trừ giảng viên hiện tại
     $mentors = User::where('role', 2)
-    ->where('id', '!=', $currentUserId);
+        ->where('id', '!=', $currentUserId);
 
     if ($query) {
         $mentors = $mentors->where('name', 'LIKE', "%$query%");
     }
-    $mentors = $mentors->get();
+
+    // Phân trang với 10 giảng viên mỗi trang
+    $mentors = $mentors->paginate(10);
 
     $categories = Course_category::all();
-    return view('client.instructor.instructor-list', ['data' => $mentors, 'query' => $query,'categories'=>$categories]);
+    return view('client.instructor.instructor-list', ['data' => $mentors, 'query' => $query, 'categories' => $categories]);
 }
+
 
 
     public function profile()
     {
+         // Lấy danh sách các categories
+    $categories = Course_Category::all();
         return view('client.instructor.instructor-profile');
     }
     public function mentor_detail($id)
-    {
-        $mentor = User::with('educations')->where('role', 2)->findOrFail($id) ;
-        return view('client.instructor.instructor-profile', ['mentor' => $mentor]);
-    }
+{
+    $mentor = User::with('educations')->where('role', 2)->findOrFail($id);
+    
+    // Lấy danh sách các categories
+    $categories = Course_Category::all();
+    
+    return view('client.instructor.instructor-profile', [
+        'mentor' => $mentor,
+        'categories' => $categories,
+    ]);
+}
+
 
     
 

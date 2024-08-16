@@ -110,8 +110,7 @@
                                         <div class="course-fee">
                                             <span>Giá: {{ $course->price }} VNĐ</span>
                                         </div>
-                                        
-                                        <a href="checkout.html" class="btn btn-enroll w-100 mt-3">Đăng ký ngay</a>
+                                        <a href="{{ route('client.course-checkout', $course->id) }}" class="btn btn-enroll w-100 mt-3">Đăng ký ngay</a>
                                     </div>
                                 </div>
 

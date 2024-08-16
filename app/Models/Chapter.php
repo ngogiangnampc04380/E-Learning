@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 class Chapter extends Model
 {
     use HasFactory;
     protected $fillable = [
         'name',
-        'course_id'
+        'course_id',
+        'number' // Thêm number vào $fillable
     ];
 
     // Mối quan hệ với bảng Lesson: Một chương có nhiều bài học
