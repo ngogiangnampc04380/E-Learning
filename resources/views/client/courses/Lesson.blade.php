@@ -164,9 +164,9 @@
                             <input type="hidden" id="lessonID" name="lessonID" value="">
                             {{-- <input type="hidden" id="completed" name ="completed" value="1"> --}}
                             <div class="ratio ratio-16x9">
-                                
-                              
-                               
+
+
+
                                 <video id="lesson-video" controls>
                                     <source src="{{ $firstLessonVideo }}" type="video/mp4">
                                 </video>
@@ -186,43 +186,43 @@
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
                                         <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#collapse{{ $item->chapterID }}" aria-expanded="true"
-                                                aria-controls="collapse{{ $item->chapterID }}">
+                                            data-bs-target="#collapse{{ $item->chapterID }}" aria-expanded="true"
+                                            aria-controls="collapse{{ $item->chapterID }}">
                                             {{ $item->chaptername }}
                                         </button>
                                     </h2>
                                     <div id="collapse{{ $item->chapterID }}" class="accordion-collapse collapse"
-                                         data-bs-parent="#accordionExample">
+                                        data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
                                             <ul class="list-group lesson-list">
                                                 @if (isset($chapterLessons[$item->chapterID]))
                                                     @foreach ($chapterLessons[$item->chapterID] as $lesson)
-                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        <li
+                                                            class="list-group-item d-flex justify-content-between align-items-center">
                                                             <a href="{{ route('client.lesson', ['id' => $data->id, 'lesson-id' => $lesson->lessonID]) }}"
-                                                               class="lesson-link"
-                                                               data-lesson-id="{{ $lesson->lessonID }}"
-                                                               @php
-                                                                                        $bucketName = 'entweb01';
+                                                                class="lesson-link" data-lesson-id="{{ $lesson->lessonID }}"
+                                                                @php
+$bucketName = 'entweb01';
                                                                                         $path_prefix ='ENT01';
                                                                                         $filePath = 'folder-name';
-                                                                                        $namefile= $lesson->path_video;
-                                                                                        $url = "https://storage.googleapis.com/{$bucketName}/{$path_prefix}/{$filePath}/{$namefile}";
-                                                                                @endphp
-                                                               data-video="{{ Storage::url('public/assets-client/Videos/Lessons/' . $lesson->lessonvideo) }}"
-                                                               data-title="{{ $lesson->lessonname }}"
-                                                               onclick="loadLesson(event, '{{ $data->id }}', '{{ $item->chapterID }}', '{{ $lesson->lessonID }}', '{{ $lesson->lessonname }}', '{{ $url }}')">
+                                                                                        $namefile= $lesson->lessonvideo;
+                                                                                        $url = "https://storage.googleapis.com/{$bucketName}/{$path_prefix}/{$filePath}/{$namefile}"; @endphp
+                                                                data-video="{{ Storage::url('public/assets-client/Videos/Lessons/' . $lesson->lessonvideo) }}"
+                                                                data-title="{{ $lesson->lessonname }}"
+                                                                onclick="loadLesson(event, '{{ $data->id }}', '{{ $item->chapterID }}', '{{ $lesson->lessonID }}', '{{ $lesson->lessonname }}', '{{ $url }}')">
                                                                 {{ $lesson->lessonname }}
                                                             </a>
                                                             @if (in_array($lesson->lessonID, $checklesson))
-                                                                <i class="fa-solid fa-check"
-                                                                   style="color: #63E6BE;"></i>
+                                                                <i class="fa-solid fa-check" style="color: #63E6BE;"></i>
                                                             @endif
                                                         </li>
                                                     @endforeach
 
                                                     @forelse($quizzes as $quiz)
-                                                        <li class="list-group-item d-flex justify-content-between align-items-center mt-2">
-                                                            <a href="{{ route('client.courses.quiz-chapter', $quiz->id) }}" >
+                                                        <li
+                                                            class="list-group-item d-flex justify-content-between align-items-center mt-2">
+                                                            <a
+                                                                href="{{ route('client.courses.quiz-chapter', $quiz->id) }}">
                                                                 <span>{{ $quiz->name }}</span></a>
                                                         </li>
                                                     @empty
@@ -285,7 +285,7 @@
 
         }
 
-        window.addEventListener('popstate', function (event) {
+        window.addEventListener('popstate', function(event) {
             const url = new URL(window.location);
             const lessonID = url.searchParams.get('lesson-id');
 
@@ -316,7 +316,7 @@
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute(
                 'content'));
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     console.log(xhr.responseText);
                 }
@@ -332,20 +332,20 @@
             console.log('Current time: ' + currentTime, 'Percent: ' + percent, courseId, chapterId, lessonId);
         }
 
-        video.addEventListener('play', function () {
+        video.addEventListener('play', function() {
             intervalId = setInterval(saveProgress, 5000); // Gửi dữ liệu sau mỗi 5 giây
         });
 
-        video.addEventListener('pause', function () {
+        video.addEventListener('pause', function() {
             clearInterval(intervalId);
             saveProgress();
         });
 
-        video.addEventListener('seeked', function () {
+        video.addEventListener('seeked', function() {
             saveProgress(); // Gửi dữ liệu khi người dùng tua video
         });
 
-        video.addEventListener('ended', function () {
+        video.addEventListener('ended', function() {
             clearInterval(intervalId);
             saveProgress(); // Gửi dữ liệu khi video kết thúc
         });
