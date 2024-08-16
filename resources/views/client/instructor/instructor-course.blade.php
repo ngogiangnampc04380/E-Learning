@@ -52,34 +52,14 @@
                 <i class="feather-home"></i> Dữ liệu và thống kê
             </a>
         </li>
-        @if(in_array(auth()->user()->role, [0, 2]))
-        <li class="nav-item {{ request()->is('instructor-course') ? 'active' : '' }}">
-            <a href="instructor-course.html" class="nav-link">
-                <i class="feather-shopping-bag"></i> Khóa học của tôi
-            </a>
-        </li>
-        @endif
+        
         @if(auth()->user()->role == 2)
         <li class="nav-item {{ request()->routeIs('client.instructor-course') ? 'active' : '' }}">
             <a href="{{ route('client.instructor-course',auth()->user()->id) }}" class="nav-link">
                 <i class="feather-book"></i> Quản lí khóa học
             </a>
         </li>
-        <li class="nav-item {{ request()->is('instructor-student-grid.html') ? 'active' : '' }}">
-            <a href="instructor-student-grid.html" class="nav-link">
-                <i class="feather-users"></i> Quản lí học viên
-            </a>
-        </li>
-        <li class="nav-item {{ request()->is('instructor-earnings.html') ? 'active' : '' }}">
-            <a href="instructor-earnings.html" class="nav-link">
-                <i class="feather-pie-chart"></i> Nam Béo
-            </a>
-        </li>
-        <li class="nav-item {{ request()->is('instructor-orders.html') ? 'active' : '' }}">
-            <a href="instructor-orders.html" class="nav-link">
-                <i class="feather-shopping-bag"></i> Nam Béo
-            </a>
-        </li>
+        
         @endif
         <div class="instructor-title">
             <h3>Cài đặt tài khoản</h3>
@@ -148,7 +128,7 @@
                                                             <tr>
                                                                 <td>
                                                                     <a href="#">
-                                                                        <img src="{{ Storage::url('public/assets-client/img/Courses/' . $post->thumbnail) }}" alt="Thumbnail" class="img-fluid rounded shadow-sm" style="max-width: 100px;">
+                                                                        <img src="{{ Storage::url('public/' . $post->thumbnail) }}" alt="Thumbnail" class="img-fluid rounded shadow-sm" style="max-width: 100px;">
                                                                     </a>
                                                                 </td>
                                                                 <td>
@@ -242,7 +222,7 @@
                                                             <tr>
                                                                 <td>
                                                                     <a href="#">
-                                                                        <img src="{{ Storage::url('public/assets-client/img/Courses/' . $post->thumbnail) }}" alt="Thumbnail" class="img-fluid rounded shadow-sm" style="max-width: 100px;">
+                                                                        <img src="{{ Storage::url('public/' . $post->thumbnail) }}" alt="Thumbnail" class="img-fluid rounded shadow-sm" style="max-width: 100px;">
                                                                     </a>
                                                                 </td>
                                                                 <td>
@@ -312,7 +292,7 @@
                                                             <tr>
                                                                 <td>
                                                                     <a href="#">
-                                                                        <img src="{{ Storage::url('public/assets-client/img/Courses/' . $post->thumbnail) }}" alt="Thumbnail" class="img-fluid rounded shadow-sm" style="max-width: 100px;">
+                                                                        <img src="{{ Storage::url('public/' . $post->thumbnail) }}" alt="Thumbnail" class="img-fluid rounded shadow-sm" style="max-width: 100px;">
                                                                     </a>
                                                                 </td>
                                                                 <td>

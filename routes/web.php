@@ -85,7 +85,7 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::post("/save-course", [CoursesController::class, "saveCourse"])->name('saveCourse');
     Route::get('/courses/autoAddChapter/{course_id}', [CoursesController::class, 'autoAddChapter'])->name('autoAddChapter');
     Route::delete('/courses/deleteChapter/{id}', [CoursesController::class, 'deleteChapter'])->name('deleteChapter');
-    Route::put('/courses/chapters/{chapter}', [CoursesController::class, 'updateChapters'])->name('updateChapter');
+    Route::post('/courses/chapters/{chapter}', [CoursesController::class, 'updateChapters'])->name('updateChapter');
 
     Route::post('/client/addLesson', [CoursesController::class, 'addLesson'])->name('addLesson');
     Route::get('/client/getLessonsByChapterId/{chapterId}', [CoursesController::class, 'getLessonsByChapterId'])->name('getLessonsByChapterId');
@@ -115,7 +115,7 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::get('/list-quiz', [CoursesController::class, 'listquiz'])->name('list-quiz');
     Route::get('/quiz/{id}', [CoursesController::class, 'show'])->name('courses.show');
     Route::get('/quiz/{id}/edit', [CoursesController::class, 'editQuiz'])->name('courses.edit-quiz');
-    Route::put('/quiz/{id}', [CoursesController::class, 'updateQuiz'])->name('courses.update-quiz');
+    Route::post('/quiz/{id}', [CoursesController::class, 'updateQuiz'])->name('courses.update-quiz');
     Route::delete('/quiz/{id}', [CoursesController::class, 'deleteQuiz'])->name('courses.delete-quiz');
     Route::get('/quiz-chapter/{id}', [CoursesController::class, 'quizChapter'])->name('courses.quiz-chapter');
     Route::post('/quiz-chapter/{id}/submit', [CoursesController::class, 'submitQuiz'])->name('courses.submit');

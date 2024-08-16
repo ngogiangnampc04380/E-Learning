@@ -27,9 +27,6 @@ class Order extends Model
     public function user(): BelongsTo{
         return $this ->belongsTo(User::class);
     }
-    public function order_details(): HasOne{
-        return $this ->hasOne(Order_detail::class);
-    }
     public function course(): BelongsTo{
         return $this ->belongsTo(Course::class);
     }

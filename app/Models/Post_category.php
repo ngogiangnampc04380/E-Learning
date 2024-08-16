@@ -13,7 +13,8 @@ class Post_category extends Model
     protected $fillable=[
         'id',
         'name',
-        'slug'
+        'slug',
+        'description'
     ];
     public function post_pivots(): BelongsToMany
     {

@@ -232,7 +232,7 @@
                                                         <div class="course-three-item">
                                                             <div class="course-three-img">
                                                                 <a href="{{ route('client.course-details', $course->id) }}">
-                                                                    <img class="img-fluid" alt="Course Image" src="{{ Storage::url('public/assets-client/img/Courses/'.$course->thumbnail) }}">
+                                                                    <img class="img-fluid" alt="Course Image" src="{{ Storage::url('public/'.$course->thumbnail) }}">
                                                                 </a>
                                                                 <div class="heart-three">
                                                                     <a href="#"><i class="fa-regular fa-heart"></i></a>

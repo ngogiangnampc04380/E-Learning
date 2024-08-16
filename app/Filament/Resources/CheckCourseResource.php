@@ -19,7 +19,7 @@ use App\Notifications\AcceptCourseNotification;
 use App\Notifications\DeclineCourseNotification;
 use Filament\Tables\Columns\ViewColumn;
 use Filament\Infolists\Components\Section;
-
+use Filament\Tables\Enums\FiltersLayout;
 // use App\Models\User;
 
 use Filament\Infolists\Infolist;
@@ -77,10 +77,11 @@ class CheckCourseResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            
             ->filters([
                 Filter::make('status')
                     ->query(fn (Builder $query): Builder => $query->where('status', 1))
-                    ->default(),
+                    ->default(1),
             ])
 
             ->hiddenFilterIndicators()

@@ -42,8 +42,8 @@
                         <form action="{{ route('apply.promotion') }}" method="POST">
                             @csrf
                             <input type="hidden" name="course_id" value="{{ $course->id }}">
-                            <input type="text" name="sales_code" placeholder="Nhập mã khuyến mãi">
-                            <button type="submit">Áp dụng</button>
+                            <input type="text" name="sales_code" class="form-control" placeholder="Nhập mã khuyến mãi">
+                            <button type="submit" class="btn btn-primary">Áp dụng</button>
                         </form>
                         @if(session('error'))
                             <div>{{ session('error') }}</div>
@@ -55,7 +55,7 @@
                             <p>Giá sau khi giảm: {{ $discountedPrice ?? ''}}</p>
                         </div>
                         <hr>
-                        <h5>Phương thức thanh toán</h5>
+                        {{-- <h5>Phương thức thanh toán</h5>
                         <ul>
                             <li style="list-style: none; display: inline-block; margin-right: 10px;">
                                 <label>
@@ -63,16 +63,16 @@
                                     <img src="https://tse3.mm.bing.net/th?id=OIP.ozc76HTNt1OMfXfNiFShsQHaHa&pid=Api&P=0&h=180" alt="" style="height: 50px; width: auto;">
                                 </label>
                             </li>
-                        </ul>
+                        </ul> --}}
                         <form action="{{ route('client.checkout') }}" method="post">
                             @csrf
                             {{-- <button name="zalopay" class="btn btn-secondary w-100">Thanh toán zalopay</button>
                         <hr> --}}
-                            <button name="payUrl" type="submit" class="btn btn-secondary w-100">Thanh toán momo</button>
+                            <button name="payUrl" type="submit" class="btn btn-primary w-100">Thanh toán momo</button>
                             <hr>
 
 
-                            <a href="javascript:void(0);" class="btn btn-secondary w-100">Hủy thanh toán</a>
+                            <a href="javascript:void(0);" class="btn btn-primary w-100">Hủy thanh toán</a>
                         </form>
                     </div>
                 </div>

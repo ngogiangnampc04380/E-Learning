@@ -153,7 +153,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                     <tr>
                                         <td>
                                             <a href="#">
-                                                <img src="{{ Storage::url('assets-client/img/Courses/' . $course->thumbnail) }}"
+                                                <img src="{{ Storage::url('' . $course->thumbnail) }}"
                                                     alt="Thumbnail" class="img-fluid" style="max-width: 100px;">
                                             </a>
                                         </td>
@@ -199,7 +199,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                 </tbody>
 
                             </table>
-                            <button type="button" class="btn btn-secondary mt-3" id="backBtn" style="display: none;">Quay
+                            <button type="button" class="btn btn-primary mt-3" id="backBtn" style="display: none;">Quay
                                 lại</button>
 
                             @if (session('success'))
@@ -321,12 +321,12 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                 data-chapter-id="{{ $chapter->id }}">Sửa chương</button>
 
                                                             <button type="button"
-                                                                class="btn btn-outline-secondary  ml-2 toggle-lesson-list"
+                                                                class="btn btn-outline-primary  ml-2 toggle-lesson-list"
                                                                 data-chapter-id="{{ $chapter->id }}">Ẩn bài học</button>
                                                             
 
                                                             <button type="button"
-                                                                class="btn btn-outline-secondary  ml-2 toggle-quiz-list"
+                                                                class="btn btn-outline-primary  ml-2 toggle-quiz-list"
                                                                 data-chapter-id="{{ $chapter->id }}">Ẩn bài quiz
                                                             </button>
 
@@ -401,7 +401,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                 <div class="modal-content">
                                                                     <form id="editQuizForm" method="POST">
                                                                         @csrf
-                                                                        @method('PUT')
+                                                                        @method('POST')
                                                                         <div class="modal-header">
                                                                             <h5 class="modal-title"
                                                                                 id="editQuizModalLabel">
@@ -421,7 +421,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button type="button"
-                                                                                class="btn btn-secondary"
+                                                                                class="btn btn-primary"
                                                                                 data-bs-dismiss="modal">Hủy
                                                                             </button>
                                                                             <button type="submit"
@@ -481,7 +481,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                                 method="POST" class="lesson-update-form"
                                                                                 enctype="multipart/form-data">
                                                                                 @csrf
-                                                                                @method('PUT')
+                                                                                @method('post')
                                                                                 <div class="form-group">
                                                                                     <label for="edit_lesson_name">Tên bài
                                                                                         học</label>
@@ -503,7 +503,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                                 <button type="submit"
                                                                                     class="btn btn-success save-lesson-btn m-2">Lưu</button>
                                                                                 <button type="button"
-                                                                                    class="btn btn-secondary cancel-edit-lesson-btn m-2"
+                                                                                    class="btn btn-primary cancel-edit-lesson-btn m-2"
                                                                                     data-lesson-id="{{ $lesson->id }}">Hủy</button>
                                                                                 <hr>
                                                                             </form>
@@ -527,6 +527,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                 </div>
                                                                 <button type="submit" class="btn btn-success">Lưu bài
                                                                     học</button>
+                                                            </form>
 
                                                         </div>
                                                         <div class="edit-chapter-form mt-2"
@@ -545,7 +546,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                 <button type="submit"
                                                                     class="btn btn-success">Lưu</button>
                                                                 <button type="button"
-                                                                    class="btn btn-secondary cancel-edit-chapter-btn"
+                                                                    class="btn btn-primary cancel-edit-chapter-btn"
                                                                     data-chapter-id="{{ $chapter->id }}">Hủy</button>
                                                             </form>
                                                         </div>
@@ -604,7 +605,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                 <span class="close">&times;</span>
                                 <p>Bạn có chắc chắn muốn xóa khóa học này không?</p>
                                 <div class="modal-buttons">
-                                    <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">Hủy</button>
+                                    <button type="button" class="btn btn-primary" id="cancelDeleteBtn">Hủy</button>
                                     <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Xóa</button>
                                 </div>
                             </div>

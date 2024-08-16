@@ -342,14 +342,10 @@
 
                     <div class="card overview-sec">
                         <div class="card-body overview-sec-body">
-                            <h5 class="subs-title">Professional Skills</h5>
+                            <h5 class="subs-title">Kỹ năng chuyên môn</h5>
                             <div class="sidebar-tag-labels">
                                 <ul class="list-unstyled">
-                                    <li><a href="javascript:void(0);" class>User Interface Design</a></li>
-                                    <li><a href="javascript:void(0);">Web Development</a></li>
-                                    <li><a href="javascript:void(0);">Web Design</a></li>
-                                    <li><a href="javascript:void(0);">UI Design</a></li>
-                                    <li><a href="javascript:void(0);">Mobile App Design</a></li>
+                                    <li><a href="javascript:void(0);" class>Tiếng anh</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -358,7 +354,7 @@
 
                     <div class="card overview-sec">
                         <div class="card-body">
-                            <h5 class="subs-title">Profile Overview</h5>
+                            <h5 class="subs-title">Tổng quan hồ sơ</h5>
                             <div class="rating-grp">
                                 <div class="rating">
                                     <i class="fas fa-star filled"></i>
@@ -378,8 +374,8 @@
                                         <img src="/assets-client/img/instructor/courses-icon.png" alt="Courses">
                                     </div>
                                     <div class="list-content-blk flex-grow-1 ms-3">
-                                        <h5>32</h5>
-                                        <p>Courses</p>
+                                        <h5>2</h5>
+                                        <p>Khóa học</p>
                                     </div>
                                 </div>
                                 <div class="list-grp-blk d-flex">
@@ -387,17 +383,8 @@
                                         <img src="/assets-client/img/instructor/ttl-stud-icon.png" alt="Total Students">
                                     </div>
                                     <div class="list-content-blk flex-grow-1 ms-3">
-                                        <h5>11,604</h5>
-                                        <p>Total Students</p>
-                                    </div>
-                                </div>
-                                <div class="list-grp-blk d-flex">
-                                    <div class="flex-shrink-0">
-                                        <img src="/assets-client/img/instructor/review-icon.png" alt="Reviews">
-                                    </div>
-                                    <div class="list-content-blk flex-grow-1 ms-3">
-                                        <h5>12,230</h5>
-                                        <p>Reviews</p>
+                                        <h5>10</h5>
+                                        <p>Tổng học viên</p>
                                     </div>
                                 </div>
                             </div>

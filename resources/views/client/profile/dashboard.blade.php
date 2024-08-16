@@ -69,16 +69,7 @@
                 <i class="feather-users"></i> Quản lí học viên
             </a>
         </li>
-        <li class="nav-item {{ request()->is('instructor-earnings.html') ? 'active' : '' }}">
-            <a href="{{ route('mentor.store-sale')}}" class="nav-link">
-                <i class="feather-pie-chart"></i> SALES
-            </a>
-        </li>
-        <li class="nav-item {{ request()->is('instructor-orders.html') ? 'active' : '' }}">
-            <a href="instructor-orders.html" class="nav-link">
-                <i class="feather-shopping-bag"></i> Nam Béo
-            </a>
-        </li>
+        
         @endif
         <div class="instructor-title">
             <h3>Cài đặt tài khoản</h3>

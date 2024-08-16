@@ -110,14 +110,7 @@
                                         <div class="course-fee">
                                             <span>Giá: {{ $course->price }} VNĐ</span>
                                         </div>
-                                        <div class="row mt-3 gx-2">
-                                            <div class="col-md-6">
-                                                <a href="course-wishlist.html" class="btn btn-wish w-100"><i class="feather-heart"></i> Yêu thích</a>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <a href="javascript:void(0);" class="btn btn-wish w-100"><i class="feather-share-2"></i> Chia sẻ</a>
-                                            </div>
-                                        </div>
+                                        
                                         <a href="checkout.html" class="btn btn-enroll w-100 mt-3">Đăng ký ngay</a>
                                     </div>
                                 </div>

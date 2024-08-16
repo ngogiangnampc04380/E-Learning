@@ -173,7 +173,7 @@
                             </div>
                         
                             <div class="d-flex justify-content-between align-items-center mb-4">
-                                <a href="#" class="btn btn-secondary" q return false;">
+                                <a href="#" class="btn btn-primary" q return false;">
                                     <i class="bi bi-arrow-left"></i> Quay lại
                                 </a>
                                 <button type="submit" class="btn btn-success">Lưu</button>

@@ -58,7 +58,7 @@
                             <div class="product">
                                 <div class="product-img">
                                     <a href="{{ route('client.course-details', $item->id) }}">
-                                        <img src="{{ Storage::url('public/assets-client/img/Courses/'.$item->thumbnail) }}" alt="Thumbnail" style="width: 250px; height: 150px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                                        <img src="{{ Storage::url('public/'.$item->thumbnail) }}" alt="Thumbnail" style="width: 250px; height: 150px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
 
                                     </a>
                                 </div>
@@ -158,9 +158,9 @@
                                 <i class="fas fa-angle-down"></i>
                             </div>
                             <ul>
-                                {{-- @foreach ($categories as $category)
+                                @foreach ($categories as $category)
                                     <li>{{ $category->name }}</li>
-                                @endforeach --}}
+                                @endforeach
                             </ul>
                         </div>
                     </div>
@@ -176,7 +176,7 @@
                                     <div class="post-thumb">
                                         <a href="{{ route('client.course-details', $course->id) }}">
 
-                                            <img src="{{ Storage::url('public/assets-client/img/Courses/'.$course->thumbnail) }}" alt="Thumbnail" class="img-fluid rounded shadow-sm" style="max-width: 100px;">
+                                            <img src="{{ Storage::url('public/'.$course->thumbnail) }}" alt="Thumbnail" class="img-fluid rounded shadow-sm" style="max-width: 100px;">
 
                                         </a>
                                     </div>

@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 class Course extends Model
 {
     use HasFactory, Notifiable;
+    protected $table = 'courses';
     protected $fillable = [
         'category_id',
         'name',
@@ -31,9 +32,6 @@ class Course extends Model
     {
         return $this->hasMany(Chapter::class);
     }
-    // public function comment(): HasManyThrough{
-    //     return $this ->hasManyThrough('Comment::class','Chapters::class', 'course_id', 'chapter_id');
-    // }
     public function sales()
     {
         return $this->hasMany(Sale::class);
@@ -43,7 +41,4 @@ class Course extends Model
     {
         return $this->belongsTo(Mentor::class, 'mentor_id');
     }
-
-    
-    
 }

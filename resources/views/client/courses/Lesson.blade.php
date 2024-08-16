@@ -1,6 +1,14 @@
 @extends('client.layout.master')
 @section('content')
     <style>
+        .hidden-check {
+            display: none;
+        }
+
+        .completed-check {
+            display: inline-block;
+        }
+
         .course-sec {
             padding: 40px 0;
             background-color: #f8f9fa;
@@ -212,9 +220,8 @@ $bucketName = 'entweb01';
                                                                 onclick="loadLesson(event, '{{ $data->id }}', '{{ $item->chapterID }}', '{{ $lesson->lessonID }}', '{{ $lesson->lessonname }}', '{{ $url }}')">
                                                                 {{ $lesson->lessonname }}
                                                             </a>
-                                                            @if (in_array($lesson->lessonID, $checklesson))
-                                                                <i class="fa-solid fa-check" style="color: #63E6BE;"></i>
-                                                            @endif
+                                                            <i class="fa-solid fa-check hidden-check"
+                                                                style="color: #63E6BE;"></i>
                                                         </li>
                                                     @endforeach
 
@@ -262,6 +269,7 @@ $bucketName = 'entweb01';
     </section>
 
     <script>
+        //cua th Trường
         function loadLesson(event, id, chapterID, lessonID, lessonName, lessonVideo) {
             event.preventDefault();
 
@@ -298,56 +306,76 @@ $bucketName = 'entweb01';
             }
         });
 
+        //chức năng bắt quá trình video
+        document.addEventListener('DOMContentLoaded', function() {
+            var video = document.getElementById('lesson-video');
+            var intervalId;
+            //đẩy lên database
+            function saveProgress() {
+                var currentTime = video.currentTime;
+                var duration = video.duration;
+                var percent = (currentTime / duration) * 100;
+                var courseId = document.getElementById('courseID').value;
+                var chapterId = document.getElementById('chapterID').value;
+                var lessonId = document.getElementById('lessonID').value;
 
-        var video = document.getElementById('lesson-video');
-        var intervalId;
+                var xhr = new XMLHttpRequest();
+                var url = percent >= 90 ? '/video-progress-complete' : '/video-progress';
+                xhr.open('POST', url, true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute(
+                    'content'));
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        console.log(xhr.responseText);
+                    }
+                };
+                var data = JSON.stringify({
+                    course_id: courseId,
+                    chapter_id: chapterId,
+                    lesson_id: lessonId,
+                    percent: percent
+                });
+                xhr.send(data);
 
-        function saveProgress() {
-            var currentTime = video.currentTime;
-            var duration = video.duration;
-            var percent = (currentTime / duration) * 100;
-            var courseId = document.getElementById('courseID').value;
-            var chapterId = document.getElementById('chapterID').value;
-            var lessonId = document.getElementById('lessonID').value;
+                console.log('Current time: ' + currentTime, 'Percent: ' + percent, courseId, chapterId, lessonId);
+            }
 
-            var xhr = new XMLHttpRequest();
-            var url = percent >= 90 ? '/video-progress-complete' : '/video-progress';
-            xhr.open('POST', url, true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute(
-                'content'));
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    console.log(xhr.responseText);
-                }
-            };
-            var data = JSON.stringify({
-                course_id: courseId,
-                chapter_id: chapterId,
-                lesson_id: lessonId,
-                percent: percent
+            video.addEventListener('play', function() {
+                intervalId = setInterval(saveProgress, 5000); // Gửi dữ liệu sau mỗi 5 giây
             });
-            xhr.send(data);
 
-            console.log('Current time: ' + currentTime, 'Percent: ' + percent, courseId, chapterId, lessonId);
-        }
+            video.addEventListener('pause', function() {
+                clearInterval(intervalId);
+                saveProgress();
+            });
 
-        video.addEventListener('play', function() {
-            intervalId = setInterval(saveProgress, 5000); // Gửi dữ liệu sau mỗi 5 giây
-        });
+            video.addEventListener('seeked', function() {
+                saveProgress(); // Gửi dữ liệu khi người dùng tua video
+            });
+            var completedLessons = @json($checklesson); // Giả sử bạn có mảng $completedLessons chứa các lessonID đã hoàn thành
+            completedLessons.forEach(function(lessonId) {
+                var checkIcon = document.querySelector(`a[data-lesson-id="${lessonId}"]`)
+                .nextElementSibling;
+                if (checkIcon) {
+                    checkIcon.classList.remove('hidden-check');
+                    checkIcon.classList.add('completed-check');
+                }
+            });
+            video.addEventListener('ended', function() {
+                clearInterval(intervalId);
+                saveProgress(); // Gửi dữ liệu khi video kết thúc
 
-        video.addEventListener('pause', function() {
-            clearInterval(intervalId);
-            saveProgress();
-        });
+                // Hiển thị dấu tích sau khi người dùng xem xong video
+                var lessonId = document.getElementById('lessonID').value;
+                var checkIcon = document.querySelector(`a[data-lesson-id="${lessonId}"]`)
+                .nextElementSibling;
 
-        video.addEventListener('seeked', function() {
-            saveProgress(); // Gửi dữ liệu khi người dùng tua video
-        });
-
-        video.addEventListener('ended', function() {
-            clearInterval(intervalId);
-            saveProgress(); // Gửi dữ liệu khi video kết thúc
+                if (checkIcon) {
+                    checkIcon.classList.remove('hidden-check');
+                    checkIcon.classList.add('completed-check');
+                }
+            });
         });
     </script>
 @endsection

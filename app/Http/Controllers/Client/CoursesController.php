@@ -141,6 +141,7 @@ class CoursesController extends Controller
             $checklesson = DB::table('video_done')
                 ->where('user_id', $user->id)
                 ->where('course_id', $data->id)
+                ->where('completed', 1)
                 ->pluck('lesson_id')
                 ->toArray();
         }
@@ -438,13 +439,13 @@ class CoursesController extends Controller
         if ($request->hasFile('thumbnail')) {
             $thumbnail = $request->file('thumbnail');
             $thumbnailName = $thumbnail->getClientOriginalName();
-            $thumbnail->storeAs('public/assets-client/img/Courses', $thumbnailName); // Lưu vào thư mục storage/app/public/images
+            $thumbnail->storeAs('public', $thumbnailName); // Lưu vào thư mục storage/app/public/images
             $course->thumbnail = $thumbnailName;
         }
         if ($request->hasFile('video_demo')) {
             $video_demo = $request->file('video_demo');
             $video_demoName = $video_demo->getClientOriginalName();
-            $video_demo->storeAs('public/assets-client/videos/Courses', $video_demoName); // Lưu vào thư mục storage/app/public/images
+            $video_demo->storeAs('public', $video_demoName); // Lưu vào thư mục storage/app/public/images
             $course->video_demo = $video_demoName;
         }
         $course->save();
@@ -613,14 +614,14 @@ class CoursesController extends Controller
         if ($request->hasFile('thumbnail')) {
             $thumbnail = $request->file('thumbnail');
             $thumbnailName = time() . '_' . $thumbnail->getClientOriginalName();
-            $thumbnail->storeAs('public/assets-client/img/Courses', $thumbnailName);
+            $thumbnail->storeAs('public', $thumbnailName);
             $data['thumbnail'] = $thumbnailName;
         }
 
         if ($request->hasFile('video_demo')) {
             $videoDemo = $request->file('video_demo');
             $videoDemoName = time() . '_' . $videoDemo->getClientOriginalName();
-            $videoDemo->storeAs('public/assets-client/Videos/Courses', $videoDemoName);
+            $videoDemo->storeAs('public', $videoDemoName);
             $data['video_demo'] = $videoDemoName;
         }
 
@@ -667,6 +668,7 @@ class CoursesController extends Controller
     {
         return view('client.instructor.instructor-dashboard');
     }
+    //lưu quá trình video
     public function saveProgress(Request $request)
     {
         $user = Auth::user();
@@ -693,6 +695,7 @@ class CoursesController extends Controller
 
         return response()->json(['status' => 'error'], 403);
     }
+    //bắt quá trình video
     public function completeProgress(Request $request)
     {
         $user = Auth::user();
@@ -712,7 +715,7 @@ class CoursesController extends Controller
                     'lesson_id' => $request->lesson_id
                 ],
                 [
-                    'percent' => 1
+                    'completed' => 1
                 ]
             );
             return response()->json([
