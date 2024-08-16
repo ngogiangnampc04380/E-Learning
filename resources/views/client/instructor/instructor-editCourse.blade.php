@@ -436,7 +436,14 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                                 data-id="{{ $lesson->id }}">
                                                                                 <span>{{ $lesson->name }}</span>
                                                                                 <div>
-                                                                                    <a href="{{ asset('storage/assets-client/Videos/Lessons/' . $lesson->path_video) }}"
+                                                                                    @php
+                                                                                        $bucketName = 'entweb01';
+                                                                                        $path_prefix = 'ENT01';
+                                                                                        $filePath = 'folder-name';
+                                                                                        $namefile = $lesson->path_video;
+                                                                                        $url = "https://storage.googleapis.com/{$bucketName}/{$path_prefix}/{$filePath}/{$namefile}";
+                                                                                    @endphp
+                                                                                    <a href="{{ $url }}"
                                                                                         target="_blank"
                                                                                         class="btn btn-sm btn-outline-dark mr-2">Xem
                                                                                         video</a>

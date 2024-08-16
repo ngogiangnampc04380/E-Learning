@@ -47,9 +47,9 @@
                                                         @if(auth()->user()->role == 0)
                                                         <h5 class="text-muted mb-0">Học viên</h5>
                                                         @elseif(auth()->user()->role == 1)
-                                                        <h5 class="text-muted mb-0">ADMIN</h5>
+                                                        <h5 class="text-muted mb-0">Quản trị viên</h5>
                                                         @elseif(auth()->user()->role == 2)
-                                                        <h5 class="text-muted mb-0">Quảng trị viên</h5>
+                                                        <h5 class="text-muted mb-0">Giảng viên</h5>
                                                         @endif
                                                         <img src="/assets-client/img/instructor-profile-bg.jpg" alt="">
                                                         <div class="profile-img">

@@ -575,71 +575,47 @@ class CoursesController extends Controller
 
 
     public function addLesson(Request $request)
-    {
-        // Validate request data
-        $request->validate([
-            'lessons.*.name' => 'required|string|max:255',
-            'lessons.*.video' => 'required|file|mimes:mp4,mov,avi,wmv|max:204800', // max 200MB
-            'lessons.*.chapter_id' => 'required|exists:chapters,id',
-        ]);
+{
+    // Validate request data
+    $request->validate([
+        'lessons.*.name' => 'required|string|max:255',
+        'lessons.*.video' => 'required|file|mimes:mp4,mov,avi,wmv|max:204800', // max 200MB
+        'lessons.*.chapter_id' => 'required|exists:chapters,id',
+    ]);
 
-        $lessons = $request->input('lessons');
+    $lessons = $request->input('lessons');
 
-        if (empty($lessons)) {
-            return redirect()->back()->with('error', 'Vui lòng thêm ít nhất một bài học.');
-        }
-
-        foreach ($lessons as $index => $lessonData) {
-            if ($request->hasFile("lessons.{$index}.video")) {
-                $video = $request->file("lessons.{$index}.video");
-                $videoName = $video->getClientOriginalName();
-                $video->storeAs('public/assets-client/videos/Lessons', $videoName);
-
-                $lesson = new Lesson();
-                $lesson->name = $lessonData['name'];
-                $lesson->path_video = $videoName;
-                $lesson->chapter_id = $lessonData['chapter_id'];
-
-                // Get the maximum number value for the current chapter and increment it
-                $maxNumber = Lesson::where('chapter_id', $lessonData['chapter_id'])->max('number');
-                $lesson->number = $maxNumber ? $maxNumber + 1 : 1;
-
-                $lesson->save();
-            } else {
-                return redirect()->back()->with('error', 'Vui lòng chọn video để tải lên cho bài học ' . ($index + 1));
-            }
-            foreach ($lessons as $index => $lessonData) {
-
-                if ($request->hasFile("lessons.{$index}.video")) {
-                    $video = $request->file("lessons.{$index}.video");
-
-                    $videoName = $video->hashName();
-                    $stream = fopen($video->getRealPath(), 'r');
-                    Storage::disk('gcs')->writeStream('folder-name/' . $videoName, $stream);
-                    if (is_resource($stream)) {
-                        fclose($stream);
-                    }
-                    // dd(123);
-                    // die;
-                    $lesson = new Lesson();
-                    $lesson->name = $lessonData['name'];
-                    $lesson->path_video = $videoName;
-                    $lesson->chapter_id = $lessonData['chapter_id'];
-                    $lesson->save();
-                } else {
-                    // dd('sai rồi làm lại đi');
-                    // die;
-
-                    return redirect()->back()->with('error', 'Vui lòng chọn video để tải lên cho bài học ' . ($index + 1));
-                }
-            }
-            // dd(456);
-            // die;
-            return redirect()->back()->with('success', 'Đã thêm bài học thành công.');
-        }
-
-        return redirect()->back()->with('success', 'Đã thêm bài học thành công.');
+    if (empty($lessons)) {
+        return redirect()->back()->with('error', 'Vui lòng thêm ít nhất một bài học.');
     }
+
+    foreach ($lessons as $index => $lessonData) {
+        if ($request->hasFile("lessons.{$index}.video")) {
+            $video = $request->file("lessons.{$index}.video");
+                
+            $videoName = $video->hashName();
+            $stream = fopen($video->getRealPath(), 'r');
+            Storage::disk('gcs')->writeStream('folder-name/' . $videoName, $stream);
+            if (is_resource($stream)) {
+                fclose($stream);
+            }
+            $lesson = new Lesson();
+            $lesson->name = $lessonData['name'];
+            $lesson->path_video = $videoName;
+            $lesson->chapter_id = $lessonData['chapter_id'];
+
+            // Get the maximum number value for the current chapter and increment it
+            $maxNumber = Lesson::where('chapter_id', $lessonData['chapter_id'])->max('number');
+            $lesson->number = $maxNumber ? $maxNumber + 1 : 1;
+
+            $lesson->save();
+        } else {
+            return redirect()->back()->with('error', 'Vui lòng chọn video để tải lên cho bài học ' . ($index + 1));
+        }
+    }
+
+    return redirect()->back()->with('success', 'Đã thêm bài học thành công.');
+}
     public function updateOrder(Request $request)
     {
         $request->validate([
@@ -689,7 +665,6 @@ class CoursesController extends Controller
             $video->storeAs('public/assets-client/Videos/Lessons', $videoName);
             $lesson->path_video = $videoName;
         }
-
         $lesson->save();
 
         return redirect()->back()->with('success', 'Đã cập nhật bài học!');

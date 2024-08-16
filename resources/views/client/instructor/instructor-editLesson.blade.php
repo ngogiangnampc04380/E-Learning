@@ -11,7 +11,7 @@
                                 @if(auth()->user()->role == 0)
                                 <h5 class="text-muted mb-0">Học viên</h5>
                                 @elseif(auth()->user()->role == 1)
-                                <h5 class="text-muted mb-0">Quảng trị viên</h5>
+                                <h5 class="text-muted mb-0">Quản trị viên</h5>
                                 @elseif(auth()->user()->role == 2)
                                 <h5 class="text-muted mb-0">Giảng viên</h5>
                                 @endif
@@ -30,7 +30,7 @@
                                         @elseif(auth()->user()->role == 1)
                                         <p class="text-muted mb-0">Quản trị viên</p>
                                         @elseif(auth()->user()->role == 2)
-                                        <p class="text-muted mb-0">GIảng viên</p>
+                                        <p class="text-muted mb-0">Giảng viên</p>
                                         @endif
                                 </div>
                                 @if(auth()->user()->role == 2)
@@ -118,7 +118,7 @@
                             </div>
                             <li class="nav-item">
                                 <a href="/admin" class="nav-link">
-                                    <i class="feather-cpu"></i> Quảng trị website
+                                    <i class="feather-cpu"></i> Quản trị website
                                 </a>
                             </li>
                             @endif  

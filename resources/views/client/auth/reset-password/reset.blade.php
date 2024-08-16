@@ -94,7 +94,7 @@
         </div>
         <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
             <a href="/admin" class="nav-link">
-                <i class="feather-cpu"></i> Quảng trị website
+                <i class="feather-cpu"></i> Quản trị website
             </a>
         </li>
         @endif

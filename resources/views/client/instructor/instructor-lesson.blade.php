@@ -11,9 +11,9 @@
                                 @if(auth()->user()->role == 0)
                                     <h5 class="text-muted mb-0">Học viên</h5>
                                 @elseif(auth()->user()->role == 1)
-                                    <h5 class="text-muted mb-0">ADMIN</h5>
+                                    <h5 class="text-muted mb-0">Quản trị viên</h5>
                                 @elseif(auth()->user()->role == 2)
-                                    <h5 class="text-muted mb-0">Quảng trị viên</h5>
+                                    <h5 class="text-muted mb-0">Giảng viên</h5>
                                 @endif
                                 <img src="/assets-client/img/instructor-profile-bg.jpg" alt="">
                                 <div class="profile-img">
@@ -32,7 +32,7 @@
                                     @elseif(auth()->user()->role == 1)
                                         <p class="text-muted mb-0">Quản trị viên</p>
                                     @elseif(auth()->user()->role == 2)
-                                        <p class="text-muted mb-0">GIảng viên</p>
+                                        <p class="text-muted mb-0">Giảng viên</p>
                                     @endif
                                 </div>
                                 @if(auth()->user()->role == 2)
@@ -116,11 +116,11 @@
                             </li>
                             @if(auth()->user()->role== 1)
                                 <div class="instructor-title">
-                                    <h3>ADMIN</h3>
+                                    <h3>Quản trị viên</h3>
                                 </div>
                                 <li class="nav-item">
                                     <a href="/admin" class="nav-link">
-                                        <i class="feather-cpu"></i> Quảng trị website
+                                        <i class="feather-cpu"></i> Quản trị website
                                     </a>
                                 </li>
                             @endif
