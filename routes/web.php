@@ -21,7 +21,7 @@ use App\Http\Controllers\Client\SearchController;
 use App\Http\Controllers\Client\LogoutController;
 use App\Http\Controllers\Client\RegisterController;
 use App\Http\Controllers\Client\PasswordController;
-
+use App\Http\Controllers\Client\QuizCourseController;
 // ----------------------------Mentor----------------------------*******
 use App\Http\Controllers\Mentor\MentorControllerr;
 use App\Http\Controllers\Mentor\SaleController;
@@ -124,6 +124,17 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::post('/quiz-chapter/{id}/submit', [CoursesController::class, 'submitQuiz'])->name('courses.submit');
     Route::get('/quiz-chapter/{id}/result/{score}', [CoursesController::class, 'quizResult'])->name('courses.quiz.result');
     Route::get('/header-categories', [HomeController::class, 'getCourseCategories'])->name('header.categories');
+    //quiz final
+    Route::get('/quiz-course/{course_id}', [QuizCourseController::class, 'index'])->name('client.quiz.quiz-final.index');
+    Route::get('/quiz-course/{course_id}/create', [QuizCourseController::class, 'create'])->name('quiz-final.create');
+    Route::get('/quizzes/{quiz_id}', [QuizCourseController::class, 'show'])->name('quiz.show-quiz-final');
+    Route::post('/quiz-course/{course_id}', [QuizCourseController::class, 'store'])->name('quiz-final.store');
+    Route::get('quiz/edit-final/{quiz_id}', [QuizCourseController::class, 'edit'])->name('quiz.edit-quiz-final');
+    Route::put('quiz/update-final/{quiz_id}', [QuizCourseController::class, 'update'])->name('quiz.update-quiz-final');
+    Route::delete('/quiz-course/quiz/{quiz_id}', [QuizCourseController::class, 'destroy'])->name('quiz-final.destroy');
+    Route::get('/{quiz_id}/quiz', [QuizCourseController::class, 'quiz'])->name('quiz.quiz-final');
+    Route::post('/{quiz_id}/submit', [QuizCourseController::class, 'submitQuiz'])->name('quiz.submit-quiz-final');
+    Route::get('/quiz-result/{id}/{score}', [QuizCourseController::class, 'quizResult'])->name('quiz.quiz-result');
 // suport mail
 Route::get('/contact', [SupportController::class, 'contact'])->name('contact');
 Route::post('/contact', [SupportController::class, 'submitSupportForm'])->name('contact.submit');

@@ -195,8 +195,11 @@ class CoursesController extends Controller
             ->where('course_id', $data->id)
             ->select('id', 'name')
             ->get();
-
-        return view('client.courses.lesson', compact('data', 'checklesson', 'chapters', 'chapterLessons', 'Lessonname', 'firstLessonVideo', 'selectedLesson', 'quizzes'));
+        $quizFinals = DB::table('quiz_finals')
+            ->where('course_id', $data->id)
+            ->select('id', 'title')
+            ->get();
+        return view('client.courses.lesson', compact('data', 'checklesson', 'chapters', 'chapterLessons', 'Lessonname', 'firstLessonVideo', 'selectedLesson', 'quizzes', 'quizFinals'));
     }
 
 
@@ -532,7 +535,12 @@ class CoursesController extends Controller
         $mentorId = auth()->user()->mentor->id;
         $courses = Course::where('mentor_id', $mentorId)->get();
         $chapters = Chapter::whereIn('course_id', $courses->pluck('id'))->get();
-        return view('client.instructor.instructor-editCourse', compact('course', 'courses', 'chapters', 'categories'));
+        // $quizs = $course->quizFinals;
+        $quizs = DB::table('quiz_finals')
+        ->where('course_id', $course->id)
+        ->select('id', 'title')
+        ->get();
+        return view('client.instructor.instructor-editCourse', compact('course', 'courses', 'chapters', 'categories', 'quizs'));
     }
 
     public function deleteChapter($id)
@@ -750,7 +758,7 @@ class CoursesController extends Controller
             $videoDemo->storeAs('public', $videoDemoName);
             $data['video_demo'] = $videoDemoName;
         }
-
+        
         $course->update($data);
         return response()->json(['redirect_url' => route('client.editCourse', $id)]);
     }

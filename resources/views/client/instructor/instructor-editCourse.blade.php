@@ -300,6 +300,11 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                             mới</button>
                                         <button type="button" id="sort-chapters-btn"
                                             class="btn btn-outline-sort-chapters m-2">Sắp xếp chương</button>
+                                        <a href="{{ route('client.quiz-final.create', $course->id) }}">
+                                            <button type="button" class="btn btn-outline-info">Thêm
+                                                quiz final
+                                            </button>
+                                        </a>
 
                                     </div>
                                     <table class="table table-hover">
@@ -619,11 +624,60 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                             </div>
                                         @endif
                                     </div>
-
-
-
-
                                 </div>
+                                <h3 class="mt-5">Danh sách Quiz Final</h3>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th
+                                                style="color: black; background: #f1c232; background: linear-gradient(#f1c232, #ffff00);">
+                                                Tên Quiz
+                                            </th>
+                                            <th
+                                                style="color: black; background: #f1c232; background: linear-gradient(#f1c232, #ffff00);">
+                                                Hành Động
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if($quizs)
+                                            @foreach ($quizs as $quiz)
+                                                <tr>
+                                                    <td>{{ $quiz->title }}</td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <!-- Xem chi tiết -->
+                                                            <a href="{{ route('client.quiz.show-quiz-final', ['quiz_id' => $quiz->id]) }}"
+                                                                class="btn btn-sm btn-outline-dark mr-2">Xem chi tiết</a>
+
+                                                            <!-- Sửa -->
+                                                            <a href="{{ route('client.quiz.edit-quiz-final', ['quiz_id' => $quiz->id]) }}"
+                                                                class="btn btn-sm btn-outline-warning mr-2">Sửa</a>
+
+                                                            <!-- Xóa -->
+                                                            <form
+                                                                action="{{ route('client.quiz-final.destroy', ['quiz_id' => $quiz->id]) }}"
+                                                                method="POST" class="d-inline"
+                                                                onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?');">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit"
+                                                                    class="btn btn-sm btn-outline-danger">
+                                                                    Xóa
+                                                                </button>
+                                                            </form>
+
+                                                            <!-- Làm bài -->
+                                                            <a href="{{ route('client.quiz.quiz-final', ['quiz_id' => $quiz->id]) }}"
+                                                                class="btn btn-sm btn-success">Làm bài</a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
+
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center mt-4">
