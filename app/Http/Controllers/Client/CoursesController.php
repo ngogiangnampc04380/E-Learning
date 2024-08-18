@@ -25,6 +25,7 @@ use App\Models\Question;
 use App\Models\Answer;
 use App\Models\QuizResult;
 use Illuminate\Support\Facades\Auth;
+use App\Models\QuizFinal;
 
 class CoursesController extends Controller
 {
@@ -204,25 +205,41 @@ class CoursesController extends Controller
 
 
 
-    public function addQuiz($course_id, $chapter_id)
-    {
-        // Lấy danh sách danh mục khóa học
-        $categories = Course_category::all(); // Thay thế với logic lấy danh mục phù hợp nếu cần
+  public function addQuiz($course_id, $chapter_id)
+{
+    // Lấy danh mục khóa học
+    $categories = Course_category::all(); // Thay thế với logic lấy danh mục phù hợp nếu cần
 
-        return view('client.courses.add-quiz', compact('course_id', 'chapter_id', 'categories'));
-    }
+    // Tìm chương theo ID để lấy tên chương
+    $chapter = Chapter::findOrFail($chapter_id);
+    $chapter_name = $chapter->name;
+
+    return view('client.courses.add-quiz', compact('course_id', 'chapter_id', 'categories', 'chapter_name'));
+}
 
 
-    public function quizChapter($id)
-    {
-        $quiz = Quiz::findOrFail($id);
 
-        $questions = Question::with(['answers' => function ($query) {
-            $query->inRandomOrder();
-        }])->where('quiz_id', $id)->get();
+  public function quizChapter($id)
+{
+    // Lấy thông tin quiz
+    $quiz = Quiz::findOrFail($id);
 
-        return view('client.courses.quiz', compact('questions', 'quiz'));
-    }
+    // Lấy thông tin chương từ quiz (giả sử quiz có thuộc tính chapter_id)
+    $chapter = Chapter::findOrFail($quiz->chapter_id);
+
+    // Lấy các câu hỏi cùng với câu trả lời ngẫu nhiên
+    $questions = Question::with(['answers' => function ($query) {
+        $query->inRandomOrder();
+    }])->where('quiz_id', $id)->get();
+
+    // Truyền thông tin vào view
+    return view('client.courses.quiz', [
+        'questions' => $questions,
+        'quiz' => $quiz,
+        'chapter_name' => $chapter->name, // Thêm tên chương vào dữ liệu truyền vào view
+    ]);
+}
+
     public function submitQuiz(Request $request, $id)
     {
         $quiz = Quiz::findOrFail($id);
@@ -270,32 +287,42 @@ class CoursesController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $quiz = new Quiz();
-        $quiz->course_id = $request->course_id;
-        $quiz->chapter_id = $request->chapter_id;
-        $quiz->mentor_id = Auth::user()->mentor->id;
-        $quiz->name = $request->title;
-        $quiz->save();
+{
+    $quiz = new Quiz();
+    $quiz->course_id = $request->course_id;
+    $quiz->chapter_id = $request->chapter_id;
+    $quiz->mentor_id = Auth::user()->mentor->id;
+    $quiz->name = $request->title;
 
-        // Process questions and answers
-        foreach ($request->input('questions') as $questionData) {
-            $question = new Question();
-            $question->quiz_id = $quiz->id;
-            $question->question = $questionData['question'];
-            $question->save();
+    // Xác định số thứ tự cho quiz mới
+    $maxNumber = Quiz::where('chapter_id', $request->chapter_id)
+                     ->max('number');
+    $quiz->number = $maxNumber ? $maxNumber + 1 : 1;
 
-            foreach ($questionData['answers'] as $answerData) {
-                $answer = new Answer();
-                $answer->question_id = $question->id;
-                $answer->answer = $answerData['answer'];
-                $answer->is_correct = $answerData['is_correct'];
-                $answer->save();
-            }
+    $quiz->save();
+
+    // Xử lý các câu hỏi và câu trả lời
+    foreach ($request->input('questions') as $questionData) {
+        $question = new Question();
+        $question->quiz_id = $quiz->id;
+        $question->question = $questionData['question'];
+        $question->save();
+
+        foreach ($questionData['answers'] as $answerData) {
+            $answer = new Answer();
+            $answer->question_id = $question->id;
+            $answer->answer = $answerData['answer'];
+            $answer->is_correct = $answerData['is_correct'];
+            $answer->save();
         }
-
-        return redirect()->back()->with('success', 'Bài quiz đã được lưu thành công.');
     }
+
+    // Trả về trang chỉnh sửa khóa học
+    return redirect()->route('client.editCourse', $quiz->course_id)
+                     ->with('success', 'Bài quiz đã được lưu thành công.');
+}
+
+
 
     public function show($id)
     {
@@ -358,14 +385,18 @@ class CoursesController extends Controller
 
         return redirect()->route('client.editCourse', ['id' => $quiz->course_id]);
     }
-
     public function deleteQuiz($id)
     {
-        $quiz = Quiz::findOrFail($id);
-        $quiz->delete();
-
-        return redirect()->route('client.editCourse', ['id' => $quiz->course_id]);
+        try {
+            $quiz = Quiz::findOrFail($id);
+            $quiz->delete();
+    
+            return response()->json(['success' => true], 200);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Không thể xóa bài quiz.'], 500);
+        }
     }
+    
 
     public function checkout($id)
     {
@@ -528,20 +559,22 @@ class CoursesController extends Controller
     }
 
     // sửa khóa học
-    public function editCourse($id)
-    {
-        $course = Course::with('chapters')->findOrFail($id);
-        $categories = Course_category::all();
+public function editCourse($id)
+{
+    $course = Course::with(['chapters', 'quizFinals'])->findOrFail($id);
+    $categories = Course_category::all();
         $mentorId = auth()->user()->mentor->id;
         $courses = Course::where('mentor_id', $mentorId)->get();
         $chapters = Chapter::whereIn('course_id', $courses->pluck('id'))->get();
-        // $quizs = $course->quizFinals;
-        $quizs = DB::table('quiz_finals')
-        ->where('course_id', $course->id)
-        ->select('id', 'title')
-        ->get();
-        return view('client.instructor.instructor-editCourse', compact('course', 'courses', 'chapters', 'categories', 'quizs'));
-    }
+
+    
+    $quizs = $course->quizFinals->sortBy('number');
+
+    return view('client.instructor.instructor-editCourse', compact('course', 'courses', 'chapters', 'categories', 'quizs'));
+}
+
+    
+    
 
     public function deleteChapter($id)
     {
@@ -603,10 +636,10 @@ class CoursesController extends Controller
                 
             $videoName = $video->hashName();
             $stream = fopen($video->getRealPath(), 'r');
-            Storage::disk('gcs')->writeStream('folder-name/' . $videoName, $stream);
-            if (is_resource($stream)) {
-                fclose($stream);
-            }
+            // Storage::disk('gcs')->writeStream('folder-name/' . $videoName, $stream);
+            // if (is_resource($stream)) {
+            //     fclose($stream);
+            // }
             $lesson = new Lesson();
             $lesson->name = $lessonData['name'];
             $lesson->path_video = $videoName;
@@ -860,4 +893,19 @@ class CoursesController extends Controller
 
         return response()->json(['status' => 'error'], 403);
     }
+    // kéo thả quiz
+    public function updateQuizOrder(Request $request)
+    {
+        $quizData = json_decode($request->input('quiz_data'), true);
+    
+        foreach ($quizData as $item) {
+            $quiz = Quiz::find($item['id']);
+            $quiz->number = $item['number'];
+            $quiz->save();
+        }
+    
+        return redirect()->back()->with('success', 'Thứ tự bài quiz đã được cập nhật.');
+    }
+    
+
 }

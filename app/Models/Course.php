@@ -24,7 +24,10 @@ class Course extends Model
         'enrollment',
     ];
 
-
+    public function quizFinals()
+    {
+        return $this->hasMany(QuizFinal::class, 'course_id');
+    }
     public function category(): BelongsTo{
         return $this->belongsTo(Course_Category::class, 'category_id');
     }

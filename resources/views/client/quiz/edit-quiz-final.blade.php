@@ -118,7 +118,7 @@
             <div class="col-xl-9 col-lg-8 col-md-12 my-5">
                 <div class="card">
                     <div class="card-body">
-                        <h2>Chỉnh sửa Quiz Final</h2>
+                        <h2 class="text-center display-4 font-weight-bold">Chỉnh sửa Quiz Final</h2>
                         @if(session('success'))
                             <div class="alert alert-success">
                                 {{ session('success') }}
@@ -127,10 +127,13 @@
                         <form action="{{ route('client.quiz.update-quiz-final', ['quiz_id' => $quizFinal->id]) }}" method="POST" class="p-4 bg-light rounded shadow-sm">
                             @csrf
                             @method('PUT')
-                            <div class="mb-4">
-                                <label for="title" class="form-label fw-bold">Tiêu đề Quiz:</label>
-                                <input type="text" id="title" name="title" class="form-control" value="{{ old('title', $quizFinal->title) }}" required>
+                            <div class="border border-primary border-4 mb-2 rounded p-3 shadow-sm">
+                                <div class="mb-4">
+                                    <label for="title" class="form-label fw-bold ">Tiêu đề Quiz:</label>
+                                    <input type="text" id="title" name="title" class="form-control" value="{{ old('title', $quizFinal->title) }}" required>
+                                </div>
                             </div>
+                            
 
                             <div id="questions-container">
                                 @foreach($quizFinal->questions as $index => $question)
@@ -157,7 +160,7 @@
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center mb-4">
-                                <a href="{{ route('client.editCourse', $quizFinal->course_id) }}" class="btn btn-secondary">
+                                <a href="{{ route('client.editCourse', $quizFinal->course_id) }}" class="btn btn-outline-secondary">
                                     <i class="bi bi-arrow-left"></i> Quay lại
                                 </a>
                                 <button type="submit" class="btn btn-success">Lưu</button>

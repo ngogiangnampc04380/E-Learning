@@ -7,15 +7,17 @@
             <div class="col-xl-9 col-lg-8 col-md-12 my-5">
                 <div class="card">
                     <div class="card-body">
-                        <h2 class="mb-4">Chỉnh sửa Quiz</h2>
+                        <h2 class="text-center display-4 font-weight-bold">Chỉnh sửa Quiz:</h2>
                         <form action="{{ route('client.courses.update-quiz', $quiz->id) }}" method="POST" class="p-4 bg-light rounded shadow-sm">
                             @csrf
                             @method('PUT')
-                        
-                            <div class="mb-4">
-                                <label for="name" class="form-label fw-bold">Tiêu đề Quiz:</label>
-                                <input type="text" id="name" name="name" class="form-control" value="{{ $quiz->name }}" required>
+                            <div class="border border-primary border-4 rounded p-3 mb-2 shadow-sm">
+                                <div class="mb-4">
+                                    <label for="title" class="form-label fw-bold">Tiêu đề Quiz:</label>
+                                    <input type="text" id="name" name="name" class="form-control" value="{{ $quiz->name }}" required>
+                                </div>
                             </div>
+
                         
                             <div id="questions-container">
                                 @foreach ($quiz->questions as $index => $question)
@@ -53,11 +55,12 @@
                             <button type="button" class="btn btn-outline-success mb-3" id="add-question">Thêm câu hỏi</button>
                         
                             <div class="d-flex justify-content-between align-items-center mb-4">
-                                <a href="#" class="btn btn-secondary" onclick="window.history.back(); return false;">
+                                <a href="{{ route('client.editCourse', $quiz->course_id) }}" class="btn btn-secondary">
                                     <i class="bi bi-arrow-left"></i> Quay lại
                                 </a>
                                 <button type="submit" class="btn btn-success">Lưu</button>
                             </div>
+                            
                         </form>
                         
                     </div>

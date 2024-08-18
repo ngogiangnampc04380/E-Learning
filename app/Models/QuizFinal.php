@@ -14,6 +14,7 @@ class QuizFinal extends Model
     protected $fillable = [
         'course_id',
         'mentor_id',
+        'nmuber',
         'title',
     ];
 

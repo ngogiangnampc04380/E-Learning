@@ -618,33 +618,75 @@ button.bg-danger:hover {
 .show > .btn-outline-success.dropdown-toggle:focus {
 	box-shadow: none;
 }
-.btn-outline-info {
+.btn-outline-infos {
 	color: #009efb;
 	border-color: #009efb;
 }
-.btn-outline-info:hover {
+.btn-outline-infos:hover {
 	color: #fff;
 	background-color: #009efb;
 	border-color: #009efb;
 }
-.btn-outline-info:focus, .btn-outline-info.focus {
+.btn-outline-infos:focus, .btn-outline-info.focus {
 	box-shadow: none;
 }
-.btn-outline-info.disabled, .btn-outline-info:disabled {
+.btn-outline-infos.disabled, .btn-outline-info:disabled {
 	background-color: transparent;
 	color: #009efb;
 }
-.btn-outline-info:not(:disabled):not(.disabled):active,
-.btn-outline-info:not(:disabled):not(.disabled).active,
-.show > .btn-outline-info.dropdown-toggle {
+.btn-outline-infos:not(:disabled):not(.disabled):active,
+.btn-outline-infos:not(:disabled):not(.disabled).active,
+.show > .btn-outline-infos.dropdown-toggle {
 	background-color: #009efb;
 	border-color: #009efb;
 }
-.btn-outline-info:not(:disabled):not(.disabled):active:focus,
-.btn-outline-info:not(:disabled):not(.disabled).active:focus,
-.show > .btn-outline-info.dropdown-toggle:focus {
+.btn-outline-infos:not(:disabled):not(.disabled):active:focus,
+.btn-outline-infos:not(:disabled):not(.disabled).active:focus,
+.show > .btn-outline-infos.dropdown-toggle:focus {
 	box-shadow: none;
 }
+.btn-outline-info {
+    color: white; /* Màu chữ */
+    border: 2px solid #009efb; /* Viền màu xanh dương */
+    background-color: #009efb; /* Màu nền khi hover */
+
+    padding: 0.75rem 1.5rem; /* Padding để nút có kích thước đẹp */
+    border-radius: 0.5rem; /* Bo tròn góc để nút mềm mại hơn */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.1); /* Bóng đổ nhẹ nhàng */
+    transition: all 0.3s ease-in-out; /* Hiệu ứng chuyển tiếp */
+    text-transform: uppercase; /* Chữ in hoa để tạo sự mạnh mẽ */
+    font-weight: 700; /* Chữ đậm để tạo sự nổi bật */
+    cursor: pointer; /* Con trỏ chuột thay đổi khi hover */
+    display: inline-flex; /* Căn giữa nội dung và các thuộc tính flex */
+    align-items: center; /* Căn giữa nội dung theo chiều dọc */
+    justify-content: center; /* Căn giữa nội dung theo chiều ngang */
+}
+
+.btn-outline-info i {
+    margin-right: 0.5rem; /* Khoảng cách giữa biểu tượng và chữ */
+}
+
+.btn-outline-info:hover {
+    background-color: white; /* Màu nền khi hover */
+
+
+    color:#009efb; /* Màu chữ khi hover */
+    border-color: #007bb5; /* Viền xanh dương đậm hơn khi hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 0 0 0 2px rgba(0, 0, 0, 0.15); /* Bóng đổ sâu hơn khi hover */
+    transform: scale(1.05); /* Phóng to nút một chút khi hover */
+}
+
+.btn-outline-info:focus {
+    outline: none; /* Loại bỏ đường viền tập trung mặc định */
+    box-shadow: 0 0 0 4px rgba(0, 158, 251, 0.5); /* Bóng đổ ánh sáng xanh dương khi nút được chọn */
+}
+
+.btn-outline-info.disabled, .btn-outline-info:disabled {
+    background-color: transparent; /* Nền trong suốt khi disabled */
+    color: #009efb; /* Màu chữ khi disabled */
+    border-color: #009efb; /* Viền khi disabled */
+}
+
 .btn-outline-warning {
 	color: #ffbc34;
 	border-color: #ffbc34;
@@ -26132,7 +26174,7 @@ hr {
     color: #dc3545; /* Màu đỏ cho thông báo lỗi */
 }
 .table td.special-cell {
-    text-align: center;
+    text-align: left;
     color: #4a5d77; /* Màu chữ xanh xám, dễ nhìn và hiện đại */
     font-weight: 600; /* Chữ đậm nhưng không quá nặng */
     font-size: 1.2rem; /* Kích thước chữ lớn hơn để dễ đọc */
@@ -26187,11 +26229,10 @@ hr {
 .btn-outline-edit-chapter {
     background-color: #fff; /* Màu nền trắng để nổi bật */
     color: #f39c12; /* Màu chữ vàng đậm */
-    border: 1px solid #000; /* Màu viền đen */
+    border: 1px solid #e67e22; /* Màu viền cam đậm hơn màu nền */
     font-weight: bold; /* Chữ đậm để nổi bật hơn */
     transition: all 0.3s ease; /* Hiệu ứng chuyển tiếp mượt mà */
 }
-
 .btn-outline-edit-chapter:hover,
 .btn-outline-edit-chapter:focus {
     background-color: #f39c12; /* Màu nền vàng đậm khi hover */
@@ -26201,15 +26242,9 @@ hr {
     outline: none; /* Loại bỏ viền khi focus */
 }
 
-.btn-outline-sort-chapters {
-    background-color: #fff; /* Màu nền trắng để nổi bật */
-    color: #f39c12; /* Màu chữ vàng đậm */
-    border: 1px solid #000; /* Màu viền đen */
-    font-weight: bold; /* Chữ đậm để nổi bật hơn */
-    transition: all 0.3s ease; /* Hiệu ứng chuyển tiếp mượt mà */
-}
 
-.btn-outline-sort-chapters:hover,
+
+/* .btn-outline-sort-chapters:hover, */
 .btn-outline-sort-chapters:focus {
     background-color: #f39c12; /* Màu nền vàng đậm khi hover */
     color: #fff; /* Màu chữ trắng khi hover */
@@ -26225,8 +26260,10 @@ hr {
     transition: all 0.3s ease; /* Hiệu ứng chuyển tiếp mượt mà */
 }
 /* Các thuộc tính giống nhau cho tất cả các lớp */
-.btn-outline-edit-chapter,
-.btn-outline-sort-chapters,
+.btn-outline-sort-quiz,
+.btn-outline-sort-lessons,
+/* .btn-outline-edit-chapter, */
+/* .btn-outline-sort-chapters, */
 .btn-outline-edit-course,
 .btn-outline-edit-quiz,
 .btn-outline-edit-lesson {
@@ -26238,8 +26275,12 @@ hr {
 }
 
 /* Hiệu ứng hover và focus cho các lớp cụ thể */
-.btn-outline-edit-chapter:hover,
-.btn-outline-edit-chapter:focus,
+.btn-outline-sort-quiz:hover,
+.btn-outline-sort-quiz:focus,
+.btn-outline-sort-lessons:hover,
+.btn-outline-sort-lessons:focus,
+/* .btn-outline-edit-chapter:hover, */
+/* .btn-outline-edit-chapter:focus, */
 .btn-outline-sort-chapters:hover,
 .btn-outline-sort-chapters:focus,
 .btn-outline-edit-course:hover,
@@ -26271,4 +26312,125 @@ hr {
     border-color: #e67e22; /* Màu viền đậm hơn khi hover */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bóng đổ để nổi bật */
     outline: none; /* Loại bỏ viền khi focus */
+}
+
+#backBtn {
+    display: none; /* Giữ trạng thái ẩn mặc định */
+    border: 2px solid #000; /* Viền đen với độ dày 2px */
+    color: #000; /* Màu chữ đen */
+    background-color: #fff; /* Màu nền trắng để làm nổi bật viền và chữ */
+    font-weight: bold; /* Chữ đậm hơn để nổi bật */
+    border-radius: 8px; /* Bo tròn góc nút */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Hiệu ứng chuyển màu mượt mà */
+}
+
+#backBtn:hover,
+#backBtn:focus {
+    background-color: #dcdcdc; /* Màu nền xám sáng hơn khi hover */
+    color: #333; /* Màu chữ xám đậm khi hover */
+    border-color: #a0a0a0; /* Màu viền xám trung bình khi hover */
+    outline: none; /* Loại bỏ viền focus */
+}
+
+
+.modal {
+    display: none; /* Đảm bảo rằng modal không hiển thị mặc định */
+    position: fixed;
+    z-index: 1050; /* Đảm bảo modal có z-index cao hơn các phần tử khác */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    outline: 0;
+}
+.modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 1.75rem auto;
+}
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.3rem;
+    box-shadow: 0 3px 9px rgba(0,0,0,.5);
+}
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: .5;
+    z-index: 1040; /* Đảm bảo backdrop có z-index thấp hơn modal */
+}
+
+#sort-chapters-btn {
+    background-color: #f39c12; /* Màu nền cam sáng */
+    color: #fff; /* Màu chữ trắng để tạo sự tương phản */
+    border: 2px solid #e67e22; /* Viền cam đậm để làm nổi bật */
+    font-size: 1rem; /* Kích thước chữ */
+    padding: 0.75rem 1.5rem; /* Padding để nút có kích thước đẹp */
+    border-radius: 0.5rem; /* Bo tròn góc để nút mềm mại hơn */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.1); /* Bóng đổ để nút nổi bật */
+    transition: all 0.3s ease-in-out; /* Hiệu ứng chuyển tiếp */
+    text-transform: uppercase; /* Chữ in hoa để tạo sự mạnh mẽ */
+    font-weight: 700; /* Chữ đậm để tạo sự nổi bật */
+    cursor: pointer; /* Con trỏ chuột thay đổi khi hover để cho biết đây là nút có thể nhấn */
+    display: inline-flex; /* Căn giữa nội dung và các thuộc tính flex */
+    align-items: center; /* Căn giữa nội dung theo chiều dọc */
+    justify-content: center; /* Căn giữa nội dung theo chiều ngang */
+}
+
+#sort-chapters-btn i {
+    margin-right: 0.5rem; /* Khoảng cách giữa biểu tượng và chữ */
+}
+
+#sort-chapters-btn:hover {
+    background-color: transparent; /* Nền trong suốt */
+color: #e67e22;
+    border-color: #d35400; /* Viền cam đậm hơn khi hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 0 0 0 2px rgba(0, 0, 0, 0.15); /* Bóng đổ sâu hơn khi hover */
+    transform: scale(1.05); /* Phóng to nút một chút khi hover */
+}
+
+#sort-chapters-btn:focus {
+    outline: none; /* Loại bỏ đường viền tập trung mặc định */
+    box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.5); /* Bóng đổ ánh sáng vàng khi nút được chọn */
+}
+#sort-quiz-final-btn {
+    background-color: #f39c12; /* Màu nền cam sáng */
+    color: #fff; /* Màu chữ trắng để tạo sự tương phản */
+    border: 2px solid #e67e22; /* Viền cam đậm để làm nổi bật */
+    font-size: 1rem; /* Kích thước chữ */
+    padding: 0.75rem 1.5rem; /* Padding để nút có kích thước đẹp */
+    border-radius: 0.5rem; /* Bo tròn góc để nút mềm mại hơn */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.1); /* Bóng đổ để nút nổi bật */
+    transition: all 0.3s ease-in-out; /* Hiệu ứng chuyển tiếp */
+    text-transform: uppercase; /* Chữ in hoa để tạo sự mạnh mẽ */
+    font-weight: 700; /* Chữ đậm để tạo sự nổi bật */
+    cursor: pointer; /* Con trỏ chuột thay đổi khi hover để cho biết đây là nút có thể nhấn */
+    display: inline-flex; /* Căn giữa nội dung và các thuộc tính flex */
+    align-items: center; /* Căn giữa nội dung theo chiều dọc */
+    justify-content: center; /* Căn giữa nội dung theo chiều ngang */
+}
+
+#sort-quiz-final-btn i {
+    margin-right: 0.5rem; /* Khoảng cách giữa biểu tượng và chữ */
+}
+
+#sort-quiz-final-btn:hover {
+    /* background-color: #e67e22; Màu nền cam đậm khi hover */
+    background-color: transparent; /* Nền trong suốt */
+color: #e67e22;
+    border-color: #d35400; /* Viền cam đậm hơn khi hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 0 0 0 2px rgba(0, 0, 0, 0.15); /* Bóng đổ sâu hơn khi hover */
+    transform: scale(1.05); /* Phóng to nút một chút khi hover */
+}
+
+#sort-quiz-final-btn:focus {
+    outline: none; /* Loại bỏ đường viền tập trung mặc định */
+    box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.5); /* Bóng đổ ánh sáng vàng khi nút được chọn */
 }

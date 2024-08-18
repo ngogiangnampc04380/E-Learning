@@ -36,30 +36,52 @@ class QuizCourseController extends Controller
 
     // Lưu quiz mới
     public function store(Request  $request, $course_id)
-    {
-        $quizFinal = new QuizFinal();
-        $quizFinal->course_id = $course_id;
-        $quizFinal->mentor_id = Auth::user()->mentor->id;
-        $quizFinal->title = $request->title;
-        $quizFinal->save();
+{
+    // Lấy số thứ tự lớn nhất hiện tại
+    $maxNumber = QuizFinal::where('course_id', $course_id)->max('number');
 
-        foreach ($request->questions as $questionData) {
-            $question = new QuestionFinal();
-            $question->quiz_final_id = $quizFinal->id;
-            $question->questions = $questionData['question'];
-            $question->save();
+    $quizFinal = new QuizFinal();
+    $quizFinal->course_id = $course_id;
+    $quizFinal->mentor_id = Auth::user()->mentor->id;
+    $quizFinal->title = $request->title;
+    $quizFinal->number = $maxNumber + 1; // Số thứ tự mới
+    $quizFinal->save();
 
-            foreach ($questionData['answers'] as $answerData) {
-                $answer = new AnswerFinal();
-                $answer->question_id = $question->id;
-                $answer->answer_text = $answerData['answer'];
-                $answer->is_correct = $answerData['is_correct'];
-                $answer->save();
-            }
+    // Thêm câu hỏi và câu trả lời (như cũ)
+    foreach ($request->questions as $questionData) {
+        $question = new QuestionFinal();
+        $question->quiz_final_id = $quizFinal->id;
+        $question->questions = $questionData['question'];
+        $question->save();
+
+        foreach ($questionData['answers'] as $answerData) {
+            $answer = new AnswerFinal();
+            $answer->question_id = $question->id;
+            $answer->answer_text = $answerData['answer'];
+            $answer->is_correct = $answerData['is_correct'];
+            $answer->save();
         }
-        return redirect()->route('client.editCourse', ['id' => $course_id])
-            ->with('success', 'Quiz đã được tạo thành công!');
     }
+    return redirect()->route('client.editCourse', ['id' => $course_id])
+        ->with('success', 'Quiz đã được tạo thành công!');
+}
+public function updateOrderQuizFinal(Request $request, $course_id)
+{
+    $quizIds = $request->input('quiz_ids');
+
+    foreach ($quizIds as $index => $id) {
+        $quiz = QuizFinal::find($id);
+        if ($quiz) {
+            $quiz->number = $index + 1;
+            $quiz->save();
+        }
+    }
+
+    return response()->json(['success' => true]);
+}
+
+
+
     public function edit( $quiz_id)
     {
         $quizFinal = QuizFinal::with('questions.answers')->findOrFail($quiz_id);

@@ -10,7 +10,7 @@
             <div class="col-xl-9 col-lg-8 col-md-12 my-5">
                 <div class="card">
                     <div class="card-body">
-                        <h2>Thêm bài quiz</h2>
+                        <h2 class="text-center display-4 font-weight-bold">Thêm bài quiz cho chương: <p style="color: red">{{ $chapter_name }}</p></h2>
                         @if (session('success'))
                             <div class="alert alert-success">
                                 {{ session('success') }}
@@ -21,11 +21,13 @@
                             @csrf
                             <input type="hidden" name="course_id" value="{{ $course_id }}">
                             <input type="hidden" name="chapter_id" value="{{ $chapter_id }}">
-
-                            <div class="mb-4">
-                                <label for="title" class="form-label fw-bold">Tiêu đề Quiz:</label>
-                                <input type="text" id="title" name="title" class="form-control" required>
+                            <div class="border border-primary border-4 rounded p-3 mb-2 shadow-sm">
+                                <div class="mb-4">
+                                    <label for="title" class="form-label fw-bold">Tiêu đề Quiz:</label>
+                                    <input type="text" id="title" name="title" class="form-control" required>
+                                </div>
                             </div>
+                            
 
                             <div id="questions-container">
                                 <div class="question-block mb-4 p-4 border border-primary rounded">
@@ -68,11 +70,12 @@
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center mb-4">
-                                <a href="javascript:history.go(-1)" class="btn btn-secondary">
+                                <a href="{{ route('client.editCourse', $course_id) }}" class="btn btn-outline-secondary">
                                     <i class="bi bi-arrow-left"></i> Quay lại
                                 </a>
                                 <button type="submit" class="btn btn-success">Lưu</button>
                             </div>
+                            
                         </form>
 
                     </div>

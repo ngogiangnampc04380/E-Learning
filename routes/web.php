@@ -119,7 +119,7 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::get('/quiz/{id}', [CoursesController::class, 'show'])->name('courses.show');
     Route::get('/quiz/{id}/edit', [CoursesController::class, 'editQuiz'])->name('courses.edit-quiz');
     Route::post('/quiz/{id}', [CoursesController::class, 'updateQuiz'])->name('courses.update-quiz');
-    Route::delete('/quiz/{id}', [CoursesController::class, 'deleteQuiz'])->name('courses.delete-quiz');
+    Route::delete('/quiz/{id}', [CoursesController::class, 'deleteQuiz'])->name('delete-quiz');
     Route::get('/quiz-chapter/{id}', [CoursesController::class, 'quizChapter'])->name('courses.quiz-chapter');
     Route::post('/quiz-chapter/{id}/submit', [CoursesController::class, 'submitQuiz'])->name('courses.submit');
     Route::get('/quiz-chapter/{id}/result/{score}', [CoursesController::class, 'quizResult'])->name('courses.quiz.result');
@@ -143,6 +143,10 @@ Route::post('/contact', [SupportController::class, 'submitSupportForm'])->name('
 Route::post('/update-lesson-order', [CoursesController::class, 'updateOrder'])->name('lesson-order');
 // thứ tự chương
 Route::post('/chapter-order', [CoursesController::class, 'updateOrderChapter'])->name('chapter-order');
+// thứ tự quiz chương
+Route::post('/update-quiz-order', [CoursesController::class, 'updateQuizOrder'])->name('quiz-order');
+//  thứ tự quiz final
+Route::post('/quiz-final-order/{course_id}', [QuizCourseController::class, 'updateOrderQuizFinal'])->name('quiz-final-order');
 
 
     // ----------------------------- Search ------------------------------
