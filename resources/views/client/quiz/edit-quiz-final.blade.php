@@ -133,7 +133,7 @@
                                     <input type="text" id="title" name="title" class="form-control" value="{{ old('title', $quizFinal->title) }}" required>
                                 </div>
                             </div>
-                            
+
 
                             <div id="questions-container">
                                 @foreach($quizFinal->questions as $index => $question)
@@ -243,6 +243,87 @@
                 });
             });
         }
+        document.querySelector('form').addEventListener('submit', function(event) {
+            let isValid = true;
+            clearErrors();
 
+            // Kiểm tra tiêu đề Quiz
+            const titleField = document.getElementById('title');
+            const title = titleField.value.trim();
+            if (title === '') {
+                isValid = false;
+                showError(titleField, 'Tiêu đề không được để trống.');
+            } else if (title.length > 50) {
+                isValid = false;
+                showError(titleField, 'Tiêu đề không được quá 50 ký tự.');
+            } else if (/[^a-zA-Z0-9\s]/.test(title)) {
+                isValid = false;
+                showError(titleField, 'Tiêu đề không được chứa ký tự đặc biệt.');
+            }
+
+            // Kiểm tra từng câu hỏi
+            const questionBlocks = document.querySelectorAll('.question-block');
+            questionBlocks.forEach((block, index) => {
+                const questionField = block.querySelector('input[name^="questions["][name$="][question]"]');
+                const questionText = questionField.value.trim();
+
+                if (questionText === '') {
+                    isValid = false;
+                    showError(questionField, `Câu hỏi ${index + 1} không được để trống.`);
+                } else if (questionText.length > 50) {
+                    isValid = false;
+                    showError(questionField, `Câu hỏi ${index + 1} không được quá 50 ký tự.`);
+                } else if (/[^a-zA-Z0-9\s]/.test(questionText)) {
+                    isValid = false;
+                    showError(questionField, `Câu hỏi ${index + 1} không được chứa ký tự đặc biệt.`);
+                }
+
+                // Kiểm tra đáp án
+                const answerFields = block.querySelectorAll('input[name^="questions["][name$="][answer]"]');
+                const answers = [];
+                answerFields.forEach((answerField, answerIndex) => {
+                    const answerText = answerField.value.trim();
+                    if (answerText === '') {
+                        isValid = false;
+                        showError(answerField, `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được để trống.`);
+                    } else if (answerText.length > 250) {
+                        isValid = false;
+                        showError(answerField, `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được quá 250 ký tự.`);
+                    } else if (/[^a-zA-Z0-9\s]/.test(answerText)) {
+                        isValid = false;
+                        showError(answerField, `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được chứa ký tự đặc biệt.`);
+                    }
+                    answers.push(answerText);
+                });
+
+                // Kiểm tra đáp án trùng lặp
+                const uniqueAnswers = new Set(answers);
+                if (uniqueAnswers.size !== answers.length) {
+                    isValid = false;
+                    answers.forEach((answer, answerIndex) => {
+                        showError(answerFields[answerIndex], `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được trùng lặp.`);
+                    });
+                }
+            });
+
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+
+        function showError(field, message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'text-danger';
+            errorDiv.textContent = message;
+            field.classList.add('is-invalid');
+            field.parentElement.appendChild(errorDiv);
+        }
+
+        function clearErrors() {
+            const errorDivs = document.querySelectorAll('.text-danger');
+            errorDivs.forEach(div => div.remove());
+            const invalidFields = document.querySelectorAll('.is-invalid');
+            invalidFields.forEach(field => field.classList.remove('is-invalid'));
+        }
     </script>
 @endsection
