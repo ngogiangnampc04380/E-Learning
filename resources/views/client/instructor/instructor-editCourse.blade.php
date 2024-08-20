@@ -150,7 +150,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                 <tr>
                                     <td>
                                         <a href="#">
-                                            <img src="{{ Storage::url('assets-client/img/Courses/' . $course->thumbnail) }}"
+                                            <img src="{{ Storage::url('public/' . $course->thumbnail) }}"
                                                 alt="Thumbnail" class="img-fluid" style="max-width: 100px;">
                                         </a>
                                     </td>

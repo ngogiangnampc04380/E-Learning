@@ -8,51 +8,60 @@
                 <div class="card">
                     <div class="card-body">
                         <h2 class="text-center display-4 font-weight-bold">Chỉnh sửa Quiz:</h2>
-                        <form action="{{ route('client.courses.update-quiz', $quiz->id) }}" method="POST" class="p-4 bg-light rounded shadow-sm">
+                        <form action="{{ route('client.courses.update-quiz', $quiz->id) }}" method="POST"
+                            class="p-4 bg-light rounded shadow-sm">
                             @csrf
-                            @method('PUT')
+                           
                             <div class="border border-primary border-4 rounded p-3 mb-2 shadow-sm">
                                 <div class="mb-4">
                                     <label for="title" class="form-label fw-bold">Tiêu đề Quiz:</label>
-                                    <input type="text" id="name" name="name" class="form-control" value="{{ $quiz->name }}" required>
+                                    <input type="text" id="name" name="name" class="form-control"
+                                        value="{{ $quiz->name }}">
                                 </div>
                             </div>
 
 
                             <div id="questions-container">
                                 @foreach ($quiz->questions as $index => $question)
-                                    <div class="question-block mb-4 p-4 border border-primary rounded" data-index="{{ $index }}">
+                                    <div class="question-block mb-4 p-4 border border-primary rounded"
+                                        data-index="{{ $index }}">
                                         <h5 class="mb-3 question-title">Câu hỏi {{ $index + 1 }}</h5>
-                                        <input type="hidden" name="questions[{{ $index }}][id]" value="{{ $question->id }}">
+                                        <input type="hidden" name="questions[{{ $index }}][id]"
+                                            value="{{ $question->id }}">
 
                                         <div class="mb-3">
                                             <label for="question_{{ $index }}" class="form-label">Câu hỏi:</label>
                                             <input type="text" id="question_{{ $index }}"
-                                                   name="questions[{{ $index }}][question]"
-                                                   class="form-control" value="{{ $question->question }}" required>
+                                                name="questions[{{ $index }}][question]" class="form-control"
+                                                value="{{ $question->question }}">
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="correct_answer_{{ $index }}" class="form-label">Đáp án đúng:</label>
+                                            <label for="correct_answer_{{ $index }}" class="form-label">Đáp án
+                                                đúng:</label>
                                             <input type="text" id="correct_answer_{{ $index }}"
-                                                   name="questions[{{ $index }}][correct_answer]" class="form-control"
-                                                   value="{{ $question->correctAnswer->answer }}" required>
+                                                name="questions[{{ $index }}][correct_answer]" class="form-control"
+                                                value="{{ $question->correctAnswer->answer }}">
                                         </div>
 
                                         @foreach ($question->wrongAnswers as $i => $wrongAnswer)
                                             <div class="mb-3">
-                                                <label for="wrong_answer{{ $i + 1 }}_{{ $index }}" class="form-label">Đáp án sai {{ $i + 1 }}:</label>
-                                                <input type="text" id="wrong_answer{{ $i + 1 }}_{{ $index }}"
-                                                       name="questions[{{ $index }}][wrong_answers][]" class="form-control"
-                                                       value="{{ $wrongAnswer->answer }}" required>
+                                                <label for="wrong_answer{{ $i + 1 }}_{{ $index }}"
+                                                    class="form-label">Đáp án sai {{ $i + 1 }}:</label>
+                                                <input type="text"
+                                                    id="wrong_answer{{ $i + 1 }}_{{ $index }}"
+                                                    name="questions[{{ $index }}][wrong_answers][]"
+                                                    class="form-control" value="{{ $wrongAnswer->answer }}">
                                             </div>
                                         @endforeach
-                                        <button type="button" class="btn btn-outline-danger btn-sm remove-question mt-2">Xóa câu hỏi</button>
+                                        <button type="button"
+                                            class="btn btn-outline-danger btn-sm remove-question mt-2">Xóa câu hỏi</button>
                                     </div>
                                 @endforeach
                             </div>
 
-                            <button type="button" class="btn btn-outline-success mb-3" id="add-question">Thêm câu hỏi</button>
+                            <button type="button" class="btn btn-outline-success mb-3" id="add-question">Thêm câu
+                                hỏi</button>
 
                             <div class="d-flex justify-content-between align-items-center mb-4">
                                 <a href="{{ route('client.editCourse', $quiz->course_id) }}" class="btn btn-secondary">
@@ -76,34 +85,30 @@
 
             <div class="mb-3">
                 <label for="question_INDEX" class="form-label">Câu hỏi:</label>
-                <input type="text" id="question_INDEX" name="questions[INDEX][question]"
-                       class="form-control" value="" required>
+                <input type="text" id="question_INDEX" name="questions[INDEX][question]" class="form-control"
+                    value="">
             </div>
 
             <div class="mb-3">
                 <label for="correct_answer_INDEX" class="form-label">Đáp án đúng:</label>
-                <input type="text" id="correct_answer_INDEX"
-                       name="questions[INDEX][correct_answer]" class="form-control"
-                       value="" required>
+                <input type="text" id="correct_answer_INDEX" name="questions[INDEX][correct_answer]" class="form-control"
+                    value="">
             </div>
 
             <div class="mb-3">
                 <label for="wrong_answer1_INDEX" class="form-label">Đáp án sai 1:</label>
-                <input type="text" id="wrong_answer1_INDEX"
-                       name="questions[INDEX][wrong_answers][]" class="form-control"
-                       value="" required>
+                <input type="text" id="wrong_answer1_INDEX" name="questions[INDEX][wrong_answers][]" class="form-control"
+                    value="">
             </div>
             <div class="mb-3">
                 <label for="wrong_answer2_INDEX" class="form-label">Đáp án sai 2:</label>
-                <input type="text" id="wrong_answer2_INDEX"
-                       name="questions[INDEX][wrong_answers][]" class="form-control"
-                       value="" required>
+                <input type="text" id="wrong_answer2_INDEX" name="questions[INDEX][wrong_answers][]" class="form-control"
+                    value="">
             </div>
             <div class="mb-3">
                 <label for="wrong_answer3_INDEX" class="form-label">Đáp án sai 3:</label>
-                <input type="text" id="wrong_answer3_INDEX"
-                       name="questions[INDEX][wrong_answers][]" class="form-control"
-                       value="" required>
+                <input type="text" id="wrong_answer3_INDEX" name="questions[INDEX][wrong_answers][]"
+                    class="form-control" value="">
             </div>
 
             <button type="button" class="btn btn-outline-danger btn-sm remove-question">Xóa câu hỏi</button>
@@ -111,7 +116,7 @@
     </template>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             let questionIndex = {{ count($quiz->questions) }};
 
             function updateQuestionIndices() {
@@ -133,7 +138,7 @@
                 questionIndex = document.querySelectorAll('.question-block').length;
             }
 
-            document.getElementById('add-question').addEventListener('click', function () {
+            document.getElementById('add-question').addEventListener('click', function() {
                 const template = document.getElementById('question-template').content.cloneNode(true);
                 template.querySelectorAll('input, label').forEach(el => {
                     if (el.htmlFor) {
@@ -153,7 +158,7 @@
                 updateQuestionIndices();
             });
 
-            document.getElementById('questions-container').addEventListener('click', function (e) {
+            document.getElementById('questions-container').addEventListener('click', function(e) {
                 if (e.target.classList.contains('remove-question')) {
                     e.target.closest('.question-block').remove();
                     updateQuestionIndices();
@@ -162,6 +167,7 @@
         });
         document.querySelector('form').addEventListener('submit', function(event) {
             let isValid = true;
+            let firstErrorField = null; // Biến để lưu trường lỗi đầu tiên
             clearErrors();
 
             // Kiểm tra tiêu đề Quiz
@@ -170,13 +176,12 @@
             if (title === '') {
                 isValid = false;
                 showError(titleField, 'Tiêu đề không được để trống.');
-            } else if (title.length > 50) {
+                if (!firstErrorField) firstErrorField = titleField;
+            } else if (title.length > 200) {
                 isValid = false;
-                showError(titleField, 'Tiêu đề không được quá 50 ký tự.');
-            } else if (/[^a-zA-Z0-9\s]/.test(title)) {
-                isValid = false;
-                showError(titleField, 'Tiêu đề không được chứa ký tự đặc biệt.');
-            }
+                showError(titleField, 'Tiêu đề không được quá 200 ký tự.');
+                if (!firstErrorField) firstErrorField = titleField;
+            } 
 
             // Kiểm tra từng câu hỏi
             const questionBlocks = document.querySelectorAll('.question-block');
@@ -187,30 +192,35 @@
                 if (questionText === '') {
                     isValid = false;
                     showError(questionField, `Câu hỏi ${index + 1} không được để trống.`);
-                } else if (questionText.length > 50) {
+                    if (!firstErrorField) firstErrorField = questionField;
+                } else if (questionText.length > 200) {
                     isValid = false;
-                    showError(questionField, `Câu hỏi ${index + 1} không được quá 50 ký tự.`);
-                } else if (/[^a-zA-Z0-9\s]/.test(questionText)) {
-                    isValid = false;
-                    showError(questionField, `Câu hỏi ${index + 1} không được chứa ký tự đặc biệt.`);
+                    showError(questionField, `Câu hỏi ${index + 1} không được quá 200 ký tự.`);
+                    if (!firstErrorField) firstErrorField = questionField;
                 }
 
                 // Kiểm tra đáp án
-                const answerFields = block.querySelectorAll('input[name^="questions[' + index + '][wrong_answers]"], input[name^="questions[' + index + '][correct_answer]"]');
+                const answerFields = block.querySelectorAll('input[name^="questions[' + index +
+                    '][wrong_answers]"], input[name^="questions[' + index + '][correct_answer]"]');
                 const answers = [];
                 answerFields.forEach((answerField, answerIndex) => {
                     const answerText = answerField.value.trim();
                     if (answerText === '') {
                         isValid = false;
-                        showError(answerField, `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được để trống.`);
-                    } else if (answerText.length > 250) {
+                        showError(answerField,
+                            `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được để trống.`
+                        );
+                        if (!firstErrorField) firstErrorField = answerField;
+                    } else if (answerText.length > 200) {
                         isValid = false;
-                        showError(answerField, `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được quá 250 ký tự.`);
-                    } else if (/[^a-zA-Z0-9\s]/.test(answerText)) {
-                        isValid = false;
-                        showError(answerField, `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được chứa ký tự đặc biệt.`);
+                        showError(answerField,
+                            `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được quá 200 ký tự.`
+                        );
+                        if (!firstErrorField) firstErrorField = answerField;
                     }
-                    answers.push(answerText);
+                    else {
+                        answers.push(answer);
+                    }
                 });
 
                 // Kiểm tra đáp án trùng lặp
@@ -218,15 +228,42 @@
                 if (uniqueAnswers.size !== answers.length) {
                     isValid = false;
                     answers.forEach((answer, answerIndex) => {
-                        showError(answerFields[answerIndex], `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được trùng lặp.`);
+                        showError(answerFields[answerIndex],
+                            `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được trùng lặp.`
+                        );
+                        if (!firstErrorField) firstErrorField = answerFields[answerIndex];
                     });
                 }
             });
 
             if (!isValid) {
                 event.preventDefault();
+                if (firstErrorField) {
+                    firstErrorField.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                    firstErrorField.focus();
+                }
             }
         });
+
+        function clearErrors() {
+            document.querySelectorAll('.text-danger').forEach(element => element.remove());
+            document.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
+        }
+
+        function showError(field, message) {
+            const error = document.createElement('div');
+            error.className = 'text-danger mt-2';
+            error.textContent = message;
+            field.classList.add('is-invalid');
+
+            // Thêm thông báo lỗi ngay dưới trường nhập liệu
+            if (!field.nextElementSibling || !field.nextElementSibling.classList.contains('text-danger')) {
+                field.parentNode.insertBefore(error, field.nextSibling);
+            }
+        }
 
         function showError(field, message) {
             const errorDiv = document.createElement('div');
@@ -242,6 +279,5 @@
             const invalidFields = document.querySelectorAll('.is-invalid');
             invalidFields.forEach(field => field.classList.remove('is-invalid'));
         }
-
     </script>
 @endsection

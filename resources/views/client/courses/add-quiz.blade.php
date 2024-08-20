@@ -10,7 +10,9 @@
             <div class="col-xl-9 col-lg-8 col-md-12 my-5">
                 <div class="card">
                     <div class="card-body">
-                        <h2 class="text-center display-4 font-weight-bold">Thêm bài quiz cho chương: <p style="color: red">{{ $chapter_name }}</p></h2>
+                        <h2 class="text-center display-4 font-weight-bold">Thêm bài quiz cho chương: <p style="color: red">
+                                {{ $chapter_name }}</p>
+                        </h2>
                         @if (session('success'))
                             <div class="alert alert-success">
                                 {{ session('success') }}
@@ -139,7 +141,8 @@
                 const questionNumber = index + 1;
                 block.querySelector('h5').textContent = `Câu hỏi ${questionNumber}`;
                 block.querySelector('label[for^="question_"]').setAttribute('for', `question_${questionNumber}`);
-                block.querySelector('input[name^="questions["]').setAttribute('name', `questions[${questionNumber}][question]`);
+                block.querySelector('input[name^="questions["]').setAttribute('name',
+                    `questions[${questionNumber}][question]`);
                 block.querySelector('input[id^="question_"]').setAttribute('id', `question_${questionNumber}`);
 
                 const answers = block.querySelectorAll('div[class="mb-3"]');
@@ -150,14 +153,17 @@
 
                     answerLabel.setAttribute('for', `answer_${questionNumber}_${answerIndex}`);
                     answerInput.setAttribute('id', `answer_${questionNumber}_${answerIndex}`);
-                    answerInput.setAttribute('name', `questions[${questionNumber}][answers][${answerIndex}][answer]`);
-                    answerHiddenInput.setAttribute('name', `questions[${questionNumber}][answers][${answerIndex}][is_correct]`);
+                    answerInput.setAttribute('name',
+                        `questions[${questionNumber}][answers][${answerIndex}][answer]`);
+                    answerHiddenInput.setAttribute('name',
+                        `questions[${questionNumber}][answers][${answerIndex}][is_correct]`);
                 });
             });
         }
 
         document.querySelector('form').addEventListener('submit', function(event) {
             let isValid = true;
+            let firstErrorField = null; // Biến để lưu trường lỗi đầu tiên
 
             // Xóa tất cả thông báo lỗi cũ
             document.querySelectorAll('.text-danger').forEach(element => element.remove());
@@ -168,12 +174,11 @@
             if (title === '') {
                 isValid = false;
                 showError(titleField, 'Tiêu đề không được để trống.');
-            } else if (title.length > 50) {
+                if (!firstErrorField) firstErrorField = titleField;
+            } else if (title.length > 200) {
                 isValid = false;
-                showError(titleField, 'Tiêu đề không được quá 50 ký tự.');
-            } else if (/[^a-zA-Z0-9\s]/.test(title)) {
-                isValid = false;
-                showError(titleField, 'Tiêu đề không được chứa ký tự đặc biệt.');
+                showError(titleField, 'Tiêu đề không được quá 200 ký tự.');
+                if (!firstErrorField) firstErrorField = titleField;
             }
 
             // Kiểm tra các câu hỏi và đáp án
@@ -183,12 +188,11 @@
                 if (question === '') {
                     isValid = false;
                     showError(questionField, 'Câu hỏi không được để trống.');
-                } else if (question.length > 50) {
+                    if (!firstErrorField) firstErrorField = questionField;
+                } else if (question.length > 200) {
                     isValid = false;
-                    showError(questionField, 'Câu hỏi không được quá 50 ký tự.');
-                } else if (/[^a-zA-Z0-9\s]/.test(question)) {
-                    isValid = false;
-                    showError(questionField, 'Câu hỏi không được chứa ký tự đặc biệt.');
+                    showError(questionField, 'Câu hỏi không được quá 200 ký tự.');
+                    if (!firstErrorField) firstErrorField = questionField;
                 }
 
                 const answers = [];
@@ -197,26 +201,33 @@
                     if (answer === '') {
                         isValid = false;
                         showError(answerField, 'Đáp án không được để trống.');
-                    } else if (answer.length > 250) {
+                        if (!firstErrorField) firstErrorField = answerField;
+                    } else if (answer.length > 200) {
                         isValid = false;
-                        showError(answerField, 'Đáp án không được quá 250 ký tự.');
-                    } else if (/[^a-zA-Z0-9\s]/.test(answer)) {
-                        isValid = false;
-                        showError(answerField, 'Đáp án không được chứa ký tự đặc biệt.');
-                    } else {
+                        showError(answerField, 'Đáp án không được quá 200 ký tự.');
+                        if (!firstErrorField) firstErrorField = answerField;
+                    }  else {
                         answers.push(answer);
                     }
                 });
-
                 // Kiểm tra đáp án trùng lặp
                 if (!checkDuplicateAnswers(answers)) {
                     isValid = false;
                     showError(questionField, 'Đáp án không được trùng lặp.');
+                    if (!firstErrorField) firstErrorField = questionField;
                 }
             });
 
+            // Nếu không hợp lệ, ngăn chặn gửi form và cuộn đến trường đầu tiên bị lỗi
             if (!isValid) {
                 event.preventDefault();
+                if (firstErrorField) {
+                    firstErrorField.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                    firstErrorField.focus();
+                }
             }
         });
 
