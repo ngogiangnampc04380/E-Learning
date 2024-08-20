@@ -27,11 +27,13 @@ class Mentor extends Model
     {
         return $this->hasMany(Course::class);
     }
-  
 
     public function courses()
     {
         return $this->hasMany(Course::class);
     }
-
+    public function sales(): HasMany
+    {
+        return $this->hasMany(Sale::class);
+    }
 }

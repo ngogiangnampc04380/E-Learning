@@ -13,22 +13,16 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->string('name',50);
-            $table->text('description');
-            $table->integer('percent_sale');
-            $table->string('sales_code',50);
+            $table->unsignedBigInteger('mentor_id');
+            $table->foreign('mentor_id')->references('id')->on('mentors')->constrained()->cascadeOnDelete();
+            $table->string('discount_title');
+            $table->integer('discount_percent'); // Điều chỉnh độ chính xác và quy mô nếu cần
+            $table->string('discount_code');
+            $table->integer('quantity');
+            $table->integer('used_quantity')->nullable();
             $table->date('start_date');
             $table->date('end_date');
-            $table->integer('amount');
-            $table->integer('status');
-            $table->unsignedBigInteger('course_id');
-            $table->foreign('course_id')->references('id')->on('courses')->constrained()->cascadeOnDelete();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unique(['user_id', 'course_id']);
             $table->timestamps();
-
-
         });
     }
 

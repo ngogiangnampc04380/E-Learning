@@ -24,7 +24,8 @@ use App\Http\Controllers\Client\PasswordController;
 use App\Http\Controllers\Client\QuizCourseController;
 // ----------------------------Mentor----------------------------*******
 use App\Http\Controllers\Mentor\MentorControllerr;
-use App\Http\Controllers\Mentor\SaleController;
+use App\Http\Controllers\Client\SaleController;
+
 
 
 // ---------------------------------------Client-------------------------
@@ -179,15 +180,15 @@ Route::post('/upload_ID_Card', [MentorControllerr::class, 'handleUploadIdCard'])
 Route::post('/mentor/save-id-card-data', [MentorControllerr::class, 'saveIdCardData'])->name('mentor-save-id-card');
 
 // -----------------------Sales-------------------------
-Route::get('/sale-course', [SaleController::class, 'showSaleCourseForm'])->name('mentor.show-sale-course');
-Route::post('/sale-course', [SaleController::class, 'storeSale'])->name('mentor.store-sale');
 
-Route::get('/mentor/sale-list', [SaleController::class, 'showSaleCourseList'])->name('mentor.list-sale-course');
+Route::get('sale/add-sale', [SaleController::class, 'create'])->name('sale.add-sale');
+Route::post('sale/store', [SaleController::class, 'store'])->name('sale.store');
+Route::get('sale/show-sale', [SaleController::class, 'show'])->name('sale.show-sale');
+Route::get('sale/{sale}/edit', [SaleController::class, 'edit'])->name('sale.edit');
+Route::put('sale/{sale}', [SaleController::class, 'update'])->name('sale.update');
+Route::delete('sale/{id}', [SaleController::class, 'destroy'])->name('sale.destroy');
 
-Route::get('/mentor/edit-sale/{id}', [SaleController::class, 'editSales'])->name('mentor.edit-sale');
-Route::post('/mentor/update-sale/{id}', [SaleController::class, 'updateSales'])->name('mentor.update-sale');
 
-Route::delete('/mentor/delete-sale/{id}', [SaleController::class, 'deleteSale'])->name('mentor.delete-sale');
 
 Route::post('/apply-promotion', [SaleController::class, 'applyPromotion'])->name('apply.promotion');
 

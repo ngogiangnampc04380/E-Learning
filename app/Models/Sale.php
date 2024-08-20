@@ -10,22 +10,22 @@ class Sale extends Model
     use HasFactory;
     protected $table = 'sales';
     protected $fillable = [
-        'id',
-        'name',
-        'description',
-        'percent_sale',
-        'sales_code',
+        'mentor_id',
+        'discount_title',
+        'discount_percent',
+        'discount_code',
+        'quantity',
+        'used_quantity',
         'start_date',
         'end_date',
-        'amount',
-        'status',
-        'course_id',
-
-
     ];
-    public function course()
+    protected $dates = [
+        'start_date',
+        'end_date',
+    ];
+    public function courses()
     {
-        return $this->belongsTo(Course::class); // Mỗi mã khuyến mãi thuộc về một khóa học
+        return $this->belongsToMany(Course::class, 'sale_pivots', 'sale_id', 'course_id');
     }
 }
 
