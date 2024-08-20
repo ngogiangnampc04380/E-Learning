@@ -98,7 +98,7 @@
                                     @if($course->video_demo)
                                         <div class="video-container">
                                             <video controls class="img-fluid rounded shadow-sm">
-                                                <source src="{{ Storage::url('public/assets-client/Videos/Courses/'.$course->video_demo) }}" type="video/mp4">
+                                                <source src="{{ Storage::url('public/'.$course->video_demo) }}" type="video/mp4">
                                                 Trình duyệt của bạn không hỗ trợ thẻ video.
                                             </video>
                                         </div>

@@ -15,17 +15,25 @@
                         <div style="display: flex; align-items: center;">
                             <div style="margin-right: 20px;">
                                 <img src="{{ Storage::url($course->thumbnail) }}" alt="Thumbnail" class="img-fluid"
-                                     style="width: 200px;">
+                                     style="width: 1000px;">
+                                     <h3 class="title"><a
+                                        href="{{ route('client.course-details', $course->id) }}">{{ $course->name }}</a>
+                                </h3>
+                                <p>{{ $course->description }}</p>
+                                <div>
+                                    <h5 style="color:red">{{ number_format($course->price) }} VNĐ</h5>
+                                </div>
                             </div>
-                            <div>
+                            
+                            {{-- <div>
                                 <h3 class="title"><a
                                         href="{{ route('client.course-details', $course->id) }}">{{ $course->name }}</a>
                                 </h3>
                                 <p>{{ $course->description }}</p>
-                            </div>
+                            </div> --}}
                         </div>
 
-                        <h5 style="color:red">{{ number_format($course->price) }} VNĐ</h5>
+                       
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -42,7 +50,7 @@
                         <form action="{{ route('apply.promotion') }}" method="POST">
                             @csrf
                             <input type="hidden" name="course_id" value="{{ $course->id }}">
-                            <input type="text" name="sales_code" class="form-control" placeholder="Nhập mã khuyến mãi">
+                            <input type="text" name="sales_code"  placeholder="Nhập mã khuyến mãi">
                             <button type="submit" class="btn btn-primary">Áp dụng</button>
                         </form>
                         @if(session('error'))

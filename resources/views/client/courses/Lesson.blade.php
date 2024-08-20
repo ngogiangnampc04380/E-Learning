@@ -210,7 +210,7 @@
                                                             <a href="{{ route('client.lesson', ['id' => $data->id, 'lesson-id' => $lesson->lessonID]) }}"
                                                                 class="lesson-link" data-lesson-id="{{ $lesson->lessonID }}"
                                                                 @php
-$bucketName = 'entweb01';
+                                                                                        $bucketName = 'entweb01';
                                                                                         $path_prefix ='ENT01';
                                                                                         $filePath = 'folder-name';
                                                                                         $namefile= $lesson->lessonvideo;
@@ -243,9 +243,24 @@ $bucketName = 'entweb01';
                                 </div>
                             </div>
                         @endforeach
+                        @forelse ($quizFinals as $quiz)
+                            <tr>
+                                <td></td> <!-- Assuming 'title' is the column name -->
+                                <td>
+                                    <div class="d-flex">
 
+                                        <a href="{{ route('client.quiz.quiz-final', ['quiz_id' => $quiz->id]) }}">
+                                            <h2>{{ $quiz->title }}</h2>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="2" class="text-center">Chưa có quiz final nào.</td>
+                            </tr>
+                        @endforelse
                     </div>
-
                 </div>
             </div>
             <div class="row">
@@ -353,10 +368,11 @@ $bucketName = 'entweb01';
             video.addEventListener('seeked', function() {
                 saveProgress(); // Gửi dữ liệu khi người dùng tua video
             });
-            var completedLessons = @json($checklesson); // Giả sử bạn có mảng $completedLessons chứa các lessonID đã hoàn thành
+            var completedLessons =
+            @json($checklesson); // Giả sử bạn có mảng $completedLessons chứa các lessonID đã hoàn thành
             completedLessons.forEach(function(lessonId) {
                 var checkIcon = document.querySelector(`a[data-lesson-id="${lessonId}"]`)
-                .nextElementSibling;
+                    .nextElementSibling;
                 if (checkIcon) {
                     checkIcon.classList.remove('hidden-check');
                     checkIcon.classList.add('completed-check');
@@ -369,7 +385,7 @@ $bucketName = 'entweb01';
                 // Hiển thị dấu tích sau khi người dùng xem xong video
                 var lessonId = document.getElementById('lessonID').value;
                 var checkIcon = document.querySelector(`a[data-lesson-id="${lessonId}"]`)
-                .nextElementSibling;
+                    .nextElementSibling;
 
                 if (checkIcon) {
                     checkIcon.classList.remove('hidden-check');

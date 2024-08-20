@@ -12352,13 +12352,13 @@ input[type=password]::-ms-clear
 	padding-bottom: 10px;
 }
 .plan-box {
-	background: #99cc00;
+	background: #ffffff;
 	border-radius: 8px;
 	padding: 30px;
 	display: flex;
     justify-content: space-between;
 	margin-bottom: 25px;
-	border: 1px solid #e9ecef;
+	border: 1px solid #000000;
 }
 .plan-box:hover {
 }
@@ -12389,7 +12389,7 @@ input[type=password]::-ms-clear
 	border-radius: 10px;
 	padding: 20px;
 	margin-bottom: 30px;
-	border: 1px solid #e9ecef;
+	border: 1px solid #000000;
 }
 .benefit-box h5 {
 	font-size: 18px;
@@ -25823,7 +25823,7 @@ input[type=password]::-ms-clear
     text-align:    center;
 }
 /* Kiểu dáng chung cho submenu */
-.submenu {
+.has-submenu .submenu {
     display: flex;
     flex-wrap: wrap; /* Cho phép các mục bọc sang dòng kế tiếp */
     padding: 0;

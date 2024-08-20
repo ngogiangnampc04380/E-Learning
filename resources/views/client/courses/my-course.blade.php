@@ -26,7 +26,7 @@
             <div class="product">
                 <div class="product-img">
                     <a href="{{ route('client.course-details', $course->id) }}">
-                        <img src="{{ Storage::url('public/assets-client/img/Courses/'.$course->thumbnail) }}" alt="Thumbnail" style="width: 250px; height: 150px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                        <img src="{{ Storage::url('public/'.$course->thumbnail) }}" alt="Thumbnail" style="width: 250px; height: 150px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
                     </a>
                 </div>
                 <div class="product-content">

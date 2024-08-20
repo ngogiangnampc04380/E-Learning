@@ -240,7 +240,7 @@
                                                                 <a
                                                                     href="{{ route('client.course-details', $course->id) }}">
                                                                     <img class="img-fluid" alt="Course Image"
-                                                                        src="{{ Storage::url('public/assets-client/img/Courses/' . $course->thumbnail) }}">
+                                                                        src="{{ Storage::url('public/' . $course->thumbnail) }}">
                                                                 </a>
                                                                 <div class="heart-three">
                                                                     <a href="#"><i
@@ -303,7 +303,7 @@
                                                                         <a
                                                                             href="{{ route('client.course-details', $course->id) }}">
                                                                             <img class="img-fluid" alt="Course Image"
-                                                                                src="{{ Storage::url('public/assets-client/img/Courses/' . $course->thumbnail) }}">
+                                                                                src="{{ Storage::url('public/' . $course->thumbnail) }}">
                                                                         </a>
                                                                         <div class="heart-three">
                                                                             <a href="#"><i

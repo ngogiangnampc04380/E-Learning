@@ -52,7 +52,7 @@
                             </ul>
                         </div>
                     @endforeach
-                    <a href="#" class="btn btn-primary btn-back">
+                    <a href="{{ route('client.editCourse', $quizFinal->course_id) }}" class="btn btn-primary btn-back">
                         Quay lại danh sách quiz
                     </a>
                 </div>

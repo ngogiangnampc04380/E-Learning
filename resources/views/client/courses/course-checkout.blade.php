@@ -81,7 +81,7 @@
                         <div class="student-widget-group">
 
                             <div class="basic-plan" style="display: flex; align-items: center;">
-                                <img src="{{ Storage::url('assets-client/img/user/'. $data->thumbnail) }}" alt="Thumbnail" class="img-fluid"
+                                <img src="{{ Storage::url('public/'. $data->thumbnail) }}" alt="Thumbnail" class="img-fluid"
                                      style="max-width: auto;">
 
                             </div>

@@ -1,5 +1,6 @@
 @extends('client.layout.master')
 @section('content')
+    
     <div class="page-content">
         <div class="container">
             <div class="row">

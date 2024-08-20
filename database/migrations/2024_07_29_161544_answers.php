@@ -15,7 +15,9 @@ return new class extends Migration
 
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
-            $table->string('name',255);
+            $table->string('answer',255);
+            $table->unsignedBigInteger('question_id');
+            $table->foreign('question_id')->references('id')->on('questions')->cascadeOnDelete();
             $table->enum('is_correct', ['true', 'false']);
             $table->timestamps();
         });
