@@ -30,7 +30,7 @@ use App\Http\Controllers\Client\SaleController;
 
 // ---------------------------------------Client-------------------------
 Route::get("/", [HomeController::class, "index"])->name("Dashboard-client");
-Route::get("/error", [HomeController::class, "error"])->name("error");
+Route::get("/error", [MentorControllerr::class, "error"])->name("error");
 // -----login Google
 Route::get('/login/google', [IndexAuthController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('/login/google/callback', [IndexAuthController::class, 'handleGoogleCallback']);
@@ -42,8 +42,6 @@ Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 Route::get('/logout', [LogoutController::class, 'index'])->name('logout')->middleware('auth');
 Route::post('/logout', [LogoutController::class, 'logout'])->middleware('auth');
-
-
 Route::prefix('password')->group(function () {
     Route::get('enter-email', [PasswordController::class, 'enterEmail'])->name('enter-email');
     Route::post('enter-email', [PasswordController::class, 'handleEnterEmail']);

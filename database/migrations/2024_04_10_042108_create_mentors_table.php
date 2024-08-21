@@ -16,6 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('name');
             $table->foreign('user_id')->references('id')->on('users')->constrained()->cascadeOnDelete();
+            $table->string('front_card');
+            $table->string('back_card');
             $table->timestamps();
         });
     }

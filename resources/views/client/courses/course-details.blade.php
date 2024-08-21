@@ -11,10 +11,7 @@
                 <div class="col-lg-8">
                     <div class="instructor-wrap border-bottom-0 m-0">
                         <div class="about-instructor align-items-center">
-                            {{-- <div class="abt-instructor-img">
-                                <a href="instructor-profile.html"><img src="/assets-client/img/user/user1.jpg" alt="img"
-                                                                       class="img-fluid"></a>
-                            </div> --}}
+
                             <div class="instructor-detail me-3">
                                 <h2>{{ $course->name}}</h2>
                             </div>
@@ -42,7 +39,7 @@
                                 <div class="about-instructor">
                                     <div class="abt-instructor-img">
                                         <a href="javascript:void(0);" class="profile-info-img">
-                                            <img src="{{ $course->mentor->thumbnail ? Storage::url('assets-client/img/user/' . $course->mentor->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"   alt class="img-fluid">
+                                            <img src="{{ $course->mentor->thumbnail ? Storage::url('public/' . $course->mentor->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"   alt class="img-fluid">
                                         </a>
                                     </div>
                                     <div class="instructor-detail">

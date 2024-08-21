@@ -20,7 +20,7 @@
                             </div>
                             <div class="profile-group">
                                 <div class="profile-name text-center">
-                                    <h4><a href="instructor-profile.html">Nam Béo</a></h4>
+                                    <h4><a href="instructor-profile.html"></a></h4>
                                     <p>Giảng viên</p>
                                 </div>
                                 <div class="go-dashboard text-center">
@@ -34,7 +34,7 @@
                             <h3>Thông tin giảng viên</h3>
                             <ul>
                                 <li class="nav-item active">
-                                    <a href="{{route('client.mentor-profile')}}" class="nav-link">
+                                    <a href="{{route('mentor-profile')}}" class="nav-link">
                                         <i class="feather-home"></i> Hồ sơ
                                     </a>
                                 </li>
@@ -43,7 +43,7 @@
                                         <i class="feather-shopping-bag"></i> Khóa học của tôi
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a href="{{route('client.mentor-comment')}}" class="nav-link">
                                         <i class="feather-star"></i> Quản lý bình luận
                                     </a>
@@ -52,7 +52,7 @@
                                     <a href="{{route('client.mentor-favorite')}}" class="nav-link">
                                         <i class="feather-star"></i> Quản lý lượt thích
                                     </a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                     </div>

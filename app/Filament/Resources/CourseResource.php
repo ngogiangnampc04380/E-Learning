@@ -32,44 +32,6 @@ class CourseResource extends Resource
     protected static ?string $navigationLabel = 'Khóa học';
     protected static ?string $modelLabel = 'khóa học';
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
-
-    // public static function form(Form $form): Form
-    // {
-    //     return $form
-    //         ->schema([
-    //             Forms\Components\Select::make('category_id')
-    //                 ->relationship('category', 'name')
-    //                 ->label('Mã danh mục')
-    //                 ->required(),
-
-    //             Forms\Components\TextInput::make('name')
-    //                 ->label('Tên khóa học')
-    //                 ->required()
-    //                 ->maxLength(50),
-    //             Forms\Components\FileUpload::make('thumbnail')
-    //                 ->label('Hình ảnh')
-    //                 ->required(),
-    //             Forms\Components\TextInput::make('price')
-    //                 ->label('Giá')
-    //                 ->required()
-    //                 ->numeric()
-    //                 ->prefix('vnđ'),
-    //             Forms\Components\TextInput::make('view')
-    //                 ->label('Lượt xem')
-    //                 ->required()
-    //                 ->numeric(),
-    //             Forms\Components\TextInput::make('enrollment')
-    //                 ->label('Số người đăng ký')
-    //                 ->required()
-    //                 ->numeric(),
-    //                 Forms\Components\RichEditor::make('description')
-    //                 ->label('Mô tả')
-    //                 ->required()
-    //                 ->maxLength(65535)
-    //                 ->columnSpanFull(),
-    //         ]);
-    // }
-
     public static function table(Table $table): Table
     {
         return $table
@@ -83,6 +45,10 @@ class CourseResource extends Resource
                 Tables\Columns\ImageColumn::make('thumbnail')
                     ->label('Hình ảnh')
                     ->searchable(),
+                Tables\Columns\ViewColumn::make('video_demo')
+                    ->label('Video xem trước')
+                    ->view('components.video')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('price')
                     ->label('Giá')
                     ->money('VND')
@@ -91,6 +57,7 @@ class CourseResource extends Resource
                     ->label('Số người đăng ký')
                     ->numeric()
                     ->sortable(),
+                    
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -140,10 +107,10 @@ class CourseResource extends Resource
                             ImageEntry::make('thumbnail')
                                 ->label('Hình ảnh')
                                 ->columnSpan(1),
-                                ViewEntry::make('video_demo')
+                            ViewEntry::make('video_demo')
                                 ->columnSpan(2)
                                 ->view('components.video-entry', [
-                                    'label' => 'Video demo',
+                                    'label' => 'Video xem trước',
                                     'value' => $infolist->getRecord()->video_demo,
                                 ]),
                             ViewEntry::make('description')
@@ -166,31 +133,29 @@ class CourseResource extends Resource
                                                     TextEntry::make('name')
                                                         ->label('Tên Bài học'),
                                                         ViewEntry::make('path_video')
-                                                        ->view('components.video-entry', [
-                                                            'label' => 'Video bài học',
-                                                            'value' => $infolist->getRecord()->path_video,
-                                                        ]),
+                                                        ->view('components.video-entry2',[
+                                                            'label' =>'Video bài học',
+                                                        ]),                        
                                                 ])->grid(),
-                                        ])->grid(),
-                                ])->collapsed()
-
+                                        ])
+                                        ->hiddenLabel()
+                                        ->grid()
+                                        ,
+                                ])->collapsed()->columns(1)
                         ])->collapsed()->columns(3),
-
-
                 ])->columnSpanFull()->from('md'),
                 Section::make('Giảng viên')
                     ->schema([
                         TextEntry::make('mentor.user.name')
                             ->label('Tên Giảng viên'),
-                            TextEntry::make('mentor.user.email')
+                        TextEntry::make('mentor.user.email')
                             ->label('Email'),
-                            TextEntry::make('mentor.user.address')
+                        TextEntry::make('mentor.user.address')
                             ->label('Địa chỉ'),
-                            TextEntry::make('mentor.user.phone')
+                        TextEntry::make('mentor.user.phone')
                             ->label('Số điện thoại'),
-                            ImageEntry::make('mentor.user.thumbnail')
-                            ->label('Ảnh đại diện')
-                            ->columnSpanFull(),
+                        ImageEntry::make('mentor.user.thumbnail')
+                            ->label('Ảnh đại diện'),
                     ])->collapsed()->columns(2),
             ]);
     }

@@ -44,7 +44,7 @@
                                             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6"><div class="settings-widget dash-profile">
                                                 <div class="settings-menu p-0">
                                                     <div class="profile-bg">
-                                                        @if(auth()->user()->role == 0)
+                                                        @if(in_array(auth()->user()->role, [0, 3]))
                                                         <h5 class="text-muted mb-0">Học viên</h5>
                                                         @elseif(auth()->user()->role == 1)
                                                         <h5 class="text-muted mb-0">Quản trị viên</h5>
@@ -53,7 +53,7 @@
                                                         @endif
                                                         <img src="/assets-client/img/instructor-profile-bg.jpg" alt="">
                                                         <div class="profile-img">
-                                                            <a href=""><img src="{{ auth()->user()->thumbnail ? Storage::url('assets-client/img/user/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}"  alt="">
+                                                            <a href=""><img src="{{ auth()->user()->thumbnail ? Storage::url('public/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}"  alt="">
                                                         </div>
                                                     </div>
                                                     <div class="profile-group">
@@ -121,7 +121,7 @@
                                                     <h5>Beginner</h5>
                                                     <img src="/assets-client/img/instructor-profile-bg.jpg" alt="">
                                                     <div class="profile-img">
-                                                        <a href="instructor-profile.html"><img src="{{asset('/public/uploads/'.auth()->user()->thumbnail)}}"
+                                                        <a href="instructor-profile.html"><img src="{{asset('public/'.auth()->user()->thumbnail)}}"
                                                                 alt=""></a>
                                                     </div>
                                                 </div>

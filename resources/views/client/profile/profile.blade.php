@@ -55,7 +55,7 @@
                                                         <div class="profile-bg">
                                                             <img src="/assets-client/img/instructor-profile-bg.jpg" alt="">
                                                             <div class="profile-imgs">
-                                                                <img class="trigger-element" src="{{ auth()->user()->thumbnail ? Storage::url('assets-client/img/user/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}" alt="">
+                                                                <img class="trigger-element" src="{{ auth()->user()->thumbnail ? Storage::url('public/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}" alt="">
                                                                 <input type="file" id="thumbnail" name="thumbnail" accept="image/*" style="display: none;">
                                                                 <label class="target-element custom-file-upload" for="thumbnail">Chọn Ảnh</label>
                                                             </div>
@@ -127,7 +127,7 @@
                                                 
                                                 <td>
                                                     @if ($education->thumbnail)
-                                                    <img src="{{ asset('storage/assets-client/img/educations/' . $education->thumbnail) }}" width="100">
+                                                    <img src="{{ asset('public/' . $education->thumbnail) }}" width="100">
                                                     @endif
                                                 </td>
                                                 <td>{{ $education->academic_level }}</td>

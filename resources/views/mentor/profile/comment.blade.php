@@ -20,7 +20,7 @@
                             </div>
                             <div class="profile-group">
                                 <div class="profile-name text-center">
-                                    <h4><a href="instructor-profile.html">Nam Béo</a></h4>
+                                    <h4><a href="instructor-profile.html"></a></h4>
                                     <p>Giảng viên</p>
                                 </div>
                                 <div class="go-dashboard text-center">

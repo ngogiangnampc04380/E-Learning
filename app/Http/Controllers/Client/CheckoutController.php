@@ -126,11 +126,7 @@ class CheckoutController extends Controller
         session([
             'course_id' => $course->id,
             'user_id'=>auth()->user()->id,
-            
         ]);
-
-        // dd(session());
-
 
         if (isset($_GET['partnerCode']) && $_GET['message'] == "Successful." &&  $orderid == null) {
             Order::create([
@@ -154,7 +150,6 @@ class CheckoutController extends Controller
             // ->where('sales_code', session('sale_code'))
             // ->select('used_amount')
             // ->first();
-
             // $used_cupon->used_amount = $used_cupon->used_amount + 1;
             // DB::table('sales')
             // ->where('sales_code', session('sale_code'))

@@ -215,7 +215,7 @@
                                                                                         $filePath = 'folder-name';
                                                                                         $namefile= $lesson->lessonvideo;
                                                                                         $url = "https://storage.googleapis.com/{$bucketName}/{$path_prefix}/{$filePath}/{$namefile}"; @endphp
-                                                                data-video="{{ Storage::url('public/assets-client/Videos/Lessons/' . $lesson->lessonvideo) }}"
+                                                                data-video="{{ Storage::url('public/' . $lesson->lessonvideo) }}"
                                                                 data-title="{{ $lesson->lessonname }}"
                                                                 onclick="loadLesson(event, '{{ $data->id }}', '{{ $item->chapterID }}', '{{ $lesson->lessonID }}', '{{ $lesson->lessonname }}', '{{ $url }}')">
                                                                 {{ $lesson->lessonname }}

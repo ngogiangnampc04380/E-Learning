@@ -28,8 +28,8 @@
 <div class="error-box-img">
     <img src="/assets-client/img/tichxanh.png" alt class="img-fluid">
 </div>
-<h3 class="h2 mb-3">TÀI KHOẢN ĐÃ ĐƯỢC KÍCH HOẠT THÀNH CÔNG!</h3>
-<p class="h4 font-weight-normal">bạn có thể tao tác các chức năng của mentor trên trang web.</p>
+<h3 class="h2 mb-3">TÀI KHOẢN ĐÃ ĐƯỢC GỬI DUYỆT!!!</h3>
+<p class="h4 font-weight-normal">Hãy đợi quản trị viên duyệt yêu cầu của bạn!!!</p>
 <a href="{{ route('Dashboard-client') }}" class="btn btn-primary">Về Trang Chủ</a>
 </div>
 </div>

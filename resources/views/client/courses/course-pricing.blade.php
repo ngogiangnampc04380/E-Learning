@@ -63,19 +63,10 @@
                             <p>Giá sau khi giảm: {{ $discountedPrice ?? ''}}</p>
                         </div>
                         <hr>
-                        {{-- <h5>Phương thức thanh toán</h5>
-                        <ul>
-                            <li style="list-style: none; display: inline-block; margin-right: 10px;">
-                                <label>
-                                    <input type="radio" name="payment_method" class="btn" value="momo">
-                                    <img src="https://tse3.mm.bing.net/th?id=OIP.ozc76HTNt1OMfXfNiFShsQHaHa&pid=Api&P=0&h=180" alt="" style="height: 50px; width: auto;">
-                                </label>
-                            </li>
-                        </ul> --}}
+                       
                         <form action="{{ route('client.checkout') }}" method="post">
                             @csrf
-                            {{-- <button name="zalopay" class="btn btn-secondary w-100">Thanh toán zalopay</button>
-                        <hr> --}}
+
                             <button name="payUrl" type="submit" class="btn btn-primary w-100">Thanh toán momo</button>
                             <hr>
 

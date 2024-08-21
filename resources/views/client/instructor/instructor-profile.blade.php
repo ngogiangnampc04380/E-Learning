@@ -11,7 +11,7 @@
                     <div class="profile-info-blk">
                         
                         <a href="javascript:void(0);" class="profile-info-img">
-                            <img src="{{ $mentor->thumbnail ? Storage::url('assets-client/img/user/' . $mentor->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"   alt class="img-fluid">
+                            <img src="{{ $mentor->thumbnail ? Storage::url('public/' . $mentor->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"   alt class="img-fluid">
                         </a>
                         <h4><a href="javascript:void(0);">{{ $mentor->name }}</a></h4>
                         <p>Giảng viên</p>
@@ -80,7 +80,7 @@
                             @foreach($mentor->educations as $education)
                             <div class="edu-wrap">
                                 <div class="edu-name">
-                                    <img src="{{ Storage::url('assets-client/img/educations/' . $education->thumbnail) }}" alt="" width="100">
+                                    <img src="{{ Storage::url('public/' . $education->thumbnail) }}" alt="" width="100">
                                 </div>
                                 <div class="edu-detail">
                                     <h6>{{ $education->academic_level }}</h6>

@@ -37,11 +37,11 @@ class CourseCategoriesResource extends Resource
 
                     ->validationMessages([
                         'required' => 'vui lòng nhập Tên danh mục',
-                        'unique' =>'Danh mục đã tồn tại'
+                        'unique' => 'Danh mục đã tồn tại'
 
                         // 'regex'=>'Tên danh mục không chứa ký tự đặc biệt'
-                        ]),
-                    
+                    ]),
+
                 Forms\Components\TextInput::make('slug')
                     ->label('Đường dẫn')
                     ->required()
@@ -49,18 +49,17 @@ class CourseCategoriesResource extends Resource
                     ->regex('/^[a-z0-9]+(-[a-z0-9]+)+$/') //bắt thiếu dấu -
                     ->validationMessages([
                         'required' => 'vui lòng nhập đường dẫn',
-                        'unique'=> 'đường dẫn đã tồn tại',
+                        'unique' => 'đường dẫn đã tồn tại',
                         'regex' => 'đường dẫn không hợp lệ (ví dụ dẫn hợp lệ là: abc-abc)'
-                        ]),
-                Forms\Components\TextInput::make('description')
-                ->label('Mô tả')
-                ->required()
-                // ->rules('regex:/^[a-zA-Z]+$/')
-
-                ->validationMessages([
-                    'required' => 'vui lòng nhập mô tả',
-                    // 'regex'=>'Tên danh mục không chứa ký tự đặc biệt'
-                    ]),        
+                    ]),
+                Forms\Components\RichEditor::make('description')
+                    ->required()
+                    ->validationMessages([
+                        'required' => 'vui lòng nhập nội dung bài viết',
+                    ])
+                    ->label('Nội dung')
+                    ->maxLength(65535)
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -69,13 +68,14 @@ class CourseCategoriesResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                ->label('Tên danh mục')
-                ->sortable(),
+                    ->label('Tên danh mục')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('slug')
-                ->label('Đường dẫn')
-                ->sortable(),
-                
+                    ->label('Đường dẫn')
+                    ->sortable(),
+
             ])
+
             ->filters([
                 //
             ])

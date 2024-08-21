@@ -47,11 +47,7 @@ class OrderResource extends Resource
                 ->label('Người đăng ký khóa học')
                 ->sortable()
                 ->searchable(),
-                Tables\Columns\SelectColumn::make('order_details.status')
-                ->options([
-                    0 => 'Chưa thanh toán',
-                    1 => 'Đã thanh toán',
-                ]),
+                
             ])
             ->filters([
                 //

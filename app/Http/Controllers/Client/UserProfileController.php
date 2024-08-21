@@ -87,13 +87,13 @@ class UserProfileController extends Controller
     ]);
 
     if ($request->hasFile('thumbnail')) {
-        $destination = storage_path('app/public/assets-client/img/user/' . $user->thumbnail);
+        $destination = storage_path('public/' . $user->thumbnail);
         if (File::exists($destination)) {
             File::delete($destination);
         }
         $thumbnail = $request->file('thumbnail');
         $thumbnailName = $thumbnail->getClientOriginalName();
-        $thumbnail->storeAs('/public/assets-client/img/user', $thumbnailName);
+        $thumbnail->storeAs('public/', $thumbnailName);
         $data['thumbnail'] = $thumbnailName;
     }
 
@@ -126,7 +126,7 @@ class UserProfileController extends Controller
         if ($request->hasFile('thumbnail')) {
             $thumbnail = $request->file('thumbnail');
             $thumbnailName = time() . '_' . $thumbnail->getClientOriginalName();
-            $thumbnail->storeAs('public/assets-client/img/educations', $thumbnailName);
+            $thumbnail->storeAs('public/', $thumbnailName);
             $data['thumbnail'] = $thumbnailName;
         }
         $data['user_id'] = Auth::id();
@@ -149,13 +149,13 @@ class UserProfileController extends Controller
         $education = Education::findOrFail($id);
         $data = $request->only('academic_level', 'school', 'describe', 'time');
         if ($request->hasFile('thumbnail')) {
-            $destination = storage_path('app/public/assets-client/img/educations/'.$education->thumbnail);
+            $destination = storage_path('public/'.$education->thumbnail);
             if (File::exists($destination)) {
                 File::delete($destination);
             }
             $thumbnail = $request->file('thumbnail');
             $thumbnailName = time() . '_' . $thumbnail->getClientOriginalName();
-            $thumbnail->storeAs('public/assets-client/img/educations', $thumbnailName);
+            $thumbnail->storeAs('public/', $thumbnailName);
             $data['thumbnail'] = $thumbnailName;
         }
         $education->update($data);
@@ -165,7 +165,7 @@ class UserProfileController extends Controller
 
     public function deleteEducation($id) {
         $education = Education::findOrFail($id);
-        $destination = storage_path('app/public/assets-client/img/educations/'.$education->thumbnail);
+        $destination = storage_path('public/'.$education->thumbnail);
         if (File::exists($destination)) {
             File::delete($destination);
         }

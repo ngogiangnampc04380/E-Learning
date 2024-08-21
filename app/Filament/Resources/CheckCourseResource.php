@@ -22,8 +22,13 @@ use Filament\Infolists\Components\Section;
 use Filament\Tables\Enums\FiltersLayout;
 // use App\Models\User;
 
-use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\RepeatableEntry;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\Split;
+use Filament\Infolists\Components\ViewEntry;
+use Filament\Support\Enums\FontWeight;
 
 class CheckCourseResource extends Resource
 {
@@ -61,9 +66,10 @@ class CheckCourseResource extends Resource
                 Tables\Columns\TextColumn::make('mentor.user.name')
                     ->label('Giảng viên')
                     ->sortable(),
-                Tables\Columns\ImageColumn::make('video_demo')
-                    ->label('Video demo')
-                    ->sortable(),
+                Tables\Columns\ViewColumn::make('video_demo')
+                    ->label('Video xem trước')
+                    ->view('components.video')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('enrollment')
                     ->label('Số người đăng ký')
                     ->numeric()
@@ -77,10 +83,10 @@ class CheckCourseResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            
+
             ->filters([
                 Filter::make('status')
-                    ->query(fn (Builder $query): Builder => $query->where('status', 1))
+                    ->query(fn(Builder $query): Builder => $query->where('status', 1))
                     ->default(1),
             ])
 
@@ -150,16 +156,67 @@ class CheckCourseResource extends Resource
     {
         return $infolist
             ->schema([
-                Section::make('Thông tin khóa học')
-                ->schema([
-                    
-
-                ]),
-                Section::make('Thông tin giảng viên')
+                Split::make([
+                    Section::make('Khóa học')
+                        ->schema([
+                            TextEntry::make('name')
+                                ->label('Tên khóa học'),
+                            TextEntry::make('price')
+                                ->label('Giá'),
+                            TextEntry::make('enrollment')
+                                ->label('Lượt đăng ký'),
+                            ImageEntry::make('thumbnail')
+                                ->label('Hình ảnh')
+                                ->columnSpan(1),
+                            ViewEntry::make('video_demo')
+                                ->columnSpan(2)
+                                ->view('components.video-entry', [
+                                    'label' => 'Video xem trước',
+                                    'value' => $infolist->getRecord()->video_demo,
+                                ]),
+                            ViewEntry::make('description')
+                                ->label('Mô tả')
+                                ->view('components.textarea-entry', [
+                                    'label' => 'Mô tả',
+                                    'value' => $infolist->getRecord()->description,
+                                ])
+                                ->columnSpanFull(),
+                            Section::make('Chương')
+                                ->schema([
+                                    RepeatableEntry::make('chapters')
+                                        ->label('Chương')
+                                        ->schema([
+                                            TextEntry::make('name')
+                                                ->label('Tên chương'),
+                                            RepeatableEntry::make('lessons')
+                                                ->label('Bài học')
+                                                ->schema([
+                                                    TextEntry::make('name')
+                                                        ->label('Tên Bài học'),
+                                                    ViewEntry::make('path_video')
+                                                        ->view('components.video-entry2', [
+                                                            'label' => 'Video bài học',
+                                                        ]),
+                                                ])->grid(),
+                                        ])
+                                        ->hiddenLabel()
+                                        ->grid(),
+                                ])->collapsed()->columns(1)
+                        ])->collapsed()->columns(3),
+                ])->columnSpanFull()->from('md'),
+                Section::make('Giảng viên')
                     ->schema([
-                       
-                        
-                    ]),
+                        TextEntry::make('mentor.user.name')
+                            ->label('Tên Giảng viên'),
+                        TextEntry::make('mentor.user.email')
+                            ->label('Email'),
+                        TextEntry::make('mentor.user.address')
+                            ->label('Địa chỉ'),
+                        TextEntry::make('mentor.user.phone')
+                            ->label('Số điện thoại'),
+                        ImageEntry::make('mentor.user.thumbnail')
+                            ->label('Ảnh đại diện'),
+                    ])->collapsed()->columns(2),
             ]);
     }
 

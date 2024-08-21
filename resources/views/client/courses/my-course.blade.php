@@ -49,7 +49,7 @@
                     <div class="course-group d-flex mb-0">
                         <div class="course-group-img d-flex">
                             <a href="{{ route('client.mentor_detail', $mentor->id) }}">
-                                <img src="{{ $mentor->thumbnail ? Storage::url('assets-client/img/user/' . $mentor->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"
+                                <img src="{{ $mentor->thumbnail ? Storage::url('public/' . $mentor->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"
                                      class="img-fluid rounded-circle">
                             </a>
                             <div class="course-name">

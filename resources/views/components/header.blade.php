@@ -921,7 +921,7 @@
                                         <li class="{{ Route::currentRouteName() == 'client.instructor-course' ? 'active' : '' }}">
                                             <a href="{{ route('client.instructor-course', auth()->user()->mentor->id) }}">QUẢN LÝ KHÓA HỌC</a>
                                         </li>
-                                    @elseif(auth()->user()->role == 0)
+                                    @elseif(in_array(auth()->user()->role, [0, 3]))
                                         <li class="{{ Route::currentRouteName() == 'client.my-course' ? 'active' : '' }}">
                                             <a href="{{ route('client.my-course', auth()->user()->id) }}">KHÓA HỌC CỦA TÔI</a>
                                         </li>
@@ -957,7 +957,7 @@
                                             @if(Str::startsWith(auth()->user()->thumbnail, 'http'))
                                                 {{ auth()->user()->thumbnail }}
                                             @else
-                                                {{ Storage::url('assets-client/img/user/' . auth()->user()->thumbnail) }}
+                                                {{ Storage::url('public/' . auth()->user()->thumbnail) }}
                                             @endif
                                         @else
                                             https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU
@@ -971,7 +971,7 @@
                                     <div class="users dropdown-menu dropdown-user"
                                         data-popper-placement="bottom-end">
                                         
-                                        @if(auth()->user()->role == 0)
+                                        @if(in_array(auth()->user()->role, [0, 3]))
                                         <p class="mb-0 text-center text-danger">
                                             <strong>{{auth()->user()->name}}</strong>
                                             <br>
@@ -995,7 +995,7 @@
                                         
                                         @endif
 
-                                        @if(auth()->user()->role == 0)
+                                        @if(in_array(auth()->user()->role, [0, 3]))
                                         <a class="dropdown-item" href="{{ route('client.dashboard-profile') }}"><i
                                             class="feather-user me-1"></i>Thông tin người dùng</a>
                                         </a>

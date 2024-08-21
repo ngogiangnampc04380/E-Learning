@@ -54,7 +54,7 @@
                                     <div class="instructor-img">
                                         <a href="{{ route('client.mentor_detail', ['id' => $mentor->id]) }}">
                                             <img class="img-fluid" alt
-                                                src="{{ $mentor->thumbnail ? Storage::url('assets-client/img/user/' . $mentor->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"
+                                                src="{{ $mentor->thumbnail ? Storage::url('public/' . $mentor->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"
                                                 alt="{{ $mentor->name }}">
                                         </a>
                                     </div>

@@ -636,10 +636,10 @@ public function editCourse($id)
                 
             $videoName = $video->hashName();
             $stream = fopen($video->getRealPath(), 'r');
-            // Storage::disk('gcs')->writeStream('folder-name/' . $videoName, $stream);
-            // if (is_resource($stream)) {
-            //     fclose($stream);
-            // }
+            Storage::disk('gcs')->writeStream('folder-name/' . $videoName, $stream);
+            if (is_resource($stream)) {
+                fclose($stream);
+            }
             $lesson = new Lesson();
             $lesson->name = $lessonData['name'];
             $lesson->path_video = $videoName;
@@ -700,12 +700,12 @@ public function editCourse($id)
         $lesson = Lesson::findOrFail($id);
         $lesson->name = $request->input('name');
         $categories = Course_Category::all();
-        if ($request->hasFile('video')) {
-            $video = $request->file('video');
-            $videoName = $video->getClientOriginalName();
-            $video->storeAs('public/assets-client/Videos/Lessons', $videoName);
-            $lesson->path_video = $videoName;
-        }
+        // if ($request->hasFile('video')) {
+        //     $video = $request->file('video');
+        //     $videoName = $video->getClientOriginalName();
+        //     $video->storeAs('public/', $videoName);
+        //     $lesson->path_video = $videoName;
+        // }
         $lesson->save();
 
         return redirect()->back()->with('success', 'Đã cập nhật bài học!');
