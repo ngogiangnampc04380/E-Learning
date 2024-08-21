@@ -11,7 +11,7 @@
                         <form action="{{ route('client.courses.update-quiz', $quiz->id) }}" method="POST"
                             class="p-4 bg-light rounded shadow-sm">
                             @csrf
-                           
+
                             <div class="border border-primary border-4 rounded p-3 mb-2 shadow-sm">
                                 <div class="mb-4">
                                     <label for="title" class="form-label fw-bold">Tiêu đề Quiz:</label>
@@ -164,120 +164,106 @@
                     updateQuestionIndices();
                 }
             });
-        });
-        document.querySelector('form').addEventListener('submit', function(event) {
-            let isValid = true;
-            let firstErrorField = null; // Biến để lưu trường lỗi đầu tiên
-            clearErrors();
 
-            // Kiểm tra tiêu đề Quiz
-            const titleField = document.getElementById('name');
-            const title = titleField.value.trim();
-            if (title === '') {
-                isValid = false;
-                showError(titleField, 'Tiêu đề không được để trống.');
-                if (!firstErrorField) firstErrorField = titleField;
-            } else if (title.length > 200) {
-                isValid = false;
-                showError(titleField, 'Tiêu đề không được quá 200 ký tự.');
-                if (!firstErrorField) firstErrorField = titleField;
-            } 
+            document.querySelector('form').addEventListener('submit', function(event) {
+                let isValid = true;
+                let firstErrorField = null;
+                clearErrors();
 
-            // Kiểm tra từng câu hỏi
-            const questionBlocks = document.querySelectorAll('.question-block');
-            questionBlocks.forEach((block, index) => {
-                const questionField = block.querySelector(`input[name="questions[${index}][question]"]`);
-                const questionText = questionField.value.trim();
-
-                if (questionText === '') {
+                // Kiểm tra tiêu đề Quiz
+                const titleField = document.getElementById('name');
+                const title = titleField.value.trim();
+                if (title === '') {
                     isValid = false;
-                    showError(questionField, `Câu hỏi ${index + 1} không được để trống.`);
-                    if (!firstErrorField) firstErrorField = questionField;
-                } else if (questionText.length > 200) {
+                    showError(titleField, 'Tiêu đề không được để trống.');
+                    if (!firstErrorField) firstErrorField = titleField;
+                } else if (title.length > 200) {
                     isValid = false;
-                    showError(questionField, `Câu hỏi ${index + 1} không được quá 200 ký tự.`);
-                    if (!firstErrorField) firstErrorField = questionField;
+                    showError(titleField, 'Tiêu đề không được quá 200 ký tự.');
+                    if (!firstErrorField) firstErrorField = titleField;
                 }
 
-                // Kiểm tra đáp án
-                const answerFields = block.querySelectorAll('input[name^="questions[' + index +
-                    '][wrong_answers]"], input[name^="questions[' + index + '][correct_answer]"]');
-                const answers = [];
-                answerFields.forEach((answerField, answerIndex) => {
-                    const answerText = answerField.value.trim();
-                    if (answerText === '') {
+                // Kiểm tra từng câu hỏi
+                const questionBlocks = document.querySelectorAll('.question-block');
+                questionBlocks.forEach((block, index) => {
+                    const questionField = block.querySelector(`input[name="questions[${index}][question]"]`);
+                    const questionText = questionField.value.trim();
+
+                    if (questionText === '') {
                         isValid = false;
-                        showError(answerField,
-                            `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được để trống.`
-                        );
-                        if (!firstErrorField) firstErrorField = answerField;
-                    } else if (answerText.length > 200) {
+                        showError(questionField, `Câu hỏi ${index + 1} không được để trống.`);
+                        if (!firstErrorField) firstErrorField = questionField;
+                    } else if (questionText.length > 200) {
                         isValid = false;
-                        showError(answerField,
-                            `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được quá 200 ký tự.`
-                        );
-                        if (!firstErrorField) firstErrorField = answerField;
+                        showError(questionField, `Câu hỏi ${index + 1} không được quá 200 ký tự.`);
+                        if (!firstErrorField) firstErrorField = questionField;
                     }
-                    else {
-                        answers.push(answer);
+
+                    // Kiểm tra đáp án
+                    const answerFields = block.querySelectorAll('input[name^="questions[' + index +
+                        '][wrong_answers]"], input[name^="questions[' + index + '][correct_answer]"]');
+                    const answers = [];
+                    answerFields.forEach((answerField, answerIndex) => {
+                        const answerText = answerField.value.trim();
+                        if (answerText === '') {
+                            isValid = false;
+                            showError(answerField,
+                                `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được để trống.`
+                            );
+                            if (!firstErrorField) firstErrorField = answerField;
+                        } else if (answerText.length > 200) {
+                            isValid = false;
+                            showError(answerField,
+                                `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được quá 200 ký tự.`
+                            );
+                            if (!firstErrorField) firstErrorField = answerField;
+                        } else {
+                            answers.push(answerText);
+                        }
+                    });
+
+                    // Kiểm tra đáp án trùng lặp
+                    const uniqueAnswers = new Set(answers);
+                    if (uniqueAnswers.size !== answers.length) {
+                        isValid = false;
+                        answers.forEach((answer, answerIndex) => {
+                            showError(answerFields[answerIndex],
+                                `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được trùng lặp.`
+                            );
+                            if (!firstErrorField) firstErrorField = answerFields[answerIndex];
+                        });
                     }
                 });
 
-                // Kiểm tra đáp án trùng lặp
-                const uniqueAnswers = new Set(answers);
-                if (uniqueAnswers.size !== answers.length) {
-                    isValid = false;
-                    answers.forEach((answer, answerIndex) => {
-                        showError(answerFields[answerIndex],
-                            `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được trùng lặp.`
-                        );
-                        if (!firstErrorField) firstErrorField = answerFields[answerIndex];
-                    });
+                if (!isValid) {
+                    event.preventDefault();
+                    if (firstErrorField) {
+                        firstErrorField.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                        firstErrorField.focus();
+                    }
                 }
             });
 
-            if (!isValid) {
-                event.preventDefault();
-                if (firstErrorField) {
-                    firstErrorField.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
-                    firstErrorField.focus();
+            function clearErrors() {
+                document.querySelectorAll('.text-danger').forEach(element => element.remove());
+                document.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
+            }
+
+            function showError(field, message) {
+                const error = document.createElement('div');
+                error.className = 'text-danger mt-2';
+                error.textContent = message;
+                field.classList.add('is-invalid');
+
+                // Thêm thông báo lỗi ngay dưới trường nhập liệu
+                if (!field.nextElementSibling || !field.nextElementSibling.classList.contains('text-danger')) {
+                    field.parentNode.insertBefore(error, field.nextSibling);
                 }
             }
         });
 
-        function clearErrors() {
-            document.querySelectorAll('.text-danger').forEach(element => element.remove());
-            document.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
-        }
-
-        function showError(field, message) {
-            const error = document.createElement('div');
-            error.className = 'text-danger mt-2';
-            error.textContent = message;
-            field.classList.add('is-invalid');
-
-            // Thêm thông báo lỗi ngay dưới trường nhập liệu
-            if (!field.nextElementSibling || !field.nextElementSibling.classList.contains('text-danger')) {
-                field.parentNode.insertBefore(error, field.nextSibling);
-            }
-        }
-
-        function showError(field, message) {
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'text-danger mt-1';
-            errorDiv.textContent = message;
-            field.classList.add('is-invalid');
-            field.parentElement.appendChild(errorDiv);
-        }
-
-        function clearErrors() {
-            const errorDivs = document.querySelectorAll('.text-danger');
-            errorDivs.forEach(div => div.remove());
-            const invalidFields = document.querySelectorAll('.is-invalid');
-            invalidFields.forEach(field => field.classList.remove('is-invalid'));
-        }
     </script>
 @endsection
