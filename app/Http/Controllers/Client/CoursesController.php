@@ -98,11 +98,6 @@ class CoursesController extends Controller
 
         // return view('client.courses.courses-list', compact('data', 'query', 'categories', 'categoryIds', 'latestCourses', 'priceRanges', 'sort'));
     }
-
-
-
-
-
     public function detail($id)
     {
         // Lấy thông tin khóa học với mentor
