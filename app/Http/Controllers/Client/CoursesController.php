@@ -43,6 +43,10 @@ class CoursesController extends Controller
 
         // Đảm bảo $priceRanges là một mảng
         $priceRanges = is_array($priceRanges) ? $priceRanges : [];
+        $userPurchasedCourses = auth()->check() ? DB::table('course_users')
+            ->where('user_id', auth()->id())
+            ->pluck('course_id')
+            ->toArray() : [];
 
         $data = Course::where('status', 2)->with('mentor');
 
@@ -81,8 +85,18 @@ class CoursesController extends Controller
 
         $categories = Course_Category::all();
         $latestCourses = Course::where('status', 2)->orderBy('created_at', 'desc')->take(5)->get(); // Lấy 5 khóa học mới nhất
+        return view('client.courses.courses-list', [
+            'data' => $data,
+            'query' => $query,
+            'categories' => $categories,
+            'categoryIds' => $categoryIds,
+            'latestCourses' => $latestCourses,
+            'priceRanges' => $priceRanges,
+            'sort' => $sort,
+            'userPurchasedCourses' => $userPurchasedCourses,
+        ]);
 
-        return view('client.courses.courses-list', compact('data', 'query', 'categories', 'categoryIds', 'latestCourses', 'priceRanges', 'sort'));
+        // return view('client.courses.courses-list', compact('data', 'query', 'categories', 'categoryIds', 'latestCourses', 'priceRanges', 'sort'));
     }
 
 
@@ -137,10 +151,10 @@ class CoursesController extends Controller
         if (!auth()->check()) {
             return redirect()->route('login');
         }
-        $chapter_id = 
+        $chapter_id =
 
 
-        $data = DB::table('courses')
+            $data = DB::table('courses')
             ->select('id', 'thumbnail', 'name', 'description')
             ->where('id', $id)
             ->first();
@@ -207,14 +221,14 @@ class CoursesController extends Controller
             ->select('video_done.*') // Chọn tất cả các cột từ bảng lessons
             ->where('courses.id', '=', $data->id) // Điều kiện chỉ lấy những bản ghi có courses.id bằng $data->id
             ->count();
-        
+
         $quizFinals = DB::table('quiz_finals')
             ->where('course_id', $data->id)
             ->select('id', 'title')
             ->get();
-        
 
-        
+
+
         return view('client.courses.lesson', compact('data', 'checklesson', 'chapters', 'chapterLessons', 'Lessonname', 'firstLessonVideo', 'selectedLesson', 'quizFinals', 'les', 'les2'));
     }
 
@@ -670,9 +684,34 @@ class CoursesController extends Controller
             } else {
                 return redirect()->back()->with('error', 'Vui lòng chọn video để tải lên cho bài học ' . ($index + 1));
             }
-        }
 
-        return redirect()->back()->with('success', 'Đã thêm bài học thành công.');
+            foreach ($lessons as $index => $lessonData) {
+                if ($request->hasFile("lessons.{$index}.video")) {
+                    $video = $request->file("lessons.{$index}.video");
+
+                    $videoName = $video->hashName();
+                    $stream = fopen($video->getRealPath(), 'r');
+                    Storage::disk('gcs')->writeStream('folder-name/' . $videoName, $stream);
+                    if (is_resource($stream)) {
+                        fclose($stream);
+                    }
+                    $lesson = new Lesson();
+                    $lesson->name = $lessonData['name'];
+                    $lesson->path_video = $videoName;
+                    $lesson->chapter_id = $lessonData['chapter_id'];
+
+                    // Get the maximum number value for the current chapter and increment it
+                    $maxNumber = Lesson::where('chapter_id', $lessonData['chapter_id'])->max('number');
+                    $lesson->number = $maxNumber ? $maxNumber + 1 : 1;
+
+                    $lesson->save();
+                } else {
+                    return redirect()->back()->with('error', 'Vui lòng chọn video để tải lên cho bài học ' . ($index + 1));
+                }
+            }
+
+            return redirect()->back()->with('success', 'Đã thêm bài học thành công.');
+        }
     }
     public function updateOrder(Request $request)
     {

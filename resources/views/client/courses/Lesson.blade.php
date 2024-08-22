@@ -197,30 +197,31 @@
                                 ->count();
                         @endphp
 
-                        <h2>Tiến độ : {{ $les2 + $count_quizz + $count_final }}/{{ $les + $count_quizz2 + $count_final2 }}</h2>
+                        <h2>Tiến độ : {{ $les2 + $count_quizz + $count_final }}/{{ $les + $count_quizz2 + $count_final2 }}
+                        </h2>
 
-                        @if ( $les2 + $count_quizz + $count_final == $les + $count_quizz2 + $count_final2)
-                            <a href="{{url('/certificate/' . auth()->user()->id. '/' . $data->id)}}">Lấy chứng chỉ</a>
+                        @if ($les2 + $count_quizz + $count_final == $les + $count_quizz2 + $count_final2)
+                            <a href="{{ url('/certificate/' . auth()->user()->id . '/' . $data->id) }}">Lấy chứng chỉ</a>
                             <script>
                                 // Gửi yêu cầu AJAX để gửi email
                                 fetch("{{ route('send.certificate.email') }}", {
-                                    method: "POST",
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                                    },
-                                    body: JSON.stringify({
-                                        user_id: {{ auth()->user()->id }},
-                                        course_id: {{ $data->id }},
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                                        },
+                                        body: JSON.stringify({
+                                            user_id: {{ auth()->user()->id }},
+                                            course_id: {{ $data->id }},
+                                        })
                                     })
-                                })
-                                .then(response => response.json())
-                                .then(data => {
-                                    console.log('Email đã được gửi:', data.message);
-                                })
-                                .catch(error => {
-                                    console.error('Lỗi khi gửi email:', error);
-                                });
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        console.log('Email đã được gửi:', data.message);
+                                    })
+                                    .catch(error => {
+                                        console.error('Lỗi khi gửi email:', error);
+                                    });
                             </script>
                         @endif
                         <h2>Danh sách chương</h2>
@@ -293,21 +294,21 @@ $bucketName = 'entweb01';
 
                                                     @endphp
                                                     @php
-                                                    
-                                                    $final = DB::table('quiz_finals')
-                                                        ->where('course_id', $data->id)
-                                                        ->first();
 
-                                                    $final_result = DB::table('results_final')
-                                                        // ->where('course_id', $data->id)
-                                                        // ->where('chapter_id', $item->chapterID)
-                                                        ->where('user_id', auth()->user()->id)
-                                                        ->where('quiz_final_id', $final->id)
-                                                        ->first();
+                                                        $final = DB::table('quiz_finals')
+                                                            ->where('course_id', $data->id)
+                                                            ->first();
 
-                                                    // dd($quizz_result);
+                                                        $final_result = DB::table('results_final')
+                                                            // ->where('course_id', $data->id)
+                                                            // ->where('chapter_id', $item->chapterID)
+                                                            ->where('user_id', auth()->user()->id)
+                                                            ->where('quiz_final_id', $final->id)
+                                                            ->first();
 
-                                                @endphp
+                                                        // dd($quizz_result);
+
+                                                    @endphp
                                                     @if ($quizz_result)
                                                         <i class="fa-solid fa-check" style="color: #63E6BE;"></i>
                                                     @endif
@@ -328,13 +329,13 @@ $bucketName = 'entweb01';
 
                                         <a href="{{ route('client.quiz.quiz-final', ['quiz_id' => $quiz->id]) }}">
                                             <h2>{{ $quiz->title }}</h2>
-                                            
+
                                         </a>
                                         @if ($final_result)
                                             <i class="fa-solid fa-check" style="color: #63E6BE;"></i>
                                         @endif
                                     </div>
-                                    
+
                                 </td>
                             </tr>
                         @empty

@@ -25,6 +25,7 @@ use App\Http\Controllers\Client\PasswordController;
 use App\Http\Controllers\Client\QuizCourseController;
 // ----------------------------Mentor----------------------------*******
 use App\Http\Controllers\Mentor\MentorControllerr;
+use App\Http\Controllers\Mentor\StudentController;
 use App\Http\Controllers\Client\SaleController;
 use App\Http\Controllers\Mentor\SalesController;
 
@@ -156,7 +157,8 @@ Route::post('/quiz-final-order/{course_id}', [QuizCourseController::class, 'upda
     Route::get("/thank", [CheckoutController::class, "thank"])->name("thank");
 
     // -----------------------Mentor-------------------------
-    
+    Route::get("/my-student", [StudentController::class, "index"])->name("my-student");
+    Route::get('/my-student/{userId}/courses', [StudentController::class, 'getCoursesByStudent'])->name('mentor.student.courses');
     // -------------------------------resetPassword------------------------------
 
     Route::get("/reset-password", [PasswordController::class, "resetpassword"])->name("reset-password");

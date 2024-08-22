@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
@@ -82,5 +83,9 @@ class User extends Authenticatable  implements FilamentUser
     }
     public function educations() {
         return $this->hasMany(Education::class);
+    }
+    public function courses(): BelongsToMany
+    {
+        return $this->belongsToMany(Course::class, 'course_users', 'user_id', 'course_id');
     }
 }

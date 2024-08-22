@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Notifications\Notifiable;
 class Course extends Model
 {
@@ -43,5 +44,9 @@ class Course extends Model
     public function mentor()
     {
         return $this->belongsTo(Mentor::class, 'mentor_id');
+    }
+    public function students(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'course_users', 'course_id', 'user_id');
     }
 }

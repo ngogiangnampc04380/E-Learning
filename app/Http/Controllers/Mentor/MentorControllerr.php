@@ -101,7 +101,6 @@ class MentorControllerr extends Controller
     {
 
         if (IdCard::where('id', $request->id)->exists()) {
-
             return response()->json([
                 'status' => '0',
                 'message' => 'ID already exists'
@@ -129,9 +128,9 @@ class MentorControllerr extends Controller
         // }
 
         // $mentorId = $mentor->id;
-        // $mentorID = Mentor::where('user_id', auth()->user()->id)->first();
+
         IdCard::create([
-            // 'id_mentor' => $mentorID->id,
+            // 'id_mentor' => $mentorId,
             'id' => $request->id,
             'id_prob' => $request->id_prob,
             'name' => $request->name,
@@ -162,6 +161,7 @@ class MentorControllerr extends Controller
             'type' => $request->type,
             'mrz_details' => $request->mrz_details,
         ]);
+
         return response()->json([
             'status' => '1',
             'message' => 'ID Card data saved successfully',
@@ -176,6 +176,8 @@ class MentorControllerr extends Controller
         if (!$check) {
             return redirect()->route('Dashboard-client');
         } else {
+            // Lấy danh sách các categories
+            // $categories = Course_Category::all();
             return view('components.under-construction');
         }
     }

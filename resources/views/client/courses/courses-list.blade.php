@@ -68,8 +68,14 @@
                                                             href="{{ route('client.course-details', $item->id) }}">{{ $item->name }}</a>
                                                     </h2>
                                                     <div class="all-btn all-category d-flex align-items-center">
-                                                        <a href="{{ route('client.course-checkout', $item->id) }}"
-                                                            class="btn btn-primary">Đăng Ký Ngay</a>
+                                                        
+                                                        @if (in_array($item->id, $userPurchasedCourses))
+                                                            <a href="{{ route('client.lesson', ['id' => $item->id]) }}"
+                                                                class="btn btn-primary">Học</a>
+                                                        @else
+                                                            <a href="{{ route('client.course-checkout', $item->id) }}"
+                                                                class="btn btn-primary">Đăng Ký Ngay</a>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="course-info border-bottom-0 pb-0 d-flex align-items-center">
@@ -172,7 +178,8 @@
                                                         <label for="sort-asc">Từ thấp đến cao</label>
                                                     </li>
                                                     <li>
-                                                        <input type="radio" id="sort-desc" name="sort" value="desc"
+                                                        <input type="radio" id="sort-desc" name="sort"
+                                                            value="desc"
                                                             {{ request('sort') == 'desc' ? 'checked' : '' }}>
                                                         <label for="sort-desc">Từ cao đến thấp</label>
                                                     </li>

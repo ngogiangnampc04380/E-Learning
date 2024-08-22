@@ -72,7 +72,6 @@
 
         </div>
     </div>
-    </div>
     <script>
         var is_both_uploaded = [false, false]
         var loader = document.querySelector('#loader')
@@ -109,7 +108,7 @@
                                     }
                                 }
                                 if (!(result_id['id'] && result_id['name'] && result_id['dob'] && result_id[
-                                    'address'])) {
+                                        'address'])) {
                                     document.querySelector('#front_id').value = ''
                                     temp_label.innerHTML = 'Invalid image, Please try again'
                                     temp_label.style.background = '#f66962'
