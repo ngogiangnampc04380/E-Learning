@@ -75,14 +75,6 @@
                                                 <img src="/assets-client/img/icon/user-icon.svg" class="me-1" alt>
                                                 <p>50 Học viên</p>
                                             </div>
-                                            <div class="rating">
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star filled"></i>
-                                                <i class="fas fa-star"></i>
-                                                <span class="d-inline-block average-rating"><span>4.0</span> (15)</span>
-                                            </div>
                                             <a href="#rate" class="rating-count"><i class="fa-regular fa-heart"></i></a>
                                         </div>
                                         <div class="instructor-badge">

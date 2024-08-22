@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Course;
 use App\Models\Course_user;
+use App\Models\Sale;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -129,6 +130,9 @@ class CheckoutController extends Controller
         ]);
 
         if (isset($_GET['partnerCode']) && $_GET['message'] == "Successful." &&  $orderid == null) {
+
+            DB::table('sales')->where('discount_code', session('sale_code'))->increment('used_quantity');;
+
             Order::create([
                 'order_code' => $_GET['orderId'],
                 'fullname' => session('fullname'),
@@ -145,15 +149,8 @@ class CheckoutController extends Controller
                 'course_id' => session('course_id'),
                 'user_id' => session('user_id'),
             ]);
+            
 
-            // $used_cupon = DB::table('sales')
-            // ->where('sales_code', session('sale_code'))
-            // ->select('used_amount')
-            // ->first();
-            // $used_cupon->used_amount = $used_cupon->used_amount + 1;
-            // DB::table('sales')
-            // ->where('sales_code', session('sale_code'))
-            // ->update(['used_amount' => $used_cupon->used_amount]);
         }
         return view('client.checkout.thank');
     }

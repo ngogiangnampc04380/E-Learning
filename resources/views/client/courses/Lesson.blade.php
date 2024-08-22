@@ -172,73 +172,150 @@
                             <input type="hidden" id="lessonID" name="lessonID" value="">
                             {{-- <input type="hidden" id="completed" name ="completed" value="1"> --}}
                             <div class="ratio ratio-16x9">
-
-
-
                                 <video id="lesson-video" controls>
                                     <source src="{{ $firstLessonVideo }}" type="video/mp4">
                                 </video>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
                 <!-- Sidebar -->
                 <div class="col-lg-3">
                     <div class="lesson-group">
-                        <h2>Danh sách chương</h2>
+                        @php
+                            $count_quizz = DB::table('quiz_results')
+                                ->where('course_id', $data->id)
+                                ->count();
+                            $count_quizz2 = DB::table('quizzes')
+                                ->where('course_id', $data->id)
+                                ->count();
+                            $count_final = DB::table('results_final')
+                                ->where('course_id', $data->id)
+                                ->count();
+                            $count_final2 = DB::table('quiz_finals')
+                                ->where('course_id', $data->id)
+                                ->count();
+                        @endphp
 
-                        @foreach ($chapters as $item)
+                        <h2>Tiến độ : {{ $les2 + $count_quizz + $count_final }}/{{ $les + $count_quizz2 + $count_final2 }}</h2>
+
+                        @if ( $les2 + $count_quizz + $count_final == $les + $count_quizz2 + $count_final2)
+                            <a href="{{url('/certificate/' . auth()->user()->id. '/' . $data->id)}}">Lấy chứng chỉ</a>
+                            <script>
+                                // Gửi yêu cầu AJAX để gửi email
+                                fetch("{{ route('send.certificate.email') }}", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                                    },
+                                    body: JSON.stringify({
+                                        user_id: {{ auth()->user()->id }},
+                                        course_id: {{ $data->id }},
+                                    })
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log('Email đã được gửi:', data.message);
+                                })
+                                .catch(error => {
+                                    console.error('Lỗi khi gửi email:', error);
+                                });
+                            </script>
+                        @endif
+                        <h2>Danh sách chương</h2>
+                        @foreach ($chapters->sortBy('number') as $item)
                             <div class="accordion" id="accordionExample">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
                                         <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                             data-bs-target="#collapse{{ $item->chapterID }}" aria-expanded="true"
-                                            aria-controls="collapse{{ $item->chapterID }}">
-                                            {{ $item->chaptername }}
+                                            aria-controls="collapse{{ $item->chapterID }}"
+                                            data-chapter-id="{{ $item->chapterID }}">
+                                            Chương: {{ $item->chaptername }}
                                         </button>
+                                        @php
+                                            $quizzes = DB::table('quizzes')
+                                                ->where('course_id', $data->id)
+                                                ->where('chapter_id', $item->chapterID)
+                                                ->select('id', 'name')
+                                                ->get();
+
+                                            $quizzes2 = DB::table('quizzes')
+                                                ->where('course_id', $data->id)
+                                                ->where('chapter_id', $item->chapterID)
+                                                ->first();
+                                        @endphp
                                     </h2>
                                     <div id="collapse{{ $item->chapterID }}" class="accordion-collapse collapse"
                                         data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
                                             <ul class="list-group lesson-list">
                                                 @if (isset($chapterLessons[$item->chapterID]))
-                                                    @foreach ($chapterLessons[$item->chapterID] as $lesson)
+                                                    @foreach ($chapterLessons[$item->chapterID]->sortBy('number') as $lesson)
                                                         <li
                                                             class="list-group-item d-flex justify-content-between align-items-center">
                                                             <a href="{{ route('client.lesson', ['id' => $data->id, 'lesson-id' => $lesson->lessonID]) }}"
-                                                                class="lesson-link" data-lesson-id="{{ $lesson->lessonID }}"
+                                                                class="lesson-link"
+                                                                data-lesson-id="{{ $lesson->lessonID }}"
                                                                 @php
-                                                                                        $bucketName = 'entweb01';
-                                                                                        $path_prefix ='ENT01';
-                                                                                        $filePath = 'folder-name';
-                                                                                        $namefile= $lesson->lessonvideo;
-                                                                                        $url = "https://storage.googleapis.com/{$bucketName}/{$path_prefix}/{$filePath}/{$namefile}"; @endphp
+$bucketName = 'entweb01';
+                                                                    $path_prefix ='ENT01';
+                                                                    $filePath = 'folder-name';
+                                                                    $namefile= $lesson->lessonvideo;
+                                                                    $url = "https://storage.googleapis.com/{$bucketName}/{$path_prefix}/{$filePath}/{$namefile}"; @endphp
                                                                 data-video="{{ Storage::url('public/' . $lesson->lessonvideo) }}"
                                                                 data-title="{{ $lesson->lessonname }}"
                                                                 onclick="loadLesson(event, '{{ $data->id }}', '{{ $item->chapterID }}', '{{ $lesson->lessonID }}', '{{ $lesson->lessonname }}', '{{ $url }}')">
-                                                                {{ $lesson->lessonname }}
+                                                                Bài: {{ $lesson->lessonname }}
                                                             </a>
                                                             <i class="fa-solid fa-check hidden-check"
                                                                 style="color: #63E6BE;"></i>
                                                         </li>
                                                     @endforeach
-
-                                                    @forelse($quizzes as $quiz)
-                                                        <li
-                                                            class="list-group-item d-flex justify-content-between align-items-center mt-2">
-                                                            <a
-                                                                href="{{ route('client.courses.quiz-chapter', $quiz->id) }}">
-                                                                <span>{{ $quiz->name }}</span></a>
-                                                        </li>
-                                                    @empty
-                                                        <li class="list-group-item mt-2">Không có bài quiz nào.</li>
-                                                    @endforelse
                                                 @endif
                                             </ul>
-                                        </div>
+                                            @forelse($quizzes as $quiz)
+                                                <li class="list-group-item d-flex justify-content-between align-items-center mt-2"
+                                                    id="quiz-row">
+                                                    <a href="{{ route('client.courses.quiz-chapter', $quiz->id) }}">
+                                                        <span>Quiz: {{ $quiz->name }}</span></a>
 
+                                                    @php
+                                                        $quizz_result = DB::table('quiz_results')
+                                                            // ->where('course_id', $data->id)
+                                                            // ->where('chapter_id', $item->chapterID)
+                                                            ->where('user_id', auth()->user()->id)
+                                                            ->where('quiz_id', $quizzes2->id)
+                                                            ->first();
+
+                                                        // dd($quizz_result);
+
+                                                    @endphp
+                                                    @php
+                                                    
+                                                    $final = DB::table('quiz_finals')
+                                                        ->where('course_id', $data->id)
+                                                        ->first();
+
+                                                    $final_result = DB::table('results_final')
+                                                        // ->where('course_id', $data->id)
+                                                        // ->where('chapter_id', $item->chapterID)
+                                                        ->where('user_id', auth()->user()->id)
+                                                        ->where('quiz_final_id', $final->id)
+                                                        ->first();
+
+                                                    // dd($quizz_result);
+
+                                                @endphp
+                                                    @if ($quizz_result)
+                                                        <i class="fa-solid fa-check" style="color: #63E6BE;"></i>
+                                                    @endif
+                                                </li>
+                                            @empty
+                                                <li class="list-group-item mt-2">Không có bài quiz nào.</li>
+                                            @endforelse
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -251,13 +328,18 @@
 
                                         <a href="{{ route('client.quiz.quiz-final', ['quiz_id' => $quiz->id]) }}">
                                             <h2>{{ $quiz->title }}</h2>
+                                            
                                         </a>
+                                        @if ($final_result)
+                                            <i class="fa-solid fa-check" style="color: #63E6BE;"></i>
+                                        @endif
                                     </div>
+                                    
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="2" class="text-center">Chưa có quiz final nào.</td>
+                                <td colspan="2" class="text-center" disabled>Chưa có quiz final nào.</td>
                             </tr>
                         @endforelse
                     </div>
@@ -335,7 +417,7 @@
                 var lessonId = document.getElementById('lessonID').value;
 
                 var xhr = new XMLHttpRequest();
-                var url = percent >= 90 ? '/video-progress-complete' : '/video-progress';
+                var url = percent >= 95 ? '/video-progress-complete' : '/video-progress';
                 xhr.open('POST', url, true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute(
@@ -369,7 +451,7 @@
                 saveProgress(); // Gửi dữ liệu khi người dùng tua video
             });
             var completedLessons =
-            @json($checklesson); // Giả sử bạn có mảng $completedLessons chứa các lessonID đã hoàn thành
+                @json($checklesson); // Giả sử bạn có mảng $completedLessons chứa các lessonID đã hoàn thành
             completedLessons.forEach(function(lessonId) {
                 var checkIcon = document.querySelector(`a[data-lesson-id="${lessonId}"]`)
                     .nextElementSibling;
@@ -378,6 +460,7 @@
                     checkIcon.classList.add('completed-check');
                 }
             });
+
             video.addEventListener('ended', function() {
                 clearInterval(intervalId);
                 saveProgress(); // Gửi dữ liệu khi video kết thúc
@@ -392,6 +475,7 @@
                     checkIcon.classList.add('completed-check');
                 }
             });
+
         });
     </script>
 @endsection

@@ -17,51 +17,31 @@
                                             <div class="input-block">
                                                 <label class="form-control-label">Họ và tên</label>
                                                 <input type="text" class="form-control" name="fullname" id="fullname"
-                                                       placeholder="Họ và tên">
-                                                <div ng-show="checkoutForm.fullname.$dirty && checkoutForm.fullname.$error.pattern">
-                                                    <span class="error-text text-danger">Họ và tên không được chứa số.</span>
-                                                </div>
-                                                <div ng-show="checkoutForm.fullname.$dirty && checkoutForm.fullname.$error.required">
-                                                    <span class="error-text text-danger">Vui lòng nhập họ và tên.</span>
-                                                </div>
+                                                       value="{{auth()->user()->name}}" disabled>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="input-block">
                                                 <label class="form-control-label">Số điện thoại</label>
                                                 <input type="text" class="form-control" name="phone" id="phone"
-                                                       placeholder="Số điện thoại" ng-model="formData.phone" ng-required="true"
-                                                       ng-pattern="/^\d{10}$/">
-                                                <div ng-show="checkoutForm.phone.$dirty && checkoutForm.phone.$error.required">
-                                                    <span class="error-text text-danger">Vui lòng nhập số điện thoại.</span>
-                                                </div>
-                                                <div ng-show="checkoutForm.phone.$dirty && checkoutForm.phone.$error.pattern">
-                                                    <span class="error-text text-danger">Số điện thoại không hợp lệ.</span>
-                                                </div>
-                                                <div ng-show="checkoutForm.phone.$dirty && !checkoutForm.phone.$error.pattern && isNaN(formData.phone)">
-                                                    <span class="error-text text-danger">Số điện thoại chỉ được nhập số.</span>
-                                                </div>
+                                                       value="{{auth()->user()->phone}}" disabled>
+                                               
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="input-block">
                                                 <label class="form-control-label">Email</label>
                                                 <input type="email" class="form-control" name="email" id="email"
-                                                       placeholder="Email" ng-model="formData.email" ng-required="true">
-                                                <div ng-show="checkoutForm.email.$dirty && checkoutForm.email.$invalid">
-                                                    <span class="error-text text-danger" ng-show="checkoutForm.email.$error.required">Vui lòng nhập email.</span>
-                                                    <span class="error-text text-danger" ng-show="checkoutForm.email.$error.email">Email không hợp lệ.</span>
-                                                </div>
+                                                value="{{auth()->user()->email}}" disabled>
+                                                
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="input-block">
                                                 <label class="form-control-label">Địa chỉ</label>
                                                 <input type="text" class="form-control" name="address" id="address"
-                                                       placeholder="Address" ng-model="formData.address" ng-required="true">
-                                                <div ng-show="checkoutForm.address.$dirty && checkoutForm.address.$invalid">
-                                                    <span class="error-text text-danger" ng-show="checkoutForm.address.$error.required">Vui lòng nhập địa chỉ.</span>
-                                                </div>
+                                                value="{{auth()->user()->address}}" disabled>
+                                                
                                             </div>
                                             <input type="hidden" class="form-control" name="course_id" value="{{ $data->id }}">                                            
                                             <input type="hidden" class="form-control" name="price" value="{{ $data->price }}">

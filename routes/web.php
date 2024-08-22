@@ -1,6 +1,7 @@
 <?php
 // ----------------------------Admin----------------------------*******
 
+use App\Http\Controllers\Client\CertificateController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\CheckoutController;
 
@@ -25,8 +26,7 @@ use App\Http\Controllers\Client\QuizCourseController;
 // ----------------------------Mentor----------------------------*******
 use App\Http\Controllers\Mentor\MentorControllerr;
 use App\Http\Controllers\Client\SaleController;
-
-
+use App\Http\Controllers\Mentor\SalesController;
 
 // ---------------------------------------Client-------------------------
 Route::get("/", [HomeController::class, "index"])->name("Dashboard-client");
@@ -156,7 +156,7 @@ Route::post('/quiz-final-order/{course_id}', [QuizCourseController::class, 'upda
     Route::get("/thank", [CheckoutController::class, "thank"])->name("thank");
 
     // -----------------------Mentor-------------------------
-
+    
     // -------------------------------resetPassword------------------------------
 
     Route::get("/reset-password", [PasswordController::class, "resetpassword"])->name("reset-password");
@@ -188,8 +188,16 @@ Route::delete('sale/{id}', [SaleController::class, 'destroy'])->name('sale.destr
 
 
 
-Route::post('/apply-promotion', [SaleController::class, 'applyPromotion'])->name('apply.promotion');
+Route::post('/apply-promotion', [SalesController::class, 'applyPromotion'])->name('promotion')->middleware('auth');
 
 
 Route::post('/video-progress', [CoursesController::class, 'saveProgress'])->middleware('auth');
 Route::post('/video-progress-complete', [CoursesController::class, 'completeProgress'])->middleware('auth');
+
+Route::get('/certificate/{userId}/{courseID}',[CertificateController::class, 'generate'])->name('generate')->middleware('auth');
+
+Route::post('/send-certificate-email', [CertificateController::class, 'sendCertificateEmail'])->name('send.certificate.email');
+
+// Route::get('/certificate/{userId}',[CertificateController::class, 'download'])->name('download');
+
+

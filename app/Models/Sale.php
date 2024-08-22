@@ -23,9 +23,5 @@ class Sale extends Model
         'start_date',
         'end_date',
     ];
-    public function courses()
-    {
-        return $this->belongsToMany(Course::class, 'sale_pivots', 'sale_id', 'course_id');
-    }
 }
 

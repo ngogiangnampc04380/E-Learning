@@ -38,14 +38,6 @@
                             <a href="{{ route('client.lesson', ['id' => $course->id]) }}" class="btn btn-primary">Học</a>
                         </div>
                     </div>
-                    <div class="rating">
-                        <i class="fas fa-star filled"></i>
-                        <i class="fas fa-star filled"></i>
-                        <i class="fas fa-star filled"></i>
-                        <i class="fas fa-star filled"></i>
-                        <i class="fas fa-star"></i>
-                        <span class="d-inline-block average-rating"><span>4.0</span> (15)</span>
-                    </div>
                     <div class="course-group d-flex mb-0">
                         <div class="course-group-img d-flex">
                             <a href="{{ route('client.mentor_detail', $mentor->id) }}">

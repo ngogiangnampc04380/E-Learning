@@ -16,8 +16,7 @@
                             <div style="margin-right: 20px;">
                                 <img src="{{ Storage::url($course->thumbnail) }}" alt="Thumbnail" class="img-fluid"
                                      style="width: 1000px;">
-                                     <h3 class="title"><a
-                                        href="{{ route('client.course-details', $course->id) }}">{{ $course->name }}</a>
+                                     <h3 class="title"><a></a>
                                 </h3>
                                 <p>{{ $course->description }}</p>
                                 <div>
@@ -44,13 +43,12 @@
                             <p><strong>Số điện thoại:</strong> {{ session('phone' ?? '' )}}</p>
                             <p><strong>Email:</strong> {{ session('email' ?? '' )}}</p>
                             <p><strong>Địa chỉ:</strong> {{ session('address' ?? '')}}</p>
-                            <p><strong>Mã Khóa Học:</strong> {{ session('course_id' ?? '' )}}</p>
                         </ul>
                         <hr>
-                        <form action="{{ route('apply.promotion') }}" method="POST">
+                        <form action="{{ route('promotion') }}" method="POST">
                             @csrf
                             <input type="hidden" name="course_id" value="{{ $course->id }}">
-                            <input type="text" name="sales_code"  placeholder="Nhập mã khuyến mãi">
+                            <input type="text" name="discount_code"  placeholder="Nhập mã khuyến mãi">
                             <button type="submit" class="btn btn-primary">Áp dụng</button>
                         </form>
                         @if(session('error'))

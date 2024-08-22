@@ -141,15 +141,6 @@
                                                         <p>9hr 30min</p>
                                                     </div>
                                                 </div>
-                                                <div class="rating">
-                                                    <i class="fas fa-star filled"></i>
-                                                    <i class="fas fa-star filled"></i>
-                                                    <i class="fas fa-star filled"></i>
-                                                    <i class="fas fa-star filled"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <span class="d-inline-block average-rating"><span>4.0</span>
-                                                        (15)</span>
-                                                </div>
                                                 <div class="all-btn all-category d-flex align-items-center">
                                                     <a href="checkout.html" class="btn btn-primary">BUY NOW</a>
                                                 </div>
@@ -196,15 +187,6 @@
                                                         <p>9hr 30min</p>
                                                     </div>
                                                 </div>
-                                                <div class="rating">
-                                                    <i class="fas fa-star filled"></i>
-                                                    <i class="fas fa-star filled"></i>
-                                                    <i class="fas fa-star filled"></i>
-                                                    <i class="fas fa-star filled"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <span class="d-inline-block average-rating"><span>4.0</span>
-                                                        (15)</span>
-                                                </div>
                                                 <div class="all-btn all-category d-flex align-items-center">
                                                     <a href="checkout.html" class="btn btn-primary">BUY NOW</a>
                                                 </div>
@@ -233,13 +215,6 @@
                                             <p>UX/UI Designer</p>
                                         </div>
                                     </div>
-                                    <div class="rating">
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
                                 </div>
                                 <p class="rev-info">“ This is the second Photoshop course I have completed with
                                     Cristian. Worth every penny and recommend it highly. To get the most out of this
@@ -261,13 +236,6 @@
                                             <p>UX/UI Designer</p>
                                         </div>
                                     </div>
-                                    <div class="rating">
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
                                 </div>
                                 <p class="rev-info">“ This is the second Photoshop course I have completed with
                                     Cristian. Worth every penny and recommend it highly. To get the most out of this
@@ -288,13 +256,6 @@
                                             <h5><a href="instructor-profile.html">Nicole Brown</a></h5>
                                             <p>UX/UI Designer</p>
                                         </div>
-                                    </div>
-                                    <div class="rating">
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star"></i>
                                     </div>
                                 </div>
                                 <p class="rev-info">“ This is the second Photoshop course I have completed with
@@ -356,14 +317,6 @@
                         <div class="card-body">
                             <h5 class="subs-title">Tổng quan hồ sơ</h5>
                             <div class="rating-grp">
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star"></i>
-                                    <span class="d-inline-block average-rating"><span>4.0</span> (15)</span>
-                                </div>
                                 <div class="course-share d-flex align-items-center justify-content-center">
                                     <a href="#rate"><i class="fa-regular fa-heart"></i></a>
                                 </div>
