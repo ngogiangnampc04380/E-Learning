@@ -463,7 +463,9 @@ class CoursesController extends Controller
         // Lấy dữ liệu giảm giá cho khóa học cụ thể
         $data = SalePivot::where('course_id', $id)->first();
 
-        $datasale = Sale::where('id', $data->sale_id)->first();
+        if($data){
+            $datasale = Sale::where('id', $data->sale_id)->first();
+        }
 
         // Lấy thông tin phiên làm việc
         $sessionData = [
@@ -678,31 +680,6 @@ class CoursesController extends Controller
                 $lesson->save();
             } else {
                 return redirect()->back()->with('error', 'Vui lòng chọn video để tải lên cho bài học ' . ($index + 1));
-            }
-
-            foreach ($lessons as $index => $lessonData) {
-                if ($request->hasFile("lessons.{$index}.video")) {
-                    $video = $request->file("lessons.{$index}.video");
-
-                    $videoName = $video->hashName();
-                    $stream = fopen($video->getRealPath(), 'r');
-                    Storage::disk('gcs')->writeStream('folder-name/' . $videoName, $stream);
-                    if (is_resource($stream)) {
-                        fclose($stream);
-                    }
-                    $lesson = new Lesson();
-                    $lesson->name = $lessonData['name'];
-                    $lesson->path_video = $videoName;
-                    $lesson->chapter_id = $lessonData['chapter_id'];
-
-                    // Get the maximum number value for the current chapter and increment it
-                    $maxNumber = Lesson::where('chapter_id', $lessonData['chapter_id'])->max('number');
-                    $lesson->number = $maxNumber ? $maxNumber + 1 : 1;
-
-                    $lesson->save();
-                } else {
-                    return redirect()->back()->with('error', 'Vui lòng chọn video để tải lên cho bài học ' . ($index + 1));
-                }
             }
 
             return redirect()->back()->with('success', 'Đã thêm bài học thành công.');

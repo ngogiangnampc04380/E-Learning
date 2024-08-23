@@ -84,8 +84,10 @@
                     </div>
                     <div class="card-body">
                         <ul class="tags">
+                            @foreach ($posts as $post)
                             @foreach($post->post_categories as $category)
                                 <li><a href="{{ route('client.category-detail', ['slug' => $category->slug]) }}" class="tag">{{ $category->name }}</a></li>
+                            @endforeach
                             @endforeach
                         </ul>
                     </div>

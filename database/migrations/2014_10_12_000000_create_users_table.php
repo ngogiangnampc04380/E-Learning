@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('link_face')->nullable();
             $table->string('link_youtube')->nullable();
             $table->string('link_mail')->nullable();
-            $table->unsignedBigInteger('auth')->nullable();
+            $table->string('auth',255)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->bigInteger('is_active')->default(1);
             $table->string('password')->nullable();

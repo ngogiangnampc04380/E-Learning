@@ -224,6 +224,7 @@
                                     });
                             </script>
                         @endif
+
                         <h2>Danh sách chương</h2>
                         @foreach ($chapters->sortBy('number') as $item)
                             <div class="accordion" id="accordionExample">
@@ -299,12 +300,14 @@ $bucketName = 'entweb01';
                                                             ->where('course_id', $data->id)
                                                             ->first();
 
-                                                        $final_result = DB::table('results_final')
-                                                            // ->where('course_id', $data->id)
-                                                            // ->where('chapter_id', $item->chapterID)
-                                                            ->where('user_id', auth()->user()->id)
-                                                            ->where('quiz_final_id', $final->id)
-                                                            ->first();
+                                                        if ($final) {
+                                                            $final_result = DB::table('results_final')
+                                                                // ->where('course_id', $data->id)
+                                                                // ->where('chapter_id', $item->chapterID)
+                                                                ->where('user_id', auth()->user()->id)
+                                                                ->where('quiz_final_id', $final->id)
+                                                                ->first();
+                                                        }
 
                                                         // dd($quizz_result);
 

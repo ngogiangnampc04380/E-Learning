@@ -242,10 +242,6 @@
                                                                     <img class="img-fluid" alt="Course Image"
                                                                         src="{{ Storage::url('public/' . $course->thumbnail) }}">
                                                                 </a>
-                                                                <div class="heart-three">
-                                                                    <a href="#"><i
-                                                                            class="fa-regular fa-heart"></i></a>
-                                                                </div>
                                                             </div>
                                                             <div class="course-three-content">
                                                                 <a
@@ -260,7 +256,7 @@
                                                                         href="{{ route('client.mentor_detail', $course->mentor->user->id) }}">
                                                                         <img class="mentor-img img-fluid rounded-circle"
                                                                             alt="Mentor Image"
-                                                                            src="{{ $course->mentor->user->thumbnail ? Storage::url('assets-client/img/user/' . $course->mentor->user->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"
+                                                                            src="{{ $course->mentor->user->thumbnail ? Storage::url('public/' . $course->mentor->user->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"
                                                                             style="width: 40px; height: 40px;">
                                                                     </a>
                                                                     <div class="mentor-name ms-2">
@@ -324,7 +320,7 @@
                                                                                 href="{{ route('client.mentor_detail', $course->mentor->user->id) }}">
                                                                                 <img class="mentor-img img-fluid rounded-circle"
                                                                                     alt="Mentor Image"
-                                                                                    src="{{ $course->mentor->user->thumbnail ? Storage::url('assets-client/img/user/' . $course->mentor->user->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"
+                                                                                    src="{{ $course->mentor->user->thumbnail ? Storage::url('public/' . $course->mentor->user->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"
                                                                                     style="width: 40px; height: 40px;">
                                                                             </a>
                                                                             <div class="mentor-name ms-2">
