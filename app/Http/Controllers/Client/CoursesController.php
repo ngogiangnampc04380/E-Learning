@@ -111,11 +111,34 @@ class CoursesController extends Controller
             ->where('courses.id', $id)
             ->first();
 
+        $totalStudents1 = DB::table('course_users')
+            ->where('course_id', $id)
+            ->count('user_id');
+
+        $totalChapters = DB::table('chapters')
+            ->where('course_id', $id)
+            ->count();
+
+        $totalLessons = DB::table('lessons')
+            ->join('chapters', 'lessons.chapter_id', '=', 'chapters.id')
+            ->where('chapters.course_id', $id)
+            ->count();
+
+        $totalStudents = DB::table('course_users')
+            ->join('courses', 'course_users.course_id', '=', 'courses.id')
+            ->where('courses.mentor_id', $course->mentor_id)
+            ->distinct('course_users.user_id')
+            ->count('course_users.user_id');
+
+        $allCourses = Course::where('mentor_id', $course->mentor_id)->get();
+        $totalLessons = Lesson::whereHas('chapter.course', function ($query) use ($course) {
+            $query->where('mentor_id', $course->mentor_id);
+        })->count();
         // Lấy danh sách các categories
         $categories = Course_Category::all();
 
         // Truyền biến categories vào view
-        return view('client.courses.course-details', compact('course', 'mentor', 'categories'));
+        return view('client.courses.course-details', compact('course', 'mentor', 'categories', 'allCourses', 'totalLessons', 'totalStudents', 'totalStudents1', 'totalChapters', 'totalLessons'));
     }
 
 

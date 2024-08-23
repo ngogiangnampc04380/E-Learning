@@ -185,23 +185,22 @@
                         @php
                             $count_quizz = DB::table('quiz_results')
                                 ->where('course_id', $data->id)
+                                ->where('score', '>=', 60)
                                 ->count();
                             $count_quizz2 = DB::table('quizzes')
                                 ->where('course_id', $data->id)
                                 ->count();
                             $count_final = DB::table('results_final')
                                 ->where('course_id', $data->id)
+                                ->where('score', '>=', 80)
                                 ->count();
                             $count_final2 = DB::table('quiz_finals')
                                 ->where('course_id', $data->id)
                                 ->count();
                         @endphp
-
-                        <h2>Tiến độ : {{ $les2 + $count_quizz + $count_final }}/{{ $les + $count_quizz2 + $count_final2 }}
-                        </h2>
-
                         @if ($les2 + $count_quizz + $count_final == $les + $count_quizz2 + $count_final2)
                             <a href="{{ url('/certificate/' . auth()->user()->id . '/' . $data->id) }}">Lấy chứng chỉ</a>
+
                             <script>
                                 // Gửi yêu cầu AJAX để gửi email
                                 fetch("{{ route('send.certificate.email') }}", {
@@ -224,7 +223,8 @@
                                     });
                             </script>
                         @endif
-
+                        <h2>Tiến độ : {{ $les2 + $count_quizz + $count_final }}/{{ $les + $count_quizz2 + $count_final2 }}
+                        </h2>
                         <h2>Danh sách chương</h2>
                         @foreach ($chapters->sortBy('number') as $item)
                             <div class="accordion" id="accordionExample">
@@ -285,8 +285,7 @@ $bucketName = 'entweb01';
 
                                                     @php
                                                         $quizz_result = DB::table('quiz_results')
-                                                            // ->where('course_id', $data->id)
-                                                            // ->where('chapter_id', $item->chapterID)
+                                                            // ->where('score', '>=', 60)
                                                             ->where('user_id', auth()->user()->id)
                                                             ->where('quiz_id', $quizzes2->id)
                                                             ->first();
@@ -302,18 +301,15 @@ $bucketName = 'entweb01';
 
                                                         if ($final) {
                                                             $final_result = DB::table('results_final')
-                                                                // ->where('course_id', $data->id)
-                                                                // ->where('chapter_id', $item->chapterID)
+                                                                // ->where('score', '>=', 80)
                                                                 ->where('user_id', auth()->user()->id)
                                                                 ->where('quiz_final_id', $final->id)
                                                                 ->first();
                                                         }
-
                                                         // dd($quizz_result);
-
                                                     @endphp
                                                     @if ($quizz_result)
-                                                        <i class="fa-solid fa-check" style="color: #63E6BE;"></i>
+                                                        <b>{{ $quizz_result->score }} / 100</b>
                                                     @endif
                                                 </li>
                                             @empty
@@ -328,14 +324,15 @@ $bucketName = 'entweb01';
                             <tr>
                                 <td></td> <!-- Assuming 'title' is the column name -->
                                 <td>
-                                    <div class="d-flex">
+                                    <div class="d-flex mt-2">
 
                                         <a href="{{ route('client.quiz.quiz-final', ['quiz_id' => $quiz->id]) }}">
                                             <h2>{{ $quiz->title }}</h2>
 
                                         </a>
                                         @if ($final_result)
-                                            <i class="fa-solid fa-check" style="color: #63E6BE;"></i>
+                                            <b class=" mt-2" style="margin-left: 104px">{{ $final_result->score }} /
+                                                100</b>
                                         @endif
                                     </div>
 

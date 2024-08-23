@@ -13,7 +13,7 @@
                         <div class="about-instructor align-items-center">
 
                             <div class="instructor-detail me-3">
-                                <h2>{{ $course->name}}</h2>
+                                <h2>{{ $course->name }}</h2>
                             </div>
                         </div>
                     </div>
@@ -39,38 +39,47 @@
                                 <div class="about-instructor">
                                     <div class="abt-instructor-img">
                                         <a href="javascript:void(0);" class="profile-info-img">
-                                            <img src="{{ $course->mentor->thumbnail ? Storage::url('public/' . $course->mentor->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"   alt class="img-fluid">
+                                            <img src="{{ $course->mentor->thumbnail ? Storage::url('public/' . $course->mentor->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"
+                                                alt class="img-fluid">
                                         </a>
                                     </div>
                                     <div class="instructor-detail">
                                         <h5><a href="#">
-                                                @if($course->mentor)
-                                                    {{ $course->mentor->name }}
+                                                @if ($course->mentor)
+                                                    {{ $course->mentor->user->name }}
                                                 @else
                                                     Không tìm thấy mentor
-                                                @endif</a></h5>
+                                                @endif
+                                            </a></h5>
                                     </div>
                                 </div>
                             </div>
                             <div class="course-info d-flex align-items-center">
                                 <div class="cou-info">
                                     <img src="/assets-client/img/icon/play.svg" alt>
-                                    <p>5 Khóa học</p>
+                                    <p>{{ $allCourses->count() }} Khóa học</p>
                                 </div>
                                 <div class="cou-info">
                                     <img src="/assets-client/img/icon/icon-01.svg" alt>
-                                    <p>12+ Bài học</p>
+                                    <p>{{ $totalLessons }} Bài học</p>
                                 </div>
-                                <div class="cou-info">
-                                    <img src="/assets-client/img/icon/icon-02.svg" alt>
-                                    <p>9 giờ 30 phút</p>
-                                </div>
+                                {{--                                <div class="cou-info"> --}}
+                                {{--                                    <img src="/assets-client/img/icon/icon-02.svg" alt> --}}
+                                {{--                                    <p>9 giờ 30 phút</p> --}}
+                                {{--                                </div> --}}
                                 <div class="cou-info">
                                     <img src="/assets-client/img/icon/people.svg" alt>
-                                    <p>270,866 học viên đã đăng ký</p>
+                                    @if ($totalStudents == 0)
+                                        <p>Chưa ai đăng ký khóa học</p>
+                                    @elseif ($totalStudents == 1)
+                                        <p>1 học viên đã đăng ký</p>
+                                    @else
+                                        <p>{{ number_format($totalStudents) }} học viên đã đăng ký</p>
+                                    @endif
                                 </div>
+
                             </div>
-                            {{$mentor->introduce}}
+                            {{ $mentor->introduce }}
                         </div>
                     </div>
                     <div class="card comment-sec">
@@ -92,10 +101,11 @@
                         <div class="video-sec vid-bg">
                             <div class="card">
                                 <div class="card-body">
-                                    @if($course->video_demo)
+                                    @if ($course->video_demo)
                                         <div class="video-container">
                                             <video controls class="img-fluid rounded shadow-sm">
-                                                <source src="{{ Storage::url('public/'.$course->video_demo) }}" type="video/mp4">
+                                                <source src="{{ Storage::url('public/' . $course->video_demo) }}"
+                                                    type="video/mp4">
                                                 Trình duyệt của bạn không hỗ trợ thẻ video.
                                             </video>
                                         </div>
@@ -107,7 +117,8 @@
                                         <div class="course-fee">
                                             <span>Giá: {{ $course->price }} VNĐ</span>
                                         </div>
-                                        <a href="{{ route('client.course-checkout', $course->id) }}" class="btn btn-enroll w-100 mt-3">Đăng ký ngay</a>
+                                        <a href="{{ route('client.course-checkout', $course->id) }}"
+                                            class="btn btn-enroll w-100 mt-3">Đăng ký ngay</a>
                                     </div>
                                 </div>
 
@@ -119,19 +130,41 @@
                                     <h4>Bao gồm</h4>
                                 </div>
                                 <ul>
-                                    <li><img src="/assets-client/img/icon/users.svg" class="me-2" alt> Đã đăng ký:
-                                        <span>{{ $course->enrollment }}</span> học viên
+                                    <li>
+                                        <img src="/assets-client/img/icon/users.svg" class="me-2" alt>
+                                        @if ($totalStudents1 == 0)
+                                            Chưa ai đăng ký khóa học
+                                        @elseif ($totalStudents1 == 1)
+                                            Đã đăng ký: 1 học viên
+                                        @else
+                                            Đã đăng ký: {{ $totalStudents1 }} học viên
+                                        @endif
                                     </li>
-                                    <li><img src="/assets-client/img/icon/timer.svg" class="me-2" alt> Thời lượng:
-                                        <span>{{ $course->total_duration }}</span> giờ
+
+                                    {{--                                    <li><img src="/assets-client/img/icon/timer.svg" class="me-2" alt> Thời lượng: --}}
+                                    {{--                                        <span>{{ $course->total_duration }}</span> giờ --}}
+                                    {{--                                    </li> --}}
+                                    <li>
+                                        <img src="/assets-client/img/icon/chapter.svg" class="me-2" alt>
+                                        @if ($totalChapters == 0)
+                                            Không có chương nào
+                                        @elseif ($totalChapters == 1)
+                                            Số chương: 1
+                                        @else
+                                            Số chương: {{ $totalChapters }}
+                                        @endif
                                     </li>
-                                    <li><img src="/assets-client/img/icon/chapter.svg" class="me-2" alt> Chương:
-                                        <span>{{ $course->chapters->count() }}</span></li>
-                                    <li><img src="/assets-client/img/icon/video.svg" class="me-2" alt> Video:
-                                        <span>{{ $course->video_hours }}</span> giờ
+
+                                    <li>
+                                        <img src="/assets-client/img/icon/video.svg" class="me-2" alt>
+                                        @if ($totalLessons == 0)
+                                            Không có bài học nào
+                                        @elseif ($totalLessons == 1)
+                                            Số bài: 1
+                                        @else
+                                            Số bài: {{ $totalLessons }}
+                                        @endif
                                     </li>
-                                    <li><img src="/assets-client/img/icon/chart.svg" class="me-2" alt> Cấp độ:
-                                        <span>{{ $course->level }}</span></li>
                                 </ul>
                             </div>
                         </div>

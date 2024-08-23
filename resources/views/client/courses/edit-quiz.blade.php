@@ -79,7 +79,7 @@
     </div>
 
     <template id="question-template">
-        <div class="question-block mb-4 p-3 rounded">
+        <div class="question-block mb-4 p-3 border border-primary rounded">
             <h5 class="mb-3">Câu hỏi</h5>
             <input type="hidden" name="questions[INDEX][id]" value="">
 
