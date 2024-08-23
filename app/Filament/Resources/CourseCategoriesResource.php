@@ -69,10 +69,14 @@ class CourseCategoriesResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->label('Tên danh mục')
-                    ->sortable(),
+                    ->sortable()
+                    ->limit(30)
+                    ->suffix('...'),
                 Tables\Columns\TextColumn::make('slug')
                     ->label('Đường dẫn')
-                    ->sortable(),
+                    ->sortable()
+                    ->limit(30)
+                    ->suffix('...'),
 
             ])
 

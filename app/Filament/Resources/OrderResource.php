@@ -41,7 +41,6 @@ class OrderResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('order_code')
                     ->label('Mã đơn hàng')
-
                     ->searchable(),
                 Tables\Columns\TextColumn::make('user.name')
                 ->label('Người đăng ký khóa học')

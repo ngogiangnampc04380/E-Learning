@@ -41,9 +41,7 @@ class CommentsResource extends Resource
                 
                 Tables\Columns\TextColumn::make('lesson.name')
                     ->label('Tên bài học')
-                    
                     ->searchable(),
-                    
                 Tables\Columns\TextColumn::make('content')
                     ->label('Nội dung bình luận')
                     ->searchable(),

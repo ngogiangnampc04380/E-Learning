@@ -52,10 +52,14 @@ class CheckCourseResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('category.name')
                     ->label('Danh mục')
-                    ->sortable(),
+                    ->sortable()
+                    ->limit(30)
+                    ->suffix('...'),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Tên khóa học')
-                    ->searchable(),
+                    ->searchable()
+                    ->limit(30)
+                    ->suffix('...'),
                 Tables\Columns\ImageColumn::make('thumbnail')
                     ->label('Hình ảnh')
                     ->searchable(),
