@@ -999,13 +999,24 @@
                                         <a class="dropdown-item" href="{{ route('client.dashboard-profile') }}"><i
                                             class="feather-user me-1"></i>Thông tin người dùng</a>
                                         </a>
+                                        @if(auth()->user()->role== 0)
                                         <a class="dropdown-item" href="{{ route('mentor-register') }}"><i
                                             class="feather-user me-1"></i>
                                        
                                             <span class="d-inline-block">Giảng viên</span><sup
-                                                class="badge badge-info">Đăng ký</sup>
+                                                class="badge badge-info ml-2">Đăng ký</sup>
                                         
                                         </a>
+                                        @elseif(auth()->user()->role== 3)
+                                        <a class="dropdown-item" href="/error"><i
+                                            class="feather-user me-1"></i>
+                                       
+                                            <span class="d-inline-block">Chờ duyệt</span><sup
+                                                class="badge badge-info ml-2"> Mentor</sup>
+                                        
+                                        </a>
+                                        @endif
+                                        
                                         @elseif(auth()->user()->role== 2)
                                         <a class="dropdown-item" href="{{route('client.mentor_detail', ['id' =>auth()->user()->id]) }}">
                                             <i class="feather-star me-1"></i> Giới thiệu

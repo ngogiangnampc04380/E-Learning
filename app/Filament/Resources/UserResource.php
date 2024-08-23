@@ -84,7 +84,6 @@ class UserResource extends Resource
                     ->options([
                         0 => 'Học viên',
                         1 => 'Admin',
-                        2 => 'Giảng viên'
                     ])
                     ->default('0'),
                 Forms\Components\TextInput::make('password')
@@ -134,7 +133,6 @@ class UserResource extends Resource
                 ->options([
                     0 => 'Học viên',
                     1 => 'Admin',
-                    2 => 'Giảng viên'
                 ]),
             Tables\Columns\TextColumn::make('created_at')
                 ->dateTime()

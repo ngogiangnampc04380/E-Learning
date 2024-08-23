@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mentors', function (Blueprint $table) {
+        Schema::create('comments_courses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('name');
             $table->foreign('user_id')->references('id')->on('users')->constrained()->cascadeOnDelete();
-            $table->string('front_card')->nullable();
-            $table->string('back_card')->nullable();
+            $table->unsignedBigInteger('course_id');
+            $table->foreign('course_id')->references('id')->on('courses')->constrained()->cascadeOnDelete();
+            $table->text('content')->nullable(255);
+            $table->string('status')->nullable(10);
+            $table->string('stars')->nullable(10);
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mentors');
+        Schema::dropIfExists('comments_courses');
     }
 };

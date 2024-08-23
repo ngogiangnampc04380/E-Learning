@@ -43,7 +43,7 @@
                                             MỚI</a>
                                     </div>
                                 @endif
-
+    
                             </div>
                         </div>
                     </div>
@@ -55,26 +55,22 @@
                                     <i class="feather-home"></i> Dữ liệu và thống kê
                                 </a>
                             </li>
-
-
+                            @if (in_array(auth()->user()->role, [0, 2,3]))
+                                <li class="nav-item {{ request()->is('instructor-course') ? 'active' : '' }}">
+                                    <a href="{{ route('client.my-course', auth()->user()->id) }}" class="nav-link">
+                                        <i class="feather-shopping-bag"></i> Khóa học của tôi
+                                    </a>
+                                </li>
+                            @endif
                             @if (auth()->user()->role == 2)
                                 <li class="nav-item {{ request()->routeIs('client.instructor-course') ? 'active' : '' }}">
                                     <a href="{{ route('client.instructor-course', auth()->user()->id) }}" class="nav-link">
                                         <i class="feather-book"></i> Quản lí khóa học
                                     </a>
                                 </li>
-                            @endif
-                            @if (auth()->user()->role == 2)
-                                <li class="nav-item {{ request()->routeIs('sale.add-sale') ? 'active' : '' }}">
-                                    <a href="{{ route('sale.add-sale', auth()->user()->id) }}" class="nav-link">
-                                        <i class="feather-book"></i> Quản lí mã giảm giá
-                                    </a>
-                                </li>
-                            @endif
-                            @if (auth()->user()->role == 2)
-                                <li class="nav-item {{ request()->routeIs('sale.show-sale') ? 'active' : '' }}">
-                                    <a href="{{ route('sale.show-sale', auth()->user()->id) }}" class="nav-link">
-                                        <i class="feather-book"></i> xem mã giảm giá
+                                <li class="nav-item {{ request()->is('instructor-student-grid.html') ? 'active' : '' }}">
+                                    <a href="{{ route('client.my-student') }}" class="nav-link">
+                                        <i class="feather-users"></i> Quản lí học viên
                                     </a>
                                 </li>
                             @endif
@@ -113,7 +109,7 @@
                             </li>
                         </ul>
                     </div>
-
+    
                 </div>
 
 
@@ -168,7 +164,7 @@
                                                                         <video controls class="img-fluid rounded shadow-sm"
                                                                             style="max-width: 150px;">
                                                                             <source
-                                                                                src="{{ Storage::url('public/' . $post->video_demo) }}"
+                                                                                src="{{ Storage::url('public/'.$post->video_demo) }}"
                                                                                 type="video/mp4">
                                                                             Trình duyệt của bạn không hỗ trợ thẻ video.
                                                                         </video>

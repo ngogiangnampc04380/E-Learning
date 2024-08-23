@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+{
+    Schema::create('replies_comments_courses', function (Blueprint $table) {
+        $table->id();
+        $table->unsignedBigInteger('comment_course_id');
+        $table->foreign('comment_course_id')->references('id')->on('comments_courses')->constrained()->cascadeOnDelete();
+        $table->unsignedBigInteger('user_id');
+        $table->foreign('user_id')->references('id')->on('users')->constrained()->cascadeOnDelete();
+        $table->text('content')->nullable(255);
+        $table->string('status')->nullable(10);
+        $table->timestamps();
+    });
+}
+
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('replies_comments_courses');
+    }
+};

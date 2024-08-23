@@ -121,8 +121,8 @@
                             <form action="{{route('mentor-register')}}" method="POST">
                                 @csrf
                             <div class="form-group">
-                            <label class="form-control-label">Full Name</label>
-                            <input type="text" id="email" name="name" class="form-control" placeholder="Enter your mentor's name" oninput="enter_data()">
+                            <label class="form-control-label">Họ và tên</label>
+                            <input type="text" id="email" name="name" class="form-control" placeholder="Nhập họ và tên" oninput="enter_data()">
                             <div class="error_message">
                                 @error('name')
                                 <span style="color: red;font-weight:lighter">{{$message}}</span>

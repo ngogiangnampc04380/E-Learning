@@ -50,7 +50,7 @@
                                 <i class="feather-home"></i> Dữ liệu và thống kê
                             </a>
                         </li>
-                        @if (in_array(auth()->user()->role, [0, 2]))
+                        @if (in_array(auth()->user()->role, [0, 2,3]))
                             <li class="nav-item {{ request()->is('instructor-course') ? 'active' : '' }}">
                                 <a href="{{ route('client.my-course', auth()->user()->id) }}" class="nav-link">
                                     <i class="feather-shopping-bag"></i> Khóa học của tôi

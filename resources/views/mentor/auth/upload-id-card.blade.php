@@ -4,13 +4,13 @@
         <div class="loginbox">
             <div class="w-100">
 
-                <h1>Upload card</h1>
+                <h1>Cập nhật CCCD</h1>
                 <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label class="form-control-label">Front ID CARD</label>
+                        <label class="form-control-label">Mặt trước CCCD</label>
                         <div class="profile-share d-flex align-items-center justify-content-center">
-                            <label href="javascript:;" class="btn btn-primary text-white" for="front_id">Upload</label>
+                            <label href="javascript:;" class="btn btn-primary text-white" for="front_id">Tải ảnh lên</label>
                             <input type="file" style="display: none" name="front_card" id="front_id"
                                 onchange="uploadImage(this,'front_id')">
                         </div>
@@ -44,15 +44,15 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="form-control-label">Back ID CARD</label>
+                        <label class="form-control-label">Mặt sau CCCD</label>
                         <div class="profile-share d-flex align-items-center justify-content-center">
-                            <label href="javascript:;" class="btn btn-primary text-white" for="back_id">Upload</label>
+                            <label href="javascript:;" class="btn btn-primary text-white" for="back_id">Tải ảnh lên</label>
                             <input type="file" name="back_card" style="display: none" id="back_id"
                                 onchange="uploadImage(this,'back_id')">
                         </div>
                     </div>
                     <div class="spinner-border mb-2" id="loader" style="color: #f66962;display: none" role="status">
-                        <span class="visually-hidden">Loading...</span>
+                        <span class="visually-hidden">Đang tải...</span>
                     </div>
 
                     <div id="where_card_infor" style="display: none"
@@ -64,7 +64,7 @@
 
             </div>
             <div class="d-grid">
-                <button class="btn btn-primary btn-start" id="btn_submit" disabled>Register mentor</button>
+                <button class="btn btn-primary btn-start" id="btn_submit" disabled>Tiến hành đăng ký</button>
                 <br>
                 {{-- <a class="link-secondary" href="{{route('client.mentor-ID')}}">Or upload photos here</a> --}}
             </div>

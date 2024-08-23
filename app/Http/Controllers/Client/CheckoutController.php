@@ -50,7 +50,7 @@ class CheckoutController extends Controller
     }
 
 
-    public function online_pay(request $request)
+    public function online_pay(Request $request)
     {
         // $discountedPrice = $request->input('discounted_price');
         if (isset($_POST['payUrl'])) {

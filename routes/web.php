@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\CheckoutController;
 
 // ----------------------------client----------------------------*******
+use App\Http\Controllers\Client\CommentController;
 
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\CoursesController;
@@ -99,6 +100,23 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::get("/instructor-lesson/{id}", [CoursesController::class, "lesson"])->name("instructor-lesson");
     Route::post("/save-chapter", [CoursesController::class, "saveChapter"])->name("saveChapter");
     Route::post("/save-lesson", [CoursesController::class, "saveLesson"])->name("saveLesson");
+    // comment
+    Route::post('/comments/store', [CommentController::class, 'store'])->name('comments-store');
+
+    // Route cho việc cập nhật bình luận
+    Route::post('/comments/{id}/update', [CommentController::class, 'update'])->name('comments-update');
+    Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comments-destroy');
+
+    Route::post('/comments/{id}/reply', [CommentController::class, 'reply'])->name('comments-reply');
+    Route::get('/comments', [CommentController::class, 'index'])->name('comments-index');
+    // Route cập nhật trả lời
+    Route::post('/replies/update/{id}', [CommentController::class, 'updaterep'])->name('replies-update');
+
+    // Route xóa trả lời
+    Route::delete('/client/replies/{id}', [CommentController::class, 'destroyReply'])->name('replies-delete');
+
+
+
 
     Route::post("/delete-course/{id}", [CoursesController::class, "deleteCourse"])->name("deleteCourse");
 
@@ -135,18 +153,18 @@ Route::prefix('client')->name('client.')->group(function () {
     Route::get('/{quiz_id}/quiz', [QuizCourseController::class, 'quiz'])->name('quiz.quiz-final');
     Route::post('/{quiz_id}/submit', [QuizCourseController::class, 'submitQuiz'])->name('quiz.submit-quiz-final');
     Route::get('/quiz-result/{id}/{score}', [QuizCourseController::class, 'quizResult'])->name('quiz.quiz-result');
-// suport mail
-Route::get('/contact', [SupportController::class, 'contact'])->name('contact');
-Route::post('/contact', [SupportController::class, 'submitSupportForm'])->name('contact.submit');
+    // suport mail
+    Route::get('/contact', [SupportController::class, 'contact'])->name('contact');
+    Route::post('/contact', [SupportController::class, 'submitSupportForm'])->name('contact.submit');
 
-// thứ tự bài học
-Route::post('/update-lesson-order', [CoursesController::class, 'updateOrder'])->name('lesson-order');
-// thứ tự chương
-Route::post('/chapter-order', [CoursesController::class, 'updateOrderChapter'])->name('chapter-order');
-// thứ tự quiz chương
-Route::post('/update-quiz-order', [CoursesController::class, 'updateQuizOrder'])->name('quiz-order');
-//  thứ tự quiz final
-Route::post('/quiz-final-order/{course_id}', [QuizCourseController::class, 'updateOrderQuizFinal'])->name('quiz-final-order');
+    // thứ tự bài học
+    Route::post('/update-lesson-order', [CoursesController::class, 'updateOrder'])->name('lesson-order');
+    // thứ tự chương
+    Route::post('/chapter-order', [CoursesController::class, 'updateOrderChapter'])->name('chapter-order');
+    // thứ tự quiz chương
+    Route::post('/update-quiz-order', [CoursesController::class, 'updateQuizOrder'])->name('quiz-order');
+    //  thứ tự quiz final
+    Route::post('/quiz-final-order/{course_id}', [QuizCourseController::class, 'updateOrderQuizFinal'])->name('quiz-final-order');
 
 
     // ----------------------------- Search ------------------------------
@@ -189,6 +207,9 @@ Route::put('sale/{sale}', [SaleController::class, 'update'])->name('sale.update'
 Route::delete('sale/{id}', [SaleController::class, 'destroy'])->name('sale.destroy');
 
 
+// cmt
+
+
 
 Route::post('/apply-promotion', [SalesController::class, 'applyPromotion'])->name('promotion')->middleware('auth');
 
@@ -196,10 +217,8 @@ Route::post('/apply-promotion', [SalesController::class, 'applyPromotion'])->nam
 Route::post('/video-progress', [CoursesController::class, 'saveProgress'])->middleware('auth');
 Route::post('/video-progress-complete', [CoursesController::class, 'completeProgress'])->middleware('auth');
 
-Route::get('/certificate/{userId}/{courseID}',[CertificateController::class, 'generate'])->name('generate')->middleware('auth');
+Route::get('/certificate/{userId}/{courseID}', [CertificateController::class, 'generate'])->name('generate')->middleware('auth');
 
 Route::post('/send-certificate-email', [CertificateController::class, 'sendCertificateEmail'])->name('send.certificate.email');
 
 // Route::get('/certificate/{userId}',[CertificateController::class, 'download'])->name('download');
-
-

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course_user;
+use App\Models\CommentCourse;
+
 use App\Models\Video_done;
 use App\Models\Video_not_done;
 use Illuminate\Http\Request;
@@ -111,6 +113,16 @@ class CoursesController extends Controller
             ->where('courses.id', $id)
             ->first();
 
+        // Lấy danh sách các categories
+        $categories = Course_Category::all();
+
+        // Lấy danh sách bình luận và các câu trả lời liên quan
+        $comments = CommentCourse::with(['user', 'replies' => function ($query) {
+            $query->where('status', 1)->with('user');
+        }])
+            ->where('course_id', $id)
+            ->where('status', 1)
+            ->get();
         $totalStudents1 = DB::table('course_users')
             ->where('course_id', $id)
             ->count('user_id');
@@ -131,18 +143,15 @@ class CoursesController extends Controller
             ->count('course_users.user_id');
 
         $allCourses = Course::where('mentor_id', $course->mentor_id)->get();
+
         $totalLessons = Lesson::whereHas('chapter.course', function ($query) use ($course) {
             $query->where('mentor_id', $course->mentor_id);
         })->count();
-        // Lấy danh sách các categories
-        $categories = Course_Category::all();
 
-        // Truyền biến categories vào view
-        return view('client.courses.course-details', compact('course', 'mentor', 'categories', 'allCourses', 'totalLessons', 'totalStudents', 'totalStudents1', 'totalChapters', 'totalLessons'));
+
+        // Truyền biến vào view
+        return view('client.courses.course-details', compact('course', 'mentor', 'categories', 'comments', 'allCourses', 'totalLessons', 'totalStudents', 'totalStudents1', 'totalChapters', 'totalLessons'));
     }
-
-
-
     public function myCourse($id)
     {
         if (!auth()->check()) {
@@ -510,12 +519,10 @@ class CoursesController extends Controller
 
         // Lấy dữ liệu giảm giá cho khóa học cụ thể
         $data = SalePivot::where('course_id', $id)->first();
-
         if ($data) {
             $datasale = Sale::where('id', $data->sale_id)->first();
         }
-
-        // Lấy thông tin phiên làm việc
+        // lấy thông tin phiên làm việc
         $sessionData = [
             'id' => $id,
             'fullname' => session('fullname'),
@@ -712,10 +719,10 @@ class CoursesController extends Controller
 
                 $videoName = $video->hashName();
                 $stream = fopen($video->getRealPath(), 'r');
-                Storage::disk('gcs')->writeStream('folder-name/' . $videoName, $stream);
-                if (is_resource($stream)) {
-                    fclose($stream);
-                }
+                // Storage::disk('gcs')->writeStream('folder-name/' . $videoName, $stream);
+                // if (is_resource($stream)) {
+                //     fclose($stream);
+                // }
                 $lesson = new Lesson();
                 $lesson->name = $lessonData['name'];
                 $lesson->path_video = $videoName;

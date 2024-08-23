@@ -21,8 +21,8 @@
 <div class="main-wrapper">
 <div class="error-box">
 <div class="error-logo">
-<a href="index.html">
-<img src="/assets-client/img/" class="img-fluid" alt="Logo">
+<a href="{{ route('Dashboard-client') }}">
+<img src="{{ asset('/img/logo.gif') }}" class="img-fluid" alt="Logo">
 </a>
 </div>
 <div class="error-box-img">

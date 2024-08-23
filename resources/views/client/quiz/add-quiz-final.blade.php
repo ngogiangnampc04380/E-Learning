@@ -52,9 +52,9 @@
                                 <i class="feather-home"></i> Dữ liệu và thống kê
                             </a>
                         </li>
-                        @if (in_array(auth()->user()->role, [0, 2]))
+                        @if (in_array(auth()->user()->role, [0, 2, 3]))
                             <li class="nav-item {{ request()->is('instructor-course') ? 'active' : '' }}">
-                                <a href="instructor-course.html" class="nav-link">
+                                <a href="{{ route('client.my-course', auth()->user()->id) }}" class="nav-link">
                                     <i class="feather-shopping-bag"></i> Khóa học của tôi
                                 </a>
                             </li>
@@ -66,7 +66,7 @@
                                 </a>
                             </li>
                             <li class="nav-item {{ request()->is('instructor-student-grid.html') ? 'active' : '' }}">
-                                <a href="instructor-student-grid.html" class="nav-link">
+                                <a href="{{ route('client.my-student') }}" class="nav-link">
                                     <i class="feather-users"></i> Quản lí học viên
                                 </a>
                             </li>
@@ -85,7 +85,7 @@
                             </div>
                             <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
                                 <a href="/admin" class="nav-link">
-                                    <i class="feather-cpu"></i> Quảng trị website
+                                    <i class="feather-cpu"></i> Quản trị website
                                 </a>
                             </li>
                         @endif

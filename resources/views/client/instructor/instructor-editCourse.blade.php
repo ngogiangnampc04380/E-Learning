@@ -322,11 +322,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                             <!-- Hiển thị tên chương -->
                                             <td>
                                                 <div class="d-flex justify-content-end align-items-center">
-                                                    <form action="{{ route('client.deleteChapter', $chapter->id) }}" method="POST" class="delete-chapter-form mr-2">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        
-                                                    </form>
+                                                    
                                                     <button type="button" class="btn btn-outline-edit-chapter ml-2 edit-chapter-btn" data-chapter-id="{{ $chapter->id }}">
                                                         <i class="fas fa-pencil-alt"></i> Sửa chương
                                                     </button>
@@ -336,9 +332,13 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                     <button type="button" class="btn btn-outline-secondary ml-2 toggle-lesson-list" data-chapter-id="{{ $chapter->id }}">
                                                         <i class="fas fa-chevron-down"></i> Xem bài học
                                                     </button>
-                                                    <button type="button" class="btn btn-outline-danger ml-2 delete-chapter-btn" data-chapter-id="{{ $chapter->id }}">
-                                                        <i class="fas fa-trash"></i> Xóa
-                                                    </button>
+                                                    <form action="{{ route('client.deleteChapter', $chapter->id) }}" method="POST" class="delete-chapter-form mr-2">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button" class="btn btn-outline-danger ml-2 delete-chapter-btn" data-chapter-id="{{ $chapter->id }}">
+                                                            <i class="fas fa-trash"></i> Xóa
+                                                        </button>
+                                                    </form>
                                                     <button type="button" id="toggle-expand-collapse" class="btn btn-outline-infos ml-2">
                                                         <i class="fas fa-chevron-down"></i> Mở rộng
                                                     </button>

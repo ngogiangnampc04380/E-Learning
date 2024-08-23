@@ -68,7 +68,7 @@ class User extends Authenticatable  implements FilamentUser
     ];
     public function comments(): HasMany
     {
-        return $this->hasMany(comment::class);
+        return $this->hasMany(CommentCourse::class);
     }
 
     public function mentor()
@@ -88,4 +88,5 @@ class User extends Authenticatable  implements FilamentUser
     {
         return $this->belongsToMany(Course::class, 'course_users', 'user_id', 'course_id');
     }
+
 }

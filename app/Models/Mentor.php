@@ -36,4 +36,8 @@ class Mentor extends Model
     {
         return $this->hasMany(Sale::class);
     }
+    public function comments()
+{
+    return $this->hasMany(CommentMentor::class);
+}
 }
