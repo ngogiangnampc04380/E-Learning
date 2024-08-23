@@ -369,8 +369,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                                    <a href="{{ route('client.courses.edit-quiz', $quiz->id) }}"
                                                                       class="btn btn-sm btn-outline-edit-chapter mr-2"><i class="fas fa-pencil-alt"></i>Sửa</a>
                                                                    <button type="button" class="btn btn-sm btn-outline-danger delete-quiz-btn" data-quiz-id="{{ $quiz->id }}"><i class="fas fa-trash"></i>Xóa</button>
-                                                                   <a href="{{ route('client.courses.quiz-chapter', $quiz->id) }}"
-                                                                      class="btn btn-sm btn-success">Làm bài</a>
+                                                                   
                                                                </div>
                                                            </li>
                                                            @empty
@@ -641,10 +640,6 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                                         <i class="fas fa-trash"></i>Xóa
                                                     </button>
                                                 </form>
-                                            
-                                                <!-- Làm bài -->
-                                                <a href="{{ route('client.quiz.quiz-final', ['quiz_id' => $quiz->id]) }}"
-                                                    class="btn custom-btn btn-success mr-2">Làm bài</a>
                                             </div>
                                             
                                         </td>

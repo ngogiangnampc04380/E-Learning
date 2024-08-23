@@ -3,14 +3,19 @@
 @section('content')
     <style>
         .answer-correct {
-            color: #28a745; /* Màu xanh cho đáp án đúng */
+            color: #28a745;
+            /* Màu xanh cho đáp án đúng */
         }
+
         .answer-incorrect {
-            color: #dc3545; /* Màu đỏ cho đáp án sai */
+            color: #dc3545;
+            /* Màu đỏ cho đáp án sai */
         }
+
         .answer-user-selected {
             font-weight: bold;
         }
+
         .btn-back {
             margin-top: 20px;
         }
@@ -22,25 +27,30 @@
                 <div class="quiz-widget p-5 bg-white shadow-sm rounded">
                     <h2>{{ $quizFinal->title }}</h2>
                     <p><strong>Khóa học:</strong> {{ $quizFinal->course->name }}</p>
-                    <p><strong>Điểm số của bạn:</strong> {{ $result['score'] }} / {{ $result['totalQuestions'] }}</p>
+                    <p><strong>Điểm số của bạn:</strong> {{ $result['score'] }} / 100</p>
                     <hr>
                     <h3>Chi tiết câu trả lời:</h3>
-                    @foreach($quizFinal->questions as $question)
+                    @foreach ($quizFinal->questions as $question)
                         <div class="mb-4">
-                            <h5>{{ $question->questions }}</h5>
+                            <h5>{{ $question->question_text }}</h5>
                             <ul class="list-unstyled">
-                                @foreach($question->answers as $answer)
+                                @foreach ($question->answers as $answer)
                                     @php
-                                        $userSelected = isset($userAnswers['question_' . $question->id]) && $userAnswers['question_' . $question->id] == $answer->id;
+                                        $userSelected =
+                                            isset($userAnswers['question_' . $question->id]) &&
+                                            $userAnswers['question_' . $question->id] == $answer->id;
                                         $isCorrect = $answer->is_correct;
                                     @endphp
-                                    <li class="{{
-                                        $userSelected ?
-                                            ($isCorrect ? 'answer-correct answer-user-selected' : 'answer-incorrect') :
-                                            ($isCorrect ? 'answer-correct' : '')
-                                    }}">
+                                    <li
+                                        class="{{ $userSelected
+                                            ? ($isCorrect
+                                                ? 'answer-correct answer-user-selected'
+                                                : 'answer-incorrect')
+                                            : ($isCorrect
+                                                ? 'answer-correct'
+                                                : '') }}">
                                         {{ $answer->answer_text }}
-                                        @if($userSelected && !$isCorrect)
+                                        @if ($userSelected && !$isCorrect)
                                             <strong> (Bạn đã chọn - Sai)</strong>
                                         @elseif($userSelected && $isCorrect)
                                             <strong> (Bạn đã chọn - Đúng)</strong>
@@ -52,7 +62,7 @@
                             </ul>
                         </div>
                     @endforeach
-                    <a href="{{ route('client.editCourse', $quizFinal->course_id) }}" class="btn btn-primary btn-back">
+                    <a href="#" class="btn btn-primary btn-back">
                         Quay lại danh sách quiz
                     </a>
                 </div>

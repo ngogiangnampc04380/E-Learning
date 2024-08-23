@@ -266,38 +266,63 @@ class CoursesController extends Controller
 
     public function submitQuiz(Request $request, $id)
     {
-        $quiz = Quiz::findOrFail($id);
-        $questions = Question::where('quiz_id', $id)->get();
+        // Lấy quiz và các câu hỏi liên quan
+        $quiz = Quiz::with('questions.answers')->findOrFail($id);
 
         $score = 0;
-        $userAnswers = [];
+        $totalQuestions = $quiz->questions->count();
+        $userAnswers = $request->except('_token');
 
-        foreach ($questions as $question) {
-            $correctAnswer = $question->answers()->where('is_correct', 1)->first();
+        // Duyệt qua các câu hỏi và kiểm tra đáp án
+        foreach ($quiz->questions as $question) {
             $selectedAnswerId = $request->input('question_' . $question->id);
 
+            // Lưu câu trả lời của người dùng vào mảng
             $userAnswers[$question->id] = $selectedAnswerId;
 
-            if ($correctAnswer && $selectedAnswerId == $correctAnswer->id) {
+            // Kiểm tra xem câu trả lời của người dùng có đúng không
+            if ($question->answers()->where('id', $selectedAnswerId)->where('is_correct', true)->exists()) {
                 $score++;
             }
         }
 
-        session(['user_answers' => $userAnswers]);
-        QuizResult::create([
-            'quiz_id' => $quiz->id,
-            'user_id' => auth()->id(),
-            'score' => $score,
-            'chapter_id' => $quiz->chapter_id ?? null,
-            'course_id' => $quiz->course_id ?? null,
-        ]);
+        // Tính điểm theo thang điểm 100 và làm tròn đến 2 chữ số thập phân
+        $scaledScore = number_format(($score / $totalQuestions) * 100, 2);
 
-        return view('client.courses.result', [
-            'id' => $id,
-            'score' => $score,
-            'quiz' => $quiz,
-            'questions' => $questions
-        ]);
+        // Tạo mảng kết quả để truyền vào view
+        $result = [
+            'score' => $scaledScore,
+            'totalQuestions' => $totalQuestions,
+            'percentage' => $scaledScore
+        ];
+
+        // Kiểm tra nếu người dùng đã làm bài quiz trước đó
+        $existingResult = QuizResult::where('quiz_id', $quiz->id)
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if ($existingResult) {
+            // Nếu đã có kết quả, cập nhật nếu điểm số mới cao hơn
+            if ($scaledScore > $existingResult->score) {
+                $existingResult->score = $scaledScore;
+                $existingResult->save();
+            }
+        } else {
+            // Nếu chưa có kết quả, tạo mới
+            QuizResult::create([
+                'quiz_id' => $quiz->id,
+                'user_id' => auth()->id(),
+                'score' => $scaledScore,
+                'chapter_id' => $quiz->chapter_id ?? null,
+                'course_id' => $quiz->course_id ?? null,
+            ]);
+        }
+
+        // Lưu câu trả lời của người dùng vào session
+        session(['user_answers' => $userAnswers]);
+
+        // Trả về view với kết quả và câu trả lời
+        return view('client.courses.result', compact('quiz', 'result', 'userAnswers'));
     }
 
     public function quizResult($id, $score)
@@ -463,7 +488,7 @@ class CoursesController extends Controller
         // Lấy dữ liệu giảm giá cho khóa học cụ thể
         $data = SalePivot::where('course_id', $id)->first();
 
-        if($data){
+        if ($data) {
             $datasale = Sale::where('id', $data->sale_id)->first();
         }
 
@@ -681,7 +706,6 @@ class CoursesController extends Controller
             } else {
                 return redirect()->back()->with('error', 'Vui lòng chọn video để tải lên cho bài học ' . ($index + 1));
             }
-
             return redirect()->back()->with('success', 'Đã thêm bài học thành công.');
         }
     }

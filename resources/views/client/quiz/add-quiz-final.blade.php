@@ -8,7 +8,7 @@
                 <div class="settings-widget dash-profile">
                     <div class="settings-menu p-0">
                         <div class="profile-bg">
-                            @if(in_array(auth()->user()->role, [0, 3]))
+                            @if (in_array(auth()->user()->role, [0, 3]))
                                 <h5 class="text-muted mb-0">Học viên</h5>
                             @elseif(auth()->user()->role == 1)
                                 <h5 class="text-muted mb-0">Quản trị viên</h5>
@@ -18,14 +18,15 @@
                             <img src="/assets-client/img/instructor-profile-bg.jpg" alt="">
                             <div class="profile-img">
                                 <a href="">
-                                    <img src="{{ auth()->user()->thumbnail ? Storage::url('public/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}"  alt="">
+                                    <img src="{{ auth()->user()->thumbnail ? Storage::url('public/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}"
+                                        alt="">
                                 </a>
                             </div>
                         </div>
                         <div class="profile-group">
                             <div class="profile-name text-center">
-                                <h4><a href="">{{auth()->user()-> name}}</a></h4>
-                                @if(in_array(auth()->user()->role, [0, 3]))
+                                <h4><a href="">{{ auth()->user()->name }}</a></h4>
+                                @if (in_array(auth()->user()->role, [0, 3]))
                                     <p class="text-muted mb-0">Học viên</p>
                                 @elseif(auth()->user()->role == 1)
                                     <p class="text-muted mb-0">Quản trị viên</p>
@@ -33,9 +34,10 @@
                                     <p class="text-muted mb-0">Giảng viên</p>
                                 @endif
                             </div>
-                            @if(auth()->user()->role == 2)
+                            @if (auth()->user()->role == 2)
                                 <div class="go-dashboard text-center">
-                                    <a href="{{ route('client.create-course') }}" class="btn btn-primary">THÊM KHÓA HỌC MỚI</a>
+                                    <a href="{{ route('client.create-course') }}" class="btn btn-primary">THÊM KHÓA HỌC
+                                        MỚI</a>
                                 </div>
                             @endif
 
@@ -50,16 +52,16 @@
                                 <i class="feather-home"></i> Dữ liệu và thống kê
                             </a>
                         </li>
-                        @if(in_array(auth()->user()->role, [0, 2]))
+                        @if (in_array(auth()->user()->role, [0, 2]))
                             <li class="nav-item {{ request()->is('instructor-course') ? 'active' : '' }}">
                                 <a href="instructor-course.html" class="nav-link">
                                     <i class="feather-shopping-bag"></i> Khóa học của tôi
                                 </a>
                             </li>
                         @endif
-                        @if(auth()->user()->role == 2)
+                        @if (auth()->user()->role == 2)
                             <li class="nav-item {{ request()->routeIs('client.instructor-course') ? 'active' : '' }}">
-                                <a href="{{ route('client.instructor-course',auth()->user()->id) }}" class="nav-link">
+                                <a href="{{ route('client.instructor-course', auth()->user()->id) }}" class="nav-link">
                                     <i class="feather-book"></i> Quản lí khóa học
                                 </a>
                             </li>
@@ -77,7 +79,7 @@
                                 <i class="feather-settings"></i> Thông tin cá nhân
                             </a>
                         </li>
-                        @if(auth()->user()->role == 1)
+                        @if (auth()->user()->role == 1)
                             <div class="instructor-title">
                                 <h3>Quản trị viên</h3>
                             </div>
@@ -112,12 +114,13 @@
                         <h2 class="text-center display-4 font-weight-bold">Quiz Final</h2>
 
 
-                        @if(session('success'))
+                        @if (session('success'))
                             <div class="alert alert-success">
                                 {{ session('success') }}
                             </div>
                         @endif
-                        <form action="{{ route('client.quiz-final.store', $course_id) }}" method="POST" class="p-4 bg-light rounded shadow-sm">
+                        <form action="{{ route('client.quiz-final.store', $course_id) }}" method="POST"
+                            class="p-4 bg-light rounded shadow-sm">
                             @csrf
                             <input type="hidden" name="course_id" value="{{ $course_id }}">
 
@@ -125,7 +128,7 @@
                             <div class="border border-primary border-4 rounded p-3 mb-2 shadow-sm">
                                 <div class="mb-4">
                                     <label for="title" class="form-label fw-bold">Tiêu đề Quiz:</label>
-                                    <input type="text" id="title" name="title" class="form-control" >
+                                    <input type="text" id="title" name="title" class="form-control">
                                 </div>
                             </div>
 
@@ -134,33 +137,39 @@
                                     <h5 class="mb-3 question-title">Câu hỏi 1</h5>
                                     <div class="mb-3">
                                         <label for="question_1" class="form-label">Câu hỏi:</label>
-                                        <input type="text" id="question_1" name="questions[1][question]" class="form-control" >
+                                        <input type="text" id="question_1" name="questions[1][question]"
+                                            class="form-control">
                                     </div>
                                     <div class="mb-3">
                                         <label for="answer_1_0" class="form-label">Đáp án đúng:</label>
-                                        <input type="text" id="answer_1_0" name="questions[1][answers][0][answer]" class="form-control" >
+                                        <input type="text" id="answer_1_0" name="questions[1][answers][0][answer]"
+                                            class="form-control">
                                         <input type="hidden" name="questions[1][answers][0][is_correct]" value="1">
                                     </div>
                                     <div class="mb-3">
                                         <label for="answer_1_1" class="form-label">Đáp án sai:</label>
-                                        <input type="text" id="answer_1_1" name="questions[1][answers][1][answer]" class="form-control" >
+                                        <input type="text" id="answer_1_1" name="questions[1][answers][1][answer]"
+                                            class="form-control">
                                         <input type="hidden" name="questions[1][answers][1][is_correct]" value="0">
                                     </div>
                                     <div class="mb-3">
                                         <label for="answer_1_2" class="form-label">Đáp án sai:</label>
-                                        <input type="text" id="answer_1_2" name="questions[1][answers][2][answer]" class="form-control" >
+                                        <input type="text" id="answer_1_2" name="questions[1][answers][2][answer]"
+                                            class="form-control">
                                         <input type="hidden" name="questions[1][answers][2][is_correct]" value="0">
                                     </div>
                                     <div class="mb-3">
                                         <label for="answer_1_3" class="form-label">Đáp án sai:</label>
-                                        <input type="text" id="answer_1_3" name="questions[1][answers][3][answer]" class="form-control" >
+                                        <input type="text" id="answer_1_3" name="questions[1][answers][3][answer]"
+                                            class="form-control">
                                         <input type="hidden" name="questions[1][answers][3][is_correct]" value="0">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="d-flex justify-content-between mb-4">
-                                <button type="button" id="add-question" class="btn btn-outline-primary">Thêm câu hỏi</button>
+                                <button type="button" id="add-question" class="btn btn-outline-primary">Thêm câu
+                                    hỏi</button>
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center mb-4">
@@ -233,7 +242,8 @@
                 const questionNumber = index + 1;
                 block.querySelector('h5').textContent = `Câu hỏi ${questionNumber}`;
                 block.querySelector('label[for^="question_"]').setAttribute('for', `question_${questionNumber}`);
-                block.querySelector('input[name^="questions["]').setAttribute('name', `questions[${questionNumber}][question]`);
+                block.querySelector('input[name^="questions["]').setAttribute('name',
+                    `questions[${questionNumber}][question]`);
                 block.querySelector('input[id^="question_"]').setAttribute('id', `question_${questionNumber}`);
 
                 const answers = block.querySelectorAll('div[class="mb-3"]');
@@ -244,8 +254,10 @@
 
                     answerLabel.setAttribute('for', `answer_${questionNumber}_${answerIndex}`);
                     answerInput.setAttribute('id', `answer_${questionNumber}_${answerIndex}`);
-                    answerInput.setAttribute('name', `questions[${questionNumber}][answers][${answerIndex}][answer]`);
-                    answerHiddenInput.setAttribute('name', `questions[${questionNumber}][answers][${answerIndex}][is_correct]`);
+                    answerInput.setAttribute('name',
+                        `questions[${questionNumber}][answers][${answerIndex}][answer]`);
+                    answerHiddenInput.setAttribute('name',
+                        `questions[${questionNumber}][answers][${answerIndex}][is_correct]`);
                 });
             });
         }
@@ -262,12 +274,9 @@
             if (title === '') {
                 isValid = false;
                 showError(titleField, 'Tiêu đề không được để trống.');
-            } else if (title.length > 50) {
+            } else if (title.length > 200) {
                 isValid = false;
-                showError(titleField, 'Tiêu đề không được quá 50 ký tự.');
-            } else if (/[^a-zA-Z0-9\s]/.test(title)) {
-                isValid = false;
-                showError(titleField, 'Tiêu đề không được chứa ký tự đặc biệt.');
+                showError(titleField, 'Tiêu đề không được quá 200 ký tự.');
             }
 
             // Kiểm tra các câu hỏi và đáp án
@@ -277,12 +286,10 @@
                 if (question === '') {
                     isValid = false;
                     showError(questionField, 'Câu hỏi không được để trống.');
-                } else if (question.length > 50) {
+                } else if (question.length > 200) {
                     isValid = false;
-                    showError(questionField, 'Câu hỏi không được quá 50 ký tự.');
-                } else if (/[^a-zA-Z0-9\s]/.test(question)) {
-                    isValid = false;
-                    showError(questionField, 'Câu hỏi không được chứa ký tự đặc biệt.');
+                    showError(questionField, 'Câu hỏi không được quá 200 ký tự.');
+
                 }
 
                 const answers = [];
@@ -291,12 +298,9 @@
                     if (answer === '') {
                         isValid = false;
                         showError(answerField, 'Đáp án không được để trống.');
-                    } else if (answer.length > 250) {
+                    } else if (answer.length > 200) {
                         isValid = false;
-                        showError(answerField, 'Đáp án không được quá 250 ký tự.');
-                    } else if (/[^a-zA-Z0-9\s]/.test(answer)) {
-                        isValid = false;
-                        showError(answerField, 'Đáp án không được chứa ký tự đặc biệt.');
+                        showError(answerField, 'Đáp án không được quá 200 ký tự.');
                     } else {
                         answers.push(answer);
                     }

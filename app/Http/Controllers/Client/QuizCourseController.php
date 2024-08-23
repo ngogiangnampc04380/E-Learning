@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreQuizFinalRequest;
 use App\Models\Course;
 use App\Models\ResultFinal;
+
 class QuizCourseController extends Controller
 {
 
@@ -36,53 +37,53 @@ class QuizCourseController extends Controller
 
     // Lưu quiz mới
     public function store(Request  $request, $course_id)
-{
-    // Lấy số thứ tự lớn nhất hiện tại
-    $maxNumber = QuizFinal::where('course_id', $course_id)->max('number');
+    {
+        // Lấy số thứ tự lớn nhất hiện tại
+        $maxNumber = QuizFinal::where('course_id', $course_id)->max('number');
 
-    $quizFinal = new QuizFinal();
-    $quizFinal->course_id = $course_id;
-    $quizFinal->mentor_id = Auth::user()->mentor->id;
-    $quizFinal->title = $request->title;
-    $quizFinal->number = $maxNumber + 1; // Số thứ tự mới
-    $quizFinal->save();
+        $quizFinal = new QuizFinal();
+        $quizFinal->course_id = $course_id;
+        $quizFinal->mentor_id = Auth::user()->mentor->id;
+        $quizFinal->title = $request->title;
+        $quizFinal->number = $maxNumber + 1; // Số thứ tự mới
+        $quizFinal->save();
 
-    // Thêm câu hỏi và câu trả lời (như cũ)
-    foreach ($request->questions as $questionData) {
-        $question = new QuestionFinal();
-        $question->quiz_final_id = $quizFinal->id;
-        $question->questions = $questionData['question'];
-        $question->save();
+        // Thêm câu hỏi và câu trả lời (như cũ)
+        foreach ($request->questions as $questionData) {
+            $question = new QuestionFinal();
+            $question->quiz_final_id = $quizFinal->id;
+            $question->questions = $questionData['question'];
+            $question->save();
 
-        foreach ($questionData['answers'] as $answerData) {
-            $answer = new AnswerFinal();
-            $answer->question_id = $question->id;
-            $answer->answer_text = $answerData['answer'];
-            $answer->is_correct = $answerData['is_correct'];
-            $answer->save();
+            foreach ($questionData['answers'] as $answerData) {
+                $answer = new AnswerFinal();
+                $answer->question_id = $question->id;
+                $answer->answer_text = $answerData['answer'];
+                $answer->is_correct = $answerData['is_correct'];
+                $answer->save();
+            }
         }
+        return redirect()->route('client.editCourse', ['id' => $course_id])
+            ->with('success', 'Quiz đã được tạo thành công!');
     }
-    return redirect()->route('client.editCourse', ['id' => $course_id])
-        ->with('success', 'Quiz đã được tạo thành công!');
-}
-public function updateOrderQuizFinal(Request $request, $course_id)
-{
-    $quizIds = $request->input('quiz_ids');
+    public function updateOrderQuizFinal(Request $request, $course_id)
+    {
+        $quizIds = $request->input('quiz_ids');
 
-    foreach ($quizIds as $index => $id) {
-        $quiz = QuizFinal::find($id);
-        if ($quiz) {
-            $quiz->number = $index + 1;
-            $quiz->save();
+        foreach ($quizIds as $index => $id) {
+            $quiz = QuizFinal::find($id);
+            if ($quiz) {
+                $quiz->number = $index + 1;
+                $quiz->save();
+            }
         }
+
+        return response()->json(['success' => true]);
     }
 
-    return response()->json(['success' => true]);
-}
 
 
-
-    public function edit( $quiz_id)
+    public function edit($quiz_id)
     {
         $quizFinal = QuizFinal::with('questions.answers')->findOrFail($quiz_id);
         return view('client.quiz.edit-quiz-final', compact('quizFinal'));
@@ -105,7 +106,7 @@ public function updateOrderQuizFinal(Request $request, $course_id)
         // Cập nhật tiêu đề quiz
         $quizFinal->title = $request->input('title');
         $quizFinal->save();
-// Xóa các câu hỏi cũ
+        // Xóa các câu hỏi cũ
         $quizFinal->questions()->delete();
 
         // Thêm các câu hỏi và đáp án mới
@@ -158,39 +159,61 @@ public function updateOrderQuizFinal(Request $request, $course_id)
 
     public function submitQuiz(Request $request, $quiz_id)
     {
+        // Lấy quiz và các câu hỏi liên quan
         $quizFinal = QuizFinal::with('questions.answers')->findOrFail($quiz_id);
+
         $score = 0;
         $totalQuestions = $quizFinal->questions->count();
         $userAnswers = $request->except('_token'); // Lấy tất cả các câu trả lời của người dùng
 
         foreach ($quizFinal->questions as $question) {
-            $selectedAnswer = $request->input('question_' . $question->id);
+            $selectedAnswerId = $request->input('question_' . $question->id);
 
             // Kiểm tra câu trả lời đúng
-            if ($question->answers()->where('id', $selectedAnswer)->where('is_correct', true)->exists()) {
+            if ($question->answers()->where('id', $selectedAnswerId)->where('is_correct', true)->exists()) {
                 $score++;
             }
         }
 
+        // Tính điểm theo thang điểm 100 và làm tròn đến 2 chữ số thập phân
+        $scaledScore = number_format(($score / $totalQuestions) * 100, 2);
+
+        // Tạo mảng kết quả để truyền vào view
         $result = [
-            'score' => $score,
+            'score' => $scaledScore,
             'totalQuestions' => $totalQuestions,
-            'percentage' => ($score / $totalQuestions) * 100
+            'percentage' => $scaledScore
         ];
 
-        // Lưu kết quả vào bảng results_final
-        ResultFinal::create([
-            'user_id' => Auth::id(), // Id của người dùng hiện tại
-            'quiz_final_id' => $quiz_id,
-'course_id' => $quizFinal->course_id, // Thêm course_id
-            'score' => $score,
-        ]);
+        // Tìm kết quả hiện tại của người dùng cho bài kiểm tra này
+        $existingResult = ResultFinal::where('user_id', Auth::id())
+            ->where('quiz_final_id', $quiz_id)
+            ->first();
+
+        if ($existingResult) {
+            // Nếu đã có kết quả, cập nhật điểm số nếu điểm mới cao hơn
+            if ($scaledScore > $existingResult->score) {
+                $existingResult->update([
+                    'score' => $scaledScore,
+                ]);
+            }
+        } else {
+            // Nếu chưa có kết quả, tạo mới bản ghi
+            ResultFinal::create([
+                'user_id' => Auth::id(),
+                'quiz_final_id' => $quiz_id,
+                'course_id' => $quizFinal->course_id,
+                'score' => $scaledScore,
+            ]);
+        }
 
         // Lưu câu trả lời của người dùng vào session
         session()->put('user_answers', $userAnswers);
 
+        // Trả về view với kết quả và câu trả lời
         return view('client.quiz.quiz-result', compact('quizFinal', 'result', 'userAnswers'));
     }
+
     public function quizResult($id, $score)
     {
         $quizFinal = QuizFinal::with(['questions.answers', 'course'])->findOrFail($id);
@@ -199,6 +222,4 @@ public function updateOrderQuizFinal(Request $request, $course_id)
 
         return view('client.quiz.quiz-result', compact('quizFinal', 'score', 'questions', 'userAnswers'));
     }
-
-
 }
