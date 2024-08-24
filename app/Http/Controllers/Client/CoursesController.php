@@ -178,7 +178,19 @@ class CoursesController extends Controller
         if (!auth()->check()) {
             return redirect()->route('login');
         }
-        $chapter_id =
+        $user = Auth::user();
+
+        // Kiểm tra nếu người dùng đã đăng ký khóa học hay chưa
+        $isRegistered = DB::table('course_users')
+            ->where('user_id', $user->id)
+            ->where('course_id', $id)
+            ->exists();
+    
+        // Nếu người dùng chưa đăng ký, chuyển hướng về trang trước đó với thông báo lỗi
+        if (!$isRegistered) {
+            return redirect()->back()->with('error', 'Bạn chưa đăng ký khóa học này.');
+        }
+    
 
 
             $data = DB::table('courses')
@@ -199,7 +211,7 @@ class CoursesController extends Controller
 
         $chapterLessons = [];
         $firstLessonVideo = null;
-        $Lessonname  = null;
+        
         foreach ($chapters as $chapter) {
             $lessons = DB::table('lessons')
                 ->where('chapter_id', $chapter->chapterID)
@@ -208,12 +220,10 @@ class CoursesController extends Controller
 
             $chapterLessons[$chapter->chapterID] = $lessons;
 
-            if (is_null($firstLessonVideo) && $lessons->isNotEmpty()) {
-                $firstLessonVideo = 'https://storage.googleapis.com/webent01/Video-ENT/' . $lessons->first()->lessonvideo;
+            if (is_null($firstLessonVideo)) {
+                $firstLessonVideo = Storage::url('public/' . $data->thumbnail);
             }
-            if (is_null($Lessonname) && $lessons->isNotEmpty()) {
-                $Lessonname = $lessons->first()->lessonname;
-            }
+        
         }
         $selectedLesson = null;
         if ($lesson_id) {
@@ -234,21 +244,7 @@ class CoursesController extends Controller
                 ->toArray();
         }
         //lấy dữ liệu của khóa học
-        $les = DB::table('lessons')
-            ->join('chapters', 'lessons.chapter_id', '=', 'chapters.id') // Join bảng lessons và chapters dựa trên chapter_id
-            ->join('courses', 'chapters.course_id', '=', 'courses.id') // Join bảng chapters và courses dựa trên course_id
-            ->select('lessons.*') // Chọn tất cả các cột từ bảng lessons
-            ->where('courses.id', '=', $data->id) // Điều kiện chỉ lấy những bản ghi có courses.id bằng $data->id
-            ->count(); // Lấy dữ liệu
-
-        // lấy dữ liệu của video đã hoàn thành
-        $les2 = DB::table('video_done')
-            ->join('chapters', 'video_done.chapter_id', '=', 'chapters.id') // Join bảng lessons và chapters dựa trên chapter_id
-            ->join('courses', 'chapters.course_id', '=', 'courses.id') // Join bảng chapters và courses dựa trên course_id
-            ->select('video_done.*') // Chọn tất cả các cột từ bảng lessons
-            ->where('courses.id', '=', $data->id) // Điều kiện chỉ lấy những bản ghi có courses.id bằng $data->id
-            ->count();
-
+       
         $quizFinals = DB::table('quiz_finals')
             ->where('course_id', $data->id)
             ->select('id', 'title')
@@ -256,7 +252,7 @@ class CoursesController extends Controller
 
 
 
-        return view('client.courses.lesson', compact('data', 'checklesson', 'chapters', 'chapterLessons', 'Lessonname', 'firstLessonVideo', 'selectedLesson', 'quizFinals', 'les', 'les2'));
+        return view('client.courses.lesson', compact('data', 'checklesson', 'chapters', 'chapterLessons',  'firstLessonVideo', 'selectedLesson', 'quizFinals' ));
     }
 
 

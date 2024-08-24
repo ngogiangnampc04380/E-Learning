@@ -1,6 +1,4 @@
-<div class="page-content instructor-page-content">
-    <div class="container">
-        <div class="row">
+
             <!-- Left -->
             <div class="col-xl-3 col-lg-4 col-md-12 theiaStickySidebar">
                 <div class="settings-widget dash-profile">
@@ -66,6 +64,11 @@
                             <li class="nav-item {{ request()->is('instructor-student-grid.html') ? 'active' : '' }}">
                                 <a href="{{ route('client.my-student') }}" class="nav-link">
                                     <i class="feather-users"></i> Quản lí học viên
+                                </a>
+                            </li>
+                            <li class="nav-item {{ request()->is('instructor-student-grid.html') ? 'active' : '' }}">
+                                <a href="{{ route('client.banking.edit',auth()->user()->mentor->id) }}" class="nav-link">
+                                    <i class="feather-users"></i> thông tin banking
                                 </a>
                             </li>
                         @endif

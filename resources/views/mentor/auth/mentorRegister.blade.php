@@ -5,9 +5,6 @@
 
             <div class="col-md-6 login-bg">
                 <div class="owl-carousel login-slide owl-theme owl-loaded owl-drag">
-
-
-
                     <div class="owl-stage-outer">
                         <div class="owl-stage"
                             style="transform: translate3d(-3798px, 0px, 0px); transition: all 0.25s ease 0s; width: 5318px;">
@@ -120,16 +117,23 @@
                             <h1>Đăng ký mentor</h1>
                             <form action="{{route('mentor-register')}}" method="POST">
                                 @csrf
+                                <div class="form-group">
+                                    <label class="form-control-label">Tên chủ thẻ</label>
+                                    <input type="text" name="name" placeholder="Nhập tên chủ thẻ" class="form-control"oninput="enter_data()">
+                                </div>
                             <div class="form-group">
-                            <label class="form-control-label">Họ và tên</label>
-                            <input type="text" id="email" name="name" class="form-control" placeholder="Nhập họ và tên" oninput="enter_data()">
-                            <div class="error_message">
-                                @error('name')
-                                <span style="color: red;font-weight:lighter">{{$message}}</span>
-                                <br>
+                            <label class="form-control-label">Name Banking</label>
+                            <input type="text" id="name_banking" name="name_banking"class="form-control" placeholder="Nhập tên ngân hàng" oninput="enter_data()">
+                            <ul id="suggestions" style=" max-height: 200px; overflow-y: auto; list-style-type: none;padding-left: 0; display: none;">
+                            </ul>
+                            </div>  
+                            <div class="form-group">
+                                <label class="form-control-label">ID Banking</label>
+                                <input type="text" name="id_banking" placeholder="Nhập số tài khoản" class="form-control"oninput="enter_data()">
+                                @error('id_banking')
+                                <div class="error">{{ $message }}</div>
                             @enderror
                             </div>
-                            </div>  
                             
                             <div class="d-grid">
                             <button class="btn btn-primary btn-start" type="submit" disabled >tiếp theo ></button>
@@ -144,7 +148,7 @@
         </div>
     </div>
     <script>
-        var btn_login = document.querySelector('.btn-start');
+    var btn_login = document.querySelector('.btn-start');
     var inputs = (document.querySelectorAll('input[oninput="enter_data()"]'))
     var inputs_length = inputs.length
     function enter_data(){
@@ -159,5 +163,47 @@
         if(check_)    btn_login.removeAttribute('disabled');
     
     }
+    // ----------------const name_banking
+
+    const banks = [
+    "Vietcombank",
+    "VietinBank",
+    "BIDV",
+    "VIB",
+    "Techcombank",
+    "MB Bank",
+    "ACB",
+    "Sacombank",
+    "VPBank",
+    "HDBank",
+    "LienVietPostBank"
+];
+
+const input = document.getElementById('name_banking');
+const suggestions = document.getElementById('suggestions');
+
+input.addEventListener('input', function() {
+    const query = this.value.toLowerCase().trim();
+    suggestions.innerHTML = '';
+
+    if (query) {
+        const filteredBanks = banks.filter(bank => bank.toLowerCase().includes(query));
+        filteredBanks.forEach(bank => {
+            const li = document.createElement('li');
+            li.textContent = bank;
+            li.style.cursor = 'pointer';
+            li.addEventListener('click', function() {
+                input.value = bank;
+                suggestions.innerHTML = '';
+                suggestions.style.display = 'none';
+            });
+            suggestions.appendChild(li);
+        });
+
+        suggestions.style.display = filteredBanks.length ? 'block' : 'none';
+    } else {
+        suggestions.style.display = 'none';
+    }
+});
     </script>
 @endsection

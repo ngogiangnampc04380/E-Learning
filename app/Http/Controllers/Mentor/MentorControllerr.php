@@ -31,23 +31,59 @@ class MentorControllerr extends Controller
     {
         $request->validate(
             [
-                'name' => ['required', 'min:2', 'max:40', 'regex:/[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$/'],
+                'id_banking' => [
+                    'regex:/^[0-9]+$/',
+                    'unique:mentors,id_banking', 
+                ],
             ],
             [
-                'name.required' => 'Vui lòng nhập tên.',
-                'name.min' => 'Tên ít nhất phải :min ký tự!',
-                'name.max' => 'Tên không được vượt quá :max ký tự!',
-                'name.regex' => 'Tên không được chứa ký tự đặc biệt!',
-
+                'id_banking.regex' => 'Số ngân hàng chỉ được chứa số.',
+                'id_banking.unique' => 'Số ngân hàng đã tồn tại.',
             ]
         );
 
         Mentor::create([
             'user_id' => auth()->id(),
             'name' => $request->name,
+            'name_banking' => $request->name_banking,
+            'id_banking' => $request->id_banking,
+        ]);
+        return redirect()->route('upload-id-card');
+    }
+    public function edit($id)
+    {
+        $mentor = Mentor::findOrFail($id);
+        return view('mentor.profile.edit-banking', compact('mentor'));
+    }
+
+    // Xử lý việc cập nhật
+    public function update(Request $request, $id)
+    {
+        // Validate the request
+        $request->validate(
+            [
+                'id_banking' => [
+                    'regex:/^[0-9]+$/',
+                    'unique:mentors,id_banking,' . $id, // Exclude current record
+                ],
+               
+            ],
+            [
+                'id_banking.regex' => 'Số ngân hàng chỉ được chứa số.',
+                'id_banking.unique' => 'Số ngân hàng đã tồn tại.',
+                
+            ]
+        );
+
+        // Find the mentor and update
+        $mentor = Mentor::findOrFail($id);
+        $mentor->update([
+            'name' => $request->name,
+            'name_banking' => $request->name_banking,
+            'id_banking' => $request->id_banking,
         ]);
 
-        return redirect()->route('upload-id-card');
+        return redirect()->back()->with('success', 'Thông tin ngân hàng đã được cập nhật.');
     }
     public function profile()
     {
@@ -55,9 +91,6 @@ class MentorControllerr extends Controller
         $user = Auth::user();
         return view('mentor.profile.profile');
     }
-
-
-
     public function upload_ID_Card(Request $request)
     {
 

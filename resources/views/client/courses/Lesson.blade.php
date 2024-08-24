@@ -166,13 +166,15 @@
                 <div class="col-lg-9 mb-4">
                     <div class="student-widget lesson-introduction">
                         <div class="lesson-widget-group">
-                            <h2 id="lesson-title">{{ $Lessonname }}</h2>
+                            <h2 id="lesson-title"></h2>
                             <input type="hidden" id="courseID" name="courseID" value="">
                             <input type="hidden" id="chapterID" name="chapterID" value="">
                             <input type="hidden" id="lessonID" name="lessonID" value="">
                             {{-- <input type="hidden" id="completed" name ="completed" value="1"> --}}
                             <div class="ratio ratio-16x9">
-                                <video id="lesson-video" controls>
+                                <img id="lesson-thumbnail" src="{{ Storage::url('public/' . $data->thumbnail) }}"
+                                    alt="Course Thumbnail" style="width: 100%; border-radius: 15px; display: block;">
+                                <video id="lesson-video" controls style="display: none;">
                                     <source src="{{ $firstLessonVideo }}" type="video/mp4">
                                 </video>
                             </div>
@@ -182,19 +184,39 @@
                 <!-- Sidebar -->
                 <div class="col-lg-3">
                     <div class="lesson-group">
+
                         @php
+                            $les = DB::table('lessons')
+                                ->join('chapters', 'lessons.chapter_id', '=', 'chapters.id') // Join bảng lessons và chapters dựa trên chapter_id
+                                ->join('courses', 'chapters.course_id', '=', 'courses.id') // Join bảng chapters và courses dựa trên course_id
+                                ->select('lessons.*') // Chọn tất cả các cột từ bảng lessons
+                                ->where('courses.id', '=', $data->id) // Điều kiện chỉ lấy những bản ghi có courses.id bằng $data->id
+                                ->count(); // Lấy dữ liệu
+
+                            // lấy dữ liệu của video đã hoàn thành
+                            $les2 = DB::table('video_done')
+                                ->join('chapters', 'video_done.chapter_id', '=', 'chapters.id') // Join bảng lessons và chapters dựa trên chapter_id
+                                ->where('user_id', auth()->user()->id)
+                                ->join('courses', 'chapters.course_id', '=', 'courses.id') // Join bảng chapters và courses dựa trên course_id
+                                ->select('video_done.*') // Chọn tất cả các cột từ bảng lessons
+                                ->where('courses.id', '=', $data->id) // Điều kiện chỉ lấy những bản ghi có courses.id bằng $data->id
+                                ->count();
                             $count_quizz = DB::table('quiz_results')
                                 ->where('course_id', $data->id)
+                                ->where('user_id', auth()->user()->id)
                                 ->where('score', '>=', 60)
                                 ->count();
                             $count_quizz2 = DB::table('quizzes')
+                                // ->where('user_id', auth()->user()->id)
                                 ->where('course_id', $data->id)
                                 ->count();
                             $count_final = DB::table('results_final')
+                                ->where('user_id', auth()->user()->id)
                                 ->where('course_id', $data->id)
                                 ->where('score', '>=', 80)
                                 ->count();
                             $count_final2 = DB::table('quiz_finals')
+                                // ->where('user_id', auth()->user()->id)
                                 ->where('course_id', $data->id)
                                 ->count();
                         @endphp
@@ -377,7 +399,15 @@ $bucketName = 'entweb01';
                 path: url.toString()
             }, '', url.toString());
 
-            document.getElementById('lesson-video').src = lessonVideo;
+            var videoElement = document.getElementById('lesson-video');
+            var imgElement = document.getElementById('lesson-thumbnail');
+
+            // Đặt nguồn video mới
+            videoElement.src = lessonVideo;
+
+            // Ẩn ảnh thumbnail và hiển thị video
+            imgElement.style.display = 'none';
+            videoElement.style.display = 'block';
             document.getElementById('lesson-title').innerText = lessonName;
 
             // var courseid = document.getAttribute('courseid');

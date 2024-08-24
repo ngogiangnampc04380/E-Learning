@@ -177,6 +177,11 @@ Route::prefix('client')->name('client.')->group(function () {
     // -----------------------Mentor-------------------------
     Route::get("/my-student", [StudentController::class, "index"])->name("my-student");
     Route::get('/my-student/{userId}/courses', [StudentController::class, 'getCoursesByStudent'])->name('mentor.student.courses');
+    // Route để hiển thị form chỉnh sửa
+Route::get('/banking/edit/{id}', [MentorControllerr::class, 'edit'])->name('banking.edit');
+
+// Route để xử lý việc cập nhật
+Route::post('/banking/update/{id}', [MentorControllerr::class, 'update'])->name('banking.update');
     // -------------------------------resetPassword------------------------------
 
     Route::get("/reset-password", [PasswordController::class, "resetpassword"])->name("reset-password");
