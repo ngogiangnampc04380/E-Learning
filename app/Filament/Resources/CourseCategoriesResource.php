@@ -70,13 +70,13 @@ class CourseCategoriesResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->label('Tên danh mục')
                     ->sortable()
-                    ->limit(30)
-                    ->suffix('...'),
+                    ->limit(30),
+                    // ->suffix('...')
                 Tables\Columns\TextColumn::make('slug')
                     ->label('Đường dẫn')
                     ->sortable()
-                    ->limit(30)
-                    ->suffix('...'),
+                    ->limit(30),
+                    // ->suffix('...')
 
             ])
 

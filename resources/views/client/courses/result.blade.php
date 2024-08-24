@@ -130,9 +130,9 @@
                             @php
                                 $correctAnswer = $question->answers->where('is_correct', 1)->first();
                             @endphp
-                            @if($correctAnswer)
+                            {{-- @if($correctAnswer)
                                 <span class="color-text blue-text">Đáp án đúng: {{ $correctAnswer->answer_text }}</span>
-                            @endif
+                            @endif --}}
                             <ul class="list-unstyled">
                                 @foreach ($question->answers as $answer)
                                     @php
@@ -166,9 +166,7 @@
                         </div>
                     @endforeach
 
-                    <a href="#" class="btn btn-primary btn-back">
-                        Quay lại danh sách quiz
-                    </a>
+                    <a href="{{ route('client.lesson', ['id' => $course->id]) }}" class="btn btn-primary">Quay lại</a>
                 </div>
             </div>
         </div>

@@ -188,9 +188,7 @@
                         </div>
                     @endforeach
 
-                    <a href="#" class="btn btn-primary btn-back">
-                        Quay lại danh sách quiz
-                    </a>
+                    <a href="{{ route('client.lesson', ['id' => $course->id]) }}" class="btn btn-primary">Quay lại</a>
                 </div>
             </div>
         </div>

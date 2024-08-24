@@ -183,18 +183,37 @@
                 <div class="col-lg-3">
                     <div class="lesson-group">
                         @php
+                            $les = DB::table('lessons')
+                                ->join('chapters', 'lessons.chapter_id', '=', 'chapters.id') // Join bảng lessons và chapters dựa trên chapter_id
+                                ->join('courses', 'chapters.course_id', '=', 'courses.id') // Join bảng chapters và courses dựa trên course_id
+                                ->select('lessons.*') // Chọn tất cả các cột từ bảng lessons
+                                ->where('courses.id', '=', $data->id) // Điều kiện chỉ lấy những bản ghi có courses.id bằng $data->id
+                                ->count(); // Lấy dữ liệu
+
+                            // lấy dữ liệu của video đã hoàn thành
+                            $les2 = DB::table('video_done')
+                                ->join('chapters', 'video_done.chapter_id', '=', 'chapters.id') // Join bảng lessons và chapters dựa trên chapter_id
+                                ->where('user_id', auth()->user()->id)
+                                ->join('courses', 'chapters.course_id', '=', 'courses.id') // Join bảng chapters và courses dựa trên course_id
+                                ->select('video_done.*') // Chọn tất cả các cột từ bảng lessons
+                                ->where('courses.id', '=', $data->id) // Điều kiện chỉ lấy những bản ghi có courses.id bằng $data->id
+                                ->count();
                             $count_quizz = DB::table('quiz_results')
                                 ->where('course_id', $data->id)
+                                ->where('user_id', auth()->user()->id)
                                 ->where('score', '>=', 60)
                                 ->count();
                             $count_quizz2 = DB::table('quizzes')
+                                // ->where('user_id', auth()->user()->id)
                                 ->where('course_id', $data->id)
                                 ->count();
                             $count_final = DB::table('results_final')
+                                ->where('user_id', auth()->user()->id)
                                 ->where('course_id', $data->id)
                                 ->where('score', '>=', 80)
                                 ->count();
                             $count_final2 = DB::table('quiz_finals')
+                                // ->where('user_id', auth()->user()->id)
                                 ->where('course_id', $data->id)
                                 ->count();
                         @endphp
@@ -287,11 +306,9 @@ $bucketName = 'entweb01';
                                                         $quizz_result = DB::table('quiz_results')
                                                             // ->where('score', '>=', 60)
                                                             ->where('user_id', auth()->user()->id)
-                                                            ->where('quiz_id', $quizzes2->id)
+                                                            ->where('quiz_id', $quiz->id)
                                                             ->first();
-
                                                         // dd($quizz_result);
-
                                                     @endphp
                                                     @php
 
@@ -367,7 +384,6 @@ $bucketName = 'entweb01';
     </section>
 
     <script>
-        //cua th Trường
         function loadLesson(event, id, chapterID, lessonID, lessonName, lessonVideo) {
             event.preventDefault();
 
@@ -380,15 +396,12 @@ $bucketName = 'entweb01';
             document.getElementById('lesson-video').src = lessonVideo;
             document.getElementById('lesson-title').innerText = lessonName;
 
-            // var courseid = document.getAttribute('courseid');
-            // var chapterid = document.getAttribute('chapterid');
-            // var lessonid = document.getAttribute('lessonid');
-
             document.getElementById('courseID').value = id;
             document.getElementById('chapterID').value = chapterID;
             document.getElementById('lessonID').value = lessonID;
-            // console.log(courseid, chapterid, lessonid)
 
+            // Reset lại sự kiện cho video mới
+            attachVideoEvents();
         }
 
         window.addEventListener('popstate', function(event) {
@@ -396,19 +409,19 @@ $bucketName = 'entweb01';
             const lessonID = url.searchParams.get('lesson-id');
 
             if (lessonID) {
-
                 const lessonLink = document.querySelector(`a[data-lesson-id="${lessonID}"]`);
                 if (lessonLink) {
-                    loadLesson(null, lessonID, lessonLink.dataset.title, lessonLink.dataset.video);
+                    loadLesson(null, lessonLink.dataset.courseid, lessonLink.dataset.chapterid, lessonID, lessonLink
+                        .dataset.title, lessonLink.dataset.video);
                 }
             }
         });
 
-        //chức năng bắt quá trình video
-        document.addEventListener('DOMContentLoaded', function() {
+        function attachVideoEvents() {
             var video = document.getElementById('lesson-video');
-            var intervalId;
-            //đẩy lên database
+            var intervalId, lastTimeIntervalId;
+            var lastTime = 0; // Thời gian cuối cùng mà người dùng đã xem
+
             function saveProgress() {
                 var currentTime = video.currentTime;
                 var duration = video.duration;
@@ -418,7 +431,7 @@ $bucketName = 'entweb01';
                 var lessonId = document.getElementById('lessonID').value;
 
                 var xhr = new XMLHttpRequest();
-                var url = percent >= 95 ? '/video-progress-complete' : '/video-progress';
+                var url = percent = 100 ? '/video-progress-complete' : '/video-progress';
                 xhr.open('POST', url, true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute(
@@ -439,18 +452,58 @@ $bucketName = 'entweb01';
                 console.log('Current time: ' + currentTime, 'Percent: ' + percent, courseId, chapterId, lessonId);
             }
 
-            video.addEventListener('play', function() {
-                intervalId = setInterval(saveProgress, 5000); // Gửi dữ liệu sau mỗi 5 giây
-            });
+            function updateLastTime() {
+                lastTime = video.currentTime; // Cập nhật thời gian hiện tại mỗi 2 giây
+                console.log('Last time updated: ' + lastTime);
+            }
 
-            video.addEventListener('pause', function() {
+            video.removeEventListener('play', startSavingProgress);
+            video.removeEventListener('pause', stopAndSaveProgress);
+            video.removeEventListener('seeked', preventForwardSeeking);
+            video.removeEventListener('ended', markLessonComplete);
+
+            function startSavingProgress() {
+                intervalId = setInterval(saveProgress, 15000); // Gửi dữ liệu sau mỗi 15 giây
+                lastTimeIntervalId = setInterval(updateLastTime, 10000); // Cập nhật lastTime mỗi 10 giây
+            }
+
+            function stopAndSaveProgress() {
                 clearInterval(intervalId);
+                clearInterval(lastTimeIntervalId); // Dừng cập nhật lastTime
                 saveProgress();
-            });
+            }
 
-            video.addEventListener('seeked', function() {
-                saveProgress(); // Gửi dữ liệu khi người dùng tua video
-            });
+            function preventForwardSeeking() {
+                if (video.currentTime > lastTime + 1) { // Chặn tua nhanh hơn lastTime + 1 giây
+                    video.currentTime = lastTime; // Quay lại vị trí trước đó
+                    // saveProgress();
+                }
+            }
+
+            function markLessonComplete() {
+                clearInterval(intervalId);
+                clearInterval(lastTimeIntervalId); // Dừng cập nhật lastTime
+                saveProgress(); // Gửi dữ liệu khi video kết thúc
+
+                // Hiển thị dấu tích sau khi người dùng xem xong video
+                var lessonId = document.getElementById('lessonID').value;
+                var checkIcon = document.querySelector(`a[data-lesson-id="${lessonId}"]`).nextElementSibling;
+
+                if (checkIcon) {
+                    checkIcon.classList.remove('hidden-check');
+                    checkIcon.classList.add('completed-check');
+                }
+            }
+
+            video.addEventListener('play', startSavingProgress);
+            video.addEventListener('pause', stopAndSaveProgress);
+            video.addEventListener('seeked', preventForwardSeeking); // Chặn tua nhanh về phía trước, cho phép tua lùi
+            video.addEventListener('ended', markLessonComplete);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            attachVideoEvents();
+
             var completedLessons =
                 @json($checklesson); // Giả sử bạn có mảng $completedLessons chứa các lessonID đã hoàn thành
             completedLessons.forEach(function(lessonId) {
@@ -461,22 +514,6 @@ $bucketName = 'entweb01';
                     checkIcon.classList.add('completed-check');
                 }
             });
-
-            video.addEventListener('ended', function() {
-                clearInterval(intervalId);
-                saveProgress(); // Gửi dữ liệu khi video kết thúc
-
-                // Hiển thị dấu tích sau khi người dùng xem xong video
-                var lessonId = document.getElementById('lessonID').value;
-                var checkIcon = document.querySelector(`a[data-lesson-id="${lessonId}"]`)
-                    .nextElementSibling;
-
-                if (checkIcon) {
-                    checkIcon.classList.remove('hidden-check');
-                    checkIcon.classList.add('completed-check');
-                }
-            });
-
         });
     </script>
 @endsection

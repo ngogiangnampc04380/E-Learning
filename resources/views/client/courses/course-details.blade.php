@@ -63,10 +63,6 @@
                                     <img src="/assets-client/img/icon/icon-01.svg" alt>
                                     <p>{{ $totalLessons }} Bài học</p>
                                 </div>
-                                {{--                                <div class="cou-info"> --}}
-                                {{--                                    <img src="/assets-client/img/icon/icon-02.svg" alt> --}}
-                                {{--                                    <p>9 giờ 30 phút</p> --}}
-                                {{--                                </div> --}}
                                 <div class="cou-info">
                                     <img src="/assets-client/img/icon/people.svg" alt>
                                     @if ($totalStudents == 0)

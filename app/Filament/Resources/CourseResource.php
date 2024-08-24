@@ -39,13 +39,13 @@ class CourseResource extends Resource
                 Tables\Columns\TextColumn::make('category.name')
                     ->label('Danh mục')
                     ->sortable()
-                    ->limit(30)
-                    ->suffix('...'),
+                    ->limit(30),
+                    // ->suffix('...')
                 Tables\Columns\TextColumn::make('name')
                     ->label('Tên khóa học')
                     ->searchable()
-                    ->limit(30)
-                    ->suffix('...'),
+                    ->limit(30),
+                    // ->suffix('...')
                 Tables\Columns\ImageColumn::make('thumbnail')
                     ->label('Hình ảnh')
                     ->searchable(),

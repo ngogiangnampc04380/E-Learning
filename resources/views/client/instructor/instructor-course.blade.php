@@ -74,6 +74,20 @@
                                     </a>
                                 </li>
                             @endif
+                            @if (auth()->user()->role == 2)
+                                <li class="nav-item {{ request()->routeIs('sale.add-sale') ? 'active' : '' }}">
+                                    <a href="{{ route('sale.add-sale', auth()->user()->id) }}" class="nav-link">
+                                        <i class="feather-book"></i> Quản lí mã giảm giá
+                                    </a>
+                                </li>
+                            @endif
+                            @if (auth()->user()->role == 2)
+                                <li class="nav-item {{ request()->routeIs('sale.show-sale') ? 'active' : '' }}">
+                                    <a href="{{ route('sale.show-sale', auth()->user()->id) }}" class="nav-link">
+                                        <i class="feather-book"></i> xem mã giảm giá
+                                    </a>
+                                </li>
+                            @endif
                             <div class="instructor-title">
                                 <h3>Cài đặt tài khoản</h3>
                             </div>

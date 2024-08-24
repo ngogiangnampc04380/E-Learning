@@ -20,8 +20,6 @@ use App\Notifications\DeclineCourseNotification;
 use Filament\Tables\Columns\ViewColumn;
 use Filament\Infolists\Components\Section;
 use Filament\Tables\Enums\FiltersLayout;
-// use App\Models\User;
-
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\RepeatableEntry;
@@ -53,67 +51,67 @@ class CheckCourseResource extends Resource
                 Tables\Columns\TextColumn::make('category.name')
                     ->label('Danh mục')
                     ->sortable()
-                    ->limit(30)
-                    ->suffix('...'),
+                    ->searchable()
+                    ->limit(30),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Tên khóa học')
+                    ->sortable()
                     ->searchable()
-                    ->limit(30)
-                    ->suffix('...'),
+                    ->limit(30),
                 Tables\Columns\ImageColumn::make('thumbnail')
                     ->label('Hình ảnh')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('price')
                     ->label('Giá')
-                    ->money('VND')
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable()
+                    ->money('VND'),
                 Tables\Columns\TextColumn::make('mentor.user.name')
                     ->label('Giảng viên')
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\ViewColumn::make('video_demo')
                     ->label('Video xem trước')
                     ->view('components.video')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('enrollment')
                     ->label('Số người đăng ký')
-                    ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable()
+                    ->numeric(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
+                    ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
+                    ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-
             ->filters([
                 Filter::make('status')
                     ->query(fn(Builder $query): Builder => $query->where('status', 1))
                     ->default(1),
             ])
-
             ->hiddenFilterIndicators()
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\Action::make('accept')
                     ->label('Duyệt')
                     ->action(function (Course $record) {
-                        // Vô hiệu hóa tài khoản
+                        // Cập nhật trạng thái khóa học
                         $record->status = 2;
                         $record->save();
 
                         // Gửi thông báo qua email
-                        // Lấy thông tin Mentor
                         $mentor = $record->mentor;
-
                         if ($mentor) {
-                            // Lấy thông tin User từ Mentor
                             $user = $mentor->user;
-
                             if ($user) {
-                                // Gửi thông báo qua email
                                 $user->notify(new AcceptCourseNotification($record));
                             }
                         }
@@ -148,7 +146,6 @@ class CheckCourseResource extends Resource
                     })
                     ->requiresConfirmation()
                     ->color('danger'),
-                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([
@@ -156,6 +153,7 @@ class CheckCourseResource extends Resource
                 // ]),
             ]);
     }
+
     public static function infolist(Infolist $infolist): Infolist
     {
         return $infolist

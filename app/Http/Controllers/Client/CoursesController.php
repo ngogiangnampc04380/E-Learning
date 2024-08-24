@@ -234,20 +234,7 @@ class CoursesController extends Controller
                 ->toArray();
         }
         //lấy dữ liệu của khóa học
-        $les = DB::table('lessons')
-            ->join('chapters', 'lessons.chapter_id', '=', 'chapters.id') // Join bảng lessons và chapters dựa trên chapter_id
-            ->join('courses', 'chapters.course_id', '=', 'courses.id') // Join bảng chapters và courses dựa trên course_id
-            ->select('lessons.*') // Chọn tất cả các cột từ bảng lessons
-            ->where('courses.id', '=', $data->id) // Điều kiện chỉ lấy những bản ghi có courses.id bằng $data->id
-            ->count(); // Lấy dữ liệu
-
-        // lấy dữ liệu của video đã hoàn thành
-        $les2 = DB::table('video_done')
-            ->join('chapters', 'video_done.chapter_id', '=', 'chapters.id') // Join bảng lessons và chapters dựa trên chapter_id
-            ->join('courses', 'chapters.course_id', '=', 'courses.id') // Join bảng chapters và courses dựa trên course_id
-            ->select('video_done.*') // Chọn tất cả các cột từ bảng lessons
-            ->where('courses.id', '=', $data->id) // Điều kiện chỉ lấy những bản ghi có courses.id bằng $data->id
-            ->count();
+        
 
         $quizFinals = DB::table('quiz_finals')
             ->where('course_id', $data->id)
@@ -256,7 +243,7 @@ class CoursesController extends Controller
 
 
 
-        return view('client.courses.lesson', compact('data', 'checklesson', 'chapters', 'chapterLessons', 'Lessonname', 'firstLessonVideo', 'selectedLesson', 'quizFinals', 'les', 'les2'));
+        return view('client.courses.lesson', compact('data', 'checklesson', 'chapters', 'chapterLessons', 'Lessonname', 'firstLessonVideo', 'selectedLesson', 'quizFinals'));
     }
 
 
@@ -352,9 +339,10 @@ class CoursesController extends Controller
 
         // Lưu câu trả lời của người dùng vào session
         session(['user_answers' => $userAnswers]);
+        $course = $quiz->course; // Giả sử bạn đã định nghĩa mối quan hệ khóa học trong mô hình Quiz
 
         // Trả về view với kết quả và câu trả lời
-        return view('client.courses.result', compact('quiz', 'result', 'userAnswers'));
+        return view('client.courses.result', compact('quiz', 'result', 'userAnswers','course'));
     }
 
     public function quizResult($id, $score)
@@ -692,7 +680,7 @@ class CoursesController extends Controller
 
         $chapter->save();
 
-        return redirect()->back()->with('success', 'Đã thêm chương mới tự động!');
+        return redirect()->back()->with('success', 'Đã thêm chương mới thành công!');
     }
 
 

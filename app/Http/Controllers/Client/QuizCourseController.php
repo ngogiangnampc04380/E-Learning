@@ -209,9 +209,9 @@ class QuizCourseController extends Controller
 
         // Lưu câu trả lời của người dùng vào session
         session()->put('user_answers', $userAnswers);
-
+        $course = $quizFinal->course; // Giả sử bạn đã định nghĩa mối quan hệ khóa học trong mô hình Quiz
         // Trả về view với kết quả và câu trả lời
-        return view('client.quiz.quiz-result', compact('quizFinal', 'result', 'userAnswers'));
+        return view('client.quiz.quiz-result', compact('quizFinal', 'result', 'userAnswers', 'course'));
     }
 
     public function quizResult($id, $score)

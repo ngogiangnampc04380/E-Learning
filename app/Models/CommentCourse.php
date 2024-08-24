@@ -24,10 +24,6 @@ class CommentCourse extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-    /**
-     * Get the course that the comment is related to.
-     */
     public function course()
     {
         return $this->belongsTo(Course::class);

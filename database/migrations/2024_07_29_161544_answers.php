@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('answer',255);
             $table->unsignedBigInteger('question_id');
             $table->foreign('question_id')->references('id')->on('questions')->cascadeOnDelete();
-            $table->enum('is_correct', ['true', 'false']);
+            $table->boolean('is_correct');
             $table->timestamps();
         });
     }
