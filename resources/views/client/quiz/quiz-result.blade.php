@@ -2,7 +2,6 @@
 
 @section('content')
     <style>
-        /* Container giữ các mô tả màu sắc */
         .circles-container {
             display: flex;
             flex-direction: column;
@@ -13,7 +12,6 @@
             /* Khoảng cách giữa mô tả màu sắc và phần chi tiết câu trả lời */
         }
 
-        /* Định dạng cho các mô tả màu sắc */
         .circle-description {
             display: flex;
             align-items: center;
@@ -25,14 +23,12 @@
             /* Màu chữ cho dễ đọc */
         }
 
-        /* Định dạng các màu sắc */
         .color-text {
             font-weight: bold;
             /* Đậm hơn để dễ phân biệt */
             display: inline;
         }
 
-        /* Định dạng cho từng màu sắc */
         .blue-text {
             color: #007BFF;
             /* Màu xanh dương tươi sáng */
@@ -48,36 +44,81 @@
             /* Màu xanh lá cây tươi sáng */
         }
 
-        /* Định dạng câu trả lời */
         .answer {
             margin-bottom: 10px;
             font-size: 16px;
             /* Kích thước chữ của câu trả lời */
         }
 
+        <<<<<<< HEAD
+
         /* Định dạng văn bản đáp án đúng */
         .correct-answer {
             font-weight: bold;
             color: #333;
+
             /* Màu chữ cho dễ đọc */
-        }
+            =======.answer-correct {
+                color: #28A745;
+                /* Màu xanh lá cây cho đáp án đúng */
+            }
 
-        /* Nút quay lại danh sách quiz */
-        .btn-back {
-            display: inline-block;
-            margin-top: 20px;
-            text-align: center;
-            padding: 10px 20px;
-            border-radius: 5px;
-            background-color: #007BFF;
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-        }
+            .answer-incorrect {
+                color: #DC3545;
+                /* Màu đỏ cho đáp án sai */
+            }
 
-        .btn-back:hover {
-            background-color: #0056b3;
-        }
+            .answer-user-selected {
+                font-weight: bold;
+            }
+
+            .no-answer {
+                color: #DC3545;
+                /* Màu đỏ cho thông báo chưa chọn đáp án */
+                font-weight: bold;
+                >>>>>>>e904dfb ([Client] Cập nhật quiz lần thứ N)
+            }
+
+            .btn-back {
+                display: inline-block;
+                margin-top: 20px;
+                text-align: center;
+                padding: 10px 20px;
+                border-radius: 5px;
+                background-color: #007BFF;
+                color: #fff;
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+            .btn-back:hover {
+                background-color: #0056b3;
+            }
+
+            .green-text {
+                color: green;
+                font-weight: bold;
+            }
+
+            .red-text {
+                color: red;
+                font-weight: bold;
+            }
+
+            .blue-text {
+                color: blue;
+                font-weight: bold;
+            }
+
+            .no-answer {
+                color: grey;
+                font-weight: normal;
+            }
+
+            .correct-answer {
+                color: orange;
+                font-weight: bold;
+            }
     </style>
     <div class="container mt-5">
         <div class="row justify-content-center">
@@ -102,34 +143,44 @@
                     <h3>Chi tiết câu trả lời:</h3>
                     @foreach ($quizFinal->questions as $question)
                         <div class="mb-4">
-                            <h5>{{ $question->questions }}</h5>
+                            <h5>Câu hỏi {{ $loop->iteration }}: {{ $question->questions }}</h5>
                             <ul class="list-unstyled">
                                 @foreach ($question->answers as $answer)
                                     @php
                                         $userSelected =
-                                            isset($userAnswers[$question->id]) &&
-                                            $userAnswers[$question->id] == $answer->id;
+                                            isset($userAnswers['question_' . $question->id]) &&
+                                            $userAnswers['question_' . $question->id] == $answer->id;
                                         $isCorrect = $answer->is_correct;
                                     @endphp
                                     <li
-                                        class="answer {{ $userSelected && $isCorrect ? 'green-text' : ($userSelected ? 'red-text' : ($isCorrect ? 'blue-text' : '')) }}">
+                                        class="answer
+                                    {{ $userSelected && $isCorrect
+                                        ? 'green-text answer-user-selected'
+                                        : ($userSelected
+                                            ? 'red-text'
+                                            : ($isCorrect
+                                                ? 'blue-text'
+                                                : '')) }}">
                                         {{ $answer->answer_text }}
                                     </li>
                                 @endforeach
 
-                                {{-- Hiển thị đáp án đúng và thông báo nếu người dùng chưa chọn đáp án --}}
+                                {{-- Hiển thị thông báo nếu người dùng chưa chọn đáp án --}}
                                 @php
                                     $selectedAnswer = $question->answers
-                                        ->where('id', $userAnswers[$question->id] ?? null)
+                                        ->where('id', $userAnswers['question_' . $question->id] ?? null)
                                         ->first();
                                     $correctAnswer = $question->answers->where('is_correct', 1)->first();
-                                    $userNotSelected = !isset($userAnswers[$question->id]);
+                                    $userNotSelected = !isset($userAnswers['question_' . $question->id]);
                                 @endphp
                                 @if ($userNotSelected || (!$selectedAnswer && $correctAnswer))
-                                    <li
-                                        class="answer {{ $userNotSelected ? 'red-text correct-answer' : 'correct-answer' }}">
+                                    <li class="answer {{ $userNotSelected ? 'no-answer' : '' }}">
                                         @if ($userNotSelected)
                                             <span class="color-text red-text">Bạn chưa chọn đáp án cho câu hỏi này.</span>
+                                        @endif
+                                        @if ($correctAnswer && !$userNotSelected)
+                                            <span class="color-text blue-text">Đáp án đúng:
+                                                {{ $correctAnswer->answer_text }}</span>
                                         @endif
                                     </li>
                                 @endif

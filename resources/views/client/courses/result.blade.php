@@ -78,6 +78,31 @@
         .btn-back:hover {
             background-color: #0056b3;
         }
+        .green-text {
+            color: green;
+            font-weight: bold;
+        }
+
+        .red-text {
+            color: red;
+            font-weight: bold;
+        }
+
+        .blue-text {
+            color: blue;
+            font-weight: bold;
+        }
+
+        .no-answer {
+            color: grey;
+            font-weight: normal;
+        }
+
+        .correct-answer {
+            color: orange;
+            font-weight: bold;
+        }
+
     </style>
     <div class="container mt-5">
         <div class="row justify-content-center">
@@ -101,7 +126,13 @@
                     <h3>Chi tiết câu trả lời:</h3>
                     @foreach ($quiz->questions as $question)
                         <div class="mb-4">
-                            <h5>{{ $question->question }}</h5>
+                            <h5>Câu hỏi {{ $loop->iteration }}: {{ $question->question }}</h5>
+                            @php
+                                $correctAnswer = $question->answers->where('is_correct', 1)->first();
+                            @endphp
+                            @if($correctAnswer)
+                                <span class="color-text blue-text">Đáp án đúng: {{ $correctAnswer->answer_text }}</span>
+                            @endif
                             <ul class="list-unstyled">
                                 @foreach ($question->answers as $answer)
                                     @php

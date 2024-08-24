@@ -45,7 +45,7 @@
                             @foreach($questions as $index => $question)
                                 <div id="question{{ $index + 1 }}" class="mb-5 question position-relative"
                                      style="display: none;">
-                                    <h4 class="mb-4">{{ $question->question }}</h4>
+                                    <h4 class="mb-4">Câu hỏi {{ $loop->iteration }}:{{ $question->question }}</h4>
                                     <ul class="list-unstyled">
                                         @foreach($question->answers as $answer)
                                             <li class="mb-3">
