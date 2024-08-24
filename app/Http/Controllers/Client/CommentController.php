@@ -36,6 +36,9 @@ class CommentController  extends Controller
 
     public function store(Request $request)
     {
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'Bạn cần đăng nhập để bình luận.');
+        }
         // Xác thực dữ liệu
         $request->validate([
             'content' => 'required|string|max:1000',
@@ -81,6 +84,9 @@ public function destroy($id)
 }
 public function reply(Request $request, $id)
     {
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'Bạn cần đăng nhập để bình luận.');
+        }
         $request->validate([
             'content' => 'required|string|max:1000',
         ]);

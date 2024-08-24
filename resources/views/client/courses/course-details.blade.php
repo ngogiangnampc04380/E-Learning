@@ -39,7 +39,7 @@
                                 <div class="about-instructor">
                                     <div class="abt-instructor-img">
                                         <a href="javascript:void(0);" class="profile-info-img">
-                                            <img src="{{ $course->mentor->thumbnail ? Storage::url('public/' . $course->mentor->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"
+                                            <img src="{{ $course->mentor->user->thumbnail ? Storage::url('public/' . $course->mentor->user->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"
                                                 alt class="img-fluid">
                                         </a>
                                     </div>
@@ -121,7 +121,8 @@
                                 @foreach($comments as $comment)
                                     <div class="binh-luan-item mb-4 p-3 border rounded shadow-sm">
                                         <div class="binh-luan-header d-flex justify-content-between align-items-center mb-2">
-                                            <strong class="binh-luan-nguoi-danh-gia">{{ $comment->user->name }}</strong>
+                                            
+                                            <strong class="binh-luan-nguoi-danh-gia"> <img src="{{ $comment->user->thumbnail ? Storage::url('public/' . $comment->user->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}" alt="{{ $comment->user->name }}" class="rounded-circle mr-1 w-2" style="width: 30px; height: 30px;">{{ $comment->user->name }}</strong>
                                             <span class="binh-luan-ngay text-muted">{{ $comment->created_at->format('d/m/Y H:i') }}</span>
                                         </div>
                                         <div class="binh-luan-noi-dung mb-2">
