@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,7 @@ use Illuminate\Notifications\Notifiable;
 class Course extends Model
 {
     use HasFactory, Notifiable;
+
     protected $table = 'courses';
     protected $fillable = [
         'category_id',
@@ -29,22 +31,27 @@ class Course extends Model
     {
         return $this->hasMany(QuizFinal::class, 'course_id');
     }
-    public function category(): BelongsTo{
+
+    public function category(): BelongsTo
+    {
         return $this->belongsTo(Course_Category::class, 'category_id');
     }
-    public function chapters()
+
+    public function chapters(): HasMany
     {
         return $this->hasMany(Chapter::class);
     }
-    public function sales()
+
+    public function sales(): BelongsToMany
     {
-        return $this->hasMany(Sale::class);
+        return $this->belongsToMany(Sale::class, 'sale_pivots', 'course_id', 'sale_id');
     }
 
-    public function mentor()
+    public function mentor(): BelongsTo
     {
         return $this->belongsTo(Mentor::class, 'mentor_id');
     }
+
     public function students(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'course_users', 'course_id', 'user_id');

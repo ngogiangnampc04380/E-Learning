@@ -3,127 +3,32 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-xl-3 col-lg-4 col-md-12 theiaStickySidebar">
-                <div class="settings-widget dash-profile">
-                    <div class="settings-menu p-0">
-                        <div class="profile-bg">
-                            @if(in_array(auth()->user()->role, [0, 3]))
-                                <h5 class="text-muted mb-0">Học viên</h5>
-                            @elseif(auth()->user()->role == 1)
-                                <h5 class="text-muted mb-0">Quản trị viên</h5>
-                            @elseif(auth()->user()->role == 2)
-                                <h5 class="text-muted mb-0">Giảng viên</h5>
-                            @endif
-                            <img src="/assets-client/img/instructor-profile-bg.jpg" alt="">
-                            <div class="profile-img">
-                                <a href="">
-                                    <img
-                                        src="{{ auth()->user()->thumbnail ? Storage::url('public/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}"
-                                        alt="">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="profile-group">
-                            <div class="profile-name text-center">
-                                <h4><a href="">{{auth()->user()-> name}}</a></h4>
-                                @if(in_array(auth()->user()->role, [0, 3]))
-                                    <p class="text-muted mb-0">Học viên</p>
-                                @elseif(auth()->user()->role == 1)
-                                    <p class="text-muted mb-0">Quản trị viên</p>
-                                @elseif(auth()->user()->role == 2)
-                                    <p class="text-muted mb-0">Giảng viên</p>
-                                @endif
-                            </div>
-                            @if(auth()->user()->role == 2)
-                                <div class="go-dashboard text-center">
-                                    <a href="{{ route('client.create-course') }}" class="btn btn-primary">THÊM KHÓA HỌC MỚI</a>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-                <div class="settings-menu">
-                    <h3>Thông tin tài khoản</h3>
-                    <ul>
-                        <li class="nav-item {{ request()->routeIs('client.dashboard-profile') ? 'active' : '' }}">
-                            <a href="{{ route('client.dashboard-profile') }}" class="nav-link">
-                                <i class="feather-home"></i> Dữ liệu và thống kê
-                            </a>
-                        </li>
-                        @if(in_array(auth()->user()->role, [0, 2]))
-                            <li class="nav-item {{ request()->is('instructor-course') ? 'active' : '' }}">
-                                <a href="instructor-course.html" class="nav-link">
-                                    <i class="feather-shopping-bag"></i> Khóa học của tôi
-                                </a>
-                            </li>
-                        @endif
-                        @if(auth()->user()->role == 2)
-                            <li class="nav-item {{ request()->routeIs('client.instructor-course') ? 'active' : '' }}">
-                                <a href="{{ route('client.instructor-course',auth()->user()->id) }}" class="nav-link">
-                                    <i class="feather-book"></i> Quản lí khóa học
-                                </a>
-                            </li>
-                            <li class="nav-item {{ request()->is('instructor-student-grid.html') ? 'active' : '' }}">
-                                <a href="instructor-student-grid.html" class="nav-link">
-                                    <i class="feather-users"></i> Quản lí học viên
-                                </a>
-                            </li>
-                        @endif
-                        <div class="instructor-title">
-                            <h3>Cài đặt tài khoản</h3>
-                        </div>
-                        <li class="nav-item {{ request()->routeIs('client.user-profile') ? 'active' : '' }}">
-                            <a href="{{ route('client.user-profile') }}" class="nav-link">
-                                <i class="feather-settings"></i> Thông tin cá nhân
-                            </a>
-                        </li>
-                        @if(auth()->user()->role == 1)
-                            <div class="instructor-title">
-                                <h3>Quản trị viên</h3>
-                            </div>
-                            <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
-                                <a href="/admin" class="nav-link">
-                                    <i class="feather-cpu"></i> Quản trị website
-                                </a>
-                            </li>
-                        @endif
-                        <li class="nav-item">
-                            <a href="{{ route('client.reset-password') }}" class="nav-link">
-                                <i class="feather-log-out"></i> Đổi mật khẩu
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('logout') }}" class="nav-link">
-                                <i class="feather-log-out"></i> Đăng xuất
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('client.disable-account-form') }}" class="nav-link">
-                                <i class="feather-user-x"></i> Vô hiệu hóa tài khoản
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            @include('components.settingprofile')
 
             <div class="col-xl-9 col-lg-8 col-md-12 my-5">
-                <form action="{{ route('sale.update', $sale->id) }}" method="post">
+                <!-- Tiêu đề form -->
+                <h2 class="form-title" style="font-size: 24px; font-weight: 600; color: #007bff; margin-bottom: 20px;">Sửa mã giảm giá</h2>
+                
+                <!-- Form cập nhật mã giảm giá -->
+                <form action="{{ route('sale.update', $sale->id) }}" method="post" class="discount-form">
                     @csrf
                     @method('PUT') <!-- Phương thức PUT để cập nhật dữ liệu -->
-
+            
+                    <!-- Tiêu đề mã giảm giá -->
                     <div class="mb-3">
                         <label for="discount_title" class="form-label">Tiêu đề mã giảm giá</label>
-                        <input type="text" class="form-control" id="discount_title" name="discount_title" value="{{ $sale->discount_title }}" required>
-                        <div id="errorDiscountTitle" class="text-danger"></div>
+                        <input type="text" class="form-control" id="discount_title" name="discount_title" value="{{ $sale->discount_title }}" placeholder="Nhập tiêu đề mã giảm giá" required>
+                        <div id="errorDiscountTitle" class="invalid-feedback"></div>
                     </div>
-
+            
+                    <!-- Chọn khóa học giảm giá -->
                     <div class="mb-3">
                         <label for="course_id" class="form-label">Chọn các khóa học giảm giá</label>
                         <div class="custom-dropdown">
                             <div class="dropdown-display" id="dropdownDisplay">Chọn khóa học</div>
                             <div class="dropdown-options" id="dropdownOptions">
                                 @foreach($courses as $course)
-                                    <label>
+                                    <label class="dropdown-item">
                                         <input type="checkbox" name="courses[]" value="{{ $course->id }}"
                                             {{ in_array($course->id, $selectedCourses) ? 'checked' : '' }}>
                                         {{ $course->name }}
@@ -131,44 +36,51 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div id="errorCourses" class="text-danger"></div>
+                        <div id="errorCourses" class="invalid-feedback"></div>
                     </div>
-
+            
+                    <!-- % Giảm giá -->
                     <div class="mb-3">
                         <label for="discount_percent" class="form-label">% Giảm giá</label>
-                        <input type="number" class="form-control" id="discount_percent" name="discount_percent" value="{{ $sale->discount_percent }}" step="0.01" required>
-                        <div id="errorDiscountPercent" class="text-danger"></div>
+                        <input type="number" class="form-control" id="discount_percent" name="discount_percent" value="{{ $sale->discount_percent }}" step="0.01" placeholder="Nhập % giảm giá" required>
+                        <div id="errorDiscountPercent" class="invalid-feedback"></div>
                     </div>
-
+            
+                    <!-- Mã giảm giá -->
                     <div class="mb-3">
                         <label for="discount_code" class="form-label">Mã giảm giá</label>
-                        <input type="text" class="form-control" id="discount_code" name="discount_code" value="{{ $sale->discount_code }}" required>
-                        <div id="errorDiscountCode" class="text-danger"></div>
+                        <input type="text" class="form-control" id="discount_code" name="discount_code" value="{{ $sale->discount_code }}" placeholder="Nhập mã giảm giá" required>
+                        <div id="errorDiscountCode" class="invalid-feedback"></div>
                     </div>
-
+            
+                    <!-- Số lượng -->
                     <div class="mb-3">
                         <label for="quantity" class="form-label">Số lượng</label>
-                        <input type="number" class="form-control" id="quantity" name="quantity" value="{{ $sale->quantity }}" required>
-                        <div id="errorQuantity" class="text-danger"></div>
+                        <input type="number" class="form-control" id="quantity" name="quantity" value="{{ $sale->quantity }}" placeholder="Nhập số lượng" required>
+                        <div id="errorQuantity" class="invalid-feedback"></div>
                     </div>
-
+            
+                    <!-- Ngày bắt đầu -->
                     <div class="mb-3">
                         <label for="start_date" class="form-label">Ngày bắt đầu</label>
                         <input type="date" class="form-control" id="start_date" name="start_date"
                                value="{{ \Carbon\Carbon::parse($sale->start_date)->format('Y-m-d') }}" required>
-                        <div id="errorStartDate" class="text-danger"></div>
+                        <div id="errorStartDate" class="invalid-feedback"></div>
                     </div>
-
+            
+                    <!-- Ngày kết thúc -->
                     <div class="mb-3">
                         <label for="end_date" class="form-label">Ngày kết thúc</label>
                         <input type="date" class="form-control" id="end_date" name="end_date"
                                value="{{ \Carbon\Carbon::parse($sale->end_date)->format('Y-m-d') }}" required>
-                        <div id="errorEndDate" class="text-danger"></div>
+                        <div id="errorEndDate" class="invalid-feedback"></div>
                     </div>
-
+            
+                    <!-- Nút gửi -->
                     <button type="submit" class="btn btn-primary">Cập nhật mã giảm giá</button>
                 </form>
             </div>
+            
         </div>
     </div>
     <script>

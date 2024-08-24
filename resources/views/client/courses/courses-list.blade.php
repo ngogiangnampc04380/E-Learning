@@ -77,12 +77,15 @@
                                                                 class="btn btn-primary">Đăng Ký Ngay</a>
                                                         @endif
                                                     </div>
+                                                    
                                                 </div>
+                                                
                                                 <div class="course-info border-bottom-0 pb-0 d-flex align-items-center">
                                                     <div class="rating-img d-flex align-items-center">
                                                         <h3>{{ number_format($item->price) }} VNĐ</h3>
                                                     </div>
                                                 </div>
+                                                
                                                 <div class="course-category border-bottom-0 pb-2">
                                                     <span>Danh mục: <strong>{{ $item->category->name }}</strong></span>
                                                 </div>

@@ -47,7 +47,7 @@ class SaleController extends Controller
                 'sale_id' => $sale->id,
             ]);
         }
-        return redirect()->route('sale.add-sale')->with('success', 'Mã giảm giá đã được thêm thành công!');
+        return redirect()->route('sale.show-sale')->with('success', 'Mã giảm giá đã được thêm thành công!');
     }
     public function edit(Sale $sale)
     {

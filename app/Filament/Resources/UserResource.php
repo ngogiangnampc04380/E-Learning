@@ -38,10 +38,11 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->label('Tên người dùng')
                     ->required()
-                    ->regex('/^[\p{L}\s]+$/u')
+                    ->regex('/^[\p{L}\p{N}\s]+$/u
+')
                     ->validationMessages([
                         'required' => 'Vui lòng nhập tên người dùng',
-                        'regex'=> 'Chỉ nhập chữ cái', 
+                        'regex'=> 'Chỉ nhập chữ cái và số tự nhiên', 
                     ])
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')

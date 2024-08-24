@@ -282,6 +282,20 @@ button.bg-danger:hover {
 .dropdown-menu > li > a.text-danger {
 	color: #ff0100 !important;
 }
+.user-info {
+    text-align: center;
+}
+
+.user-name {
+    font-size: 20px;
+    color: black; /* Màu đen cho tên người dùng */
+    font-weight: bold; /* In đậm tên người dùng */
+}
+
+.user-role {
+    color: red; /* Màu đỏ cho vai trò */
+}
+
 .text-info,
 .dropdown-menu > li > a.text-info {
 	color: #009efb !important;

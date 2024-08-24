@@ -66,12 +66,23 @@
                                     <i class="feather-users"></i> Quản lí học viên
                                 </a>
                             </li>
+                            <li class="nav-item {{ request()->routeIs('sale.add-sale') ? 'active' : '' }}">
+                                <a href="{{ route('sale.add-sale', auth()->user()->id) }}" class="nav-link">
+                                    <i class="feather-book"></i> Quản lí mã giảm giá
+                                </a>
+                            </li>
+                            <li class="nav-item {{ request()->routeIs('sale.show-sale') ? 'active' : '' }}">
+                                <a href="{{ route('sale.show-sale', auth()->user()->id) }}" class="nav-link">
+                                    <i class="feather-book"></i> xem mã giảm giá
+                                </a>
+                            </li>
                             <li class="nav-item {{ request()->is('instructor-student-grid.html') ? 'active' : '' }}">
                                 <a href="{{ route('client.banking.edit',auth()->user()->mentor->id) }}" class="nav-link">
-                                    <i class="feather-users"></i> thông tin banking
+                                    <i class="feather-users"></i> Thông tin BANKING
                                 </a>
                             </li>
                         @endif
+                        
                         <div class="instructor-title">
                             <h3>Cài đặt tài khoản</h3>
                         </div>

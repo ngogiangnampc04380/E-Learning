@@ -89,7 +89,9 @@
                     </div>
                 </div>
             </div>
+            
         </div>
+        <img src="{{ asset('/img/quiz.gif') }}"  class="img-fluid" alt="Logo">
     </section>
 
     <div class="container mt-3" id="startQuizContainer">

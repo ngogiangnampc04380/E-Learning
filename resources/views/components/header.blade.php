@@ -972,28 +972,26 @@
                                         data-popper-placement="bottom-end">
                                         
                                         @if(in_array(auth()->user()->role, [0, 3]))
-                                        <p class="mb-0 text-center text-danger">
-                                            <strong>{{auth()->user()->name}}</strong>
-                                            <br>
-                                           <p class="text-center">Học viên</p>
-                                        </p>
-                                        
-                                        @elseif(auth()->user()->role == 1)
-                                        
-                                        <p class="mb-0 text-center text-danger">
-                                            <strong>{{auth()->user()->name}}</strong>
-                                            <br>
-                                           <p class="text-center">Quản trị viên</p>
-                                        </p>
-                                        
-                                        @elseif(auth()->user()->role == 2)
-                                        <p class="mb-0 text-center text-danger">
-                                            <strong>{{auth()->user()->name}}</strong>
-                                            <br>
-                                            Giảng viên
-                                        </p>
-                                        
-                                        @endif
+    <p class="mb-0 text-center user-info">
+        <strong class="user-name">{{ auth()->user()->name }}</strong>
+        <br>
+        <span class="user-role">Học viên</span>
+    </p>
+@elseif(auth()->user()->role == 1)
+    <p class="mb-0 text-center user-info">
+        <strong class="user-name">{{ auth()->user()->name }}</strong>
+        <br>
+        <span class="user-role">Quản trị viên</span>
+    </p>
+@elseif(auth()->user()->role == 2)
+    <p class="mb-0 text-center user-info">
+        <strong class="user-name">{{ auth()->user()->name }}</strong>
+        <br>
+        
+        <span class="user-role">Giảng viên</span>
+    </p>
+@endif
+
 
                                         @if(in_array(auth()->user()->role, [0, 3]))
                                         <a class="dropdown-item" href="{{ route('client.dashboard-profile') }}"><i

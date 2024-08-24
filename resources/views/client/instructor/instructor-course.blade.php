@@ -87,6 +87,11 @@
                                         <i class="feather-book"></i> xem mã giảm giá
                                     </a>
                                 </li>
+                                <li class="nav-item {{ request()->is('instructor-student-grid.html') ? 'active' : '' }}">
+                                    <a href="{{ route('client.banking.edit',auth()->user()->mentor->id) }}" class="nav-link">
+                                        <i class="feather-users"></i> Thông tin BANKING
+                                    </a>
+                                </li>
                             @endif
                             <div class="instructor-title">
                                 <h3>Cài đặt tài khoản</h3>

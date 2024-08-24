@@ -1,5 +1,39 @@
 @extends('client.layout.authMaster')
 @section('content')
+<style>
+    /* Gợi ý (Suggestions) */
+.suggestions {
+    position: absolute;
+    max-height: 200px;
+    overflow-y: auto;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    /* Đảm bảo width khớp với trường nhập liệu */
+    display: none; /* Ẩn danh sách gợi ý khi không có gợi ý */
+}
+
+.suggestions li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.suggestions li:hover {
+    background-color: #f1f1f1;
+}
+
+.suggestions li:last-child {
+    border-bottom: none;
+}
+
+</style>
     <div class="main-wrapper log-wrap">
         <div class="row">
 
@@ -15,8 +49,8 @@
                                     </div>
                                     <div class="mentor-course text-center">
                                         <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                                                            <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
+
                                     </div>
                                 </div>
                             </div>
@@ -27,8 +61,8 @@
                                     </div>
                                     <div class="mentor-course text-center">
                                         <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                                                            <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
+
                                     </div>
                                 </div>
                             </div>
@@ -39,8 +73,8 @@
                                     </div>
                                     <div class="mentor-course text-center">
                                         <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                                                            <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
+
                                     </div>
                                 </div>
                             </div>
@@ -51,8 +85,8 @@
                                     </div>
                                     <div class="mentor-course text-center">
                                         <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                                                            <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
+
                                     </div>
                                 </div>
                             </div>
@@ -63,8 +97,8 @@
                                     </div>
                                     <div class="mentor-course text-center">
                                         <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                                                            <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
+
                                     </div>
                                 </div>
                             </div>
@@ -75,8 +109,8 @@
                                     </div>
                                     <div class="mentor-course text-center">
                                         <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                                                            <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
+
                                     </div>
                                 </div>
                             </div>
@@ -87,8 +121,8 @@
                                     </div>
                                     <div class="mentor-course text-center">
                                         <h2>Chào mừng bạn đến với <br>các khóa học của ENT .</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                                                            <p>Khám phá ENT - Trang web tiên phong về khóa học tiếng Anh. Với đội ngũ giáo viên chất lượng và nội dung học tập đa dạng, chúng tôi sẽ giúp bạn tiến xa trên hành trình học tiếng Anh của mình.</p>
+
                                     </div>
                                 </div>
                             </div>
@@ -111,24 +145,26 @@
                             <div class="img-logo">
                                 <img src="/assets-client/img/logo.svg" class="img-fluid" alt="Logo">
                                 <div class="back-home">
-                                    <a href="{{ route('Dashboard-client') }}">Back to Home</a>
+                                    <a href="{{ route('Dashboard-client') }}">Quay về trang chủ</a>
                                 </div>
                             </div>      
-                            <h1>Đăng ký mentor</h1>
+                            <h1>Đăng ký mentor - Thông tin chuyển khoản</h1>
                             <form action="{{route('mentor-register')}}" method="POST">
                                 @csrf
                                 <div class="form-group">
                                     <label class="form-control-label">Tên chủ thẻ</label>
                                     <input type="text" name="name" placeholder="Nhập tên chủ thẻ" class="form-control"oninput="enter_data()">
                                 </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Tên ngân hàng</label>
+                                    <input type="text" id="name_banking" name="name_banking" class="form-control" placeholder="Nhập tên ngân hàng" oninput="enter_data()">
+                                    <ul id="suggestions" class="suggestions">
+                                        <!-- Các gợi ý sẽ xuất hiện ở đây -->
+                                    </ul>
+                                </div>
+                                
                             <div class="form-group">
-                            <label class="form-control-label">Name Banking</label>
-                            <input type="text" id="name_banking" name="name_banking"class="form-control" placeholder="Nhập tên ngân hàng" oninput="enter_data()">
-                            <ul id="suggestions" style=" max-height: 200px; overflow-y: auto; list-style-type: none;padding-left: 0; display: none;">
-                            </ul>
-                            </div>  
-                            <div class="form-group">
-                                <label class="form-control-label">ID Banking</label>
+                                <label class="form-control-label">Số tài khoản</label>
                                 <input type="text" name="id_banking" placeholder="Nhập số tài khoản" class="form-control"oninput="enter_data()">
                                 @error('id_banking')
                                 <div class="error">{{ $message }}</div>
@@ -136,7 +172,10 @@
                             </div>
                             
                             <div class="d-grid">
-                            <button class="btn btn-primary btn-start" type="submit" disabled >tiếp theo ></button>
+                                <button class="btn btn-primary btn-start" type="submit" disabled>
+                                    Tiếp theo <i class="fas fa-chevron-right"></i>
+                                  </button>
+                                  
                             </div>
                             </form>
                         </div>
@@ -166,18 +205,28 @@
     // ----------------const name_banking
 
     const banks = [
-    "Vietcombank",
-    "VietinBank",
-    "BIDV",
-    "VIB",
-    "Techcombank",
-    "MB Bank",
-    "ACB",
-    "Sacombank",
-    "VPBank",
-    "HDBank",
-    "LienVietPostBank"
+    "Vietcombank (Ngân hàng Ngoại thương Việt Nam)",
+    "VietinBank (Ngân hàng Công Thương Việt Nam)",
+    "BIDV (Ngân hàng Đầu tư và Phát triển Việt Nam)",
+    "VIB (Ngân hàng Quốc tế Việt Nam)",
+    "Techcombank (Ngân hàng Kỹ thương Việt Nam)",
+    "MB Bank (Ngân hàng Quân đội)",
+    "ACB (Ngân hàng Á Châu)",
+    "Sacombank (Ngân hàng Sài Gòn Thương Tín)",
+    "VPBank (Ngân hàng Việt Nam Thịnh Vượng)",
+    "HDBank (Ngân hàng Phát triển Nhà TP.HCM)",
+    "LienVietPostBank (Ngân hàng Liên Việt Post Bank)",
+    "Agribank (Ngân hàng Nông nghiệp và Phát triển Nông thôn Việt Nam)",
+    "Eximbank (Ngân hàng Xuất nhập khẩu Việt Nam)",
+    "HSBC (Ngân hàng HSBC Việt Nam)",
+    "Standard Chartered (Ngân hàng Standard Chartered Việt Nam)",
+    "Citibank (Ngân hàng Citibank Việt Nam)",
+    "ANZ (Ngân hàng ANZ Việt Nam)",
+    "JPMorgan Chase (Ngân hàng JPMorgan Chase Việt Nam)",
+    "Deutsche Bank (Ngân hàng Deutsche Bank Việt Nam)",
+    "UBS (Ngân hàng UBS Việt Nam)"
 ];
+
 
 const input = document.getElementById('name_banking');
 const suggestions = document.getElementById('suggestions');

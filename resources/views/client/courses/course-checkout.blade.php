@@ -47,7 +47,7 @@
                                             <input type="hidden" class="form-control" name="price" value="{{ $data->price }}">
                                         </div>
                                         <div class="col-lg-12 d-flex justify-content-between">
-                                            <a href="#" class="btn btn-secondary mr-2 prev">Quay lại</a>
+                                            <a href="{{ route('client.course-lists') }}" class="btn btn-secondary mr-2 prev">Quay lại</a>
                                             <button type="submit" class="btn btn-primary" ng-disabled="checkoutForm.$invalid">Tiến hành thanh toán</button>
                                         </div>
                                     </div>
@@ -65,12 +65,13 @@
                                      style="max-width: auto;">
 
                             </div>
+                            <hr>
                             <div>
-                                <h1 style="color:red">{{$data->name}}</h1>
-                                <span class="fs-5">{{number_format($data->price)}} VNĐ</span>
+                                <h1 style=" font-weight: bold;">{{$data->name}}</h1>
+                                <span  class="fs-5">Giá: <b style="color:red;"> {{number_format($data->price)}} VNĐ</b></span>
                             </div>
                             <div class="benifits-feature">
-                                <h3>Mô tả khóa học</h3>
+                                <h3>Mô tả khóa học:</h3>
                                 <ul>
                                     {{$data->description}}
                                 </ul>
