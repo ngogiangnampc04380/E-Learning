@@ -239,7 +239,7 @@
                                     @if ($course->video_demo)
                                         <div class="video-container">
                                             <video controls class="img-fluid rounded shadow-sm">
-                                                <source src="{{ Storage::url('public/' . $course->video_demo) }}"
+                                                <source src="{{ Storage::url('public/' . $course->video_demo) }}?v={{ time() }}"
                                                     type="video/mp4">
                                                 Trình duyệt của bạn không hỗ trợ thẻ video.
                                             </video>

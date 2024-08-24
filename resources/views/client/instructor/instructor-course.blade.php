@@ -288,7 +288,7 @@
                                                                         <video controls class="img-fluid rounded shadow-sm"
                                                                             style="max-width: 150px;">
                                                                             <source
-                                                                                src="{{ Storage::url('public/' . $post->video_demo) }}"
+                                                                                src="{{ Storage::url('public/' . $post->video_demo) }}?v={{ time() }}"
                                                                                 type="video/mp4">
                                                                             Trình duyệt của bạn không hỗ trợ thẻ video.
                                                                         </video>
@@ -371,7 +371,7 @@
                                                                         <video controls class="img-fluid rounded shadow-sm"
                                                                             style="max-width: 150px;">
                                                                             <source
-                                                                                src="{{ Storage::url('public/' . $post->video_demo) }}"
+                                                                                src="{{ Storage::url('public/' . $post->video_demo) }}?v={{ time() }}"
                                                                                 type="video/mp4">
                                                                             Trình duyệt của bạn không hỗ trợ thẻ video.
                                                                         </video>

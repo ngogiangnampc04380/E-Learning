@@ -237,7 +237,7 @@ background:    linear-gradient(#f1c232, #ffff00);">
                                 <input type="file" id="video_demo" name="video_demo" class="form-control">
                                 @if ($course->video_demo)
                                 <video controls class="img-fluid" style="max-width: 150px; margin-top: 10px;">
-                                    <source src="{{ Storage::url('public/'.$course->video_demo) }}" type="video/mp4">
+                                    <source src="{{ Storage::url('public/'.$course->video_demo) }}?v={{ time() }}" type="video/mp4">
                                     Trình duyệt của bạn không hỗ trợ thẻ video.
                                 </video>
                                 @endif
