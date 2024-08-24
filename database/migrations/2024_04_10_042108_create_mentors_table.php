@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('name');
+            $table->string('name_banking');
+            $table->string('id_banking');
             $table->foreign('user_id')->references('id')->on('users')->constrained()->cascadeOnDelete();
             $table->string('front_card')->nullable();
             $table->string('back_card')->nullable();

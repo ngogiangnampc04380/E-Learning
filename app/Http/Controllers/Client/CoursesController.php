@@ -178,10 +178,22 @@ class CoursesController extends Controller
         if (!auth()->check()) {
             return redirect()->route('login');
         }
-        $chapter_id =
+        $user = Auth::user();
+
+        // Kiểm tra nếu người dùng đã đăng ký khóa học hay chưa
+        $isRegistered = DB::table('course_users')
+            ->where('user_id', $user->id)
+            ->where('course_id', $id)
+            ->exists();
+
+        // Nếu người dùng chưa đăng ký, chuyển hướng về trang trước đó với thông báo lỗi
+        if (!$isRegistered) {
+            return redirect()->back()->with('error', 'Bạn chưa đăng ký khóa học này.');
+        }
 
 
-            $data = DB::table('courses')
+
+        $data = DB::table('courses')
             ->select('id', 'thumbnail', 'name', 'description')
             ->where('id', $id)
             ->first();
@@ -199,7 +211,7 @@ class CoursesController extends Controller
 
         $chapterLessons = [];
         $firstLessonVideo = null;
-        $Lessonname  = null;
+
         foreach ($chapters as $chapter) {
             $lessons = DB::table('lessons')
                 ->where('chapter_id', $chapter->chapterID)
@@ -208,11 +220,8 @@ class CoursesController extends Controller
 
             $chapterLessons[$chapter->chapterID] = $lessons;
 
-            if (is_null($firstLessonVideo) && $lessons->isNotEmpty()) {
-                $firstLessonVideo = 'https://storage.googleapis.com/webent01/Video-ENT/' . $lessons->first()->lessonvideo;
-            }
-            if (is_null($Lessonname) && $lessons->isNotEmpty()) {
-                $Lessonname = $lessons->first()->lessonname;
+            if (is_null($firstLessonVideo)) {
+                $firstLessonVideo = Storage::url('public/' . $data->thumbnail);
             }
         }
         $selectedLesson = null;
@@ -234,7 +243,7 @@ class CoursesController extends Controller
                 ->toArray();
         }
         //lấy dữ liệu của khóa học
-        
+
 
         $quizFinals = DB::table('quiz_finals')
             ->where('course_id', $data->id)
@@ -243,7 +252,7 @@ class CoursesController extends Controller
 
 
 
-        return view('client.courses.lesson', compact('data', 'checklesson', 'chapters', 'chapterLessons', 'Lessonname', 'firstLessonVideo', 'selectedLesson', 'quizFinals'));
+        return view('client.courses.lesson', compact('data', 'checklesson', 'chapters', 'chapterLessons',  'firstLessonVideo', 'selectedLesson', 'quizFinals'));
     }
 
 
@@ -342,7 +351,7 @@ class CoursesController extends Controller
         $course = $quiz->course; // Giả sử bạn đã định nghĩa mối quan hệ khóa học trong mô hình Quiz
 
         // Trả về view với kết quả và câu trả lời
-        return view('client.courses.result', compact('quiz', 'result', 'userAnswers','course'));
+        return view('client.courses.result', compact('quiz', 'result', 'userAnswers', 'course'));
     }
 
     public function quizResult($id, $score)
@@ -488,16 +497,18 @@ class CoursesController extends Controller
         $address = auth()->user()->address;
         $courseId = $request->course_id;
         $price = $request->price;
-        session([
-            'fullname' => $fullname,
-            'phone' => $phone,
-            'email' => $email,
-            'address' => $address,
-            'course_id' => $courseId,
-            'price' => $price,
-        ]);
-
-        return redirect()->route('client.course-pricing', ['id' => $courseId]);
+        if ($address) {
+            session([
+                'fullname' => $fullname,
+                'phone' => $phone,
+                'email' => $email,
+                'address' => $address,
+                'course_id' => $courseId,
+                'price' => $price,
+            ]);
+            return redirect()->route('client.course-pricing', ['id' => $courseId]);
+        }
+        return redirect()->route('client.user-profile-edit')->withSuccess( 'bạn cần nhập đầy đủ thông tin để thanh toán.');
     }
 
     public function pricing($id)
@@ -700,33 +711,32 @@ class CoursesController extends Controller
         if (empty($lessons)) {
             return redirect()->back()->with('error', 'Vui lòng thêm ít nhất một bài học.');
         }
-            foreach ($lessons as $index => $lessonData) {
-                if ($request->hasFile("lessons.{$index}.video")) {
-                    $video = $request->file("lessons.{$index}.video");
+        foreach ($lessons as $index => $lessonData) {
+            if ($request->hasFile("lessons.{$index}.video")) {
+                $video = $request->file("lessons.{$index}.video");
 
-                    $videoName = $video->hashName();
-                    $stream = fopen($video->getRealPath(), 'r');
-                    Storage::disk('gcs')->writeStream('folder-name/' . $videoName, $stream);
-                    if (is_resource($stream)) {
-                        fclose($stream);
-                    }
-                    $lesson = new Lesson();
-                    $lesson->name = $lessonData['name'];
-                    $lesson->path_video = $videoName;
-                    $lesson->chapter_id = $lessonData['chapter_id'];
-
-                    // Get the maximum number value for the current chapter and increment it
-                    $maxNumber = Lesson::where('chapter_id', $lessonData['chapter_id'])->max('number');
-                    $lesson->number = $maxNumber ? $maxNumber + 1 : 1;
-
-                    $lesson->save();
-                } else {
-                    return redirect()->back()->with('error', 'Vui lòng chọn video để tải lên cho bài học ' . ($index + 1));
+                $videoName = $video->hashName();
+                $stream = fopen($video->getRealPath(), 'r');
+                Storage::disk('gcs')->writeStream('folder-name/' . $videoName, $stream);
+                if (is_resource($stream)) {
+                    fclose($stream);
                 }
-            }
+                $lesson = new Lesson();
+                $lesson->name = $lessonData['name'];
+                $lesson->path_video = $videoName;
+                $lesson->chapter_id = $lessonData['chapter_id'];
 
-            return redirect()->back()->with('success', 'Đã thêm bài học thành công.');
-        
+                // Get the maximum number value for the current chapter and increment it
+                $maxNumber = Lesson::where('chapter_id', $lessonData['chapter_id'])->max('number');
+                $lesson->number = $maxNumber ? $maxNumber + 1 : 1;
+
+                $lesson->save();
+            } else {
+                return redirect()->back()->with('error', 'Vui lòng chọn video để tải lên cho bài học ' . ($index + 1));
+            }
+        }
+
+        return redirect()->back()->with('success', 'Đã thêm bài học thành công.');
     }
     public function updateOrder(Request $request)
     {

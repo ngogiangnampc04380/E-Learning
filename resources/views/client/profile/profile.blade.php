@@ -1,9 +1,12 @@
 @extends('client.layout.master')
 @section('content')
-    <div class="breadcrumb-bar">
-        <div class="container">
-        </div>
-    </div>
+@if ($message = Session::get('success'))
+@include('components.message', ['message' => $message, 'type' => 'success'])
+@endif
+
+    <div class="page-content">
+    <div class="container">
+        <div class="row">
     @include('components.settingprofile')
 
                 <!-- Right -->
