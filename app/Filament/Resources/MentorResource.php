@@ -30,7 +30,7 @@ class MentorResource extends Resource
     protected static ?string $navigationLabel = 'Duyệt giảng viên';
     protected static ?string $modelLabel = 'Giảng viên';
     protected static ?string $navigationGroup = 'Người dùng';
-    protected static ?int $navigationSort = 2;
+    // protected static ?int $navigationSort = 2;
 
     // public static function form(Form $form): Form
     // {

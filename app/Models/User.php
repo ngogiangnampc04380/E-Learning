@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,7 +11,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
-
 class User extends Authenticatable  implements FilamentUser
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -23,7 +21,7 @@ class User extends Authenticatable  implements FilamentUser
      */
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->role == 1 ;
+        return $this->role == 1;
     }
 
     protected $fillable = [
@@ -70,18 +68,17 @@ class User extends Authenticatable  implements FilamentUser
     {
         return $this->hasMany(CommentCourse::class);
     }
-
     public function mentor()
-{
-    return $this->hasOne(Mentor::class, 'user_id', 'id');
-}
-
+    {
+        return $this->hasOne(Mentor::class, 'user_id', 'id');
+    }
 
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
-    public function educations() {
+    public function educations()
+    {
         return $this->hasMany(Education::class);
     }
     public function courses(): BelongsToMany

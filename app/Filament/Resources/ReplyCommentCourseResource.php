@@ -20,6 +20,8 @@ class ReplyCommentCourseResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-oval-left-ellipsis';
     protected static ?string $navigationLabel = 'Trả lời bình luận';
     protected static ?string $modelLabel = 'Trả lời bình luận';
+    protected static ?string $navigationGroup = 'Bình luận';
+
     public static function form(Form $form): Form
     {
         return $form

@@ -20,6 +20,8 @@ class PostCategoryResource extends Resource
     protected static ?string $modelLabel = 'danh mục bài viết';
     protected static ?string $navigationIcon = 'heroicon-o-bookmark-square';
 
+    protected static ?string $navigationGroup = 'Bài viết';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -70,6 +72,8 @@ class PostCategoryResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

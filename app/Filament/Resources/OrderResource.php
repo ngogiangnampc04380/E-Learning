@@ -24,6 +24,9 @@ class OrderResource extends Resource
     protected static ?string $modelLabel = 'đơn hàng';
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
 
+    protected static ?string $navigationGroup = 'Khóa học';
+
+
     public static function form(Form $form): Form
     {
         return $form
@@ -54,6 +57,8 @@ class OrderResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 // Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

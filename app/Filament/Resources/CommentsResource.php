@@ -25,7 +25,10 @@ class CommentsResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-oval-left-ellipsis';
     protected static ?string $navigationLabel = 'Bình luận';
     protected static ?string $modelLabel = 'Bình luận';
-    protected static ?int $navigationSort = 3;
+    // protected static ?int $navigationSort = 3;
+
+    protected static ?string $navigationGroup = 'Bình luận';
+
     public static function form(Form $form): Form
     {
         return $form

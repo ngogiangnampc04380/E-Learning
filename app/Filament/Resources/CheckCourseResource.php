@@ -34,7 +34,10 @@ class CheckCourseResource extends Resource
     protected static ?string $navigationLabel = 'Khóa học chờ duyệt';
     protected static ?string $modelLabel = 'Khóa học chờ duyệt';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?int $navigationSort = 5;
+    // protected static ?int $navigationSort = 5;
+
+    protected static ?string $navigationGroup = 'Khóa học';
+
 
     public static function form(Form $form): Form
     {

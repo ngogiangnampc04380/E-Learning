@@ -32,6 +32,8 @@ class CourseResource extends Resource
     protected static ?string $navigationLabel = 'Khóa học';
     protected static ?string $modelLabel = 'khóa học';
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
+    protected static ?string $navigationGroup = 'Khóa học';
+
     public static function table(Table $table): Table
     {
         return $table

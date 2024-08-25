@@ -25,6 +25,8 @@ class CourseCategoriesResource extends Resource
     protected static ?string $modelLabel = 'danh mục khóa học';
     protected static ?string $navigationIcon = 'heroicon-o-paper-clip';
 
+    protected static ?string $navigationGroup = 'Khóa học';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -86,6 +88,7 @@ class CourseCategoriesResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

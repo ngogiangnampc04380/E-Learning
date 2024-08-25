@@ -20,6 +20,9 @@ class PostResource extends Resource
     protected static ?string $modelLabel = 'bài viết';
     protected static ?string $navigationIcon = 'heroicon-o-book-open';
 
+    protected static ?string $navigationGroup = 'Bài viết';
+
+
     public static function form(Form $form): Form
     {
         return $form
@@ -96,6 +99,8 @@ class PostResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
