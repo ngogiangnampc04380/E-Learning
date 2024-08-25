@@ -44,9 +44,22 @@
                     <h3>Thông tin tài khoản</h3>
                     <ul>
                         <li class="nav-item {{ request()->routeIs('client.dashboard-profile') ? 'active' : '' }}">
-                            <a href="{{ route('client.dashboard-profile') }}" class="nav-link">
-                                <i class="feather-home"></i> Dữ liệu và thống kê
+                           
+                            <a 
+                            @if (auth()->user()->role == 2)
+                            href="{{ route('client.dashboard-profile') }}"
+                            @else
+                            href="{{ route('client.user-profile') }}"
+                            @endif
+                             class="nav-link">
+                                <i class="feather-home"></i>
+                                @if (auth()->user()->role == 2)
+                               Dữ liệu và thống kê
+                                @else
+                               Thông tin người dùng
+                                @endif
                             </a>
+                           
                         </li>
                         @if (in_array(auth()->user()->role, [0, 2,3]))
                             <li class="nav-item {{ request()->is('instructor-course') ? 'active' : '' }}">
