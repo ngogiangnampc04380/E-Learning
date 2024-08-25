@@ -1018,12 +1018,12 @@
                                         @endif
                                         
                                         @elseif(auth()->user()->role== 2)
-                                        <a class="dropdown-item" href="{{route('client.mentor_detail', ['id' =>auth()->user()->id]) }}">
+                                        <a class="dropdown-item" href="{{route('client.mentor_detail', ['id' =>auth()->user()->mentor->id]) }}">
                                             <i class="feather-star me-1"></i> Giới thiệu
                                         </a>
-                                    <a class="dropdown-item" href="{{ route('client.dashboard-profile') }}">
+                                        <a class="dropdown-item" href="{{ route('client.dashboard-profile') }}">
                                         <i class="feather-star me-1"></i> Thông tin Giảng viên
-                                    </a>
+                                        </a>
                                     @elseif(auth()->user()->role== 1)
                                     <a class="dropdown-item" href="{{ route('client.dashboard-profile') }}">
                                         <i class="feather-star me-1"></i> Thông tin QTV

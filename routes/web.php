@@ -197,7 +197,7 @@ Route::post('/banking/update/{id}', [MentorControllerr::class, 'update'])->name(
 
 Route::get('/mentor-register', [MentorControllerr::class, "mentorRegister"])->name("mentor-register")->middleware('auth');
 Route::post('/mentor-register', [MentorControllerr::class, 'handleRegister'])->middleware('auth');
-Route::get('/mentor-profile', [MentorControllerr::class, "profile"])->name("mentor-profile");
+// Route::get('/mentor-profile', [MentorControllerr::class, "profile"])->name("mentor-profile");
 Route::get('/upload_ID_Card', [MentorControllerr::class, "upload_ID_Card"])->name("upload-id-card");
 Route::post('/upload_ID_Card', [MentorControllerr::class, 'handleUploadIdCard'])->middleware('auth');
 Route::post('/mentor/save-id-card-data', [MentorControllerr::class, 'saveIdCardData'])->name('mentor-save-id-card');

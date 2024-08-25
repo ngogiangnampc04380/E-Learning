@@ -34,92 +34,101 @@ class CoursesController extends Controller
 {
 
     public function list(Request $request)
-{
-    $query = $request->input('query');
-    $categoryIds = $request->input('categories', []);
-    $priceRanges = $request->input('price_range', []);
-    $sort = $request->input('sort');
+    {
+        $query = $request->input('query');
+        $categoryIds = $request->input('categories', []);
+        $priceRanges = $request->input('price_range', []);
+        $sort = $request->input('sort');
+        $courseIds = $request->input('course_ids', []); // Thêm input để lọc theo ID khóa học
 
-    // Đảm bảo $categoryIds và $priceRanges là mảng
-    $categoryIds = is_array($categoryIds) ? $categoryIds : [];
-    $priceRanges = is_array($priceRanges) ? $priceRanges : [];
+        // Đảm bảo $categoryIds, $priceRanges và $courseIds là mảng
+        $categoryIds = is_array($categoryIds) ? $categoryIds : [];
+        $priceRanges = is_array($priceRanges) ? $priceRanges : [];
+        $courseIds = is_array($courseIds) ? $courseIds : [];
 
-    $userPurchasedCourses = auth()->check() ? DB::table('course_users')
-        ->where('user_id', auth()->id())
-        ->pluck('course_id')
-        ->toArray() : [];
+        $userPurchasedCourses = auth()->check() ? DB::table('course_users')
+            ->where('user_id', auth()->id())
+            ->pluck('course_id')
+            ->toArray() : [];
 
-    $data = Course::where('status', 2)->with('mentor');
+        $data = Course::where('status', 2)->with('mentor', 'category'); // Thêm mối quan hệ category để sử dụng trong view
 
-    // Lọc theo tên khóa học
-    if ($query) {
-        $data = $data->where('name', 'LIKE', "%$query%");
+        // Lọc theo tên khóa học
+        if ($query) {
+            $data = $data->where('name', 'LIKE', "%$query%");
+        }
+
+        // Lọc theo danh mục
+        if (in_array('all', $categoryIds)) {
+            // Nếu chọn "Tất cả", không cần lọc theo danh mục
+        } elseif (!empty($categoryIds)) {
+            $data = $data->whereIn('category_id', $categoryIds);
+        }
+
+        // Lọc theo khoảng giá
+        if (!empty($priceRanges)) {
+            $data->where(function ($query) use ($priceRanges) {
+                foreach ($priceRanges as $range) {
+                    list($minPrice, $maxPrice) = explode('-', $range);
+                    $minPrice = (int)$minPrice * 1000; // Chuyển đổi sang đồng
+                    $maxPrice = (int)$maxPrice * 1000; // Chuyển đổi sang đồng
+                    $query->orWhereBetween('price', [$minPrice, $maxPrice]);
+                }
+            });
+        }
+
+        // Lọc theo ID khóa học
+        if (!empty($courseIds)) {
+            $data = $data->whereIn('id', $courseIds);
+        }
+
+        // Sắp xếp theo giá
+        if ($sort) {
+            $data = $data->orderBy('price', $sort);
+        } else {
+            $data = $data->inRandomOrder(); // Sắp xếp ngẫu nhiên nếu không có tùy chọn sắp xếp
+        }
+
+        $data = $data->paginate(10);
+
+        // Lấy danh sách các categories
+        $categories = Course_Category::all();
+
+        // Lấy 5 khóa học mới nhất
+        $latestCourses = Course::where('status', 2)->orderBy('created_at', 'desc')->take(5)->get();
+
+        // Thống kê số liệu cho từng khóa học
+        $courseStatistics = [];
+        foreach ($data as $course) {
+            $totalChapters = DB::table('chapters')->where('course_id', $course->id)->count();
+            $totalLessons = DB::table('lessons')
+                ->join('chapters', 'lessons.chapter_id', '=', 'chapters.id')
+                ->where('chapters.course_id', $course->id)
+                ->count();
+            $totalStudents = DB::table('course_users')->where('course_id', $course->id)->count();
+
+            $courseStatistics[$course->id] = [
+                'totalChapters' => $totalChapters,
+                'totalLessons' => $totalLessons,
+                'totalStudents' => $totalStudents
+            ];
+        }
+
+        // Truyền biến vào view
+        return view('client.courses.courses-list', [
+            'data' => $data,
+            'query' => $query,
+            'categories' => $categories,
+            'categoryIds' => $categoryIds,
+            'latestCourses' => $latestCourses,
+            'priceRanges' => $priceRanges,
+            'sort' => $sort,
+            'userPurchasedCourses' => $userPurchasedCourses,
+            'courseStatistics' => $courseStatistics, // Thêm thống kê khóa học vào view
+        ]);
     }
 
-    // Lọc theo danh mục
-    if (in_array('all', $categoryIds)) {
-        // Nếu chọn "Tất cả", không cần lọc theo danh mục
-    } elseif (!empty($categoryIds)) {
-        $data = $data->whereIn('category_id', $categoryIds);
-    }
 
-    // Lọc theo khoảng giá
-    if (!empty($priceRanges)) {
-        $data->where(function ($query) use ($priceRanges) {
-            foreach ($priceRanges as $range) {
-                list($minPrice, $maxPrice) = explode('-', $range);
-                $minPrice = (int)$minPrice * 1000; // Chuyển đổi sang đồng
-                $maxPrice = (int)$maxPrice * 1000; // Chuyển đổi sang đồng
-                $query->orWhereBetween('price', [$minPrice, $maxPrice]);
-            }
-        });
-    }
-
-    // Sắp xếp theo giá
-    if ($sort) {
-        $data = $data->orderBy('price', $sort);
-    } else {
-        $data = $data->inRandomOrder(); // Sắp xếp ngẫu nhiên nếu không có tùy chọn sắp xếp
-    }
-
-    $data = $data->paginate(10);
-
-    // Lấy danh sách các categories
-    $categories = Course_Category::all();
-
-    // Lấy 5 khóa học mới nhất
-    $latestCourses = Course::where('status', 2)->orderBy('created_at', 'desc')->take(5)->get();
-
-    // Thống kê số liệu
-    $totalStudents1 = DB::table('course_users')
-        ->count('user_id');
-
-    $totalChapters = DB::table('chapters')
-        ->count();
-
-    $totalLessons = DB::table('lessons')
-        ->count();
-
-    $totalStudents = DB::table('course_users')
-        ->distinct('user_id')
-        ->count('user_id');
-
-    // Truyền biến vào view
-    return view('client.courses.courses-list', [
-        'data' => $data,
-        'query' => $query,
-        'categories' => $categories,
-        'categoryIds' => $categoryIds,
-        'latestCourses' => $latestCourses,
-        'priceRanges' => $priceRanges,
-        'sort' => $sort,
-        'userPurchasedCourses' => $userPurchasedCourses,
-        'totalStudents1' => $totalStudents1,
-        'totalChapters' => $totalChapters,
-        'totalLessons' => $totalLessons,
-        'totalStudents' => $totalStudents,
-    ]);
-}
 
 
     public function detail($id)
@@ -530,7 +539,7 @@ class CoursesController extends Controller
             ]);
             return redirect()->route('client.course-pricing', ['id' => $courseId]);
         }
-        return redirect()->route('client.user-profile-edit')->withSuccess( 'bạn cần nhập đầy đủ thông tin để thanh toán.');
+        return redirect()->route('client.user-profile-edit')->withSuccess('bạn cần nhập đầy đủ thông tin để thanh toán.');
     }
 
     public function pricing($id)
@@ -800,17 +809,26 @@ class CoursesController extends Controller
 
     public function updateLesson(Request $request, $id)
     {
+
         $lesson = Lesson::findOrFail($id);
         $lesson->name = $request->input('name');
-        $categories = Course_Category::all();
-        // if ($request->hasFile('video')) {
-        //     $video = $request->file('video');
-        //     $videoName = $video->getClientOriginalName();
-        //     $video->storeAs('public/', $videoName);
-        //     $lesson->path_video = $videoName;
-        // }
-        $lesson->save();
 
+        if ($request->hasfile("video")) {
+            $video = $request->file("video");
+            $videoName = $video->hashName();
+            $stream = fopen($video->getRealPath(), 'r');
+            Storage::disk('gcs')->writeStream('folder-name/' . $videoName, $stream);
+            if (is_resource($stream)) {
+                fclose($stream);
+            }
+            $lesson->path_video = $videoName;
+            $lesson->name = $request->input('name');
+            $lesson->save();
+            return redirect()->back()->with('success', 'Đã cập nhật bài học!');
+        }
+
+
+        $lesson->save();
         return redirect()->back()->with('success', 'Đã cập nhật bài học!');
     }
 

@@ -1,5 +1,68 @@
 @extends('client.layout.authMaster')
 @section('content')
+<style>
+    .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Mờ nền */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Đặt z-index cao để thông báo nổi bật */
+}
+
+.fixed-message {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    max-width: 80%;
+    width: 400px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.fixed-message p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.contact-link {
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.contact-link:hover {
+    text-decoration: none;
+}
+
+.fixed-message::after {
+    /* content: 'X'; */
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #000;
+}
+
+</style>
 @if ($message = Session::get('success'))
 @include('components.message', ['message' => $message, 'type' => 'success'])
 @endif
@@ -153,8 +216,21 @@
                     </div>
                 </form>
             </div>
-            
+            @if ($errors->has('account_disabled'))
+            <div class="overlay">
+                <div class="alert alert-danger fixed-message">
+                    <button class="close-btn">&times;</button>
+                    <p>{{ $errors->first('account_disabled') }}</p>
+                    <p>Hãy <a href="mailto:chithiencs195@gmail.com" class="contact-link">gửi yêu cầu hỗ trợ</a>.</p>
+                </div>
+            </div>
+            @endif
+
+
+
+
         </div>
+
         <div class="google-bg text-center">
             <span><a href="{{route('login.google')}}">Đăng nhập với</a></span>
             <div class="sign-google">
@@ -187,7 +263,31 @@
             if (check_) btn_login.removeAttribute('disabled');
 
         }
+        document.addEventListener('DOMContentLoaded', function () {
+    // Hiển thị và ẩn thông báo tự động sau 8 giây
+    const overlays = document.querySelectorAll('.overlay');
+    overlays.forEach(overlay => {
+        setTimeout(() => {
+            overlay.style.opacity = 0;
+            setTimeout(() => {
+                overlay.remove();
+            }, 500); // Thời gian trễ để thông báo biến mất sau khi opacity được giảm
+        }, 8000); // Hiển thị thông báo trong 8 giây
+    });
+
+    // Xử lý nút đóng cho các thông báo
+    const closeButtons = document.querySelectorAll('.close-btn');
+    closeButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            button.closest('.overlay').remove();
+        });
+    });
+});
+
+
+
     </script>
+    
     <script>
        function togglePassword(inputId) {
         var passwordInput = document.getElementById(inputId);
@@ -203,5 +303,8 @@
             eyeIcon.classList.add('feather-eye');
         }
     }
+    
+
     </script>
+    
 @endsection

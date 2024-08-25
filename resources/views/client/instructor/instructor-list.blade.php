@@ -52,7 +52,7 @@
                             <div class="col-lg-12 d-flex">
                                 <div class="instructor-list flex-fill">
                                     <div class="instructor-img">
-                                        <a href="{{ route('client.mentor_detail', ['id' => $mentor->id]) }}">
+                                        <a href="{{ route('client.mentor_detail', ['id' => $mentor->mentor->id]) }}">
                                             <img class="img-fluid" alt
                                                 src="{{ $mentor->thumbnail ? Storage::url('public/' . $mentor->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"
                                                 alt="{{ $mentor->name }}">
@@ -60,28 +60,28 @@
                                     </div>
                                     <div class="instructor-content">
                                         <h5><a
-                                                href="{{ route('client.mentor_detail', ['id' => $mentor->id]) }}">{{ $mentor->name }}</a>
+                                                href="{{ route('client.mentor_detail', ['id' => $mentor->mentor->id]) }}">{{ $mentor->name }}</a>
                                         </h5>
                                         @if (isset($mentorStatistics[$mentor->id]))
-                                            <div class="instructor-info">
-                                                <div class="rating-img d-flex align-items-center">
-                                                    <img src="/assets-client/img/icon/icon-01.svg" class="me-1" alt>
-                                                    <p>Khóa học: {{ $mentorStatistics[$mentor->id]['totalCourses'] }}</p>
-                                                </div>
-                                                <div class="course-view d-flex align-items-center ms-0">
-                                                    <img src="/assets-client/img/icon/icon-02.svg" class="me-1" alt>
-                                                    <p>Chương: {{ $mentorStatistics[$mentor->id]['totalChapters'] }}</p>
-                                                </div>
-                                                <div class="rating-img d-flex align-items-center">
-                                                    <img src="/assets-client/img/icon/user-icon.svg" class="me-1" alt>
-                                                    <p>Bài học: {{ $mentorStatistics[$mentor->id]['totalLessons'] }}</p>
-                                                </div>
-                                                <div class="rating-img d-flex align-items-center">
-                                                    <img src="/assets-client/img/icon/user-icon.svg" class="me-1" alt>
-                                                    <p>Học viên: {{ $mentorStatistics[$mentor->id]['totalStudents'] }}</p>
-                                                </div>
-                                                <a href="#rate" class="rating-count"><i class="fa-regular fa-heart"></i></a>
+                                        <div class="instructor-info">
+                                            <div class="rating-img d-flex align-items-center">
+                                                <i class="fa-solid fa-book me-1"></i> <!-- Icon cho Khóa học -->
+                                                <p>Khóa học: {{ $mentorStatistics[$mentor->id]['totalCourses'] }}</p>
                                             </div>
+                                            <div class="course-view d-flex align-items-center ms-0">
+                                                <i class="fa-solid fa-list me-1"></i> <!-- Icon cho Chương -->
+                                                <p>Chương: {{ $mentorStatistics[$mentor->id]['totalChapters'] }}</p>
+                                            </div>
+                                            <div class="rating-img d-flex align-items-center">
+                                                <i class="fa-solid fa-file-alt me-1"></i> <!-- Icon cho Bài học -->
+                                                <p>Bài học: {{ $mentorStatistics[$mentor->id]['totalLessons'] }}</p>
+                                            </div>
+                                            <div class="rating-img d-flex align-items-center">
+                                                <i class="fa-solid fa-users me-1"></i> <!-- Icon cho Học viên -->
+                                                <p>Học viên: {{ $mentorStatistics[$mentor->id]['totalStudents'] }}</p>
+                                            </div>
+                                        </div>
+                                        
                                         @endif
                                         <div class="instructor-badge">
                                             <div class="blog-content blog-read">
@@ -118,9 +118,19 @@
                                         <i class="fas fa-angle-down"></i>
                                     </div>
                                     <ul>
-                                         @foreach ($categories as $category)
-                                        <li>{{ $category->name }}</li>
-                                    @endforeach
+                                        <ul style="list-style-type: none; padding: 0; margin: 0;">
+                                            @foreach ($categories as $category)
+                                                <li style="margin: 5px 0;">
+                                                    <a href="{{ route('client.course-lists', ['categories' => [$category->id]]) }}"
+                                                       style="text-decoration: none; color: #333; display: block; padding: 10px; border-radius: 4px; transition: background-color 0.3s;"
+                                                       onmouseover="this.style.backgroundColor='#f0f0f0'; this.style.color='#000';"
+                                                       onmouseout="this.style.backgroundColor=''; this.style.color='#333';">
+                                                        {{ $category->name }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                        
                                     </ul>
                                 </div>
                             </div>

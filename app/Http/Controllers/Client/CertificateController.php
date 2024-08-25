@@ -11,6 +11,7 @@ use PDF; // Facade cho DOMPDF
 use App\Models\User; // Model User
 use App\Mail\CertificateMail;
 use App\Models\Certificate;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class CertificateController extends Controller
@@ -20,27 +21,38 @@ class CertificateController extends Controller
         if (auth()->check()) {
             $user = User::find($userId);
             if (auth()->user()->id == $user->id) {
-                // if(){
-                    $courses = Course::find($courseID);
-                if (!$user) {
-                    abort(404, 'User not found');
+
+                $courses = Course::find($courseID);
+                $quizzresultforfinal = DB::table('results_final')
+                    // ->where('score', '>=', 60)
+                    ->where('user_id', $userId)
+                    ->where('course_id', $courseID)
+                    ->count();
+
+                $quizzforfinal = DB::table('quiz_finals')
+                    ->where('course_id', $courseID)
+                    ->count();
+                if ($quizzresultforfinal == $quizzforfinal) {
+
+                    if (!$user) {
+                        abort(404, 'User not found');
+                    }
+
+                    $data = [
+                        'name' => $user->name,
+                        'course' => $courses->name,
+                        'date' => date('d/m/Y'),
+                    ];
+                    // Tải view và tạo PDF
+                    $pdf = PDF::loadView('client.courses.certificate', $data);
+                    $pdf->download('certificate.pdf');
+
+                    // Trả về file PDF tải xuống hoặc hiển thị trong trình duyệt
+                    // return 
+                    return view('client.courses.certificate', $data);
+                } else {
+                    abort(403, 'khóa học chưa hoàn thành');
                 }
-
-                $data = [
-                    'name' => $user->name,
-                    'course' => $courses->name,
-                    'date' => date('d/m/Y'),
-                ];
-                // Tải view và tạo PDF
-                $pdf = PDF::loadView('client.courses.certificate', $data);
-                $pdf->download('certificate.pdf');
-
-                // Trả về file PDF tải xuống hoặc hiển thị trong trình duyệt
-                // return 
-                return view('client.courses.certificate', $data);
-                // }else{
-                //     abort(403, 'khóa học chưa hoàn thành');
-                // }
             } else {
                 abort(403, 'forbiden');
             }

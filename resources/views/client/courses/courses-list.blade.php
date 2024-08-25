@@ -52,84 +52,71 @@
                             <p>Không tìm thấy khóa học nào.</p>
                         @else
                             @foreach ($data as $item)
-                                <div class="col-lg-12 col-md-12 d-flex">
-                                    <div class="course-box course-design list-course d-flex">
-                                        <div class="product" style="
-    border: 1px solid #ddd; /* Viền nhẹ xung quanh */
-    border-radius: 8px; /* Bo tròn các góc */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
-    padding: 15px; /* Khoảng cách bên trong */
-    background-color: #fff; /* Nền trắng để nổi bật phần nội dung */
-    margin-bottom: 20px; /* Khoảng cách bên dưới */
-">
-                                            <div class="product-img">
-                                                <a href="{{ route('client.course-details', $item->id) }}">
-                                                    <img src="{{ Storage::url('public/' . $item->thumbnail) }}"
-                                                        alt="Thumbnail"
-                                                        style="width: 250px; height: 150px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-                                                </a>
+                            <div class="course-box course-design list-course d-flex">
+                                <div class="product" style="
+                                    border: 1px solid #ddd; /* Viền nhẹ xung quanh */
+                                    border-radius: 8px; /* Bo tròn các góc */
+                                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+                                    padding: 15px; /* Khoảng cách bên trong */
+                                    background-color: #fff; /* Nền trắng để nổi bật phần nội dung */
+                                    margin-bottom: 20px; /* Khoảng cách bên dưới */
+                                ">
+                                    <div class="product-img">
+                                        <a href="{{ route('client.course-details', $item->id) }}">
+                                            <img src="{{ Storage::url('public/' . $item->thumbnail) }}"
+                                                 alt="Thumbnail"
+                                                 style="width: 250px; height: 150px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                                        </a>
+                                    </div>
+                                    <div class="product-content">
+                                        <div class="head-course-title">
+                                            <h2 class="title"><a href="{{ route('client.course-details', $item->id) }}">{{ $item->name }}</a></h2>
+                                            <div class="all-btn all-category d-flex align-items-center">
+                                                @if (in_array($item->id, $userPurchasedCourses))
+                                                    <a href="{{ route('client.lesson', ['id' => $item->id]) }}" class="btn btn-primary">Học</a>
+                                                @else
+                                                    <a href="{{ route('client.course-checkout', $item->id) }}" class="btn btn-primary">Đăng Ký Ngay</a>
+                                                @endif
                                             </div>
-                                            <div class="product-content">
-                                                <div class="head-course-title">
-                                                    <h2 class="title"><a
-                                                            href="{{ route('client.course-details', $item->id) }}">{{ $item->name }}</a>
-                                                    </h2>
-                                                    <div class="all-btn all-category d-flex align-items-center">
-                                                        
-                                                        @if (in_array($item->id, $userPurchasedCourses))
-                                                            <a href="{{ route('client.lesson', ['id' => $item->id]) }}"
-                                                                class="btn btn-primary">Học</a>
-                                                        @else
-                                                            <a href="{{ route('client.course-checkout', $item->id) }}"
-                                                                class="btn btn-primary">Đăng Ký Ngay</a>
-                                                        @endif
-                                                    </div>
-                                                    
+                                        </div>
+                                        <div class="course-info border-bottom-0 pb-0 d-flex align-items-center">
+                                            <div class="rating-img d-flex align-items-center">
+                                                <h3 style="color: #e74c3c">{{ number_format($item->price) }} VNĐ</h3>
+                                            </div>
+                                        </div>
+                                        @if (isset($courseStatistics[$item->id]))
+                                            <div class="statistics-summary d-flex gap-2">
+                                                <div class="stat-item d-flex mb-3 align-items-center p-2" style="background-color: #f2f2f2; border-radius: 5px;">
+                                                    <i class="fas fa-book me-2" style="color: #3498db;"></i>
+                                                    <span>Số chương: {{ $courseStatistics[$item->id]['totalChapters'] }}</span>
                                                 </div>
-                                                
-                                                <div class="course-info border-bottom-0 pb-0 d-flex align-items-center">
-                                                    <div class="rating-img d-flex align-items-center">
-                                                        <h3 style="color: #e74c3c">{{ number_format($item->price) }} VNĐ</h3>
-                                                    </div>
+                                                <div class="stat-item d-flex mb-3 align-items-center p-2" style="background-color: #f2f2f2; border-radius: 5px;">
+                                                    <i class="fas fa-play-circle me-2" style="color: #e74c3c;"></i>
+                                                    <span>Số bài học: {{ $courseStatistics[$item->id]['totalLessons'] }}</span>
                                                 </div>
-                                                <div class="statistics-summary d-flex gap-2">
-                                                    <div class="stat-item d-flex mb-3 align-items-center p-2" style="background-color: #f2f2f2; border-radius: 5px;">
-                                                        <i class="fas fa-book me-2" style="color: #3498db;"></i>
-                                                        <span>Số chương: {{ $totalChapters }}</span>
-                                                    </div>
-                                                    <div class="stat-item d-flex mb-3 align-items-center p-2" style="background-color: #f2f2f2; border-radius: 5px;">
-                                                        <i class="fas fa-play-circle me-2" style="color: #e74c3c;"></i>
-                                                        <span>Số bài học: {{ $totalLessons }}</span>
-                                                    </div>
-                                                    <div class="stat-item d-flex mb-3 align-items-center p-2" style="background-color: #f2f2f2; border-radius: 5px;">
-                                                        <i class="fas fa-user-graduate me-2" style="color: #2ecc71;"></i>
-                                                        <span>Học viên đã đăng ký: {{ $totalStudents }}</span>
-                                                    </div>
+                                                <div class="stat-item d-flex mb-3 align-items-center p-2" style="background-color: #f2f2f2; border-radius: 5px;">
+                                                    <i class="fas fa-user-graduate me-2" style="color: #2ecc71;"></i>
+                                                    <span>Học viên đã đăng ký: {{ $courseStatistics[$item->id]['totalStudents'] }}</span>
                                                 </div>
-                                                
-                                                
-                                                <div class="course-category border-bottom-0 pb-2">
-                                                    <span>Danh mục: <strong>{{ $item->category->name }}</strong></span>
-                                                </div>
-                                                <div class="course-group d-flex mb-0">
-                                                    <div class="course-group-img d-flex">
-                                                        <a
-                                                            href="{{ route('client.mentor_detail', $item->mentor->user->id) }}">
-                                                            <img src="{{ $item->mentor->user->thumbnail ? Storage::url('public/' . $item->mentor->user->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}"
-                                                                class="img-fluid rounded-circle">
-                                                        </a>
-                                                        <div class="course-name">
-                                                            <h4><a
-                                                                    href="{{ route('client.mentor_detail', $item->mentor->user->id) }}">{{ $item->mentor->user->name }}</a>
-                                                            </h4>
-                                                            <p>Giảng viên</p>
-                                                        </div>
-                                                    </div>
+                                            </div>
+                                        @endif
+                                        <div class="course-category border-bottom-0 pb-2">
+                                            <span>Danh mục: <strong>{{ $item->category->name }}</strong></span>
+                                        </div>
+                                        <div class="course-group d-flex mb-0">
+                                            <div class="course-group-img d-flex">
+                                                <a href="{{ route('client.mentor_detail', $item->mentor->user->id) }}">
+                                                    <img src="{{ $item->mentor->user->thumbnail ? Storage::url('public/' . $item->mentor->user->thumbnail) : 'https://cdn-icons-png.flaticon.com/128/9721/9721084.png' }}" class="img-fluid rounded-circle">
+                                                </a>
+                                                <div class="course-name">
+                                                    <h4><a href="{{ route('client.mentor_detail', $item->mentor->user->id) }}">{{ $item->mentor->user->name }}</a></h4>
+                                                    <p>Giảng viên</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                             @endforeach
                         @endif
                     </div>

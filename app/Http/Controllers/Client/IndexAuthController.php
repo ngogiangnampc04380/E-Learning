@@ -78,25 +78,30 @@ class IndexAuthController extends Controller
         return Socialite::driver('google')->redirect();
     }
     public function login(AuthRequest $request)
-    {
-        $request->validated();
-        $findEmail = $request->email; 
-        $result = User::where('id', $findEmail)->first();
-        if (Auth::attempt($request->only('email', 'password'))) {
-            session(['id' => Auth::user()->id]);
-            // var_dump($request->only('email', 'password'));
-            // die;
-                return redirect()->route('Dashboard-client')->with('Đăng nhập thành công !');                     
-        } else {    
-
-            return redirect()->back()->withInput($request->only('email','password'))->withErrors([
-                'email' => 'Thông tin đăng nhập không chính xác!!!',
-                // 'password'=>'Mật khẩu không chính xác'
-            ]);
-
-        }
-        return redirect()->route('Dashboard-client')->with('success', 'Logged in successfully');
+{
+    $request->validated();
+    
+    // Tìm người dùng theo email
+    $user = User::where('email', $request->email)->first();
+    
+    // Kiểm tra nếu người dùng không tồn tại hoặc bị vô hiệu hóa
+    if ($user && $user->is_active == 0) {
+        return redirect()->back()->withInput($request->only('email', 'password'))
+            ->withErrors(['account_disabled' => 'Tài khoản của bạn đã bị vô hiệu hóa! Hãy liên hệ đến mail: chithiencs195@gmail.com để gửi yêu cầu hỗ trợ!']);
     }
+
+    // Thực hiện đăng nhập nếu tài khoản hợp lệ và hoạt động
+    if (Auth::attempt($request->only('email', 'password'))) {
+        session(['id' => Auth::user()->id]);
+        return redirect()->route('Dashboard-client');
+    } else {
+        // Chỉ thông báo lỗi nếu không phải tài khoản bị vô hiệu hóa
+        return redirect()->back()->withInput($request->only('email', 'password'))
+            ->withErrors(['email' => 'Thông tin đăng nhập không chính xác!']);
+    }
+}
+
+
     
 }
 

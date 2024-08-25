@@ -72,11 +72,10 @@ class SaleResource extends Resource
             ->columns([
                 // Tables\Columns\TextColumn::make('cours.name')
                 //     ->sortable(),
-                Tables\Columns\TextColumn::make('percent_sale')
-                ->label('Giảm giá')
+                Tables\Columns\TextColumn::make('discount_title')
+                ->label('Tên giảm giá')
                     ->numeric()
                     ->sortable(),
-                    
                 Tables\Columns\TextColumn::make('start_date')
                 ->label('Ngày bắt đầu')
                 ->dateTime()

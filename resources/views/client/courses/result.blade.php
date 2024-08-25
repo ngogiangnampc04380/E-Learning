@@ -44,7 +44,7 @@
         }
 
         .green-text {
-            color: #28A745;
+            color: #10f703;
             /* Màu xanh lá cây tươi sáng */
         }
 
@@ -105,25 +105,78 @@
 
     </style>
     <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="quiz-widget p-5 bg-white shadow-sm rounded">
-                    <h2>{{ $quiz->name }}</h2>
-                    <p><strong>Điểm số của bạn:</strong> {{ $result['score'] }} / 100</p>
+        <h2 style="font-size: 36px; font-weight: bold; color: #34495e; text-align: center; margin-bottom: 20px;">Kết quả làm bài</h2>
 
+        <div class="row justify-content-center">
+                    {{-- <a href="{{ route('client.lesson', ['id' => $course->id]) }}" class="btn btn-primary">Quay lại</a> --}}
+
+            <div class="col-lg-8">
+
+                <div class="quiz-widget p-5 bg-white shadow-sm rounded">
+                <a href="{{ route('client.lesson', ['id' => $course->id]) }}" class="btn btn-primary mb-4">Quay lại</a>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 20px;">
+                        <div>
+                            <h3 style="font-size: 24px; font-weight: bold; color: #2c3e50; margin: 0;">Bài quiz: {{ $quiz->name }}</h3>
+                        </div>
+                        <div style="font-size: 32px; font-weight: bold; color: #e74c3c;">
+                            {{ $result['score'] }} / 100
+                        </div>
+                    </div>
+                    
+                    <div class="circle-description">
+                        <strong>Chú thích:</strong>
+                    </div>
                     <div class="circles-container">
                         <div class="circle-description">
-                            <span class="color-text blue-text">-> Đáp án đúng của câu hỏi</span>
+                            <b style="
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    
+    background-color: blue;
+    text-align: center;
+    line-height: 100px;
+    font-weight: bold;
+    margin-right: 3px;
+">
+   
+</b><span class="color-text blue-text">-> Đáp án đúng của câu hỏi</span>
                         </div>
                         <div class="circle-description">
-                            <span class="color-text red-text">-> Đáp án bạn đã chọn</span>
+                            <b style="
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    
+    background-color: red;
+    text-align: center;
+    line-height: 100px;
+    font-weight: bold;
+    margin-right: 3px;
+">
+   
+</b><span class="color-text red-text">-> Đáp án bạn đã chọn</span>
                         </div>
                         <div class="circle-description">
-                            <span class="color-text green-text">-> Đáp án bạn chọn là đáp án đúng</span>
+                            <b style="
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    
+    background-color: green;
+    text-align: center;
+    line-height: 100px;
+    font-weight: bold;
+    margin-right: 3px;
+">
+   
+</b><span class="color-text green-text">-> Đáp án bạn chọn là đáp án đúng</span>
                         </div>
                     </div>
                     <hr>
-                    <h3>Chi tiết câu trả lời:</h3>
+                    <h3 style="text-align: center;">Chi tiết câu trả lời:</h3>
+                    <br>
                     @foreach ($quiz->questions as $question)
                         <div class="mb-4">
                             <h5>Câu hỏi {{ $loop->iteration }}: {{ $question->question }}</h5>
@@ -164,6 +217,7 @@
                                 @endif
                             </ul>
                         </div>
+                        <hr>
                     @endforeach
 
                     <a href="{{ route('client.lesson', ['id' => $course->id]) }}" class="btn btn-primary">Quay lại</a>

@@ -89,7 +89,9 @@ class MentorControllerr extends Controller
     {
         // dd(auth()->user()->mentor->id);
         $user = Auth::user();
+        
         return view('mentor.profile.profile');
+
     }
     public function upload_ID_Card(Request $request)
     {

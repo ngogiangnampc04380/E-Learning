@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('mentors', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('name');
-            $table->string('name_banking');
-            $table->string('id_banking');
+            $table->string('name',255)->nullable();
+            $table->string('name_banking',255)->nullable();
+            $table->string('id_banking',255)->nullable();
             $table->foreign('user_id')->references('id')->on('users')->constrained()->cascadeOnDelete();
             $table->string('front_card')->nullable();
             $table->string('back_card')->nullable();

@@ -1,8 +1,6 @@
 @extends('client.layout.master')
 @section('content')
-    @if ($message = Session::get('success'))
-        @include('components.message', ['message' => $message, 'type' => 'success'])
-    @endif
+    
 
     <section class="home-three-slide d-flex align-items-center">
 
@@ -95,7 +93,11 @@
                                         <img class="img-fluid" src="/assets-client/img/icon-three/course-03.svg" alt>
                                     </div>
                                     <div class="course-content-three">
-                                        <h4 class="text-info"><span class="counterUp">6</span> triệu +</h4>
+                                        @php
+                                            $a = DB::table('certificates')
+                                            ->count();
+                                        @endphp
+                                        <h4 class="text-info"><span class="counterUp">{{ $a }}</span></h4>
                                         <p>Chứng chỉ đã cấp</p>
                                     </div>
                                 </div>

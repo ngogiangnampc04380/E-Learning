@@ -25,7 +25,7 @@
                                     </a>
                                 </li>
                             @endif
-                            @if ($mentor->link_mail)
+                            @if ($mentor->user->link_mail)
                                 <li class="list-inline-item">
                                     <a href="mailto:{{ $mentor->user->link_mail }}" target="_blank">
                                         <i class="fa-solid fa-envelope"></i>
@@ -33,14 +33,14 @@
                                 </li>
                             @endif
 
-                            @if ($mentor->phone)
+                            @if ($mentor->user->phone)
                                 <li class="list-inline-item">
                                     <a href="tel:{{ $mentor->user->phone }}" target="_blank">
                                         <i class="fa-solid fa-phone"></i>
                                     </a>
                                 </li>
                             @endif
-                            @if ($mentor->link_youtube)
+                            @if ($mentor->user->link_youtube)
                                 <li class="list-inline-item">
                                     <a href="{{ $mentor->user->link_youtube }}" target="_blank">
                                         <i class="fa-brands fa-youtube"></i>
@@ -154,36 +154,6 @@
                                 </div>
                             </div>
 
-                        </div>
-                    </div>
-
-                    <!-- Phần thêm đánh giá -->
-                    <div class="card comment-sec">
-                        <div class="card-body">
-                            <h5 class="subs-title">Thêm đánh giá</h5>
-                            <form>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="input-block">
-                                            <input type="text" class="form-control" placeholder="Họ và tên">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="input-block">
-                                            <input type="email" class="form-control" placeholder="Email">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="input-block">
-                                    <input type="text" class="form-control" placeholder="Chủ đề">
-                                </div>
-                                <div class="input-block">
-                                    <textarea rows="4" class="form-control" placeholder="Nhận xét của bạn"></textarea>
-                                </div>
-                                <div class="submit-section">
-                                    <button class="btn submit-btn" type="submit">Gửi</button>
-                                </div>
-                            </form>
                         </div>
                     </div>
                 </div>
