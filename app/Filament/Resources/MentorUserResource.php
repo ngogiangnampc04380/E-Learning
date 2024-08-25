@@ -106,8 +106,8 @@ class MentorUserResource extends Resource
     {
         return [
             'index' => Pages\ListMentorUsers::route('/'),
-            'create' => Pages\CreateMentorUser::route('/create'),
-            'edit' => Pages\EditMentorUser::route('/{record}/edit'),
+            // 'create' => Pages\CreateMentorUser::route('/create'),
+            // 'edit' => Pages\EditMentorUser::route('/{record}/edit'),
         ];
     }
 }

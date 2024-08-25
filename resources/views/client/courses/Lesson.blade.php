@@ -1,6 +1,6 @@
 @extends('client.layout.master')
 @section('content')
-    <style>
+<style>
         .hidden-check {
             display: none;
         }
@@ -194,7 +194,7 @@
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
 
-    </style>
+</style>
     <section class="page-content course-sec course-lesson">
         <div class="container">
             <div class="row">
