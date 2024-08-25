@@ -324,7 +324,7 @@
                                                                 class="lesson-link"
                                                                 data-lesson-id="{{ $lesson->lessonID }}"
                                                                 @php
-$bucketName = 'entweb01';
+                                                                    $bucketName = 'entweb01';
                                                                     $path_prefix ='ENT01';
                                                                     $filePath = 'folder-name';
                                                                     $namefile= $lesson->lessonvideo;
@@ -345,7 +345,6 @@ $bucketName = 'entweb01';
                                                     id="quiz-row">
                                                     <a href="{{ route('client.courses.quiz-chapter', $quiz->id) }}">
                                                         <span>Quiz: {{ $quiz->name }}</span></a>
-
                                                     @php
                                                         $quizz_result = DB::table('quiz_results')
                                                             // ->where('score', '>=', 60)
@@ -355,7 +354,6 @@ $bucketName = 'entweb01';
                                                         // dd($quizz_result);
                                                     @endphp
                                                     @php
-
                                                         $final = DB::table('quiz_finals')
                                                             ->where('course_id', $data->id)
                                                             ->first();
