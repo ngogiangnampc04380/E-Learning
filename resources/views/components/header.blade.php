@@ -31,6 +31,8 @@
     <link rel="stylesheet" href="/assets-client/plugins/select2/css/select2.min.css">
 
     <link rel="stylesheet" href="/assets-client/plugins/swiper/css/swiper.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     {{-- <link rel="stylesheet" href="/assets-client/css/blue.css"> --}}
 
     <!--

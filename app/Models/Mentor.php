@@ -18,7 +18,6 @@ class Mentor extends Model
         'id_banking',
         'front_card',
         'back_card',
-
     ];
 
     public function user(): BelongsTo

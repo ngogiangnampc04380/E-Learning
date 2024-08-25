@@ -32,9 +32,9 @@ class PostCategoryResource extends Resource
                     ->unique(ignoreRecord: true)
                     ->validationMessages([
                         'required' => 'vui lòng nhập tên danh mục',
-                        'unique' =>'Danh mục đã tồn tại'
+                        'unique' => 'Danh mục đã tồn tại'
 
-                        ])
+                    ])
                     ->maxLength(100),
                 Forms\Components\TextInput::make('slug')
                     ->required()
@@ -44,14 +44,19 @@ class PostCategoryResource extends Resource
 
                     ->validationMessages([
                         'required' => 'vui lòng nhập đường dẫn',
-                        'unique'=> 'đường dẫn đã tồn tại',
+                        'unique' => 'đường dẫn đã tồn tại',
                         'regex' => 'đường dẫn không hợp lệ (ví dụ dẫn hợp lệ là: abc-abc)'
-                        ])
+                    ])
                     ->maxLength(100),
-                    Forms\Components\TextInput::make('description')
+                Forms\Components\RichEditor::make('description')
                     ->required()
+                    ->validationMessages([
+                        'required' => 'vui lòng nhập mô tả',
+                    ])
                     ->label('Mô tả')
-                    
+                    ->maxLength(65535)
+                    ->columnSpanFull(),
+
             ]);
     }
 
