@@ -62,21 +62,27 @@
                                         <h5><a
                                                 href="{{ route('client.mentor_detail', ['id' => $mentor->id]) }}">{{ $mentor->name }}</a>
                                         </h5>
-                                        <div class="instructor-info">
-                                            <div class="rating-img d-flex align-items-center">
-                                                <img src="/assets-client/img/icon/icon-01.svg" class="me-1" alt>
-                                                <p>12+ Bài giảng</p>
+                                        @if (isset($mentorStatistics[$mentor->id]))
+                                            <div class="instructor-info">
+                                                <div class="rating-img d-flex align-items-center">
+                                                    <img src="/assets-client/img/icon/icon-01.svg" class="me-1" alt>
+                                                    <p>Khóa học: {{ $mentorStatistics[$mentor->id]['totalCourses'] }}</p>
+                                                </div>
+                                                <div class="course-view d-flex align-items-center ms-0">
+                                                    <img src="/assets-client/img/icon/icon-02.svg" class="me-1" alt>
+                                                    <p>Chương: {{ $mentorStatistics[$mentor->id]['totalChapters'] }}</p>
+                                                </div>
+                                                <div class="rating-img d-flex align-items-center">
+                                                    <img src="/assets-client/img/icon/user-icon.svg" class="me-1" alt>
+                                                    <p>Bài học: {{ $mentorStatistics[$mentor->id]['totalLessons'] }}</p>
+                                                </div>
+                                                <div class="rating-img d-flex align-items-center">
+                                                    <img src="/assets-client/img/icon/user-icon.svg" class="me-1" alt>
+                                                    <p>Học viên: {{ $mentorStatistics[$mentor->id]['totalStudents'] }}</p>
+                                                </div>
+                                                <a href="#rate" class="rating-count"><i class="fa-regular fa-heart"></i></a>
                                             </div>
-                                            <div class="course-view d-flex align-items-center ms-0">
-                                                <img src="/assets-client/img/icon/icon-02.svg" class="me-1" alt>
-                                                <p>9hr 30min</p>
-                                            </div>
-                                            <div class="rating-img d-flex align-items-center">
-                                                <img src="/assets-client/img/icon/user-icon.svg" class="me-1" alt>
-                                                <p>50 Học viên</p>
-                                            </div>
-                                            <a href="#rate" class="rating-count"><i class="fa-regular fa-heart"></i></a>
-                                        </div>
+                                        @endif
                                         <div class="instructor-badge">
                                             <div class="blog-content blog-read">
                                                 {!! Str::limit($mentor->introduce, 100) !!}
@@ -112,28 +118,10 @@
                                         <i class="fas fa-angle-down"></i>
                                     </div>
                                     <ul>
-                                        {{-- @foreach ($categories as $category)
+                                         @foreach ($categories as $category)
                                         <li>{{ $category->name }}</li>
-                                    @endforeach --}}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card search-filter">
-                            <div class="card-body">
-                                <div class="filter-widget mb-0">
-                                    <div class="categories-head d-flex align-items-center">
-                                        <h4>Giảng viên</h4>
-                                        <i class="fas fa-angle-down"></i>
-                                    </div>
-                                    @foreach ($data as $mentor)
-                                        <div>
-                                            <label class="custom_check">
-                                                <input type="checkbox" name="select_specialist">
-                                                {{-- <span class="checkmark"></span> {{ $mentor->name }} ({{ $mentor->courses_count }}) --}}
-                                            </label>
-                                        </div>
                                     @endforeach
+                                    </ul>
                                 </div>
                             </div>
                         </div>
