@@ -54,7 +54,14 @@
                             @foreach ($data as $item)
                                 <div class="col-lg-12 col-md-12 d-flex">
                                     <div class="course-box course-design list-course d-flex">
-                                        <div class="product">
+                                        <div class="product" style="
+    border: 1px solid #ddd; /* Viền nhẹ xung quanh */
+    border-radius: 8px; /* Bo tròn các góc */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+    padding: 15px; /* Khoảng cách bên trong */
+    background-color: #fff; /* Nền trắng để nổi bật phần nội dung */
+    margin-bottom: 20px; /* Khoảng cách bên dưới */
+">
                                             <div class="product-img">
                                                 <a href="{{ route('client.course-details', $item->id) }}">
                                                     <img src="{{ Storage::url('public/' . $item->thumbnail) }}"
@@ -82,9 +89,24 @@
                                                 
                                                 <div class="course-info border-bottom-0 pb-0 d-flex align-items-center">
                                                     <div class="rating-img d-flex align-items-center">
-                                                        <h3>{{ number_format($item->price) }} VNĐ</h3>
+                                                        <h3 style="color: #e74c3c">{{ number_format($item->price) }} VNĐ</h3>
                                                     </div>
                                                 </div>
+                                                <div class="statistics-summary d-flex gap-2">
+                                                    <div class="stat-item d-flex mb-3 align-items-center p-2" style="background-color: #f2f2f2; border-radius: 5px;">
+                                                        <i class="fas fa-book me-2" style="color: #3498db;"></i>
+                                                        <span>Số chương: {{ $totalChapters }}</span>
+                                                    </div>
+                                                    <div class="stat-item d-flex mb-3 align-items-center p-2" style="background-color: #f2f2f2; border-radius: 5px;">
+                                                        <i class="fas fa-play-circle me-2" style="color: #e74c3c;"></i>
+                                                        <span>Số bài học: {{ $totalLessons }}</span>
+                                                    </div>
+                                                    <div class="stat-item d-flex mb-3 align-items-center p-2" style="background-color: #f2f2f2; border-radius: 5px;">
+                                                        <i class="fas fa-user-graduate me-2" style="color: #2ecc71;"></i>
+                                                        <span>Học viên đã đăng ký: {{ $totalStudents }}</span>
+                                                    </div>
+                                                </div>
+                                                
                                                 
                                                 <div class="course-category border-bottom-0 pb-2">
                                                     <span>Danh mục: <strong>{{ $item->category->name }}</strong></span>

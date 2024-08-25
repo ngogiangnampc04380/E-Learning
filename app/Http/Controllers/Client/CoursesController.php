@@ -34,72 +34,94 @@ class CoursesController extends Controller
 {
 
     public function list(Request $request)
-    {
-        $query = $request->input('query');
-        $categoryIds = $request->input('categories', []);
-        $priceRanges = $request->input('price_range', []);
-        $sort = $request->input('sort');
+{
+    $query = $request->input('query');
+    $categoryIds = $request->input('categories', []);
+    $priceRanges = $request->input('price_range', []);
+    $sort = $request->input('sort');
 
-        // Đảm bảo $categoryIds là một mảng
-        $categoryIds = is_array($categoryIds) ? $categoryIds : [];
+    // Đảm bảo $categoryIds và $priceRanges là mảng
+    $categoryIds = is_array($categoryIds) ? $categoryIds : [];
+    $priceRanges = is_array($priceRanges) ? $priceRanges : [];
 
-        // Đảm bảo $priceRanges là một mảng
-        $priceRanges = is_array($priceRanges) ? $priceRanges : [];
-        $userPurchasedCourses = auth()->check() ? DB::table('course_users')
-            ->where('user_id', auth()->id())
-            ->pluck('course_id')
-            ->toArray() : [];
+    $userPurchasedCourses = auth()->check() ? DB::table('course_users')
+        ->where('user_id', auth()->id())
+        ->pluck('course_id')
+        ->toArray() : [];
 
-        $data = Course::where('status', 2)->with('mentor');
+    $data = Course::where('status', 2)->with('mentor');
 
-        // Lọc theo tên khóa học
-        if ($query) {
-            $data = $data->where('name', 'LIKE', "%$query%");
-        }
-
-        // Lọc theo danh mục
-        if (in_array('all', $categoryIds)) {
-            // Nếu chọn "Tất cả", không cần lọc theo danh mục
-        } elseif (!empty($categoryIds)) {
-            $data = $data->whereIn('category_id', $categoryIds);
-        }
-
-        // Lọc theo khoảng giá
-        if (!empty($priceRanges)) {
-            $data->where(function ($query) use ($priceRanges) {
-                foreach ($priceRanges as $range) {
-                    list($minPrice, $maxPrice) = explode('-', $range);
-                    $minPrice = (int)$minPrice * 1000; // Convert to đồng
-                    $maxPrice = (int)$maxPrice * 1000; // Convert to đồng
-                    $query->orWhereBetween('price', [$minPrice, $maxPrice]);
-                }
-            });
-        }
-
-        // Sắp xếp theo giá
-        if ($sort) {
-            $data = $data->orderBy('price', $sort);
-        } else {
-            $data = $data->inRandomOrder(); // Sắp xếp ngẫu nhiên nếu không có tùy chọn sắp xếp
-        }
-
-        $data = $data->paginate(10);
-
-        $categories = Course_Category::all();
-        $latestCourses = Course::where('status', 2)->orderBy('created_at', 'desc')->take(5)->get(); // Lấy 5 khóa học mới nhất
-        return view('client.courses.courses-list', [
-            'data' => $data,
-            'query' => $query,
-            'categories' => $categories,
-            'categoryIds' => $categoryIds,
-            'latestCourses' => $latestCourses,
-            'priceRanges' => $priceRanges,
-            'sort' => $sort,
-            'userPurchasedCourses' => $userPurchasedCourses,
-        ]);
-
-        // return view('client.courses.courses-list', compact('data', 'query', 'categories', 'categoryIds', 'latestCourses', 'priceRanges', 'sort'));
+    // Lọc theo tên khóa học
+    if ($query) {
+        $data = $data->where('name', 'LIKE', "%$query%");
     }
+
+    // Lọc theo danh mục
+    if (in_array('all', $categoryIds)) {
+        // Nếu chọn "Tất cả", không cần lọc theo danh mục
+    } elseif (!empty($categoryIds)) {
+        $data = $data->whereIn('category_id', $categoryIds);
+    }
+
+    // Lọc theo khoảng giá
+    if (!empty($priceRanges)) {
+        $data->where(function ($query) use ($priceRanges) {
+            foreach ($priceRanges as $range) {
+                list($minPrice, $maxPrice) = explode('-', $range);
+                $minPrice = (int)$minPrice * 1000; // Chuyển đổi sang đồng
+                $maxPrice = (int)$maxPrice * 1000; // Chuyển đổi sang đồng
+                $query->orWhereBetween('price', [$minPrice, $maxPrice]);
+            }
+        });
+    }
+
+    // Sắp xếp theo giá
+    if ($sort) {
+        $data = $data->orderBy('price', $sort);
+    } else {
+        $data = $data->inRandomOrder(); // Sắp xếp ngẫu nhiên nếu không có tùy chọn sắp xếp
+    }
+
+    $data = $data->paginate(10);
+
+    // Lấy danh sách các categories
+    $categories = Course_Category::all();
+
+    // Lấy 5 khóa học mới nhất
+    $latestCourses = Course::where('status', 2)->orderBy('created_at', 'desc')->take(5)->get();
+
+    // Thống kê số liệu
+    $totalStudents1 = DB::table('course_users')
+        ->count('user_id');
+
+    $totalChapters = DB::table('chapters')
+        ->count();
+
+    $totalLessons = DB::table('lessons')
+        ->count();
+
+    $totalStudents = DB::table('course_users')
+        ->distinct('user_id')
+        ->count('user_id');
+
+    // Truyền biến vào view
+    return view('client.courses.courses-list', [
+        'data' => $data,
+        'query' => $query,
+        'categories' => $categories,
+        'categoryIds' => $categoryIds,
+        'latestCourses' => $latestCourses,
+        'priceRanges' => $priceRanges,
+        'sort' => $sort,
+        'userPurchasedCourses' => $userPurchasedCourses,
+        'totalStudents1' => $totalStudents1,
+        'totalChapters' => $totalChapters,
+        'totalLessons' => $totalLessons,
+        'totalStudents' => $totalStudents,
+    ]);
+}
+
+
     public function detail($id)
     {
         // Lấy thông tin khóa học với mentor
