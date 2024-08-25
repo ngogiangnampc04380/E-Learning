@@ -37,7 +37,7 @@
                                                         <th>ID</th>
                                                         <th>Tên khóa học</th>
                                                         <th>Thumbnail</th>
-                                                        <th>Số bài học</th>
+                                                        <th> tổng Số bài học và quiz, QuizFinal</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="courses-list" data-user-id="{{ $student->id }}">
@@ -45,11 +45,8 @@
                                                         <tr>
                                                             <td>{{ $course->id }}</td>
                                                             <td>{{ $course->name }}</td>
-                                                            <td><img src="{{ $course->thumbnail }}"
-                                                                    alt="{{ $course->name }}"
-                                                                    style="width: 100px; height: auto;"></td>
-                                                            <td>{{ $course->completed_lessons }}/{{ $course->lesson_count }}
-                                                            </td>
+                                                            <td><img src="{{ $course->thumbnail }}" alt="{{ $course->name }}" style="width: 100px; height: auto;"></td>
+                                                            <td>{{ $course->total_ketqua }}/{{ $course->lesson_count + $course->quiz_count + $course->quiz_final_count }}</td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
