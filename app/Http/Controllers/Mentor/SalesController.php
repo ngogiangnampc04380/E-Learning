@@ -17,7 +17,6 @@ class SalesController extends Controller
         $discount_code = $request->input('discount_code');
         $savepivot = SalePivot::where('course_id', $courseId)->first();
 
-
         if ($savepivot) {
             $sales = DB::table('sales')->where('id', $savepivot->sale_id)->first();
             $sale = DB::table('sales')
@@ -27,9 +26,6 @@ class SalesController extends Controller
                 ->where('start_date', '<=', now())
                 ->where('used_quantity', '<', $sales->quantity)
                 ->first();
-            // dd($savepivot->sale_id);
-
-            // dd($sale);
 
             if ($sale) {
                 $course = Course::findOrFail($courseId);
@@ -39,7 +35,10 @@ class SalesController extends Controller
                     'sale_code' => $sale->discount_code,
                     'price' => $discountedPrice,
                 ]);
-                return view('client.courses.course-pricing', compact('originalPrice', 'discountedPrice', 'sale', 'course'));
+
+                // Thông báo áp dụng thành công
+                return view('client.courses.course-pricing', compact('originalPrice', 'discountedPrice', 'sale', 'course'))
+                   ;
             } else {
                 $course = Course::findOrFail($courseId);
                 $originalPrice = $course->price;
@@ -48,6 +47,8 @@ class SalesController extends Controller
                 ]);
                 return back()->with('error', 'Mã khuyến mãi không hợp lệ hoặc đã hết giá trị sử dụng.');
             }
+        } else {
+            return back()->with('error', 'Mã khuyến mãi không hợp lệ hoặc đã hết giá trị sử dụng.');
         }
     }
 }

@@ -13308,6 +13308,15 @@ input[type=password]::-ms-clear
     
 }
 
+.page-banners {
+    height:220px;
+	padding: 88px 0;
+	text-align: center;
+	background: url('../img/banner-support.gif');
+	background-repeat: no-repeat;
+	background-size: cover;
+    
+}
 .page-banner p {
 	color: #FFF;
 	margin-bottom: 0;

@@ -893,7 +893,7 @@
                                     <ul class="submenu">
                                         <li><a href="{{ route('client.course-lists') }}" class="{{ request()->is('course-lists') ? 'active' : '' }}">TẤT CẢ</a></li>
                                         @foreach ($categories as $category)
-                                            @if (strlen($category->name) > 20)
+                                            @if (strlen($category->name) >= 15)
                                                 <li class="full-width">
                                                     <a href="{{ route('client.course-lists', ['categories' => [$category->id]]) }}" title="{{ $category->name }}">
                                                         {!! Str::limit($category->name, 35) !!}
@@ -919,20 +919,24 @@
                                     <a href="{{ route('client.post-list') }}">BÀI VIẾT</a>
                                 </li>
                                 @if(auth()->check())
-                                    @if(auth()->user()->role == 2)
-                                        <li class="{{ Route::currentRouteName() == 'client.instructor-course' ? 'active' : '' }}">
-                                            <a href="{{ route('client.instructor-course', auth()->user()->mentor->id) }}">QUẢN LÝ KHÓA HỌC</a>
-                                        </li>
-                                    @elseif(in_array(auth()->user()->role, [0, 3]))
-                                        <li class="{{ Route::currentRouteName() == 'client.my-course' ? 'active' : '' }}">
-                                            <a href="{{ route('client.my-course', auth()->user()->id) }}">KHÓA HỌC CỦA TÔI</a>
-                                        </li>
-                                    @elseif(auth()->user()->role == 1)
-                                        <li class="{{ Route::currentRouteName() == 'client.instructor-course' ? 'active' : '' }}">
-                                            <a href="/admin">QUẢN TRỊ WEBSITE</a>
-                                        </li>
-                                    @endif
+                                @if(auth()->user()->role == 2)
+                                <li class="{{ Route::currentRouteName() == 'client.my-course' ? 'active' : '' }}">
+                                    <a href="{{ route('client.my-course', auth()->user()->id) }}">KHÓA HỌC CỦA TÔI</a>
+                                </li>
+                                    <li class="{{ Route::currentRouteName() == 'client.instructor-course' ? 'active' : '' }}">
+                                        <a href="{{ route('client.instructor-course', auth()->user()->mentor->id) }}">QUẢN LÝ KHÓA HỌC</a>
+                                    </li>
+                                   
+                                @elseif(in_array(auth()->user()->role, [0, 3]))
+                                    <li class="{{ Route::currentRouteName() == 'client.my-course' ? 'active' : '' }}">
+                                        <a href="{{ route('client.my-course', auth()->user()->id) }}">KHÓA HỌC CỦA TÔI</a>
+                                    </li>
+                                @elseif(auth()->user()->role == 1)
+                                    <li class="{{ Route::currentRouteName() == 'client.instructor-course' ? 'active' : '' }}">
+                                        <a href="/admin">QUẢN TRỊ WEBSITE</a>
+                                    </li>
                                 @endif
+                            @endif
                                 <li class="{{ Route::currentRouteName() == 'client.contact' ? 'active' : '' }}">
                                     <a  href="{{ route('client.contact') }}">LIÊN HỆ & HỖ TRỢ</a>
                                 </li>

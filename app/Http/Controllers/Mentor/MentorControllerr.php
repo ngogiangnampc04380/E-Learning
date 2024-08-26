@@ -111,8 +111,8 @@ class MentorControllerr extends Controller
     {
         $front_card_name = uniqid() . '.' . $request->file('front_card')->getClientOriginalExtension();
         $back_card_name = uniqid() . '.' . $request->file('back_card')->getClientOriginalExtension();
-        $request->front_card->move(storage_path('app/mentor/cccd'), $front_card_name);
-        $request->back_card->move(storage_path('app/mentor/cccd'), $back_card_name);
+        $request->front_card->move(storage_path('app/public/'), $front_card_name);
+        $request->back_card->move(storage_path('app/public/'), $back_card_name);
         $mentror = Mentor::where('user_id', auth()->id())->first();
         // dd($mentror);
         // die;

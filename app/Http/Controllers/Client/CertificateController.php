@@ -23,35 +23,37 @@ class CertificateController extends Controller
             if (auth()->user()->id == $user->id) {
 
                 $courses = Course::find($courseID);
-                $quizzresultforfinal = DB::table('results_final')
-                    // ->where('score', '>=', 60)
-                    ->where('user_id', $userId)
-                    ->where('course_id', $courseID)
-                    ->count();
+                if ($courses) {
+                    $quizzresultforfinal = DB::table('results_final')
+                        // ->where('score', '>=', 60)
+                        ->where('user_id', $userId)
+                        ->where('course_id', $courseID)
+                        ->count();
 
-                $quizzforfinal = DB::table('quiz_finals')
-                    ->where('course_id', $courseID)
-                    ->count();
-                if ($quizzresultforfinal == $quizzforfinal) {
+                    $quizzforfinal = DB::table('quiz_finals')
+                        ->where('course_id', $courseID)
+                        ->count();
+                    if ($quizzresultforfinal == $quizzforfinal) {
 
-                    if (!$user) {
-                        abort(404, 'User not found');
+                        if (!$user) {
+                            abort(404, 'User not found');
+                        }
+
+                        $data = [
+                            'name' => $user->name,
+                            'course' => $courses->name,
+                            'date' => date('d/m/Y'),
+                        ];
+                        // Tải view và tạo PDF
+                        $pdf = PDF::loadView('client.courses.certificate', $data);
+                        $pdf->download('certificate.pdf');
+
+                        // Trả về file PDF tải xuống hoặc hiển thị trong trình duyệt
+                        // return 
+                        return view('client.courses.certificate', $data);
+                    } else {
+                        abort(403, 'khóa học chưa hoàn thành');
                     }
-
-                    $data = [
-                        'name' => $user->name,
-                        'course' => $courses->name,
-                        'date' => date('d/m/Y'),
-                    ];
-                    // Tải view và tạo PDF
-                    $pdf = PDF::loadView('client.courses.certificate', $data);
-                    $pdf->download('certificate.pdf');
-
-                    // Trả về file PDF tải xuống hoặc hiển thị trong trình duyệt
-                    // return 
-                    return view('client.courses.certificate', $data);
-                } else {
-                    abort(403, 'khóa học chưa hoàn thành');
                 }
             } else {
                 abort(403, 'forbiden');
@@ -79,8 +81,7 @@ class CertificateController extends Controller
             // Cập nhật trạng thái đã gửi email
             $certificate->email_sent = true;
             $certificate->save();
-
-            return response()->json(['message' => 'Email chứng chỉ đã được gửi thành công!']);
+return response()->json(['message' => 'Email chứng chỉ đã được gửi thành công!']);
         }
 
         return response()->json(['message' => 'Email chứng chỉ đã được gửi trước đó!']);

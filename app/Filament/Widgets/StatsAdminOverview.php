@@ -54,7 +54,11 @@ class StatsAdminOverview extends BaseWidget
                 ->description('Đội ngũ giảng viên')
                 ->descriptionIcon('heroicon-m-user')
                 ->color('info'),
-
+                Stat::make('Học viên', User::where('role', 0)->count())
+                ->icon('heroicon-m-user')
+                ->description('Người dùng bình thường')
+                ->descriptionIcon('heroicon-m-user')
+                ->color('info'),
 
 
 

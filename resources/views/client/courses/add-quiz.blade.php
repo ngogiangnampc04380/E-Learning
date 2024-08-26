@@ -89,12 +89,13 @@
     <script>
         let questionCount = 1;
 
-        document.getElementById('add-question').addEventListener('click', function() {
-            questionCount++;
-            const questionsContainer = document.getElementById('questions-container');
+document.getElementById('add-question').addEventListener('click', function() {
+    questionCount++;
+    const questionsContainer = document.getElementById('questions-container');
 
-            const questionHtml = `
-        <div class="question-block mb-4 p-4 border border-primary rounded">
+    // Tạo HTML cho câu hỏi mới
+    const questionHtml = `
+        <div class="question-block mb-4 p-4 border border-primary rounded" id="question_${questionCount}">
             <h5 class="mb-3 question-title">Câu hỏi ${questionCount}</h5>
             <div class="mb-3">
                 <label for="question_${questionCount}" class="form-label">Câu hỏi:</label>
@@ -124,16 +125,22 @@
         </div>
     `;
 
-            questionsContainer.insertAdjacentHTML('beforeend', questionHtml);
-        });
+    // Thêm câu hỏi mới vào container
+    questionsContainer.insertAdjacentHTML('beforeend', questionHtml);
 
-        document.addEventListener('click', function(event) {
-            if (event.target && event.target.classList.contains('delete-question')) {
-                const questionBlock = event.target.closest('.question-block');
-                questionBlock.remove();
-                updateQuestionNumbers();
-            }
-        });
+    // Cuộn tới câu hỏi mới
+    const newQuestionBlock = document.getElementById(`question_${questionCount}`);
+    newQuestionBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
+
+document.addEventListener('click', function(event) {
+    if (event.target && event.target.classList.contains('delete-question')) {
+        const questionBlock = event.target.closest('.question-block');
+        questionBlock.remove();
+        updateQuestionNumbers();
+    }
+});
+
 
         function updateQuestionNumbers() {
             const questionBlocks = document.querySelectorAll('.question-block');

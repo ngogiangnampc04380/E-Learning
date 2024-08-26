@@ -7,7 +7,7 @@
                 <div class="settings-widget dash-profile">
                     <div class="settings-menu p-0">
                         <div class="profile-bg">
-                            @if (in_array(auth()->user()->role, [0, 3]))
+                            @if(auth()->user()->role == 0)
                                 <h5 class="text-muted mb-0">Học viên</h5>
                             @elseif(auth()->user()->role == 1)
                                 <h5 class="text-muted mb-0">Quản trị viên</h5>
@@ -17,15 +17,14 @@
                             <img src="/assets-client/img/instructor-profile-bg.jpg" alt="">
                             <div class="profile-img">
                                 <a href="">
-                                    <img src="{{ auth()->user()->thumbnail ? Storage::url('public/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}"
-                                        alt="">
+                                    <img src="{{ auth()->user()->thumbnail ? Storage::url('assets-client/img/user/' . auth()->user()->thumbnail) : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPyGNr2qL63Sfugk2Z1-KBEwMGOfycBribew&usqp=CAU' }}"  alt="">
                                 </a>
                             </div>
                         </div>
                         <div class="profile-group">
                             <div class="profile-name text-center">
-                                <h4><a href="">{{ auth()->user()->name }}</a></h4>
-                                @if (in_array(auth()->user()->role, [0, 3]))
+                                <h4><a href="">{{auth()->user()-> name}}</a></h4>
+                                @if(auth()->user()->role == 0)
                                     <p class="text-muted mb-0">Học viên</p>
                                 @elseif(auth()->user()->role == 1)
                                     <p class="text-muted mb-0">Quản trị viên</p>
@@ -33,10 +32,9 @@
                                     <p class="text-muted mb-0">Giảng viên</p>
                                 @endif
                             </div>
-                            @if (auth()->user()->role == 2)
+                            @if(auth()->user()->role == 2)
                                 <div class="go-dashboard text-center">
-                                    <a href="{{ route('client.create-course') }}" class="btn btn-primary">THÊM KHÓA HỌC
-                                        MỚI</a>
+                                    <a href="{{ route('client.create-course') }}" class="btn btn-primary">THÊM KHÓA HỌC MỚI</a>
                                 </div>
                             @endif
 
@@ -51,22 +49,32 @@
                                 <i class="feather-home"></i> Dữ liệu và thống kê
                             </a>
                         </li>
-                        @if (in_array(auth()->user()->role, [0, 2, 3]))
+                        @if(in_array(auth()->user()->role, [0, 2]))
                             <li class="nav-item {{ request()->is('instructor-course') ? 'active' : '' }}">
-                                <a href="{{ route('client.my-course', auth()->user()->id) }}" class="nav-link">
+                                <a href="instructor-course.html" class="nav-link">
                                     <i class="feather-shopping-bag"></i> Khóa học của tôi
                                 </a>
                             </li>
                         @endif
-                        @if (auth()->user()->role == 2)
+                        @if(auth()->user()->role == 2)
                             <li class="nav-item {{ request()->routeIs('client.instructor-course') ? 'active' : '' }}">
-                                <a href="{{ route('client.instructor-course', auth()->user()->id) }}" class="nav-link">
+                                <a href="{{ route('client.instructor-course',auth()->user()->id) }}" class="nav-link">
                                     <i class="feather-book"></i> Quản lí khóa học
                                 </a>
                             </li>
                             <li class="nav-item {{ request()->is('instructor-student-grid.html') ? 'active' : '' }}">
-                                <a href="{{ route('client.my-student') }}" class="nav-link">
+                                <a href="instructor-student-grid.html" class="nav-link">
                                     <i class="feather-users"></i> Quản lí học viên
+                                </a>
+                            </li>
+                            <li class="nav-item {{ request()->is('instructor-earnings.html') ? 'active' : '' }}">
+                                <a href="instructor-earnings.html" class="nav-link">
+                                    <i class="feather-pie-chart"></i> Nam Béo
+                                </a>
+                            </li>
+                            <li class="nav-item {{ request()->is('instructor-orders.html') ? 'active' : '' }}">
+                                <a href="instructor-orders.html" class="nav-link">
+                                    <i class="feather-shopping-bag"></i> Nam Béo
                                 </a>
                             </li>
                         @endif
@@ -78,13 +86,13 @@
                                 <i class="feather-settings"></i> Thông tin cá nhân
                             </a>
                         </li>
-                        @if (auth()->user()->role == 1)
+                        @if(auth()->user()->role == 1)
                             <div class="instructor-title">
                                 <h3>Quản trị viên</h3>
                             </div>
                             <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
                                 <a href="/admin" class="nav-link">
-                                    <i class="feather-cpu"></i> Quản trị website
+                                    <i class="feather-cpu"></i> Quảng trị website
                                 </a>
                             </li>
                         @endif
@@ -105,125 +113,70 @@
                         </li>
                     </ul>
                 </div>
-
             </div>
 
             <div class="col-xl-9 col-lg-8 col-md-12 my-5">
                 <div class="card">
                     <div class="card-body">
-                        <h2 class="text-center display-4 font-weight-bold">Chỉnh sửa Quiz:</h2>
-                        <form action="{{ route('client.courses.update-quiz', $quiz->id) }}" method="POST"
-                            class="p-4 bg-light rounded shadow-sm">
+                        <h2 class="text-center display-4 font-weight-bold">Chỉnh sửa Quiz Final</h2>
+                        @if(session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        <form action="{{ route('client.quiz.update-quiz-final', ['quiz_id' => $quizFinal->id]) }}" method="POST" class="p-4 bg-light rounded shadow-sm">
                             @csrf
-
-                            <div class="border border-primary border-4 rounded p-3 mb-2 shadow-sm">
+                            @method('PUT')
+                            <div class="border border-primary border-4 mb-2 rounded p-3 shadow-sm">
                                 <div class="mb-4">
-                                    <label for="title" class="form-label fw-bold">Tiêu đề Quiz:</label>
-                                    <input type="text" id="name" name="name" class="form-control"
-                                        value="{{ $quiz->name }}">
+                                    <label for="title" class="form-label fw-bold ">Tiêu đề Quiz:</label>
+                                    <input type="text" id="title" name="title" class="form-control" value="{{ old('title', $quizFinal->title) }}" >
                                 </div>
                             </div>
 
 
                             <div id="questions-container">
-                                @foreach ($quiz->questions as $index => $question)
-                                    <div class="question-block mb-4 p-4 border border-primary rounded"
-                                        data-index="{{ $index }}">
+                                @foreach($quizFinal->questions as $index => $question)
+                                    <div class="question-block mb-4 p-4 border border-primary rounded">
                                         <h5 class="mb-3 question-title">Câu hỏi {{ $index + 1 }}</h5>
-                                        <input type="hidden" name="questions[{{ $index }}][id]"
-                                            value="{{ $question->id }}">
-
                                         <div class="mb-3">
-                                            <label for="question_{{ $index }}" class="form-label">Câu hỏi:</label>
-                                            <input type="text" id="question_{{ $index }}"
-                                                name="questions[{{ $index }}][question]" class="form-control"
-                                                value="{{ $question->question }}">
+                                            <label for="question_{{ $index + 1 }}" class="form-label">Câu hỏi:</label>
+                                            <input type="text" id="question_{{ $index + 1 }}" name="questions[{{ $index + 1 }}][question]" class="form-control" value="{{ old('questions.' . ($index + 1) . '.question', $question->questions) }}" >
                                         </div>
-
-                                        <div class="mb-3">
-                                            <label for="correct_answer_{{ $index }}" class="form-label">Đáp án
-                                                đúng:</label>
-                                            <input type="text" id="correct_answer_{{ $index }}"
-                                                name="questions[{{ $index }}][correct_answer]" class="form-control"
-                                                value="{{ $question->correctAnswer->answer }}">
-                                        </div>
-
-                                        @foreach ($question->wrongAnswers as $i => $wrongAnswer)
+                                        @foreach($question->answers as $answerIndex => $answer)
                                             <div class="mb-3">
-                                                <label for="wrong_answer{{ $i + 1 }}_{{ $index }}"
-                                                    class="form-label">Đáp án sai {{ $i + 1 }}:</label>
-                                                <input type="text"
-                                                    id="wrong_answer{{ $i + 1 }}_{{ $index }}"
-                                                    name="questions[{{ $index }}][wrong_answers][]"
-                                                    class="form-control" value="{{ $wrongAnswer->answer }}">
+                                                <label for="answer_{{ $index + 1 }}_{{ $answerIndex }}" class="form-label">Đáp án {{ $answerIndex + 1 }}:</label>
+                                                <input type="text" id="answer_{{ $index + 1 }}_{{ $answerIndex }}" name="questions[{{ $index + 1 }}][answers][{{ $answerIndex }}][answer]" class="form-control" value="{{ old('questions.' . ($index + 1) . '.answers.' . $answerIndex . '.answer', $answer->answer_text) }}" >
+                                                <input type="hidden" name="questions[{{ $index + 1 }}][answers][{{ $answerIndex }}][is_correct]" value="{{ $answer->is_correct }}">
                                             </div>
                                         @endforeach
-                                        <button type="button"
-                                            class="btn btn-outline-danger btn-sm remove-question mt-2">Xóa câu hỏi</button>
+                                        <button type="button" class="btn btn-outline-danger btn-sm delete-question">Xóa câu hỏi</button>
                                     </div>
                                 @endforeach
                             </div>
 
-                            <button type="button" class="btn btn-outline-success mb-3" id="add-question">Thêm câu
-                                hỏi</button>
+                            <div class="d-flex justify-content-between mb-4">
+                                <button type="button" id="add-question" class="btn btn-outline-primary">Thêm câu hỏi</button>
+                            </div>
 
                             <div class="d-flex justify-content-between align-items-center mb-4">
-                                <a href="{{ route('client.editCourse', $quiz->course_id) }}" class="btn btn-secondary">
+                                <a href="{{ route('client.editCourse', $quizFinal->course_id) }}" class="btn btn-outline-secondary">
                                     <i class="bi bi-arrow-left"></i> Quay lại
                                 </a>
                                 <button type="submit" class="btn btn-success">Lưu</button>
                             </div>
-
                         </form>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <template id="question-template">
-        <div class="question-block mb-4 p-3 rounded">
-            <h5 class="mb-3">Câu hỏi</h5>
-            <input type="hidden" name="questions[INDEX][id]" value="">
-
-            <div class="mb-3">
-                <label for="question_INDEX" class="form-label">Câu hỏi:</label>
-                <input type="text" id="question_INDEX" name="questions[INDEX][question]" class="form-control"
-                    value="">
-            </div>
-
-            <div class="mb-3">
-                <label for="correct_answer_INDEX" class="form-label">Đáp án đúng:</label>
-                <input type="text" id="correct_answer_INDEX" name="questions[INDEX][correct_answer]"
-                    class="form-control" value="">
-            </div>
-
-            <div class="mb-3">
-                <label for="wrong_answer1_INDEX" class="form-label">Đáp án sai 1:</label>
-                <input type="text" id="wrong_answer1_INDEX" name="questions[INDEX][wrong_answers][]"
-                    class="form-control" value="">
-            </div>
-            <div class="mb-3">
-                <label for="wrong_answer2_INDEX" class="form-label">Đáp án sai 2:</label>
-                <input type="text" id="wrong_answer2_INDEX" name="questions[INDEX][wrong_answers][]"
-                    class="form-control" value="">
-            </div>
-            <div class="mb-3">
-                <label for="wrong_answer3_INDEX" class="form-label">Đáp án sai 3:</label>
-                <input type="text" id="wrong_answer3_INDEX" name="questions[INDEX][wrong_answers][]"
-                    class="form-control" value="">
-            </div>
-
-            <button type="button" class="btn btn-outline-danger btn-sm remove-question">Xóa câu hỏi</button>
-        </div>
-    </template>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            let questionIndex = {{ count($quiz->questions) }};
-
-            function updateQuestionIndices() {
+            let questionCount = {{ $quizFinal->questions->count() }};
+    
+            function updateQuestionNumbers() {
                 document.querySelectorAll('.question-block').forEach((block, index) => {
                     block.querySelector('h5').textContent = `Câu hỏi ${index + 1}`;
                     block.dataset.index = index;
@@ -239,133 +192,137 @@
                         }
                     });
                 });
-                questionIndex = document.querySelectorAll('.question-block').length;
+                questionCount = document.querySelectorAll('.question-block').length;
             }
-
+    
             document.getElementById('add-question').addEventListener('click', function() {
-                const template = document.getElementById('question-template').content.cloneNode(true);
-                template.querySelectorAll('input, label').forEach(el => {
-                    if (el.htmlFor) {
-                        el.htmlFor = el.htmlFor.replace(/INDEX/g, questionIndex);
-                    }
-                    if (el.id) {
-                        el.id = el.id.replace(/INDEX/g, questionIndex);
-                    }
-                    if (el.name) {
-                        el.name = el.name.replace(/INDEX/g, questionIndex);
-                    }
-                });
-                template.querySelector('.question-block h5').textContent = `Câu hỏi ${questionIndex + 1}`;
-                template.querySelector('.question-block').dataset.index = questionIndex;
-
-                document.getElementById('questions-container').appendChild(template);
-                updateQuestionIndices();
+                const template = `
+                <div class="question-block mb-4 p-4 border border-primary rounded" data-index="${questionCount}">
+                    <h5 class="mb-3 question-title">Câu hỏi ${questionCount + 1}</h5>
+                    <div class="mb-3">
+                        <label for="question_${questionCount}" class="form-label">Câu hỏi:</label>
+                        <input type="text" id="question_${questionCount}" name="questions[${questionCount}][question]" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="answer_${questionCount}_0" class="form-label">Đáp án đúng:</label>
+                        <input type="text" id="answer_${questionCount}_0" name="questions[${questionCount}][answers][0][answer]" class="form-control">
+                        <input type="hidden" name="questions[${questionCount}][answers][0][is_correct]" value="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="answer_${questionCount}_1" class="form-label">Đáp án sai:</label>
+                        <input type="text" id="answer_${questionCount}_1" name="questions[${questionCount}][answers][1][answer]" class="form-control">
+                        <input type="hidden" name="questions[${questionCount}][answers][1][is_correct]" value="0">
+                    </div>
+                    <div class="mb-3">
+                        <label for="answer_${questionCount}_2" class="form-label">Đáp án sai:</label>
+                        <input type="text" id="answer_${questionCount}_2" name="questions[${questionCount}][answers][2][answer]" class="form-control">
+                        <input type="hidden" name="questions[${questionCount}][answers][2][is_correct]" value="0">
+                    </div>
+                    <div class="mb-3">
+                        <label for="answer_${questionCount}_3" class="form-label">Đáp án sai:</label>
+    <input type="text" id="answer_${questionCount}_3" name="questions[${questionCount}][answers][3][answer]" class="form-control">
+                        <input type="hidden" name="questions[${questionCount}][answers][3][is_correct]" value="0">
+                    </div>
+                    <button type="button" class="btn btn-outline-danger btn-sm delete-question">Xóa câu hỏi</button>
+                </div>
+            `;
+    
+                const questionsContainer = document.getElementById('questions-container');
+                questionsContainer.insertAdjacentHTML('beforeend', template);
+    
+                // Scroll to the new question block
+                const newQuestionBlock = questionsContainer.lastElementChild;
+                newQuestionBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
+                questionCount++;
             });
-
-            document.getElementById('questions-container').addEventListener('click', function(e) {
-                if (e.target.classList.contains('remove-question')) {
-                    e.target.closest('.question-block').remove();
-                    updateQuestionIndices();
+    
+            document.getElementById('questions-container').addEventListener('click', function(event) {
+                if (event.target.classList.contains('delete-question')) {
+                    event.target.closest('.question-block').remove();
+                    updateQuestionNumbers();
                 }
             });
-
+    
             document.querySelector('form').addEventListener('submit', function(event) {
                 let isValid = true;
                 let firstErrorField = null;
                 clearErrors();
-
-                // Kiểm tra tiêu đề Quiz
-                const titleField = document.getElementById('name');
+    
+                const titleField = document.getElementById('title');
                 const title = titleField.value.trim();
                 if (title === '') {
                     isValid = false;
                     showError(titleField, 'Tiêu đề không được để trống.');
                     if (!firstErrorField) firstErrorField = titleField;
-                } else if (title.length > 200) {
+                } else if (title.length > 250) {
                     isValid = false;
-                    showError(titleField, 'Tiêu đề không được quá 200 ký tự.');
+                    showError(titleField, 'Tiêu đề không được quá 250 ký tự.');
                     if (!firstErrorField) firstErrorField = titleField;
                 }
-
-                // Kiểm tra từng câu hỏi
+    
                 const questionBlocks = document.querySelectorAll('.question-block');
                 questionBlocks.forEach((block, index) => {
-                    const questionField = block.querySelector(
-                        `input[name="questions[${index}][question]"]`);
+                    const questionField = block.querySelector(`input[name="questions[${index}][question]"]`);
                     const questionText = questionField.value.trim();
-
+    
                     if (questionText === '') {
                         isValid = false;
                         showError(questionField, `Câu hỏi ${index + 1} không được để trống.`);
                         if (!firstErrorField) firstErrorField = questionField;
-                    } else if (questionText.length > 200) {
+                    } else if (questionText.length > 250) {
                         isValid = false;
-                        showError(questionField, `Câu hỏi ${index + 1} không được quá 200 ký tự.`);
+                        showError(questionField, `Câu hỏi ${index + 1} không được quá 250 ký tự.`);
                         if (!firstErrorField) firstErrorField = questionField;
                     }
-
-                    // Kiểm tra đáp án
-                    const answerFields = block.querySelectorAll('input[name^="questions[' + index +
-                        '][wrong_answers]"], input[name^="questions[' + index +
-                        '][correct_answer]"]');
+    
+                    const answerFields = block.querySelectorAll('input[name^="questions["][name$="][answer]"]');
                     const answers = [];
                     answerFields.forEach((answerField, answerIndex) => {
-                        const answerText = answerField.value.trim();
+    const answerText = answerField.value.trim();
                         if (answerText === '') {
                             isValid = false;
-                            showError(answerField,
-                                `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được để trống.`
-                            );
+                            showError(answerField, `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được để trống.`);
                             if (!firstErrorField) firstErrorField = answerField;
-                        } else if (answerText.length > 200) {
+                        } else if (answerText.length > 250) {
                             isValid = false;
-                            showError(answerField,
-                                `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được quá 200 ký tự.`
-                            );
+                            showError(answerField, `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được quá 250 ký tự.`);
                             if (!firstErrorField) firstErrorField = answerField;
                         } else {
                             answers.push(answerText);
                         }
                     });
-
-                    // Kiểm tra đáp án trùng lặp
+    
                     const uniqueAnswers = new Set(answers);
                     if (uniqueAnswers.size !== answers.length) {
                         isValid = false;
                         answers.forEach((answer, answerIndex) => {
-                            showError(answerFields[answerIndex],
-                                `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được trùng lặp.`
-                            );
-                            if (!firstErrorField) firstErrorField = answerFields[
-                                answerIndex];
+                            showError(answerFields[answerIndex], `Đáp án ${answerIndex + 1} của câu hỏi ${index + 1} không được trùng lặp.`);
+                            if (!firstErrorField) firstErrorField = answerFields[answerIndex];
                         });
                     }
                 });
-
+    
                 if (!isValid) {
                     event.preventDefault();
                     if (firstErrorField) {
-                        firstErrorField.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'center'
-                        });
+                        firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         firstErrorField.focus();
                     }
                 }
             });
-
+    
             function clearErrors() {
                 document.querySelectorAll('.text-danger').forEach(element => element.remove());
                 document.querySelectorAll('.is-invalid').forEach(element => element.classList.remove('is-invalid'));
             }
-
+    
             function showError(field, message) {
                 const error = document.createElement('div');
                 error.className = 'text-danger mt-2';
                 error.textContent = message;
                 field.classList.add('is-invalid');
-
-                // Thêm thông báo lỗi ngay dưới trường nhập liệu
+    
                 if (!field.nextElementSibling || !field.nextElementSibling.classList.contains('text-danger')) {
                     field.parentNode.insertBefore(error, field.nextSibling);
                 }

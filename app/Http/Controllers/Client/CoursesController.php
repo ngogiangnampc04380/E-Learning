@@ -305,22 +305,43 @@ class CoursesController extends Controller
     public function quizChapter($id)
     {
         // Lấy thông tin quiz
-        $quiz = Quiz::findOrFail($id);
+        if (auth::user()) {
+            $quiz = Quiz::findOrFail($id);
+            if ($quiz) {
+                // Lấy thông tin chương từ quiz (giả sử quiz có thuộc tính chapter_id)
+                $chapter = Chapter::findOrFail($quiz->chapter_id);
 
-        // Lấy thông tin chương từ quiz (giả sử quiz có thuộc tính chapter_id)
-        $chapter = Chapter::findOrFail($quiz->chapter_id);
+                // Lấy các câu hỏi cùng với câu trả lời ngẫu nhiên
+                if ($chapter) {
+                    $course = Course::findOrFail($chapter->course_id);
+                    if ($course) {
+                        $courseUser = Course_user::where(['course_id' => $course->id, 'user_id' => auth()->user()->id])->first();
+                        if ($courseUser) {
+                            $questions = Question::with(['answers' => function ($query) {
+                                $query->inRandomOrder();
+                            }])->where('quiz_id', $id)->get();
 
-        // Lấy các câu hỏi cùng với câu trả lời ngẫu nhiên
-        $questions = Question::with(['answers' => function ($query) {
-            $query->inRandomOrder();
-        }])->where('quiz_id', $id)->get();
-
-        // Truyền thông tin vào view
-        return view('client.courses.quiz', [
-            'questions' => $questions,
-            'quiz' => $quiz,
-            'chapter_name' => $chapter->name, // Thêm tên chương vào dữ liệu truyền vào view
-        ]);
+                            // Truyền thông tin vào view
+                            return view('client.courses.quiz', [
+                                'questions' => $questions,
+                                'quiz' => $quiz,
+                                'chapter_name' => $chapter->name, // Thêm tên chương vào dữ liệu truyền vào view
+                            ]);
+                        } else {
+                            abort(404, 'Người dùng chưa đăng ký khóa học');
+                        }
+                    } else {
+                        abort(404, 'Page not found');
+                    }
+                } else {
+                    abort(404, 'Page not found');
+                }
+            } else {
+                abort(404, 'Page not found');
+            }
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     public function submitQuiz(Request $request, $id)

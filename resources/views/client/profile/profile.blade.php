@@ -130,7 +130,7 @@
                                                 
                                                 <td>
                                                     @if ($education->thumbnail)
-                                                    <img src="{{ asset('public/' . $education->thumbnail) }}" width="100">
+                                                    <img src="{{ Storage::url('public/'.$education->thumbnail) }}" width="100">
                                                     @endif
                                                 </td>
                                                 <td>{{ $education->academic_level }}</td>

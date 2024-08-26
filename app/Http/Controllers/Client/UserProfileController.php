@@ -43,7 +43,7 @@ class UserProfileController extends Controller
             Rule::unique('users')->ignore(auth()->id()),
         ],
         'address' => 'required|string|max:200',
-        'introduce' => 'nullable|string|max:1000',
+        
         'thumbnail' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         'link_mail' => 'nullable|string|max:255',
         'link_face' => 'nullable|string|max:255',
@@ -61,7 +61,7 @@ class UserProfileController extends Controller
         'address.required' => 'Địa chỉ không được để trống.',
         'address.string' => 'Địa chỉ phải là chuỗi.',
         'address.max' => 'Địa chỉ không được vượt quá 200 kí tự.',
-        'introduce.max' => 'Giới thiệu không được vượt quá 1000 kí tự.',
+        
         'thumbnail.image' => 'Tệp được chọn phải là hình ảnh.',
         'thumbnail.mimes' => 'Hình ảnh phải có định dạng jpeg, png, jpg, gif.',
         'thumbnail.max' => 'Kích thước hình ảnh không được vượt quá 2MB.',

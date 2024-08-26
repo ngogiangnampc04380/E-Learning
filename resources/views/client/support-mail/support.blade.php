@@ -1,7 +1,7 @@
 @extends('client.layout.master')
 @section('content')
 
-<div class="page-banner">
+<div class="page-banners">
    
 </div>
 

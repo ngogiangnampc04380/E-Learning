@@ -18,7 +18,7 @@
                         <h4><a href="javascript:void(0);">{{ $mentor->user->name }}</a></h4>
                         <p>Giảng viên</p>
                         <ul class="list-unstyled inline-inline profile-info-social">
-                            @if ($mentor->link_face)
+                            @if ($mentor->user->link_face)
                                 <li class="list-inline-item">
                                     <a href="{{ $mentor->user->link_face }}" target="_blank">
                                         <i class="fa-brands fa-facebook"></i>

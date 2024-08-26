@@ -41,7 +41,7 @@
 
         .list-group-item {
             border: none;
-            padding: 15px 20px;
+            padding: 10px 15px;
             font-size: 1rem;
             border-bottom: 1px solid #e9ecef;
         }
@@ -391,7 +391,7 @@ $bucketName = 'entweb01';
                                                         // dd($quizz_result);
                                                     @endphp
                                                     @if ($quizz_result)
-                                                        <b>{{ $quizz_result->score }} / 100</b>
+                                                        <b style=" font-weight: bold; width: 200px;  display: flex; align-items: center;">{{ $quizz_result->score }} / 100</b>
                                                     @endif
                                                 </li>
                                             @empty
@@ -423,14 +423,18 @@ $bucketName = 'entweb01';
                                         </h6>
                                         <div class="d-flex mt-1"
                                             style="background-color: #007bff; color: #ffffff; padding: 10px; border: 2px solid #0056b3; border-radius: 5px;">
-                                            <a href="{{ route('client.quiz.quiz-final', ['quiz_id' => $quiz->id]) }}"
+                                            <a style="max-width: 150px;" href="{{ route('client.quiz.quiz-final', ['quiz_id' => $quiz->id]) }}"
                                                 style="color: #ffffff; text-decoration: none;">
-                                                <h2 style="margin: 0;">{{ $quiz->title }}</h2>
+                                                <h6 style="width: 150px; white-space: normal; word-wrap: break-word; word-break: break-word;">
+                                                    {{ $quiz->title }}
+                                                </h6>
+                                                
                                             </a>
                                             @if ($final_result)
-                                                <b style="color: #ffffff; font-weight: bold; margin-left: 50px; ">{{ $final_result->score }}
-                                                    / 100</b>
-                                            @endif
+                                            <b style="color: #ffffff; font-weight: bold; width: 120px; margin-left: 25px; display: flex; align-items: center;">
+                                                {{ $final_result->score }} / 100
+                                            </b>
+                                                                                        @endif
                                         </div>
                                     @endif
 

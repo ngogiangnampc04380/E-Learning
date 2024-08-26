@@ -72,11 +72,16 @@
                                         <div class="head-course-title">
                                             <h2 class="title"><a href="{{ route('client.course-details', $item->id) }}">{{ $item->name }}</a></h2>
                                             <div class="all-btn all-category d-flex align-items-center">
-                                                @if (in_array($item->id, $userPurchasedCourses))
-                                                    <a href="{{ route('client.lesson', ['id' => $item->id]) }}" class="btn btn-primary">Học</a>
-                                                @else
-                                                    <a href="{{ route('client.course-checkout', $item->id) }}" class="btn btn-primary">Đăng Ký Ngay</a>
-                                                @endif
+                                            @if (auth()->check() and in_array($item->id, $userPurchasedCourses))
+                                                <a href="{{ route('client.lesson', ['id' => $item->id]) }}"
+                                                    class="btn btn-primary">Học</a>
+                                            @elseif (auth()->check() and auth()->user()->role == 2 and $item->mentor_id == auth()->user()->mentor->id)
+                                                <a href="{{ route('client.instructor-course', auth()->user()->mentor->id) }}"
+                                                    class="btn btn-primary">quản lý</a>
+                                            @else
+                                                <a href="{{ route('client.course-checkout', $item->id) }}"
+                                                    class="btn btn-primary">Đăng Ký Ngay</a>
+                                            @endif
                                             </div>
                                         </div>
                                         <div class="course-info border-bottom-0 pb-0 d-flex align-items-center">

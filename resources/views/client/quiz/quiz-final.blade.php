@@ -111,14 +111,74 @@
         .question-controls .btn-prev {
             margin-right: auto;
         }
+        .custom-quiz-widget {
+        border: 3px solid #28a745;
+        background: linear-gradient(135deg, #28a745 0%, #a7ff83 100%);
+        padding: 50px;
+        border-radius: 10px;
+        position: relative;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
 
+    .custom-quiz-widget:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .custom-ribbon-wrapper {
+        position: absolute;
+        top: -10px;
+        left: -20px;
+        overflow: hidden;
+        padding-top:45px ;
+        height: 200px;
+    
+    }
+
+    .custom-ribbon {
+        margin: 2px
+        font-size: 14px;
+        font-weight: bold;
+        color: white;
+        background: #ff4757;
+        padding: 5px 15px;
+        transform: rotate(-45deg);
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+        text-transform: uppercase;
+    }
+
+    .custom-header {
+        color: #ffffff;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .custom-btn {
+        font-weight: bold;
+        background-color: #ff6348;
+        border-color: #ff6348;
+        color: white;
+        transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    .custom-btn:hover {
+        background-color: #ff4757;
+        transform: scale(1.1);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
     </style>
 
     <div class="container quiz-sec">
-        <div id="quizIntro" class="text-center">
-            <p class="lead">Hãy nhấp vào nút bên dưới để bắt đầu làm bài quiz của bạn.</p>
-            <button id="startQuizBtn" class="btn btn-primary btn-start">Bắt đầu làm bài</button>
+        <div id="quizIntro" class="text-center custom-quiz-widget p-5 mb-5 bg-light shadow-xl rounded position-relative">
+            <div class="custom-ribbon-wrapper">
+                <div class="custom-ribbon">Bài kiểm tra</div>
+            </div>
+            <div style="font-weight: bold; font-size:20px; margin-bottom: 5px">
+                Tên bài quiz: {{ $quizFinal->title }}
+            </div>
+            <p class="lead custom-header mb-4">Hãy nhấp vào nút bên dưới để bắt đầu làm bài quiz của bạn.</p>
+            <button id="startQuizBtn" class="btn btn-lg btn-primary custom-btn">Bắt đầu làm bài</button>
         </div>
+        
 
         <div id="quizSection" class="d-none quiz-container">
             <div class="quiz-content">

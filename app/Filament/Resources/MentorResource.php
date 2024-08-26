@@ -20,7 +20,9 @@ use Filament\Tables\Filters\Filter;
 
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\AcceptMentorNotification;
-
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 
 class MentorResource extends Resource
 {
@@ -28,7 +30,7 @@ class MentorResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
     protected static ?string $navigationLabel = 'Duyệt giảng viên';
-    protected static ?string $modelLabel = 'Giảng viên';
+    protected static ?string $modelLabel = 'Giảng viên chờ duyệt';
     protected static ?string $navigationGroup = 'Người dùng';
     // protected static ?int $navigationSort = 2;
 
@@ -48,12 +50,15 @@ class MentorResource extends Resource
         return $table
 
             ->columns([
+                Tables\Columns\ImageColumn::make('thumbnail')
+                    ->label('Hình ảnh')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Tên người dùng')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                    Tables\Columns\TextColumn::make('phone')
+                Tables\Columns\TextColumn::make('phone')
                     ->label('Số điện thoại')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('address')
@@ -67,20 +72,20 @@ class MentorResource extends Resource
             ])
             ->hiddenFilterIndicators()
             ->actions([
-                // Tables\Actions\ViewAction::make(),
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\Action::make('accept')
-                ->label('Duyệt')
-                ->action(function (User $record) {
-                    // Cập nhật vai trò của người dùng
-                    $record->role = 2;
-                    $record->save();
-            
-                    // Gửi thông báo email
-                    $record->notify(new AcceptMentorNotification($record));
-                })
-                ->requiresConfirmation()
-                ->color('success'),
-            
+                    ->label('Duyệt')
+                    ->action(function (User $record) {
+                        // Cập nhật vai trò của người dùng
+                        $record->role = 2;
+                        $record->save();
+
+                        // Gửi thông báo email
+$record->notify(new AcceptMentorNotification($record));
+                    })
+                    ->requiresConfirmation()
+                    ->color('success'),
+
                 Tables\Actions\Action::make('decline')
                     ->label('Không Duyệt')
                     ->form([
@@ -114,7 +119,28 @@ class MentorResource extends Resource
             //
         ];
     }
-
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                TextEntry::make('name')
+                    ->label('Tên giảng viên'),
+                TextEntry::make('email')
+                    ->label('Email'),
+                TextEntry::make('phone')
+                    ->label('Số điện thoại'),
+                TextEntry::make('address')
+                    ->label('Địa chỉ'),
+                TextEntry::make('mentor.name_banking')
+                    ->label('Tên ngân hàng'),
+                TextEntry::make('mentor.id_banking')
+                    ->label('Số tài khoản'),
+                ImageEntry::make('mentor.front_card')
+                    ->label('CCCD mặt trước'),
+                ImageEntry::make('mentor.back_card')
+                    ->label('CCCD mặt sau'),
+            ]);
+    }
     public static function getPages(): array
     {
         return [

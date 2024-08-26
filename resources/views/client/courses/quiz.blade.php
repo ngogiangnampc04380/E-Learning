@@ -2,6 +2,60 @@
 
 @section('content')
     <style>
+        .custom-quiz-widget {
+        border: 3px solid #28a745;
+        background: linear-gradient(135deg, #28a745 0%, #a7ff83 100%);
+        padding: 50px;
+        border-radius: 10px;
+        position: relative;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+    .custom-quiz-widget:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .custom-ribbon-wrapper {
+        position: absolute;
+        top: -10px;
+        left: -20px;
+        overflow: hidden;
+        padding-top:45px ;
+        height: 200px;
+    
+    }
+
+    .custom-ribbon {
+        margin: 2px
+        font-size: 14px;
+        font-weight: bold;
+        color: white;
+        background: #ff4757;
+        padding: 5px 15px;
+        transform: rotate(-45deg);
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+        text-transform: uppercase;
+    }
+
+    .custom-header {
+        color: #ffffff;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .custom-btn {
+        font-weight: bold;
+        background-color: #ff6348;
+        border-color: #ff6348;
+        color: white;
+        transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    .custom-btn:hover {
+        background-color: #ff4757;
+        transform: scale(1.1);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
         .quiz-sec {
             padding: 40px 0;
         }
@@ -94,11 +148,19 @@
         <img src="{{ asset('/img/quiz.gif') }}"  class="img-fluid" alt="Logo">
     </section>
 
-    <div class="container mt-3" id="startQuizContainer">
+    <div class="container mt-3" id="startQuizContainerNew">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <div class="quiz-widget p-5 bg-white shadow-sm rounded text-center">
-                    <button id="startQuizBtn" class="btn btn-primary">Bắt đầu làm bài</button>
+                <div class="custom-quiz-widget p-5 mb-5 bg-light shadow-xl rounded text-center position-relative">
+                    <div class="custom-ribbon-wrapper">
+                        
+                        <div class="custom-ribbon">Bài kiểm tra</div>
+                    </div>
+                    <div style="font-weight: bold; font-size:20px; margin-bottom: 5px">
+                        Tên bài quiz: {{ $quiz->name }}
+                    </div>
+                    <h3 class="custom-header mb-4">Sẵn sàng kiểm tra kiến thức của bạn?</h3>
+                    <button id="startQuizBtnNew" class="btn btn-lg btn-primary custom-btn">Bắt đầu làm bài</button>
                 </div>
             </div>
         </div>

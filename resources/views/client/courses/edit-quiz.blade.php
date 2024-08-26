@@ -119,44 +119,53 @@
         document.addEventListener('DOMContentLoaded', function() {
             let questionIndex = {{ count($quiz->questions) }};
 
-            function updateQuestionIndices() {
-                document.querySelectorAll('.question-block').forEach((block, index) => {
-                    block.querySelector('h5').textContent = `Câu hỏi ${index + 1}`;
-                    block.dataset.index = index;
-                    block.querySelectorAll('input, label').forEach(el => {
-                        if (el.htmlFor) {
-                            el.htmlFor = el.htmlFor.replace(/\d+/, index);
-                        }
-                        if (el.id) {
-                            el.id = el.id.replace(/\d+/, index);
-                        }
-                        if (el.name) {
-                            el.name = el.name.replace(/\d+/, index);
-                        }
-                    });
-                });
-                questionIndex = document.querySelectorAll('.question-block').length;
+function updateQuestionIndices() {
+    document.querySelectorAll('.question-block').forEach((block, index) => {
+        block.querySelector('h5').textContent = `Câu hỏi ${index + 1}`;
+        block.dataset.index = index;
+        block.querySelectorAll('input, label').forEach(el => {
+            if (el.htmlFor) {
+                el.htmlFor = el.htmlFor.replace(/\d+/, index);
             }
+            if (el.id) {
+                el.id = el.id.replace(/\d+/, index);
+            }
+            if (el.name) {
+                el.name = el.name.replace(/\d+/, index);
+            }
+        });
+    });
+    questionIndex = document.querySelectorAll('.question-block').length;
+}
 
-            document.getElementById('add-question').addEventListener('click', function() {
-                const template = document.getElementById('question-template').content.cloneNode(true);
-                template.querySelectorAll('input, label').forEach(el => {
-                    if (el.htmlFor) {
-                        el.htmlFor = el.htmlFor.replace(/INDEX/g, questionIndex);
-                    }
-                    if (el.id) {
-                        el.id = el.id.replace(/INDEX/g, questionIndex);
-                    }
-                    if (el.name) {
-                        el.name = el.name.replace(/INDEX/g, questionIndex);
-                    }
-                });
-                template.querySelector('.question-block h5').textContent = `Câu hỏi ${questionIndex + 1}`;
-                template.querySelector('.question-block').dataset.index = questionIndex;
+document.getElementById('add-question').addEventListener('click', function() {
+    const template = document.getElementById('question-template').content.cloneNode(true);
+    template.querySelectorAll('input, label').forEach(el => {
+        if (el.htmlFor) {
+            el.htmlFor = el.htmlFor.replace(/INDEX/g, questionIndex);
+        }
+        if (el.id) {
+            el.id = el.id.replace(/INDEX/g, questionIndex);
+        }
+        if (el.name) {
+            el.name = el.name.replace(/INDEX/g, questionIndex);
+        }
+    });
+    template.querySelector('.question-block h5').textContent = `Câu hỏi ${questionIndex + 1}`;
+    template.querySelector('.question-block').dataset.index = questionIndex;
 
-                document.getElementById('questions-container').appendChild(template);
-                updateQuestionIndices();
-            });
+    const questionsContainer = document.getElementById('questions-container');
+    questionsContainer.appendChild(template);
+
+    // Cuộn màn hình đến vị trí của form mới
+    const newQuestionBlock = questionsContainer.querySelector(`.question-block[data-index="${questionIndex}"]`);
+    if (newQuestionBlock) {
+        newQuestionBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    updateQuestionIndices();
+});
+
 
             document.getElementById('questions-container').addEventListener('click', function(e) {
                 if (e.target.classList.contains('remove-question')) {
